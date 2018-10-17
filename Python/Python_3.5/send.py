@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 ############################################################################
-#Author: Ky Ho, Jose Duron
-#Date:7/18/19
+#Author: Anthony
+#Date:10/3/18
 # Main ETHERNET Module to Send and Recieve UDP DATAGRAMS to MICROZED
 #
 #This module uses a fixed IP address and port number that must match the
@@ -15,8 +15,6 @@ import optparse
 #define the IP and port for the zynq
 UDP_IP = "192.168.1.10"
 UDP_PORT = 7
-
-
 delimiter = '/'
 
 #Creates the socket

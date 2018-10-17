@@ -8,7 +8,7 @@
 # Parameters
 
 # Project Name Definition
-set ProjectName "Watchman"
+set ProjectName "UDP_echo"
 
 # Set the reference directory for source file relative paths (by default the value is script directory path)
 set origin_dir "../"
