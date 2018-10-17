@@ -18,7 +18,7 @@ import sys
 import socket
 import optparse
 import random
-import receive_V3
+import receive
 
 #class Watchman_reg(Frame):
 class Watchman_reg():          
