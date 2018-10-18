@@ -187,4 +187,57 @@ write_hwdef -force  -file "${origin_proj_dir}/${ProjectName}.sdk/${HDFProjectWra
 
 cd "${proj_dir}"
 
+puts "Save BIT File"
+# Set Project BD for Project
+switch -glob -- [lindex $tcl_platform(os) 0] {
+	Win* { #Windows
+		cd ../hw/images/
+		if {[file exist $BITProjectWrapper] == 1} {
+			file mkdir ${proj_dir}/${ProjectName}.runs
+			file mkdir ${proj_dir}/${ProjectName}.runs/impl_1
+			file copy $BITProjectWrapper ${proj_dir}/${ProjectName}.runs/impl_1/
+			puts "Success : BIT save done"
+		} else {
+			puts "BIT file does not exist"
+		}
+		cd "${proj_dir}"
+	}
+	Lin* { #Linux
+		if {[exec ls $proj_dir/$ProjectName.runs/impl_1/$BITProjectWrapper | wc -l] == 1} {
+			exec cp $proj_dir/$ProjectName.runs/impl_1/$BITProjectWrapper $proj_dir/../$ProjectName/hw/images
+			puts "Success : BIT Save Done"
+		} else {
+			puts "BIT File does not exist"
+		}
+	}
+	default {
+		puts "Unknow"
+	}
+}
+
+puts "Save HDF File"
+# Set Project BD for Project
+switch -glob -- [lindex $tcl_platform(os) 0] {
+	Win* { #Windows
+		cd ../hw/images/
+		if {[file exist $HDFProjectWrapper] == 1} {
+			file copy $HDFProjectWrapper ${proj_dir}/${ProjectName}.sdk/
+			puts "Success : HDF save done"
+		} else {
+			puts "HDF file does not exist"
+		}
+		cd "${proj_dir}"
+	}
+	Lin* { #Linux
+		if {[exec ls $proj_dir/$ProjectName.sdk/$HDFProjectWrapper | wc -l] == 1} {
+			exec cp $proj_dir/$ProjectName.sdk/$HDFProjectWrapper $proj_dir/../$ProjectName/hw/images
+			puts "Success : HDF Save Done"
+		} else {
+			puts "HDF File does not exist"
+		}
+	}
+	default {
+		puts "Unknow"
+	}
+}
 
