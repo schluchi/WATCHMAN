@@ -43,6 +43,7 @@ volatile bool stream_flag = false;
 char return_buf[MAX_ARRAY_SIZE];
 extern volatile int count_ttcps_timer;
 extern volatile int count_scu_timer;
+extern uint16_t nbre_of_bytes;
 
 err_t transfer_data(char* frame, uint16_t length) {
 	if(sizeof(frame) <= MAX_STREAM_SIZE){
@@ -147,6 +148,7 @@ int command_parser(struct pbuf *p, int regmap[], char* return_buf){
 						xil_printf("Command start_stream received\r\n");
 						count_ttcps_timer = 0;
 						count_scu_timer = 0;
+						nbre_of_bytes = 0;
 					}
 					return 6;
 				}

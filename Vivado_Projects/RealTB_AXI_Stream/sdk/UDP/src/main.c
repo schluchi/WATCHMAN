@@ -101,6 +101,7 @@ static struct netif server_netif;
 struct netif *echo_netif;
 
 extern volatile bool run_flag;
+extern bool stream_flag;
 
 int main()
 {
@@ -145,7 +146,7 @@ int main()
 	 * the predefined regular intervals after starting the client.
 	 */
 	dhcp_start(echo_netif);
-	dhcp_timoutcntr = 3;
+	dhcp_timoutcntr = 24;
 
 	while(((echo_netif->ip_addr.addr) == 0) && (dhcp_timoutcntr > 0)) {
 		xemacif_input(echo_netif);
@@ -183,11 +184,16 @@ int main()
 //
 //	}
 
-	XTime_GetTime(&tStart);
-	while (run_flag);
-	XTime_GetTime(&tEnd);
-	printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
-	printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+	while (run_flag){
+		if(stream_flag){
+			XTime_GetTime(&tStart);
+			while(stream_flag);
+			XTime_GetTime(&tEnd);
+			printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+			printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+		}
+	}
+
 
 
 	/* never reached */

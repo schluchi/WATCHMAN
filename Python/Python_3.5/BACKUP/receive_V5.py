@@ -63,22 +63,37 @@ class Watchman_data():
         self.master.after(1000,self.plot_int)
 
     def plot_int(self):
+        #time.sleep(1)
+        #while self.run_flag:
         if(self.run_flag):
+            #print("execute thread 10--------------", file=sys.stderr)
             with self.lock_graph:
+                #print("1",file=sys.stderr)
                 for k in range(len(self.nbr_hit)):
                     self.graph_hit.patches[k].set_height(self.nbr_hit[k])
+                #print("2",file=sys.stderr)
                 self.spt_hit.set_ylim([0, max(max(self.nbr_hit)*1.1,1)])
+                #print("3",file=sys.stderr)
                 for k in range(len(self.amplitude[self.ch_selected])):
                     self.graph_amp.patches[k].set_height(self.amplitude[self.ch_selected][k])
+                #print("4",file=sys.stderr)
                 self.spt_amp.set_ylim([0, max(max(self.amplitude[self.ch_selected])*1.1,1)])
+                #print("5",file=sys.stderr)
                 self.spt_amp.set_title(self.combolist[self.ch_selected])
+                #print("6",file=sys.stderr)
                 for k in range(len(self.time[self.ch_selected])):
                     self.graph_time.patches[k].set_height(self.time[self.ch_selected][k])
+                #print("7",file=sys.stderr)
                 self.spt_time.set_ylim([0, max(max(self.time[self.ch_selected])*1.1,1)])
+                #print("8",file=sys.stderr)
                 self.spt_time.set_title(self.combolist[self.ch_selected])
+                #print("9",file=sys.stderr)
                 self.canvas.draw()
+                #print("10",file=sys.stderr)
                 self.canvas.get_tk_widget().update_idletasks()
-            print("frame received : " + str(self.count)+" | thread engaged : " + str(len(self.thread_list)))
+                #print("11",file=sys.stderr)
+            #time.sleep(1)
+
             length=len(self.thread_list)
             k=0
             while(k<length):
@@ -93,7 +108,6 @@ class Watchman_data():
             print("end of plot int.", file=sys.stderr)
 
     def recv_data(self):
-        cnt_timer = 0
         while self.run_flag:
             d = bytearray()
             try:
@@ -108,28 +122,11 @@ class Watchman_data():
                     del self.data[:]
                     del self.adress[:]
                     self.count_recv = 0
-                cnt_timer = 0
             except socket.timeout:
                 time.sleep(0.1)
-                cnt_timer += 1
                 dummy = 0 # dummy execution just to use try without trouble
             except socket.error:
                 dummy = 0
-            if((cnt_timer >= 2) and (self.count_recv > 0)):
-                t = Thread(target=self.data_int, args=(self.data, self.adress))
-                t.start()
-                self.thread_list.append(t)
-                del self.data[:]
-                del self.adress[:]
-                self.count_recv = 0
-        if(self.count_recv > 0):
-            t = Thread(target=self.data_int, args=(self.data, self.adress))
-            t.start()
-            self.thread_list.append(t)
-            del self.data[:]
-            del self.adress[:]
-            self.count_recv = 0
-
 
     def data_int(self, *args):
         list_data=list(args[0])
@@ -235,8 +232,9 @@ class Watchman_data():
     #Creates the socket
     def init_UDP_connection(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 2097152)
-        print("sock buz:", self.sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF))
+        print("get socket:", self.sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF), file=sys.stderr)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 65536)
+        print("get socket:", self.sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF), file=sys.stderr)
         self.sock.bind(('', self.UDP_PORT))
         self.sock.settimeout(0.1)
 

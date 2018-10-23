@@ -56,6 +56,7 @@ static XTtcPs TimerTtcPsInstance;
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
 volatile int count_ttcps_timer = 0;
 volatile int count_scu_timer = 0;
+volatile uint64_t nbre_of_bytes = 0;
 
 #ifndef USE_SOFTETH_ON_ZYNQ
 static int ResetRxCntr = 0;
@@ -139,12 +140,13 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 		count_ttcps_timer++;
 		length = sizeof(dummy_data);
 		length_dummy_data = made_frame(dummy_data, length);
+		nbre_of_bytes += length_dummy_data;
 		transfer_data(dummy_data, length_dummy_data);
 		test = 0;
 	}
 	else{
 		if(test == 0){
-			xil_printf("send data count=%d | 2count=%d\r\n", count_ttcps_timer, count_scu_timer);
+			xil_printf("number of frame sent = %d | total of bytes = %d\r\n", count_ttcps_timer, nbre_of_bytes);
 			test = 1;
 		}
 	}
