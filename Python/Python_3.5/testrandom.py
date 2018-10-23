@@ -1,15 +1,32 @@
-import tkinter as Tkinter
-from threading import Timer
+from threading import Thread
+import time
 
-def timer_int():
-    print(int("0x10",0)+1)
+flag = False
+liste=[]
 
-root = Tkinter.Tk()
-timer=Timer(0.5, timer_int)
-timer.start()
-x=322
-print(x/256)
-print(x%256)
+def thread_int(*args):
+    global flag
+    liste=list(args)
+    print("1) liste/thread:",liste)
+    del liste[:]
+    print("2) liste/thread:",liste)
+    for i in range(10,20):
+        liste.append(i)
+    print("3) liste/thread:",liste)
+    flag=True
+    while(flag):
+        dummy=0
+    print("4) liste/thread:",liste)
 
-Tkinter.mainloop()
+for i in range(0,10):
+    liste.append(i)
+print("1) liste/main:",liste)
+t=Thread(target=thread_int, args=(liste))
+t.start()
+while(not flag):
+    dummy = 0
+print("2) liste/main:",liste)
+del liste[:]
+print("3) liste/main:",liste)
+flag=False
 

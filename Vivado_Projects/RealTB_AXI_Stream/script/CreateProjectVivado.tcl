@@ -183,7 +183,7 @@ export_simulation -of_objects [get_files "${origin_dir}/hw/bd/${ProjectBD}/${Fil
 puts "INFO: Exporting hardware design files for the SDK."
 file mkdir "${origin_proj_dir}/${ProjectName}.sdk"
 
-write_hwdef -force  -file "${origin_proj_dir}/${ProjectName}.sdk/${HDFProjectWrapper}"
+#write_hwdef -force  -file "${origin_proj_dir}/${ProjectName}.sdk/${HDFProjectWrapper}"
 
 cd "${proj_dir}"
 
@@ -216,7 +216,7 @@ switch -glob -- [lindex $tcl_platform(os) 0] {
 }
 
 puts "Save HDF File"
-# Set Project BD for Project
+#Set Project BD for Project
 switch -glob -- [lindex $tcl_platform(os) 0] {
 	Win* { #Windows
 		cd ../hw/images/

@@ -12,7 +12,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import ttk
 from functools import partial
-from threading import Timer
+from threading import Thread
 import time
 import sys
 import socket
@@ -21,7 +21,7 @@ import random
 import receive
 
 #class Watchman_reg(Frame):
-class Watchman_reg():          
+class Watchman_reg():
     def __init__(self, master):
         # Global variable
         self.master = master
@@ -35,17 +35,16 @@ class Watchman_reg():
         # Initialize the GUI
         self.init_window()
         self.init_UDP_connection()
-        self.timer=Timer(0.5, self.timer_int, args=())
+        self.thread=Thread(target=self.thread_int, args=())
         self.run_flag = True
-        self.end_flag = False
         self.toplevel_flag = False
-        self.timer.start()
+        self.thread.start()
 
     def init_window(self):
         # Change window's title
         self.master.title("Watchman - registers")
         self.master.protocol("WM_DELETE_WINDOW", self.exit_prog) # when use close window with the red cross
-        # Menu bar        
+        # Menu bar
         self.menu = Menu(self.master)
         self.master.config(menu=self.menu)
         self.submenu = Menu(self.menu)
@@ -99,18 +98,18 @@ class Watchman_reg():
                 reg.delete(0,END)
                 reg.insert(END, str(ff.readline())[:-1])
             ff.close()
-    
+
     def savefile(self):
         if(sum(self.flag_data) == 0):
             file_path=filedialog.asksaveasfilename()
             if len(file_path) != 0:
-                ff=open(file_path,'w')                
+                ff=open(file_path,'w')
                 for reg in self.regs:
                     ff.write(str(reg.get())+"\n")
                 ff.close()
         else:
             messagebox.showinfo("Warning", "Every register value must be in the right format!")
-    
+
     def exit_prog(self):
         if(self.toplevel_flag):
             self.close_graph()
@@ -121,9 +120,8 @@ class Watchman_reg():
             self.send_command(3)
         while(self.stream_flag):
             time.sleep(0.1)
-        self.run_flag = False # stop the timer
-        while(self.end_flag == False):
-            time.sleep(0.1)
+        self.run_flag = False # stop the thread
+        self.thread.join()
         self.sock.close()
         self.master.destroy()
         print("main destroy",  file=sys.stderr)
@@ -152,12 +150,12 @@ class Watchman_reg():
                 self.flag_data[count] = 1
         else:
             self.regs[count].configure(fg="red")
-            self.flag_data[count] = 1        
+            self.flag_data[count] = 1
         if(sum(self.flag_data) == 0):
             self.btn_write_all.configure(state="normal")
         else:
             self.btn_write_all.configure(state="disable")
-    
+
     def write_txt(self, text):
         self.text.configure(state="normal")
         self.text.insert(END, ("\n" + text))
@@ -188,37 +186,39 @@ class Watchman_reg():
     def open_graph(self):
         if(self.toplevel_flag == False):
             self.toplevel = Toplevel(self.master)
-            self.window_data = receive_V3.Watchman_data(self.toplevel)
+            self.window_data = receive.Watchman_data(self.toplevel)
             self.toplevel_flag = True
             self.toplevel.protocol("WM_DELETE_WINDOW", self.close_graph)
-    
+
     def close_graph(self):
         self.window_data.exit_prog()
         self.toplevel_flag = False
 
-    def timer_int(self):
+    def thread_int(self):
         while self.run_flag:
             try:
                 data = bytearray()
                 data, adress = self.sock.recvfrom(200)
                 if(adress[0] == self.UDP_IP):
                     if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))):
-                        if(self.cmd[data[2]] == 'start_stop_stream'): 
+                        if(self.cmd[data[2]] == 'start_stop_stream'):
                             if(self.stream_flag):
                                 if(self.destroy_flag == False):
                                     self.btn_stream.configure(text="Start stream")
                                     if(self.toplevel_flag):
-                                        print("total of frame received =" + str(self.window_data.count), file=sys.stderr)
+                                        self.write_txt("total of frame received =" + str(self.window_data.count))
+                                        self.write_txt("LostCnt:"+str(self.window_data.lostcnt))
                                 self.stream_flag = False
                             else:
                                 if(self.destroy_flag == False):
                                     self.btn_stream.configure(text="Stop stream")
                                     if(self.toplevel_flag):
                                         self.window_data.count = 0
+                                        self.window_data.lostcnt = 0
                                 self.stream_flag = True
                         if(self.cmd[data[2]] == 'stop_uC'):
-                            self.btn_stream.configure(text="Start stream") 
-                            self.stream_flag = False     
+                            self.btn_stream.configure(text="Start stream")
+                            self.stream_flag = False
                         if(self.cmd[data[2]] == 'read_all_reg'):
                             offset = 100
                         else:
@@ -240,17 +240,17 @@ class Watchman_reg():
                             self.write_txt("Rx: ERROR start of frame")
                 else:
                     if(self.destroy_flag == False):
-                        self.write_txt("Rx: ERROR ip of frame (" + adress[0] + ")")                    
+                        self.write_txt("Rx: ERROR ip of frame (" + adress[0] + ")")
             except socket.timeout:
+                time.sleep(0.1)
                 dummy = 0 # dummy execution just to use try without trouble
             except socket.error:
                 dummy = 0
             #time.sleep(0.5)
-        print("end of main timer", file=sys.stderr)
-        self.end_flag = True
+        print("end of main thread", file=sys.stderr)
 
 root = Tk()
 root.resizable(width=FALSE, height=FALSE)
 
 window_reg = Watchman_reg(root)
-root.mainloop() 
+root.mainloop()
