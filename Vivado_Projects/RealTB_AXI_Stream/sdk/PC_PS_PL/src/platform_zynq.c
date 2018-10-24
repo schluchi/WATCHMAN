@@ -203,7 +203,6 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 
 void testcomponent_callback(void *callbackInst){
 	XTime_GetTime(&tStart);
-	xil_printf("SSTTTAAARRRTTFDHGDSRAHF\r\n");
 }
 
 void platform_setup_scu_timer(void)
@@ -358,70 +357,70 @@ void platform_setup_interrupts(void)
 	static XScuGic_Config *IntcConfig;
 	int Status = XST_SUCCESS;
 
-	Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
+	/*Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
 
-	XScuGic_DeviceInitialize(INTC_DEVICE_ID);
+	XScuGic_DeviceInitialize(INTC_DEVICE_ID);*/
 
 	/*
 	 * Connect the interrupt controller interrupt handler to the hardware
 	 * interrupt handling logic in the processor.
 	 */
-	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_IRQ_INT,
+	/*Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_IRQ_INT,
 			(Xil_ExceptionHandler)XScuGic_DeviceInterruptHandler,
-			(void *)INTC_DEVICE_ID);
+			(void *)INTC_DEVICE_ID);*/
 	/*
 	 * Connect the device driver handler that will be called when an
 	 * interrupt for the device occurs, the handler defined above performs
 	 * the specific interrupt processing for the device.
 	 */
-	XScuGic_RegisterHandler(INTC_BASE_ADDR, TIMER_IRPT_INTR,
+	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, TIMER_IRPT_INTR,
 					(Xil_ExceptionHandler)timer_scu_callback,
-					(void *)&TimerScuInstance);
+					(void *)&TimerScuInstance);*/
 	/*
 	 * Enable the interrupt for scu timer.
 	 */
-	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TIMER_IRPT_INTR);
+	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TIMER_IRPT_INTR);
 
 	/*
 	 * Connect the device driver handler that will be called when an
 	 * interrupt for the device occurs, the handler defined above performs
 	 * the specific interrupt processing for the device.
 	 */
-	XScuGic_RegisterHandler(INTC_BASE_ADDR, TTC_TICK_INTR_ID,
+	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, TTC_TICK_INTR_ID,
 					(Xil_ExceptionHandler)timer_ttcps_callback,
-					(void *)&TimerTtcPsInstance);
+					(void *)&TimerTtcPsInstance);*/
 	/*
 	 * Enable the interrupt for ttcps timer.
 	 */
-	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TTC_TICK_INTR_ID);
+	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TTC_TICK_INTR_ID);
 
 	/*
 	 * Connect the device driver handler that will be called when an
 	 * interrupt for the device occurs, the handler defined above performs
 	 * the specific interrupt processing for the device.
 	 */
-	XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR,
+	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR,
 					(Xil_ExceptionHandler)axidma_rx_callback,
-					(void *)&AxiDmaInstance);
+					(void *)&AxiDmaInstance);*/
 	/*
 	 * Enable the interrupt for AxiDMA.
 	 */
-	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
+	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
 
 	/*
 	 * Connect the device driver handler that will be called when an
 	 * interrupt for the device occurs, the handler defined above performs
 	 * the specific interrupt processing for the device.
 	 */
-	XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR,
+	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR,
 					(Xil_ExceptionHandler)testcomponent_callback,
-					(void *)INTC_DEVICE_ID);
+					(void *)INTC_DEVICE_ID);*/
 	/*
 	 * Enable the interrupt for TestComponent.
 	 */
-	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
+	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
 
-	/*IntcConfig = XScuGic_LookupConfig(XPAR_SCUGIC_0_DEVICE_ID);
+	IntcConfig = XScuGic_LookupConfig(XPAR_SCUGIC_0_DEVICE_ID);
 	if (IntcConfig == NULL){
 		xil_printf("In %s: XScuGic Look up config failed...\r\n",
 		__func__);
@@ -434,6 +433,18 @@ void platform_setup_interrupts(void)
 		__func__);
 		return;
 	}
+
+	// set the priority to 0xA0 (highest 0xF8, lowest 0x00) and a trigger for a rising edge 0x3.
+	XScuGic_SetPriorityTriggerType(&Intc, TIMER_IRPT_INTR, 0xA1, 0x3);
+	XScuGic_SetPriorityTriggerType(&Intc, TTC_TICK_INTR_ID, 0xA2, 0x3);
+	XScuGic_SetPriorityTriggerType(&Intc, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR, 0xA3, 0x3);
+	XScuGic_SetPriorityTriggerType(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR, 0xA0, 0x3);
+
+	Xil_ExceptionInit();
+
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+			(Xil_ExceptionHandler)XScuGic_InterruptHandler,
+			(void *)&Intc);
 
 	Status = XScuGic_Connect(&Intc,	TIMER_IRPT_INTR,
 							(Xil_InterruptHandler)timer_scu_callback,
@@ -468,7 +479,7 @@ void platform_setup_interrupts(void)
 		xil_printf("In %s: XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR failed...\r\n",
 				__func__);
 		return ;
-	}*/
+	}
 
 	return;
 }
@@ -478,19 +489,19 @@ void platform_enable_interrupts()
 	/*
 	 * Enable non-critical exceptions.
 	 */
-	/*XScuGic_Enable(&Intc, TIMER_IRPT_INTR);
+	/*Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
+	XScuTimer_EnableInterrupt(&TimerScuInstance);
 	XScuTimer_Start(&TimerScuInstance);
-	XScuGic_Enable(&Intc, TTC_TICK_INTR_ID);
+	XTtcPs_EnableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
 	XTtcPs_Start(&TimerTtcPsInstance);
+	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);*/
+	XScuGic_Enable(&Intc, TIMER_IRPT_INTR);
+	XScuGic_Enable(&Intc, TTC_TICK_INTR_ID);
 	XScuGic_Enable(&Intc, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
 	XScuGic_Enable(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
 
-	Xil_ExceptionInit();
-	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
-			(Xil_ExceptionHandler)XScuGic_InterruptHandler,
-			(void *)&Intc);
-	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);*/
 	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
+
 	XScuTimer_EnableInterrupt(&TimerScuInstance);
 	XScuTimer_Start(&TimerScuInstance);
 	XTtcPs_EnableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
