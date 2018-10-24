@@ -50,10 +50,17 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xscutimer.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps_hw.h ../src/data_test.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps_hw.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma_bd.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma_hw.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xdebug.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_cache.h ../src/data_test.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/udp.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h ../src/echo.h \
- ../src/cmd_interpreter.h
+ ../src/cmd_interpreter.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xtime_l.h
 
 ../src/platform_zynq.h:
 
@@ -159,6 +166,18 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps_hw.h:
 
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma.h:
+
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:
+
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma_bd.h:
+
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xaxidma_hw.h:
+
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xdebug.h:
+
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_cache.h:
+
 ../src/data_test.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/udp.h:
@@ -168,3 +187,5 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
 ../src/echo.h:
 
 ../src/cmd_interpreter.h:
+
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xtime_l.h:

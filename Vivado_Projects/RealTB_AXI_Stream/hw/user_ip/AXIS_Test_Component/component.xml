@@ -390,7 +390,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>e0ae2cfe</spirit:value>
+            <spirit:value>237d75f3</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -406,7 +406,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>e0ae2cfe</spirit:value>
+            <spirit:value>237d75f3</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -420,7 +420,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>1cf45c28</spirit:value>
+            <spirit:value>b0e037f1</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -434,7 +434,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>6487e524</spirit:value>
+            <spirit:value>bad24a5c</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -448,7 +448,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>45a2f450</spirit:value>
+            <spirit:value>16328387</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -463,7 +463,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>606792c8</spirit:value>
+            <spirit:value>8afde960</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -959,7 +959,7 @@
       <spirit:file>
         <spirit:name>hdl/AXIS_Test_Component_v2_0.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_96410cc9</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_8342eb8e</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -1018,7 +1018,7 @@
       <spirit:file>
         <spirit:name>xgui/AXIS_Test_Component_v2_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_6487e524</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_bad24a5c</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1130,21 +1130,21 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>AXIS_Test_Component</xilinx:displayName>
-      <xilinx:coreRevision>4</xilinx:coreRevision>
+      <xilinx:coreRevision>5</xilinx:coreRevision>
       <xilinx:upgrades>
         <xilinx:canUpgradeFrom>user.org:user:AXIS_Test_Component:1.0</xilinx:canUpgradeFrom>
       </xilinx:upgrades>
-      <xilinx:coreCreationDateTime>2018-10-02T23:04:31Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2018-10-24T01:32:39Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="user.org:user:AXIS_Test_Component:1.0_ARCHIVE_LOCATION">/home/jonathan/GitProjects/WATCHMAN/Vivado_Projects/RealTB_AXI_Stream/hw/user_ip/AXIS_Test_Component</xilinx:tag>
-        <xilinx:tag xilinx:name="user.org:user:AXIS_Test_Component:2.0_ARCHIVE_LOCATION">/home/jonathan/GitProjects/WATCHMAN/Vivado_Projects/RealTB_AXI_Stream/hw/user_ip/AXIS_Test_Component</xilinx:tag>
+        <xilinx:tag xilinx:name="user.org:user:AXIS_Test_Component:2.0_ARCHIVE_LOCATION">c:/Users/Anthony/Documents/Hawaii/WATCHMAN/Vivado_Projects/RealTB_AXI_Stream/hw/user_ip/AXIS_Test_Component</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2018.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="edae2f74"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d968b3fe"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="d405fda2"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="4e03d0e2"/>
       <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="4a82561d"/>
       <xilinx:checksum xilinx:scope="parameters" xilinx:value="6b753beb"/>

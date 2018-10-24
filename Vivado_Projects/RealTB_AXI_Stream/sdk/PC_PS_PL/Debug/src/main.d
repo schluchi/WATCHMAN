@@ -62,7 +62,7 @@ src/main.o src/main.o: ../src/main.c \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps_hw.h ../src/echo.h \
- ../src/cmd_interpreter.h \
+ ../src/cmd_interpreter.h ../src/AXIS_Peripheral.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/dhcp.h
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters.h:
@@ -196,5 +196,7 @@ src/main.o src/main.o: ../src/main.c \
 ../src/echo.h:
 
 ../src/cmd_interpreter.h:
+
+../src/AXIS_Peripheral.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/dhcp.h:

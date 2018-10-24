@@ -62,8 +62,10 @@
 #ifdef PLATFORM_ZYNQ
 #include "xscutimer.h"
 #include "xttcps.h"
+#include "xaxidma.h"
 #include "data_test.h"
 #include "echo.h"
+#include "xtime_l.h"
 
 #define INTC_DEVICE_ID		XPAR_SCUGIC_SINGLE_DEVICE_ID
 #define TIMER_DEVICE_ID		XPAR_SCUTIMER_DEVICE_ID
@@ -73,7 +75,7 @@
 
 #define TTC_TICK_DEVICE_ID	XPAR_XTTCPS_0_DEVICE_ID
 #define TTC_TICK_INTR_ID	XPAR_XTTCPS_0_INTR
-#define TTCPS_TIMER_FREQ_HZ	2000//15000
+#define TTCPS_TIMER_FREQ_HZ	10000//15000
 
 #define RESET_RX_CNTR_LIMIT	400
 
@@ -87,8 +89,11 @@ void dhcp_coarse_tmr();
 
 void timer_scu_callback(XScuTimer * TimerInstance);
 void timer_ttcps_callback(XTtcPs * TimerInstance);
+void axidma_rx_callback(XAxiDma* AxiDmaInstance);
+void testcomponent_callback(void *callbackInst);
 void platform_setup_scu_timer(void);
 void platform_setup_ttcps_timer(void);
+void platform_setup_axidma(void);
 void platform_setup_interrupts(void);
 void platform_enable_interrupts();
 void init_platform();

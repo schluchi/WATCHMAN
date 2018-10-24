@@ -818,8 +818,6 @@
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_50M" spirit:portRef="slowest_sync_clk"/>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="S_AXI_HP0_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="axi_dma_0" spirit:portRef="m_axi_s2mm_aclk"/>
-        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="s00_axi_aclk"/>
-        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="m00_axis_aclk"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="ACLK"/>
@@ -827,6 +825,8 @@
         <spirit:internalPortReference spirit:componentRef="axi_mem_intercon" spirit:portRef="S00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="axi_mem_intercon" spirit:portRef="M00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M01_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="s00_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="m00_axis_aclk"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_RESET0_N</spirit:name>
@@ -837,13 +837,13 @@
         <spirit:name>rst_ps7_0_50M_peripheral_aresetn</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_50M" spirit:portRef="peripheral_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_dma_0" spirit:portRef="axi_resetn"/>
-        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="s00_axi_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="m00_axis_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_mem_intercon" spirit:portRef="S00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_mem_intercon" spirit:portRef="M00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M01_ARESETN"/>
+        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="s00_axi_aresetn"/>
+        <spirit:internalPortReference spirit:componentRef="AXIS_Test_Component_0" spirit:portRef="m00_axis_aresetn"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>xlconcat_0_dout</spirit:name>

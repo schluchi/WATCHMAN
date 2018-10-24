@@ -243,6 +243,7 @@
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.READ_WRITE_MODE">READ_WRITE</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.RUSER_BITS_PER_BYTE">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.RUSER_WIDTH">0</spirit:configurableElementValue>
+        <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.SUPPORTS_NARROW_BURST">1</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.WUSER_BITS_PER_BYTE">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.WUSER_WIDTH">0</spirit:configurableElementValue>
         <spirit:configurableElementValue spirit:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0_ACLK.ASSOCIATED_RESET"/>
@@ -1417,7 +1418,7 @@
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.BUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.DATA_WIDTH" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
-            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.FREQ_HZ" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.HAS_BRESP" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.HAS_BURST" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.HAS_CACHE" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
@@ -1436,17 +1437,18 @@
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.READ_WRITE_MODE" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.RUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.RUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
+            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.SUPPORTS_NARROW_BURST" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.WUSER_BITS_PER_BYTE" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0.WUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0_ACLK.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
-            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0_ACLK.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_GP0_ACLK.FREQ_HZ" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.ADDR_WIDTH" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.ARUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.AWUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.BUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.DATA_WIDTH" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
-            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.FREQ_HZ" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.HAS_BRESP" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.HAS_BURST" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.HAS_CACHE" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
@@ -1464,7 +1466,7 @@
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.SUPPORTS_NARROW_BURST" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0.WUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0_ACLK.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
-            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0_ACLK.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+            <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_HP0_ACLK.FREQ_HZ" xilinx:valuePermission="bd"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.PCW_ACT_APU_PERIPHERAL_FREQMHZ" xilinx:valueSource="user"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.PCW_ACT_CAN0_PERIPHERAL_FREQMHZ" xilinx:valueSource="user"/>
             <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.PCW_ACT_CAN1_PERIPHERAL_FREQMHZ" xilinx:valueSource="user"/>

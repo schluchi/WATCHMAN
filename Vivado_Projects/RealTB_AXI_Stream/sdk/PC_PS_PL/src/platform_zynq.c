@@ -53,9 +53,12 @@
 
 static XScuTimer TimerScuInstance;
 static XTtcPs TimerTtcPsInstance;
+XAxiDma AxiDmaInstance;
+static XScuGic Intc;
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
 volatile int count_ttcps_timer = 0;
 volatile int count_scu_timer = 0;
+volatile uint64_t nbre_of_bytes = 0;
 
 #ifndef USE_SOFTETH_ON_ZYNQ
 static int ResetRxCntr = 0;
@@ -73,6 +76,8 @@ volatile int dhcp_timoutcntr = 24;
 #endif
 
 extern bool stream_flag;
+static XTime tStart, tEnd;
+char axidma_error, axidma_rx_done;
 
 void timer_scu_callback(XScuTimer * TimerInstance)
 {
@@ -93,7 +98,13 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 	if (odd) {
 #if LWIP_DHCP==1
 		dhcp_timer++;
-		dhcp_timoutcntr--;
+		if(dhcp_timoutcntr > 0){
+			dhcp_timoutcntr--;
+			if(dhcp_timoutcntr%10 == 0){
+				if(dhcp_timoutcntr == 0) xil_printf("%d...\r\n", dhcp_timoutcntr);
+				else xil_printf("%d...", dhcp_timoutcntr/10);
+			}
+		}
 #endif
 		TcpSlowTmrFlag = 1;
 #if LWIP_DHCP==1
@@ -132,22 +143,67 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 {
 	u32 StatusEvent;
 	uint16_t length;
-	static char test = 0;
+	static char test = 1;
 	StatusEvent = XTtcPs_GetInterruptStatus(TimerInstance);
 	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
 	if (((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0) && (stream_flag)){
 		count_ttcps_timer++;
 		length = sizeof(dummy_data);
 		length_dummy_data = made_frame(dummy_data, length);
+		nbre_of_bytes += length_dummy_data;
 		transfer_data(dummy_data, length_dummy_data);
 		test = 0;
 	}
 	else{
 		if(test == 0){
-			xil_printf("send data count=%d | 2count=%d\r\n", count_ttcps_timer, count_scu_timer);
+			xil_printf("number of frame sent = %d | total of bytes = %d\r\n", count_ttcps_timer, nbre_of_bytes);
 			test = 1;
 		}
 	}
+}
+
+void axidma_rx_callback(XAxiDma* AxiDmaInst){
+	uint32_t IrqStatus;
+	XTime_GetTime(&tEnd);
+
+	/* Read pending interrupts */
+	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
+
+	/* Acknowledge pending interrupts */
+	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
+
+	/*
+	 * If no interrupt is asserted, we do not do anything
+	 */
+	if (!(IrqStatus & XAXIDMA_IRQ_ALL_MASK)) {
+		return;
+	}
+
+	/*
+	 * If error interrupt is asserted, raise error flag, reset the
+	 * hardware to recover from the error, and return with no further
+	 * processing.
+	 */
+	if ((IrqStatus & XAXIDMA_IRQ_ERROR_MASK)) {
+		axidma_error = 1;
+		return;
+	}
+
+	/*
+	 * If completion interrupt is asserted, then set RxDone flag
+	 */
+	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
+		axidma_rx_done = 1;
+		xil_printf("SUCCESS\r\n");
+		printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+		printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+		//printf("Bandwidth:%.2f Mbit/s\r\n",PacketsToSend*32/(1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000)) );
+	}
+}
+
+void testcomponent_callback(void *callbackInst){
+	XTime_GetTime(&tStart);
+	xil_printf("SSTTTAAARRRTTFDHGDSRAHF\r\n");
 }
 
 void platform_setup_scu_timer(void)
@@ -244,8 +300,64 @@ void platform_setup_ttcps_timer(void){
 	XTtcPs_SetPrescaler(Timer, TimerSetup->Prescaler);
 }
 
+void platform_setup_axidma(void)
+{
+	int Status = XST_SUCCESS;
+	XAxiDma_Config *ConfigPtr;
+
+	ConfigPtr = XAxiDma_LookupConfig(XPAR_AXI_DMA_0_DEVICE_ID);
+	if (ConfigPtr == NULL){
+		xil_printf("In %s: AxiDMA Look up config failed...\r\n",
+		__func__);
+		return;
+	}
+	Status = XAxiDma_CfgInitialize(&AxiDmaInstance, ConfigPtr);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: AxiDMA Cfg initialization failed...\r\n",
+		__func__);
+		return;
+	}
+
+	Status = XAxiDma_Selftest(&AxiDmaInstance);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: AxiDMA Self test failed...\r\n",
+		__func__);
+		return;
+	}
+
+	Status = XAxiDma_HasSg(&AxiDmaInstance);
+	if (Status != XST_SUCCESS){
+		xil_printf("In %s: AxiDMA configured as SG mode...\r\n",
+		__func__);
+		return;
+	}
+
+	XAxiDma_Reset(&AxiDmaInstance);
+	uint32_t reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_CR_OFFSET);
+	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET,XAXIDMA_CR_OFFSET, reg | XAXIDMA_CR_RESET_MASK);
+	int TimeOutCnt = 5;
+	while(TimeOutCnt){
+		if(!(XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_CR_OFFSET) &  XAXIDMA_CR_RESET_MASK)) {
+			xil_printf("Reset XAxiDma Done\r\n");
+			break;
+		}
+		TimeOutCnt-=1;
+		sleep(1);
+	}
+	/* Disable MM2S Sied of AXI DMA */
+	reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET, XAXIDMA_CR_OFFSET);
+	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET,XAXIDMA_CR_OFFSET,reg & !XAXIDMA_CR_RUNSTOP_MASK);
+
+	axidma_error = 0;
+	axidma_rx_done = 0;
+	return;
+}
+
 void platform_setup_interrupts(void)
 {
+	static XScuGic_Config *IntcConfig;
+	int Status = XST_SUCCESS;
+
 	Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
 
 	XScuGic_DeviceInitialize(INTC_DEVICE_ID);
@@ -283,6 +395,81 @@ void platform_setup_interrupts(void)
 	 */
 	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TTC_TICK_INTR_ID);
 
+	/*
+	 * Connect the device driver handler that will be called when an
+	 * interrupt for the device occurs, the handler defined above performs
+	 * the specific interrupt processing for the device.
+	 */
+	XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR,
+					(Xil_ExceptionHandler)axidma_rx_callback,
+					(void *)&AxiDmaInstance);
+	/*
+	 * Enable the interrupt for AxiDMA.
+	 */
+	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
+
+	/*
+	 * Connect the device driver handler that will be called when an
+	 * interrupt for the device occurs, the handler defined above performs
+	 * the specific interrupt processing for the device.
+	 */
+	XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR,
+					(Xil_ExceptionHandler)testcomponent_callback,
+					(void *)INTC_DEVICE_ID);
+	/*
+	 * Enable the interrupt for TestComponent.
+	 */
+	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
+
+	/*IntcConfig = XScuGic_LookupConfig(XPAR_SCUGIC_0_DEVICE_ID);
+	if (IntcConfig == NULL){
+		xil_printf("In %s: XScuGic Look up config failed...\r\n",
+		__func__);
+		return;
+	}
+
+	Status = XScuGic_CfgInitialize(&Intc, IntcConfig,IntcConfig->CpuBaseAddress);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: XScuGic Cfg initialization failed...\r\n",
+		__func__);
+		return;
+	}
+
+	Status = XScuGic_Connect(&Intc,	TIMER_IRPT_INTR,
+							(Xil_InterruptHandler)timer_scu_callback,
+							&TimerScuInstance);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: TIMER_IRPT_INTR failed...\r\n",
+				__func__);
+		return ;
+	}
+
+	Status = XScuGic_Connect(&Intc,	TTC_TICK_INTR_ID,
+							(Xil_InterruptHandler)timer_ttcps_callback,
+							&TimerTtcPsInstance);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: TTC_TICK_INTR_ID failed...\r\n",
+				__func__);
+		return ;
+	}
+
+	Status = XScuGic_Connect(&Intc,	XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR,
+							(Xil_InterruptHandler)axidma_rx_callback,
+							&AxiDmaInstance);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR failed...\r\n",
+				__func__);
+		return ;
+	}
+
+	Status = XScuGic_Connect(&Intc,	XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR,
+							(Xil_ExceptionHandler)testcomponent_callback, &Intc);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR failed...\r\n",
+				__func__);
+		return ;
+	}*/
+
 	return;
 }
 
@@ -291,11 +478,24 @@ void platform_enable_interrupts()
 	/*
 	 * Enable non-critical exceptions.
 	 */
+	/*XScuGic_Enable(&Intc, TIMER_IRPT_INTR);
+	XScuTimer_Start(&TimerScuInstance);
+	XScuGic_Enable(&Intc, TTC_TICK_INTR_ID);
+	XTtcPs_Start(&TimerTtcPsInstance);
+	XScuGic_Enable(&Intc, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
+	XScuGic_Enable(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
+
+	Xil_ExceptionInit();
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,
+			(Xil_ExceptionHandler)XScuGic_InterruptHandler,
+			(void *)&Intc);
+	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);*/
 	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
 	XScuTimer_EnableInterrupt(&TimerScuInstance);
 	XScuTimer_Start(&TimerScuInstance);
 	XTtcPs_EnableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
 	XTtcPs_Start(&TimerTtcPsInstance);
+	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
 	return;
 }
 
@@ -303,6 +503,7 @@ void init_platform()
 {
 	platform_setup_scu_timer();
 	platform_setup_ttcps_timer();
+	platform_setup_axidma();
 	platform_setup_interrupts();
 	uint16_t length = sizeof(dummy_data);
 	length_dummy_data = made_frame(dummy_data, length);
@@ -316,6 +517,7 @@ void cleanup_platform()
 	XTtcPs_Stop(&TimerTtcPsInstance);
 	XScuTimer_DisableInterrupt(&TimerScuInstance);
 	XScuTimer_Stop(&TimerScuInstance);
+	XAxiDma_IntrDisable(&AxiDmaInstance, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
 	Xil_ICacheDisable();
 	Xil_DCacheDisable();
 	return;
