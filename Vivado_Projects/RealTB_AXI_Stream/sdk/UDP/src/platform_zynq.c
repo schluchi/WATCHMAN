@@ -56,7 +56,7 @@ static XTtcPs TimerTtcPsInstance;
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
 volatile int count_ttcps_timer = 0;
 volatile int count_scu_timer = 0;
-volatile uint64_t nbre_of_bytes = 0;
+volatile int nbre_of_bytes = 0;
 
 #ifndef USE_SOFTETH_ON_ZYNQ
 static int ResetRxCntr = 0;
@@ -94,7 +94,13 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 	if (odd) {
 #if LWIP_DHCP==1
 		dhcp_timer++;
-		dhcp_timoutcntr--;
+		if(dhcp_timoutcntr > 0){
+			dhcp_timoutcntr--;
+			if(dhcp_timoutcntr%10 == 0){
+				if(dhcp_timoutcntr == 0) xil_printf("%d...\r\n", dhcp_timoutcntr);
+				else xil_printf("%d...", dhcp_timoutcntr/10);
+			}
+		}
 #endif
 		TcpSlowTmrFlag = 1;
 #if LWIP_DHCP==1
@@ -133,7 +139,7 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 {
 	u32 StatusEvent;
 	uint16_t length;
-	static char test = 0;
+	static char test = 1;
 	StatusEvent = XTtcPs_GetInterruptStatus(TimerInstance);
 	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
 	if (((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0) && (stream_flag)){

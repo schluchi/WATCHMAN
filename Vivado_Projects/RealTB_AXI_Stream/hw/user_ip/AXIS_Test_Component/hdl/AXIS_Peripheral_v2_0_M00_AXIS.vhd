@@ -3,6 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.numeric_std.all;
 use work.AXIS_Peripheral_pkg.all;
+use ieee.math_real.all;
 
 entity AXIS_Peripheral_v2_0_M00_AXIS is
 	generic (
@@ -89,7 +90,7 @@ architecture implementation of AXIS_Peripheral_v2_0_M00_AXIS is
 	--signal ramp_pointer : integer range 0 to bit_num-1;
 	signal ramp_pointer : integer; 
 	signal saw_pointer : integer; 
-	signal bit_pointer : integer;                               
+	signal bit_pointer : integer;                          
 	
 	-- AXI Stream internal signals
 	--streaming data valid
@@ -117,7 +118,7 @@ begin
 
 
 	-- Control state machine implementation                                               
-	process(M_AXIS_ACLK)                                                                        
+	process(M_AXIS_ACLK)                                                              
 	begin                                                                                       
 	  if (rising_edge (M_AXIS_ACLK)) then                                                       
 	    if(M_AXIS_ARESETN = '0') then                                                           
@@ -246,14 +247,14 @@ begin
 				stream_data_out <= (others => '0'); 
 			elsif (tx_en = '1') then -- && M_AXIS_TSTRB(byte_index)                   
 				--stream_data_out <= std_logic_vector( to_unsigned(ramp_pointer,C_M_AXIS_TDATA_WIDTH) + to_unsigned(sig_one,C_M_AXIS_TDATA_WIDTH));
-				stream_data_out <= std_logic_vector(to_unsigned(ramp_pointer,stream_data_out'length) + unsigned(content_packet_s));
+				--stream_data_out <= std_logic_vector(to_unsigned(ramp_pointer,stream_data_out'length) + unsigned(content_packet_s));
 				case (mode_s) is
         			when C_RAMP_WAVE_MODE =>
         				stream_data_out <= std_logic_vector(to_unsigned(ramp_pointer,stream_data_out'length) + unsigned(content_packet_s));	        				
         			when C_SAW_WAVE_MODE =>
         				stream_data_out <= std_logic_vector(to_unsigned(saw_pointer,stream_data_out'length));	
         			when C_BIT_WAVE_MODE =>
-        				stream_data_out <= std_logic_vector(to_unsigned(bit_pointer,stream_data_out'length));
+        			    stream_data_out <= std_logic_vector(to_unsigned(bit_pointer,stream_data_out'length));
         			when others =>
         				stream_data_out <= x"ABCDABCD";	
         		end case;

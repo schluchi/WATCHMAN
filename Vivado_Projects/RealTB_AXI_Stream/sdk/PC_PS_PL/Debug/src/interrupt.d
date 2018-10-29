@@ -1,5 +1,4 @@
-src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
- ../src/platform_zynq.h \
+src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
@@ -58,11 +57,12 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xdebug.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_cache.h ../src/data_test.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/udp.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h ../src/echo.h \
- ../src/cmd_interpreter.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
+ ../src/udp_peripheral.h ../src/axis_peripheral.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xtime_l.h
 
-../src/platform_zynq.h:
+../src/interrupt.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters.h:
 
@@ -184,8 +184,10 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h:
 
-../src/echo.h:
+../src/udp_peripheral.h:
 
-../src/cmd_interpreter.h:
+../src/axis_peripheral.h:
+
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_types.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xtime_l.h:

@@ -1,5 +1,4 @@
 src/send_data.o src/send_data.o: ../src/send_data.c \
- ../src/cmd_interpreter.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/err.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/opt.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwipopts.h \
@@ -24,14 +23,7 @@ src/send_data.o src/send_data.o: ../src/send_data.c \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/ip4.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/ip6.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/ip.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_printf.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_types.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/bspconfig.h
-
-../src/cmd_interpreter.h:
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/err.h:
 
@@ -82,13 +74,3 @@ src/send_data.o src/send_data.o: ../src/send_data.c \
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/ip.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h:
-
-../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_printf.h:
-
-../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_types.h:
-
-../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters.h:
-
-../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters_ps.h:
-
-../../PC_PS_PL_bsp/ps7_cortexa9_0/include/bspconfig.h:

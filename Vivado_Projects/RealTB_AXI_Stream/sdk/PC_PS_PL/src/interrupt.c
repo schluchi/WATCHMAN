@@ -49,7 +49,12 @@
 * </pre>
  */
 
-#include "platform_zynq.h"
+#include "interrupt.h"
+
+#if LWIP_DHCP==1
+volatile int dhcp_timoutcntr;
+#endif
+extern struct netif *echo_netif;
 
 static XScuTimer TimerScuInstance;
 static XTtcPs TimerTtcPsInstance;
@@ -58,64 +63,50 @@ static XScuGic Intc;
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
 volatile int count_ttcps_timer = 0;
 volatile int count_scu_timer = 0;
-volatile uint64_t nbre_of_bytes = 0;
-
-#ifndef USE_SOFTETH_ON_ZYNQ
-static int ResetRxCntr = 0;
-extern struct netif *echo_netif;
-#endif
-
-volatile int TcpFastTmrFlag = 0;
-volatile int TcpSlowTmrFlag = 0;
-
-char dummy_data[MAX_STREAM_SIZE];
+volatile int nbre_of_bytes = 0;
+char* dummy_data;
 uint16_t length_dummy_data;
-
-#if LWIP_DHCP==1
-volatile int dhcp_timoutcntr = 24;
-#endif
-
 extern bool stream_flag;
 static XTime tStart, tEnd;
 char axidma_error, axidma_rx_done;
 
 void timer_scu_callback(XScuTimer * TimerInstance)
 {
+	static int odd = 1;
+	static int dhcp_timer = 0;
+
+	// Time out for DHCP
+	if(dhcp_timoutcntr > 0){
+		dhcp_timoutcntr--;
+		if(dhcp_timoutcntr%4 == 0){
+			if(dhcp_timoutcntr == 0) xil_printf("%d...\r\n", dhcp_timoutcntr);
+			else xil_printf("%d...", dhcp_timoutcntr/4);
+		}
+	}
+
+	count_scu_timer++;
+
+	/*
+	 * Function to call to do perdiocally (verry 250ms or 500ms)
+	 */
+	odd = !odd;
+
+#if LWIP_DHCP==1
+    dhcp_timer++;
+    if (odd) dhcp_fine_tmr(); // Must call this function every 500ms
+	if (dhcp_timer >= 240) {
+		dhcp_coarse_tmr(); // Must call this function every 60sec
+		dhcp_timer = 0;
+	}
+#endif
+
 	/* we need to call tcp_fasttmr & tcp_slowtmr at intervals specified
 	 * by lwIP. It is not important that the timing is absoluetly accurate.
 	 */
-	static int odd = 1;
+	tcp_fasttmr(); // Must call this function every 250ms
+	if (odd) tcp_slowtmr(); // Must call this function every 500ms
 
-#if LWIP_DHCP==1
-    static int dhcp_timer = 0;
-#endif
-	 TcpFastTmrFlag = 1;
-
-	odd = !odd;
 #ifndef USE_SOFTETH_ON_ZYNQ
-	ResetRxCntr++;
-#endif
-	if (odd) {
-#if LWIP_DHCP==1
-		dhcp_timer++;
-		if(dhcp_timoutcntr > 0){
-			dhcp_timoutcntr--;
-			if(dhcp_timoutcntr%10 == 0){
-				if(dhcp_timoutcntr == 0) xil_printf("%d...\r\n", dhcp_timoutcntr);
-				else xil_printf("%d...", dhcp_timoutcntr/10);
-			}
-		}
-#endif
-		TcpSlowTmrFlag = 1;
-#if LWIP_DHCP==1
-		dhcp_fine_tmr();
-		if (dhcp_timer >= 120) {
-			dhcp_coarse_tmr();
-			dhcp_timer = 0;
-		}
-#endif
-	}
-
 	/* For providing an SW alternative for the SI #692601. Under heavy
 	 * Rx traffic if at some point the Rx path becomes unresponsive, the
 	 * following API call will ensures a SW reset of the Rx path. The
@@ -123,19 +114,23 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 	 * This ensures that if the above HW bug is hit, in the worst case,
 	 * the Rx path cannot become unresponsive for more than 100
 	 * milliseconds.
+	 *
+	 * PROBLEM : this function should be called every 100ms, but in fact with a counter
+	 * of 400, it is called every 100s (original soft)
+		static int ResetRxCntr = 0;
+		ResetRxCntr++;
+		if (ResetRxCntr >= RESET_RX_CNTR_LIMIT) {
+			xemacpsif_resetrx_on_no_rxdata(echo_netif);
+			ResetRxCntr = 0;
+		}
 	 */
-#ifndef USE_SOFTETH_ON_ZYNQ
-	if (ResetRxCntr >= RESET_RX_CNTR_LIMIT) {
-		xemacpsif_resetrx_on_no_rxdata(echo_netif);
-		ResetRxCntr = 0;
-	}
+	xemacpsif_resetrx_on_no_rxdata(echo_netif); // Now the function is called every 250ms
 #endif
+
 	// Need to call this function every 250ms
 	xemacif_input(echo_netif);
-//	struct xemac_s *emac = (struct xemac_s *)echo_netif->state;
-//	xil_printf("emac->state = %d\r\n",emac->type) ;
 
-	count_scu_timer++;
+	// Clear timer's interrupt
 	XScuTimer_ClearInterruptStatus(TimerInstance);
 }
 
@@ -148,10 +143,16 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
 	if (((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0) && (stream_flag)){
 		count_ttcps_timer++;
-		length = sizeof(dummy_data);
-		length_dummy_data = made_frame(dummy_data, length);
-		nbre_of_bytes += length_dummy_data;
-		transfer_data(dummy_data, length_dummy_data);
+		if(dummy_data != NULL){
+			length = sizeof(dummy_data);
+			length_dummy_data = made_frame(dummy_data, length);
+			nbre_of_bytes += length_dummy_data;
+			XTime_GetTime(&tStart);
+			transfer_data(dummy_data, length);
+			XTime_GetTime(&tEnd);
+			printf("UDP: Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+			printf("UDP: Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+		}
 		test = 0;
 	}
 	else{
@@ -164,7 +165,6 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 
 void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	uint32_t IrqStatus;
-	XTime_GetTime(&tEnd);
 
 	/* Read pending interrupts */
 	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
@@ -194,7 +194,7 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	 */
 	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
 		axidma_rx_done = 1;
-		xil_printf("SUCCESS\r\n");
+		xil_printf("SUCCESS in data from DMA transfert trough UDP\r\n");
 		printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
 		printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
 		//printf("Bandwidth:%.2f Mbit/s\r\n",PacketsToSend*32/(1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000)) );
@@ -235,9 +235,11 @@ void platform_setup_scu_timer(void)
 
 	XScuTimer_EnableAutoReload(&TimerScuInstance);
 	/*
-	 * Set for 100 ms timeout. (XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ/2 -> 1s)
+	 * Set for 250 ms timeout. (XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ/2 -> 1s)
+	 *
+	 * WARNING: If period is modified, must adapt counter in function timer_scu_callback()
 	 */
-	TimerLoadValue = XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ / 20;//8;
+	TimerLoadValue = XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ / 8;
 
 	XScuTimer_LoadTimer(&TimerScuInstance, TimerLoadValue);
 	return;
@@ -357,69 +359,6 @@ void platform_setup_interrupts(void)
 	static XScuGic_Config *IntcConfig;
 	int Status = XST_SUCCESS;
 
-	/*Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
-
-	XScuGic_DeviceInitialize(INTC_DEVICE_ID);*/
-
-	/*
-	 * Connect the interrupt controller interrupt handler to the hardware
-	 * interrupt handling logic in the processor.
-	 */
-	/*Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_IRQ_INT,
-			(Xil_ExceptionHandler)XScuGic_DeviceInterruptHandler,
-			(void *)INTC_DEVICE_ID);*/
-	/*
-	 * Connect the device driver handler that will be called when an
-	 * interrupt for the device occurs, the handler defined above performs
-	 * the specific interrupt processing for the device.
-	 */
-	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, TIMER_IRPT_INTR,
-					(Xil_ExceptionHandler)timer_scu_callback,
-					(void *)&TimerScuInstance);*/
-	/*
-	 * Enable the interrupt for scu timer.
-	 */
-	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TIMER_IRPT_INTR);
-
-	/*
-	 * Connect the device driver handler that will be called when an
-	 * interrupt for the device occurs, the handler defined above performs
-	 * the specific interrupt processing for the device.
-	 */
-	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, TTC_TICK_INTR_ID,
-					(Xil_ExceptionHandler)timer_ttcps_callback,
-					(void *)&TimerTtcPsInstance);*/
-	/*
-	 * Enable the interrupt for ttcps timer.
-	 */
-	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TTC_TICK_INTR_ID);
-
-	/*
-	 * Connect the device driver handler that will be called when an
-	 * interrupt for the device occurs, the handler defined above performs
-	 * the specific interrupt processing for the device.
-	 */
-	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR,
-					(Xil_ExceptionHandler)axidma_rx_callback,
-					(void *)&AxiDmaInstance);*/
-	/*
-	 * Enable the interrupt for AxiDMA.
-	 */
-	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
-
-	/*
-	 * Connect the device driver handler that will be called when an
-	 * interrupt for the device occurs, the handler defined above performs
-	 * the specific interrupt processing for the device.
-	 */
-	/*XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR,
-					(Xil_ExceptionHandler)testcomponent_callback,
-					(void *)INTC_DEVICE_ID);*/
-	/*
-	 * Enable the interrupt for TestComponent.
-	 */
-	//XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
-
 	IntcConfig = XScuGic_LookupConfig(XPAR_SCUGIC_0_DEVICE_ID);
 	if (IntcConfig == NULL){
 		xil_printf("In %s: XScuGic Look up config failed...\r\n",
@@ -489,12 +428,6 @@ void platform_enable_interrupts()
 	/*
 	 * Enable non-critical exceptions.
 	 */
-	/*Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
-	XScuTimer_EnableInterrupt(&TimerScuInstance);
-	XScuTimer_Start(&TimerScuInstance);
-	XTtcPs_EnableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
-	XTtcPs_Start(&TimerTtcPsInstance);
-	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);*/
 	XScuGic_Enable(&Intc, TIMER_IRPT_INTR);
 	XScuGic_Enable(&Intc, TTC_TICK_INTR_ID);
 	XScuGic_Enable(&Intc, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
@@ -516,8 +449,11 @@ void init_platform()
 	platform_setup_ttcps_timer();
 	platform_setup_axidma();
 	platform_setup_interrupts();
-	uint16_t length = sizeof(dummy_data);
-	length_dummy_data = made_frame(dummy_data, length);
+	dummy_data = malloc(MAX_STREAM_SIZE);
+	if(dummy_data != NULL){
+		uint16_t length = sizeof(dummy_data);
+		length_dummy_data = made_frame(dummy_data, length);
+	}
 
 	return;
 }

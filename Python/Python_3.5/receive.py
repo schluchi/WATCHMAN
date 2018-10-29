@@ -65,6 +65,7 @@ class Watchman_data():
     def plot_int(self):
         if(self.run_flag):
             with self.lock_graph:
+                start = time.time()
                 for k in range(len(self.nbr_hit)):
                     self.graph_hit.patches[k].set_height(self.nbr_hit[k])
                 self.spt_hit.set_ylim([0, max(max(self.nbr_hit)*1.1,1)])
@@ -78,7 +79,9 @@ class Watchman_data():
                 self.spt_time.set_title(self.combolist[self.ch_selected])
                 self.canvas.draw()
                 self.canvas.get_tk_widget().update_idletasks()
-            print("frame received : " + str(self.count)+" | thread engaged : " + str(len(self.thread_list)))
+                end = time.time()
+                
+            print("frame received : " + str(self.count)+" | thread engaged : " + str(len(self.thread_list)) + " | time : " + str(end-start))
             length=len(self.thread_list)
             k=0
             while(k<length):
@@ -101,7 +104,7 @@ class Watchman_data():
                 self.data.append(d)
                 self.adress.append(a)
                 self.count_recv += 1
-                if(self.count_recv >= 1000):
+                if(self.count_recv >= 100):
                     t = Thread(target=self.data_int, args=(self.data, self.adress))
                     t.start()
                     self.thread_list.append(t)
@@ -235,7 +238,8 @@ class Watchman_data():
     #Creates the socket
     def init_UDP_connection(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 2097152)
+        #self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 2097152)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 131072)
         print("sock buz:", self.sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF))
         self.sock.bind(('', self.UDP_PORT))
         self.sock.settimeout(0.1)

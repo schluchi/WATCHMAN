@@ -64,7 +64,8 @@
 #include "xttcps.h"
 #include "xaxidma.h"
 #include "data_test.h"
-#include "echo.h"
+#include "udp_peripheral.h"
+#include "axis_peripheral.h"
 #include "xtime_l.h"
 
 #define INTC_DEVICE_ID		XPAR_SCUGIC_SINGLE_DEVICE_ID
@@ -75,7 +76,7 @@
 
 #define TTC_TICK_DEVICE_ID	XPAR_XTTCPS_0_DEVICE_ID
 #define TTC_TICK_INTR_ID	XPAR_XTTCPS_0_INTR
-#define TTCPS_TIMER_FREQ_HZ	1//15000
+#define TTCPS_TIMER_FREQ_HZ	1//500
 
 #define RESET_RX_CNTR_LIMIT	400
 

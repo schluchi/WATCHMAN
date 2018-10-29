@@ -55,14 +55,14 @@ src/main.o src/main.o: ../src/main.c \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xscugic.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xscugic_hw.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_exception.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xtime_l.h \
- ../src/platform_zynq.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xtime_l.h ../src/interrupt.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xscutimer.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps.h \
- ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps_hw.h ../src/echo.h \
- ../src/cmd_interpreter.h ../src/AXIS_Peripheral.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps_hw.h \
+ ../src/udp_peripheral.h ../src/axis_peripheral.h \
+ ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_types.h ../src/utility.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/dhcp.h
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters.h:
@@ -181,7 +181,7 @@ src/main.o src/main.o: ../src/main.c \
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xtime_l.h:
 
-../src/platform_zynq.h:
+../src/interrupt.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters_ps.h:
 
@@ -193,10 +193,12 @@ src/main.o src/main.o: ../src/main.c \
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xttcps_hw.h:
 
-../src/echo.h:
+../src/udp_peripheral.h:
 
-../src/cmd_interpreter.h:
+../src/axis_peripheral.h:
 
-../src/AXIS_Peripheral.h:
+../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xil_types.h:
+
+../src/utility.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/dhcp.h:

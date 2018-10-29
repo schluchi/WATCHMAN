@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "cmd_interpreter.h"
+
 
 #include "lwip/err.h"
 #include "lwip/udp.h"

@@ -1,4 +1,5 @@
-src/reg_read.o src/reg_read.o: ../src/reg_read.c ../src/reg_read.h \
+src/udp_peripheral.o src/udp_peripheral.o: ../src/udp_peripheral.c \
+ ../src/udp_peripheral.h ../src/data_test.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/err.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/opt.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwipopts.h \
@@ -30,7 +31,9 @@ src/reg_read.o src/reg_read.o: ../src/reg_read.c ../src/reg_read.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
  ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/bspconfig.h
 
-../src/reg_read.h:
+../src/udp_peripheral.h:
+
+../src/data_test.h:
 
 ../../PC_PS_PL_bsp/ps7_cortexa9_0/include/lwip/err.h:
 

@@ -43,7 +43,7 @@ volatile bool stream_flag = false;
 char return_buf[MAX_ARRAY_SIZE];
 extern volatile int count_ttcps_timer;
 extern volatile int count_scu_timer;
-extern uint16_t nbre_of_bytes;
+extern int nbre_of_bytes;
 
 err_t transfer_data(char* frame, uint16_t length) {
 	if(sizeof(frame) <= MAX_STREAM_SIZE){
