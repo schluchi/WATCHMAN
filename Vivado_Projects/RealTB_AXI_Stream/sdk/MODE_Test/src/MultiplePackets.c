@@ -21,7 +21,7 @@
 
 /*** User Define ***************************************************************/
 
-#define PACKETS 10
+#define PACKETS 10000
 
 #define RX_BUFFER_BASE (XPAR_PS7_DDR_0_S_AXI_BASEADDR + 0x00300000)
 
@@ -179,7 +179,7 @@ int main(){
 	//int PacketsToSend = 0;
 	// For loop
 	for(int k= 1; k < 5 ; k++){
-		PacketsToSend = PACKETS*k;
+		PacketsToSend = PACKETS;
 		regbank[NBR_OF_PACKETS_REG] = PacketsToSend;
 		regbank[CONTENT_PACKET_1] = 100*k;
 		if(k == 0) regbank[MODE_REG] = RAMP_MODE;
@@ -285,28 +285,28 @@ int main(){
 			}
 			//else{
 				xil_printf("Packet :\tNbr:%d\tContent:%d\tMode:%d\r\n",regbank[NBR_OF_PACKETS_REG],regbank[CONTENT_PACKET_1],regbank[MODE_REG]);
-				switch(regbank[MODE_REG] ){
-					case RAMP_MODE:
-						for(int a=0; a < PacketsToSend; a++){
-							decToHexa(&PtrData[a]);
-							xil_printf("\tPtrData[%d]\t= %d\t (= %d)\r\n",a,PtrData[a],a+cst);
-						}
-						break;
-				
-					case SAW_MODE:
-						for(int a=0; a < PacketsToSend; a++){
-							decToHexa(&PtrData[a]);
-							xil_printf("\tPtrData[%d]\t= %d\t (= %d)\r\n",a,PtrData[a],a%5);
-						}
-						break;
-					
-					case BIT_MODE: 
-						for(int a=0; a < PacketsToSend; a++){
-							decToHexa(&PtrData[a]);
-							xil_printf("\tPtrData[%d]\t= %d\t (= %d)\r\n",a,PtrData[a],a%2);
-						}
-						break;
-				}
+//				switch(regbank[MODE_REG] ){
+//					case RAMP_MODE:
+//						for(int a=0; a < PacketsToSend; a++){
+//							decToHexa(&PtrData[a]);
+//							xil_printf("\tPtrData[%d]\t= %d\t (= %d)\r\n",a,PtrData[a],a+cst);
+//						}
+//						break;
+//
+//					case SAW_MODE:
+//						for(int a=0; a < PacketsToSend; a++){
+//							decToHexa(&PtrData[a]);
+//							xil_printf("\tPtrData[%d]\t= %d\t (= %d)\r\n",a,PtrData[a],a%5);
+//						}
+//						break;
+//
+//					case BIT_MODE:
+//						for(int a=0; a < PacketsToSend; a++){
+//							decToHexa(&PtrData[a]);
+//							xil_printf("\tPtrData[%d]\t= %d\t (= %d)\r\n",a,PtrData[a],a%2);
+//						}
+//						break;
+//				}
 			//}
 		}
 		else if(Error){

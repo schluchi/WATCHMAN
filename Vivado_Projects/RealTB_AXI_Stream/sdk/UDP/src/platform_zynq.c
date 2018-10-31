@@ -190,7 +190,7 @@ void platform_setup_scu_timer(void)
 	/*
 	 * Set for 100 ms timeout. (XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ/2 -> 1s)
 	 */
-	TimerLoadValue = XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ / 20;//8;
+	TimerLoadValue = XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ / 8;//8;
 
 	XScuTimer_LoadTimer(&TimerScuInstance, TimerLoadValue);
 	return;
