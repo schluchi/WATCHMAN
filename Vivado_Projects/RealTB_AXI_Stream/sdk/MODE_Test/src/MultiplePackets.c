@@ -21,7 +21,8 @@
 
 /*** User Define ***************************************************************/
 
-#define PACKETS 10000
+#define PACKETS 1024
+
 
 #define RX_BUFFER_BASE (XPAR_PS7_DDR_0_S_AXI_BASEADDR + 0x00300000)
 

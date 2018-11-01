@@ -518,6 +518,7 @@ void init_platform()
 		uint16_t length = sizeof(dummy_data);
 		length_dummy_data = made_frame(dummy_data, length);
 	}
+	else xil_printf("malloc dummy_data failed\r\n");
 
 	return;
 }

@@ -179,7 +179,7 @@ int main()
 	//err_t ret_transfert;
 	int tst_dma = 1;
 	while(tst_dma){
-		PacketsToSend = 1024;
+		PacketsToSend = 10;
 		regbank[NBR_OF_PACKETS_REG] = PacketsToSend;
 		if(regbank[NBR_OF_PACKETS_REG] != PacketsToSend){
 			xil_printf("Error launding regbank[NBR_OF_PACKETS_REG]\r\n");
