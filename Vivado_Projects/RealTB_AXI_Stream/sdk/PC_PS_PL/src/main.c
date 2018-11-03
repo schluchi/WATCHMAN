@@ -32,6 +32,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "xparameters.h"
 
@@ -95,20 +96,11 @@ struct netif *echo_netif;
 extern volatile int count_ttcps_timer;
 extern volatile bool run_flag;
 extern bool stream_flag;
-extern XAxiDma AxiDmaInstance;
-extern char axidma_error, axidma_rx_done;
-static int PacketsToSend = 0;
-int Status;
-int *PtrData;
-int *regbank = XPAR_AXIS_TEST_COMPONENT_0_S00_AXI_BASEADDR;
+extern bool flag_ttcps_timer;
 
 int main()
 {
 	ip_addr_t ipaddr, netmask, gw, pc_ipaddr;
-
-	regbank[CONTROL_REG] = 0;			// Stop
-	regbank[NBR_OF_PACKETS_REG] = 0;	// Nbr of packets = 0
-	regbank[CONTENT_PACKET_1] = 0;		// Content of 1st packet = 0
 
 	/* the mac address of the board. this should be unique per board */
 	unsigned char mac_ethernet_address[] =
@@ -118,47 +110,49 @@ int main()
 
 	xil_printf("\n\r\n\r------START------\r\n");
 
-	init_platform();
+	/* Initial the interrupt timer, axidma, ... */
+	if(init_interrupts() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
+	else{
+		xil_printf("-------END-------\r\n");
+		return -1;
+	}
 
-    ipaddr.addr = 0;
-	gw.addr = 0;
-	netmask.addr = 0;
-
-	print_app_header();
-
+	/* Initilize the LWip */
 	lwip_init();
 
 	/* Add network interface to the netif_list, and set it as default */
+	ipaddr.addr = 0;
+	gw.addr = 0;
+	netmask.addr = 0;
 	if (!xemac_add(echo_netif, &ipaddr, &netmask,
 						&gw, mac_ethernet_address,
 						PLATFORM_EMAC_BASEADDR)) {
 		xil_printf("Error adding N/W interface\n\r");
+		xil_printf("-------END-------\r\n");
 		return -1;
 	}
 
-	netif_set_default(echo_netif);
-
 	/* now enable interrupts */
-	platform_enable_interrupts();
+	enable_interrupts();
 
 	/* specify that the network if is up */
+	netif_set_default(echo_netif);
 	netif_set_up(echo_netif);
 
-	/* Create a new DHCP client for this interface.
+	/* If DHCP available, create a new DHCP client for this interface.
 	 * Note: you must call dhcp_fine_tmr() and dhcp_coarse_tmr() at
 	 * the predefined regular intervals after starting the client.
 	 */
 	dhcp_start(echo_netif);
-	dhcp_timoutcntr = 20;
-	xil_printf("Time out : 5...");
+	dhcp_timoutcntr = 20; // Time out of 5sec (look at "TimerLoadValue" for the scu timer)
+	xil_printf("DHCP Time out : 5...");
 
 	while(((echo_netif->ip_addr.addr) == 0) && (dhcp_timoutcntr > 0)) {
 		xemacif_input(echo_netif);
 	}
 	if (dhcp_timoutcntr <= 0) {		// No DHCP, so the IP as to be fixed manually
 		if ((echo_netif->ip_addr.addr) == 0) {
-			xil_printf("DHCP Timeout\r\n");
-			xil_printf("Configuring default IP of 192.168.1.10\r\n");
+			xil_printf("DHCP not available, ip settings manually fixed:\r\n");
 			IP4_ADDR(&(echo_netif->ip_addr),  192, 168,   1, 10);
 			IP4_ADDR(&(echo_netif->netmask), 255, 255, 255,  0);
 			IP4_ADDR(&(echo_netif->gw),      192, 168,   1,  1);
@@ -168,126 +162,35 @@ int main()
 	ipaddr.addr = echo_netif->ip_addr.addr;
 	gw.addr = echo_netif->gw.addr;
 	netmask.addr = echo_netif->netmask.addr;
-
 	print_ip_settings(&ipaddr, &netmask, &gw);
 
-	IP4_ADDR(&pc_ipaddr,			 192, 168,   1, 11 );
+	/* Set the PC address */
+	IP4_ADDR(&pc_ipaddr, 192, 16, 1, 11);
+	print_ip("\r\nPC IP: ", &pc_ipaddr);
 
-	/* start the application (web server, rxtest, txtest, etc..) */
-	start_application(pc_ipaddr);
-
-	//err_t ret_transfert;
-	int tst_dma = 1;
-	while(tst_dma){
-		PacketsToSend = 10;
-		regbank[NBR_OF_PACKETS_REG] = PacketsToSend;
-		if(regbank[NBR_OF_PACKETS_REG] != PacketsToSend){
-			xil_printf("Error launding regbank[NBR_OF_PACKETS_REG]\r\n");
-			break;
-		}
-		regbank[CONTENT_PACKET_1] = 1025;
-		if(regbank[CONTENT_PACKET_1] != 1025){
-			xil_printf("Error launding regbank[CONTENT_PACKET_1]\r\n");
-			break;
-		}
-		regbank[MODE_REG] = RAMP_MODE;
-		if(regbank[MODE_REG] != RAMP_MODE){
-			xil_printf("Error launding regbank[MODE_REG]\r\n");
-			break;
-		}
-
-		xil_printf("Packet :\tNbr:%d\tContent:%d\tMode:%d\r\n",regbank[NBR_OF_PACKETS_REG],regbank[CONTENT_PACKET_1],regbank[MODE_REG]);
-
-		PtrData = malloc(sizeof(int)*PacketsToSend);
-		if(PtrData == NULL){
-			xil_printf("Malloc Failed\r\n");
-			break;
-		}
-		for(int i=0; i < PacketsToSend;i++) PtrData[i] = i;
-
-		Xil_DCacheFlushRange((UINTPTR)PtrData, PacketsToSend*sizeof(int));
-
-		Status = XAxiDma_SimpleTransfer_Hej(&AxiDmaInstance,(UINTPTR)PtrData, (PacketsToSend*sizeof(int)));
-		if (Status == XST_FAILURE) {
-			xil_printf("In %s: Failure\r\n", __func__);
-			break;
-		}
-		else{
-			if(Status == XST_INVALID_PARAM){
-				xil_printf("In %s: Invalid Param\r\n", __func__);
-				break;
-			}
-		}
-
-		//*** ResetTimer *************************/
-		int TimeOutCnt = 5;
-
-		//*** Start Transfer *********************/
-		regbank[CONTROL_REG] = 1;		//Enable Axi Peripheral to start sending data
-
-		while (!axidma_rx_done && !axidma_error && TimeOutCnt) {
-				/* NOP */
-				sleep(1);
-				TimeOutCnt--;
-				xil_printf("...\r\n");
-		}
-		if(!TimeOutCnt){
-			xil_printf(">> Time Out Reached 5sec\r\n");
-			break;
-		}
-		else{
-			if(axidma_rx_done){
-				xil_printf(">> RxDone Interrupt Caught\r\n");
-				xil_printf("\tVerifying...");
-
-				Xil_DCacheInvalidateRange((UINTPTR)PtrData, PacketsToSend*sizeof(int));
-
-				int cst = regbank[CONTENT_PACKET_1];
-				for(int a=0; a < PacketsToSend; a++){
-					if(PtrData[a] != (a+cst)){
-						xil_printf("FAILED\r\n");
-						axidma_error = 1;
-					}
-				}
-			}
-			else{
-				if(axidma_error){
-					xil_printf(">> Error\r\n");
-					break;
-				}
-			}
-		}
-
-		if(axidma_error){
-			xil_printf("General Error while Reading back values\r\n");
-			break;
-		}
-		tst_dma = 0;
-	}
-	regbank[CONTROL_REG] = 0;		//Enable Axi Peripheral to start sending data
-	free(PtrData);
-
-	axidma_error = 0;
-	axidma_rx_done = 0;
-
-	if(tst_dma == 0) xil_printf("\r\ntest axidma done \r\n");
-	else xil_printf("\r\ntest axidma failed \r\n");
+	/* Set the UDP connections and callback for data and commands */
+	setup_udp_settings(pc_ipaddr);
 
 	XTime tStart, tEnd;
 	while (run_flag){
 		if(stream_flag){
 			XTime_GetTime(&tStart);
-			while(stream_flag);
+			while(stream_flag){
+				if(flag_ttcps_timer){
+					flag_ttcps_timer = false;
+					if(dma_transfert(10) == XST_SUCCESS) xil_printf("=> DMA PASSED\r\n");
+					else xil_printf("=> DMA FAILED!\r\n");
+				}
+			}
 			XTime_GetTime(&tEnd);
-			printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
-			printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+//			printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+//			printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
 		}
 	}
 
 
-
-	/* never reached */
-	cleanup_platform();
+	cleanup_interrupts();
+	cleanup_udp();
 	xil_printf("-------END-------\r\n");
 
 	return 0;

@@ -96,9 +96,9 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 		dhcp_timer++;
 		if(dhcp_timoutcntr > 0){
 			dhcp_timoutcntr--;
-			if(dhcp_timoutcntr%10 == 0){
+			if(dhcp_timoutcntr%4 == 0){
 				if(dhcp_timoutcntr == 0) xil_printf("%d...\r\n", dhcp_timoutcntr);
-				else xil_printf("%d...", dhcp_timoutcntr/10);
+				else xil_printf("%d...", dhcp_timoutcntr/4);
 			}
 		}
 #endif
@@ -132,6 +132,74 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 //	xil_printf("emac->state = %d\r\n",emac->type) ;
 
 	count_scu_timer++;
+	XScuTimer_ClearInterruptStatus(TimerInstance);
+}
+
+void timer_scu_callback1(XScuTimer * TimerInstance)
+{
+	static int odd = 1;
+
+	TcpFastTmrFlag = 1;
+
+	// Time out for DHCP
+	if(dhcp_timoutcntr > 0){
+		dhcp_timoutcntr--;
+		if(dhcp_timoutcntr%4 == 0){
+			if(dhcp_timoutcntr == 0) xil_printf("%d...\r\n", dhcp_timoutcntr);
+			else xil_printf("%d...", dhcp_timoutcntr/4);
+		}
+	}
+
+	count_scu_timer++;
+
+	/*
+	 * Function to call to do perdiocally (every 250ms or 500ms, normaly)
+	 */
+	odd = !odd;
+
+#if LWIP_DHCP==1
+	static int dhcp_timer = 0;
+    if (odd){
+    	dhcp_timer++;
+		TcpSlowTmrFlag = 1;
+		dhcp_fine_tmr(); // Must call this function every 500ms
+		if (dhcp_timer >= 120) {
+			dhcp_coarse_tmr(); // Must call this function every 60sec
+			dhcp_timer = 0;
+		}
+	}
+#endif
+
+	/* we need to call tcp_fasttmr & tcp_slowtmr at intervals specified
+	 * by lwIP. It is not important that the timing is absoluetly accurate.
+	 */
+	tcp_fasttmr(); // Must call this function every 250ms
+	if (odd) tcp_slowtmr(); // Must call this function every 500ms
+
+#ifndef USE_SOFTETH_ON_ZYNQ
+	/* For providing an SW alternative for the SI #692601. Under heavy
+	 * Rx traffic if at some point the Rx path becomes unresponsive, the
+	 * following API call will ensures a SW reset of the Rx path. The
+	 * API xemacpsif_resetrx_on_no_rxdata is called every 100 milliseconds.
+	 * This ensures that if the above HW bug is hit, in the worst case,
+	 * the Rx path cannot become unresponsive for more than 100
+	 * milliseconds.
+	 *
+	 * PROBLEM : this function should be called every 100ms, but in fact with a counter
+	 * of 400, it is called every 100s (original soft)
+	 */
+	ResetRxCntr++;
+	if (ResetRxCntr >= RESET_RX_CNTR_LIMIT) {
+		xemacpsif_resetrx_on_no_rxdata(echo_netif);
+		ResetRxCntr = 0;
+	}
+	//xemacpsif_resetrx_on_no_rxdata(echo_netif); // Now the function is called every 250ms
+#endif
+
+	// Need to call this function every 250ms
+	xemacif_input(echo_netif);
+
+	// Clear timer's interrupt
 	XScuTimer_ClearInterruptStatus(TimerInstance);
 }
 

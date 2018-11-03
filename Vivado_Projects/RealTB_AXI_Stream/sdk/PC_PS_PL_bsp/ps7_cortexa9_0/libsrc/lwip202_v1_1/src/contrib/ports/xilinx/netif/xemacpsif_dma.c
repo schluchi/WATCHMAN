@@ -392,7 +392,7 @@ void setup_rx_bds(xemacpsif_s *xemacpsif, XEmacPs_BdRing *rxring)
 			lwip_stats.link.memerr++;
 			lwip_stats.link.drop++;
 #endif
-			printf("unable to alloc pbuf in recv_handler\r\n");
+			printf("unable to alloc pbuf in recv_handler 395\r\n");
 			return;
 		}
 		status = XEmacPs_BdRingAlloc(rxring, 1, &rxbd);

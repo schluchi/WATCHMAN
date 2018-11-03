@@ -15,7 +15,6 @@ C_SRCS += \
 ../src/main.c \
 ../src/platform_mb.c \
 ../src/platform_ppc.c \
-../src/send_data.c \
 ../src/sfp.c \
 ../src/si5324.c \
 ../src/udp_peripheral.c \
@@ -30,7 +29,6 @@ OBJS += \
 ./src/main.o \
 ./src/platform_mb.o \
 ./src/platform_ppc.o \
-./src/send_data.o \
 ./src/sfp.o \
 ./src/si5324.o \
 ./src/udp_peripheral.o \
@@ -45,7 +43,6 @@ C_DEPS += \
 ./src/main.d \
 ./src/platform_mb.d \
 ./src/platform_ppc.d \
-./src/send_data.d \
 ./src/sfp.d \
 ./src/si5324.d \
 ./src/udp_peripheral.d \

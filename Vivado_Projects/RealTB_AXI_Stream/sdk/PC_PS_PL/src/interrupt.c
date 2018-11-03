@@ -71,26 +71,31 @@ static XScuGic Intc;
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
 volatile int count_ttcps_timer = 0;
 volatile int count_scu_timer = 0;
+bool flag_ttcps_timer;
+
 volatile int nbre_of_bytes = 0;
-char* dummy_data;
+char dummy_data[MAX_STREAM_SIZE];
 uint16_t length_dummy_data;
 extern bool stream_flag;
-static XTime tStart, tEnd;
+static XTime tStart_dma, tEnd_dma;
 char axidma_error, axidma_rx_done;
-
+extern int PtrData[NBR_DATA];
 void timer_scu_callback(XScuTimer * TimerInstance)
 {
 	static int odd = 1;
 
+
 	TcpFastTmrFlag = 1;
 
 	// Time out for DHCP
+	if(odd){
 	if(dhcp_timoutcntr > 0){
 		dhcp_timoutcntr--;
 		if(dhcp_timoutcntr%4 == 0){
 			if(dhcp_timoutcntr == 0) xil_printf("%d...\r\n", dhcp_timoutcntr);
 			else xil_printf("%d...", dhcp_timoutcntr/4);
 		}
+	}
 	}
 
 	count_scu_timer++;
@@ -153,31 +158,33 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 	static char test = 1;
 	StatusEvent = XTtcPs_GetInterruptStatus(TimerInstance);
 	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
-	if (((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0) && (stream_flag)){
-		count_ttcps_timer++;
-		if(dummy_data != NULL){
-			length = sizeof(dummy_data);
-			length_dummy_data = made_frame(dummy_data, length);
-			nbre_of_bytes += length_dummy_data;
-			XTime_GetTime(&tStart);
-			transfer_data(dummy_data, length);
-			XTime_GetTime(&tEnd);
-			printf("UDP: Output took %llu clock cycles.\n", 2*(tEnd - tStart));
-			printf("UDP: Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
-		}
-		test = 0;
-	}
-	else{
-		if(test == 0){
-			xil_printf("number of frame sent = %d | total of bytes = %d\r\n", count_ttcps_timer, nbre_of_bytes);
-			test = 1;
-		}
+	if ((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0){
+//		if (stream_flag){
+//			count_ttcps_timer++;
+//			if(dummy_data != NULL){
+//				length = sizeof(dummy_data);
+//				length_dummy_data = made_frame(dummy_data, length);
+//				nbre_of_bytes += length_dummy_data;
+//				XTime_GetTime(&tStart);
+//				transfer_data(dummy_data, length);
+//				XTime_GetTime(&tEnd);
+//				printf("UDP: Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+//				printf("UDP: Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+//			}
+//			test = 0;
+//		}
+//		else{
+//			if(test == 0){
+//				xil_printf("number of frame sent = %d | total of bytes = %d\r\n", count_ttcps_timer, nbre_of_bytes);
+//				test = 1;
+//			}
+//		}
+		flag_ttcps_timer = true;
 	}
 }
 
 void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	uint32_t IrqStatus;
-	XTime_GetTime(&tEnd);
 
 	/* Read pending interrupts */
 	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
@@ -185,9 +192,7 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	/* Acknowledge pending interrupts */
 	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
 
-	/*
-	 * If no interrupt is asserted, we do not do anything
-	 */
+	/* If no interrupt is asserted, we do not do anything */
 	if (!(IrqStatus & XAXIDMA_IRQ_ALL_MASK)) {
 		return;
 	}
@@ -202,25 +207,24 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 		return;
 	}
 
-	/*
-	 * If completion interrupt is asserted, then set RxDone flag
-	 */
+	/* If completion interrupt is asserted, then set RxDone flag */
 	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
+		transfer_data(PtrData, NBR_DATA*4);
+		XTime_GetTime(&tEnd_dma);
 		axidma_rx_done = 1;
-		xil_printf("SUCCESS in data from DMA transfert trough UDP\r\n");
-		printf("DMA: Output took %llu clock cycles.\n", 2*(tEnd - tStart));
-		printf("DMA: Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
-		printf("DMA: Output took %.2f ms.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000));
+		xil_printf("TIMING DMA TRANFSERT:\r\n");
+		printf("     Output took %llu clock cycles.\n", 2*(tEnd_dma - tStart_dma));
+		printf("     Output took %.2f us.\n",1.0 * (tEnd_dma - tStart_dma) / (COUNTS_PER_SECOND/1000000));
+		//printf("     Output took %.2f ms.\n",1.0 * (tEnd_dma - tStart_dma) / (COUNTS_PER_SECOND/1000));
 		//printf("Bandwidth:%.2f Mbit/s\r\n",PacketsToSend*32/(1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000)) );
 	}
 }
 
 void testcomponent_callback(void *callbackInst){
-	XTime_GetTime(&tStart);
-	xil_printf("testcomponent callback\r\n");
+	XTime_GetTime(&tStart_dma);
 }
 
-void platform_setup_scu_timer(void)
+int setup_scu_timer_int(void)
 {
 	int Status = XST_SUCCESS;
 	XScuTimer_Config *ConfigPtr;
@@ -230,21 +234,21 @@ void platform_setup_scu_timer(void)
 	if (ConfigPtr == NULL){
 		xil_printf("In %s: Scutimer timer Look up config failed...\r\n",
 		__func__);
-		return;
+		return XST_FAILURE;
 	}
 	Status = XScuTimer_CfgInitialize(&TimerScuInstance, ConfigPtr,
 			ConfigPtr->BaseAddr);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: Scutimer Cfg initialization failed...\r\n",
 		__func__);
-		return;
+		return Status;
 	}
 
 	Status = XScuTimer_SelfTest(&TimerScuInstance);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: Scutimer Self test failed...\r\n",
 		__func__);
-		return;
+		return Status;
 
 	}
 
@@ -257,10 +261,10 @@ void platform_setup_scu_timer(void)
 	TimerLoadValue = XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ / 8;
 
 	XScuTimer_LoadTimer(&TimerScuInstance, TimerLoadValue);
-	return;
+	return Status;
 }
 
-void platform_setup_ttcps_timer(void){
+int setup_ttcps_timer_int(void){
 	int Status = XST_SUCCESS;
 	XTtcPs_Config *ConfigPtr;
 	XTtcPs *Timer;
@@ -271,7 +275,7 @@ void platform_setup_ttcps_timer(void){
 	if (ConfigPtr == NULL){
 		xil_printf("In %s: TtcPs timer Look up config failed...\r\n",
 		__func__);
-		return;
+		return XST_FAILURE;
 	}
 
 	Status = XTtcPs_CfgInitialize(&TimerTtcPsInstance, ConfigPtr,
@@ -279,14 +283,14 @@ void platform_setup_ttcps_timer(void){
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: TtcPs timer Cfg initialization failed...\r\n",
 		__func__);
-		return;
+		return Status;
 	}
 
 	Status = XTtcPs_SelfTest(&TimerTtcPsInstance);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: TtcPs timer Self test failed...\r\n",
 		__func__);
-		return;
+		return Status;
 
 	}
 
@@ -314,9 +318,11 @@ void platform_setup_ttcps_timer(void){
 	 */
 	XTtcPs_SetInterval(Timer, TimerSetup->Interval);
 	XTtcPs_SetPrescaler(Timer, TimerSetup->Prescaler);
+
+	return Status;
 }
 
-void platform_setup_axidma(void)
+int setup_axidma_int(void)
 {
 	int Status = XST_SUCCESS;
 	XAxiDma_Config *ConfigPtr;
@@ -325,27 +331,27 @@ void platform_setup_axidma(void)
 	if (ConfigPtr == NULL){
 		xil_printf("In %s: AxiDMA Look up config failed...\r\n",
 		__func__);
-		return;
+		return XST_FAILURE;
 	}
 	Status = XAxiDma_CfgInitialize(&AxiDmaInstance, ConfigPtr);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: AxiDMA Cfg initialization failed...\r\n",
 		__func__);
-		return;
+		return Status;
 	}
 
 	Status = XAxiDma_Selftest(&AxiDmaInstance);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: AxiDMA Self test failed...\r\n",
 		__func__);
-		return;
+		return Status;
 	}
 
 	Status = XAxiDma_HasSg(&AxiDmaInstance);
 	if (Status != XST_SUCCESS){
 		xil_printf("In %s: AxiDMA configured as SG mode...\r\n",
 		__func__);
-		return;
+		return Status;
 	}
 
 	XAxiDma_Reset(&AxiDmaInstance);
@@ -353,50 +359,42 @@ void platform_setup_axidma(void)
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET,XAXIDMA_CR_OFFSET, reg | XAXIDMA_CR_RESET_MASK);
 	int TimeOutCnt = 5;
 	while(TimeOutCnt){
-		if(!(XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_CR_OFFSET) &  XAXIDMA_CR_RESET_MASK)) {
-			xil_printf("Reset XAxiDma Done\r\n");
+		reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_CR_OFFSET);
+		if((reg &  XAXIDMA_CR_RESET_MASK) == NULL) {
 			break;
 		}
 		TimeOutCnt-=1;
 		sleep(1);
 	}
+
+	if((reg &  XAXIDMA_CR_RESET_MASK) != NULL) {
+		xil_printf("In %s: AxiDMA Reset failed...\r\n",
+		__func__);
+		return XST_FAILURE;
+	}
+
 	/* Disable MM2S Sied of AXI DMA */
 	reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET, XAXIDMA_CR_OFFSET);
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET,XAXIDMA_CR_OFFSET,reg & !XAXIDMA_CR_RUNSTOP_MASK);
 
 	axidma_error = 0;
 	axidma_rx_done = 0;
-	return;
+	return Status;
 }
 
-void platform_setup_test_component(void){
-	static XScuGic_Config *ConfigPtr;
+int setup_test_component_int(void){
+	int *regbank;
 	int Status = XST_SUCCESS;
 
-	ConfigPtr = XScuGic_LookupConfig(XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
-	if (ConfigPtr == NULL){
-		xil_printf("In %s: TestComp Look up config failed...\r\n",
-		__func__);
-		return;
-	}
+	regbank = XPAR_AXIS_TEST_COMPONENT_0_S00_AXI_BASEADDR;
+	regbank[CONTROL_REG] = 0;			// Stop
+	regbank[NBR_OF_PACKETS_REG] = 0;	// Nbr of packets = 0
+	regbank[CONTENT_PACKET_1] = 0;		// Content of 1st packet = 0
 
-	Status = XScuGic_CfgInitialize(&TestCompInstance,
-			ConfigPtr,ConfigPtr->CpuBaseAddress);
-	if (Status != XST_SUCCESS) {
-		xil_printf("In %s: TestComp Cfg initialization failed...\r\n",
-		__func__);
-		return;
-	}
-
-	Status = XScuGic_SelfTest(&TestCompInstance);
-	if (Status != XST_SUCCESS) {
-		xil_printf("In %s: TestComp Self test failed...\r\n",
-		__func__);
-		return;
-	}
+	return Status;
 }
 
-void platform_setup_interrupts(void)
+int setup_interrupts(void)
 {
 	static XScuGic_Config *IntcConfig;
 	int Status = XST_SUCCESS;
@@ -405,14 +403,14 @@ void platform_setup_interrupts(void)
 	if (IntcConfig == NULL){
 		xil_printf("In %s: XScuGic Look up config failed...\r\n",
 		__func__);
-		return;
+		return XST_FAILURE;
 	}
 
 	Status = XScuGic_CfgInitialize(&Intc, IntcConfig,IntcConfig->CpuBaseAddress);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: XScuGic Cfg initialization failed...\r\n",
 		__func__);
-		return;
+		return Status;
 	}
 
 	Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
@@ -461,7 +459,7 @@ void platform_setup_interrupts(void)
 					(Xil_ExceptionHandler)axidma_rx_callback,
 					(void *)&AxiDmaInstance);
 	/*
-	 * Enable the interrupt for scu timer.
+	 * Enable the interrupt for axidma.
 	 */
 	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
 
@@ -474,7 +472,7 @@ void platform_setup_interrupts(void)
 					(Xil_ExceptionHandler)testcomponent_callback,
 					(void *)&TestCompInstance);
 	/*
-	 * Enable the interrupt for ttcps timer.
+	 * Enable the interrupt for test component.
 	 */
 	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
 
@@ -484,17 +482,14 @@ void platform_setup_interrupts(void)
 	XScuGic_SetPriorityTriggerType(&Intc, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR, 0xA3, 0x3);
 	XScuGic_SetPriorityTriggerType(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR, 0xA0, 0x3);
 
-	return;
+	return Status;
 }
 
-void platform_enable_interrupts()
+void enable_interrupts()
 {
 	/*
 	 * Enable non-critical exceptions.
 	 */
-//	XScuGic_Enable(&Intc, TIMER_IRPT_INTR);
-//	XScuGic_Enable(&Intc, TTC_TICK_INTR_ID);
-//	XScuGic_Enable(&Intc, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR);
 	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
 
 	XScuTimer_EnableInterrupt(&TimerScuInstance);
@@ -507,30 +502,53 @@ void platform_enable_interrupts()
 	return;
 }
 
-void init_platform()
+int init_interrupts()
 {
-	platform_setup_scu_timer();
-	platform_setup_ttcps_timer();
-	platform_setup_axidma();
-	platform_setup_interrupts();
-	dummy_data = malloc(MAX_STREAM_SIZE);
-	if(dummy_data != NULL){
-		uint16_t length = sizeof(dummy_data);
-		length_dummy_data = made_frame(dummy_data, length);
+	int Status;
+	Status = setup_scu_timer_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: Scu timer failed...\r\n",
+		__func__);
+		return Status;
 	}
-	else xil_printf("malloc dummy_data failed\r\n");
+	Status = setup_ttcps_timer_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: Ttcps timer failed...\r\n",
+		__func__);
+		return Status;
+	}
+	Status = setup_axidma_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: AxiDMA failed...\r\n",
+		__func__);
+		return Status;
+	}
+	Status = setup_test_component_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: Test Component failed...\r\n",
+		__func__);
+		return Status;
+	}
+	Status = setup_interrupts();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: Setup interrupts failed...\r\n",
+		__func__);
+		return Status;
+	}
 
-	return;
+	length_dummy_data = made_frame(dummy_data, MAX_STREAM_SIZE);
+
+	return XST_SUCCESS;
 }
 
-void cleanup_platform()
+void cleanup_interrupts()
 {
-	free(dummy_data);
 	XTtcPs_DisableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
 	XTtcPs_Stop(&TimerTtcPsInstance);
 	XScuTimer_DisableInterrupt(&TimerScuInstance);
 	XScuTimer_Stop(&TimerScuInstance);
 	XAxiDma_IntrDisable(&AxiDmaInstance, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
+	XScuGic_Disable(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
 	Xil_ICacheDisable();
 	Xil_DCacheDisable();
 	return;

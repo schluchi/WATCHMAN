@@ -34,9 +34,9 @@
 
 int regmap[REGMAP_SIZE];
 
-struct udp_pcb *packet_pcb;
-struct pbuf *packet;
-struct pbuf *echo_buf;
+struct udp_pcb *pcb_data;
+struct udp_pcb *pcb_cmd;
+struct pbuf *buf_data;
 volatile bool run_flag = true;
 volatile bool stream_flag = false;
 
@@ -47,15 +47,15 @@ extern int nbre_of_bytes;
 
 err_t transfer_data(char* frame, uint16_t length) {
 	if(sizeof(frame) <= MAX_STREAM_SIZE){
-		packet->payload = frame;
-		packet->tot_len = length;
-		packet->len = length;
-		return udp_send(packet_pcb, packet);
+		buf_data->payload = frame;
+		buf_data->tot_len = length;
+		buf_data->len = length;
+		return udp_send(pcb_data, buf_data);
 	}
 	else return ERR_BUF;
 }
 
-void udp_echo_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
+void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
 	int length;
 	err_t ret;
@@ -170,30 +170,57 @@ int command_parser(struct pbuf *p, int regmap[], char* return_buf){
 	else return -1;
 }
 
-void print_app_header()
+int setup_udp_settings(ip_addr_t pc_ipaddr)
 {
-	xil_printf("-----lwIP UDP echo server ------\n\r");
-	xil_printf("UDP packets sent to port %d will be echoed back\n\r", PORT_ECHO);
+	int ret = 0;
+	/* Initialize the regmap for test */
+	for(int i = 0; i<REGMAP_SIZE; i++) regmap[i] = i;
+
+
+	/* create new UDP PCB structure for the data */
+	ret += setup_pcb_data(pcb_data, pc_ipaddr, PORT_DATA);
+	buf_data = pbuf_alloc(PBUF_TRANSPORT,MAX_STREAM_SIZE,PBUF_RAM);
+
+	/* create new UDP PCB structure for the commands */
+	ret += setup_pcb_cmd(pcb_cmd, PORT_CMD);
+
+	xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
+
+	return ret;
 }
 
-int start_application(ip_addr_t pc_ipaddr)
-{
-	struct udp_pcb *pcb;
+int setup_pcb_data(struct udp_pcb *pcb, ip_addr_t pc_ipaddr, uint16_t port){
+
 	err_t err;
-	unsigned port = PORT_ECHO;
-
-	for(int i = 0; i<REGMAP_SIZE; i++){
-		regmap[i] = i;
-		printf("App: regmap[%d] = %d\n", i, regmap[i]);
-	}
-
 
 	/* create new UDP PCB structure */
-	packet_pcb = setup_send_data(packet_pcb, pc_ipaddr, PORT_DATA);
-	packet = pbuf_alloc(PBUF_TRANSPORT,MAX_STREAM_SIZE,PBUF_RAM);
-	echo_buf = pbuf_alloc(PBUF_TRANSPORT,3*REGMAP_SIZE,PBUF_RAM);//5620,PBUF_RAM);
+	pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
+	if (!pcb) {
+		xil_printf("Error creating PCB. Out of Memory\n\r");
+		return -1;
+	}
 
-	/* create new TCP PCB structure */
+	/* bind zynq to specified @port */
+	err = udp_bind(pcb, IP_ANY_TYPE, port); //bind = port we are listenning to (zynq input port)
+	if (err != ERR_OK) {
+		xil_printf("Unable to bind port %d: err = %d\n\r", port, err);
+		return -2;
+	}
+
+	/*connect zynq to pc @ip addr & port*/
+	err = udp_connect(pcb, &pc_ipaddr, port); // connect = the input port of the PC
+	if (err != ERR_OK) {
+		xil_printf("Unable to bind to port %d: err = %d\n\r", port, err);
+		return -2;
+	}
+
+	return 0;
+}
+
+int setup_pcb_cmd(struct udp_pcb *pcb, uint16_t port){
+	err_t err;
+
+	/* create new UDP PCB structure */
 	pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
 	if (!pcb) {
 		xil_printf("Error creating PCB. Out of Memory\n\r");
@@ -203,20 +230,23 @@ int start_application(ip_addr_t pc_ipaddr)
 	/* bind to specified @port */
 	err = udp_bind(pcb, IP_ANY_TYPE, port);
 	if (err != ERR_OK) {
-		xil_printf("Unable to bind to port %d: err = %d\n\r", port, err);
+		xil_printf("Unable to bind port %d: err = %d\n\r", port, err);
 		return -2;
 	}
-	udp_recv(pcb, udp_echo_recv, NULL);
 
-	xil_printf("UDP echo server started @ port %d\n\r", port);
-
-
+	udp_recv(pcb, udp_cmd_recv, NULL);
 	return 0;
+}
+
+void cleanup_udp(void){
+	udp_disconnect(pcb_data);
+	udp_remove(pcb_data);
+	udp_remove(pcb_cmd);
 }
 
 void print_ip(char *msg, ip_addr_t *ip)
 {
-	print(msg);
+	xil_printf("%s", msg);
 	xil_printf("%d.%d.%d.%d\n\r", ip4_addr1(ip), ip4_addr2(ip),
 			ip4_addr3(ip), ip4_addr4(ip));
 }
