@@ -327,7 +327,7 @@ static void setup_rx_bds(XAxiDma_BdRing *rxring)
 			lwip_stats.link.memerr++;
 			lwip_stats.link.drop++;
 #endif
-			printf("unable to alloc pbuf in recv_handler 330\r\n");
+			printf("unable to alloc pbuf in recv_handler\r\n");
 			return;
 		}
 		status = XAxiDma_BdRingAlloc(rxring, 1, &rxbd);
@@ -746,7 +746,7 @@ XStatus init_axi_dma(struct xemac_s *xemac)
 			lwip_stats.link.memerr++;
 			lwip_stats.link.drop++;
 #endif
-			LWIP_DEBUGF(NETIF_DEBUG, ("unable to alloc pbuf in recv_handler 749\r\n"));
+			LWIP_DEBUGF(NETIF_DEBUG, ("unable to alloc pbuf in recv_handler\r\n"));
 			return ERR_IF;
 		}
 		/* Setup the BD. The BD template used in the call to

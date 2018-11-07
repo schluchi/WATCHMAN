@@ -88,7 +88,7 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 	TcpFastTmrFlag = 1;
 
 	// Time out for DHCP
-	if(odd){
+	//if(odd){
 	if(dhcp_timoutcntr > 0){
 		dhcp_timoutcntr--;
 		if(dhcp_timoutcntr%4 == 0){
@@ -96,7 +96,7 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 			else xil_printf("%d...", dhcp_timoutcntr/4);
 		}
 	}
-	}
+	//}
 
 	count_scu_timer++;
 

@@ -108,7 +108,7 @@ int main()
 
 	echo_netif = &server_netif;
 
-	xil_printf("\n\r\n\r------START------\r\n");
+	xil_printf("\n\r\n\r------START------test\r\n");
 
 	/* Initial the interrupt timer, axidma, ... */
 	if(init_interrupts() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
@@ -183,8 +183,8 @@ int main()
 				}
 			}
 			XTime_GetTime(&tEnd);
-//			printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
-//			printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+			printf("Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+			printf("Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
 		}
 	}
 
