@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]C:\Users\Anthony\Documents\Hawaii\WATCHMAN\Vivado_Projects\RealTB_AXI_Stream\sdk\boot_FSBL\Debug\boot_FSBL.elf
+	C:\Users\Anthony\Documents\Hawaii\WATCHMAN\Vivado_Projects\RealTB_AXI_Stream\XilinxBuild\Watchman.sdk\base_zynq_wrapper_hw_platform_0\base_zynq_wrapper.bit
+	C:\Users\Anthony\Documents\Hawaii\WATCHMAN\Vivado_Projects\RealTB_AXI_Stream\sdk\watchdog_test\Debug\watchdog_test.elf
+}

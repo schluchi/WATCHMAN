@@ -22,10 +22,11 @@ src/main.o src/main.o: ../src/main.c \
  ../../log_test_bsp/ps7_cortexa9_0/include/xil_cache.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/xsdps_hw.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/xplatform_info.h \
+ ../../log_test_bsp/ps7_cortexa9_0/include/xil_cache.h ../src/interrupt.h \
+ ../../log_test_bsp/ps7_cortexa9_0/include/xtime_l.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/ff.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/integer.h \
- ../../log_test_bsp/ps7_cortexa9_0/include/ffconf.h \
- ../../log_test_bsp/ps7_cortexa9_0/include/xil_cache.h
+ ../../log_test_bsp/ps7_cortexa9_0/include/ffconf.h ../src/time_hm.h
 
 ../../log_test_bsp/ps7_cortexa9_0/include/xparameters.h:
 
@@ -73,10 +74,16 @@ src/main.o src/main.o: ../src/main.c \
 
 ../../log_test_bsp/ps7_cortexa9_0/include/xplatform_info.h:
 
+../../log_test_bsp/ps7_cortexa9_0/include/xil_cache.h:
+
+../src/interrupt.h:
+
+../../log_test_bsp/ps7_cortexa9_0/include/xtime_l.h:
+
 ../../log_test_bsp/ps7_cortexa9_0/include/ff.h:
 
 ../../log_test_bsp/ps7_cortexa9_0/include/integer.h:
 
 ../../log_test_bsp/ps7_cortexa9_0/include/ffconf.h:
 
-../../log_test_bsp/ps7_cortexa9_0/include/xil_cache.h:
+../src/time_hm.h:

@@ -1,2 +1,2 @@
    text	   data	    bss	    dec	    hex	filename
-  98980	   4248	  26000	 129228	  1f8cc	log_test.elf
+ 100524	   4324	  26064	 130912	  1ff60	log_test.elf
