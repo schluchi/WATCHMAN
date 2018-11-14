@@ -53,8 +53,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 extern bool mount_sd;
 extern int count_timer;
 
-char *Path = "0:/";  //  string pointer to the logical drive number
-static FATFS FS_instance; // File System instance
 FRESULT result;			// FRESULT variable
 
 //----------------------------------------------------
@@ -84,7 +82,7 @@ int main (void)
 	}
 
 	// Mount SD Card and initialize device
-	result = f_mount(&FS_instance,Path, 1);
+	result = mount_sd_card();
 	if (result != 0) {
 		xil_printf("SD card mount failed %d\r\n", result);
 		init_flag = false;

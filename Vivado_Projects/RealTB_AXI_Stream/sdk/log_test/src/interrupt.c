@@ -23,65 +23,24 @@ unsigned int options;
 bool mount_sd = false;
 
 
-static FIL file1;		// File instance
 FRESULT result;			// FRESULT variable
-static char FileName[32] = "RECORDS.txt"; // name of the log
-static char *Log_File; // pointer to the log
 int count_timer=0; // Counter for the push button
-unsigned int BytesWr; // Bytes written
-int len=0;			// length of the string
-int accum=0;		//  variable holding the EOF
-u8 Buffer_logger[64] __attribute__ ((aligned(32))); // Buffer should be word aligned (multiple of 4)
-u32 Buffer_size = 64;
+
 
 void timer_scu_callback(XScuTimer * TimerInstance)
 {
 	static bool first_time = true;
-	time_cplt time;
-	gettime_hm(&time);
+
 
 	/*sprintf : Composes a string with the same text that would be printed if format was used on printf
 	 it is used here to organise the time in HH:MM:SS format*/
 
     if(mount_sd){
-    	xil_printf("%d.%d.%d - %d:%d:%d Event: Timer Triggered saved\r\n", time.day, time.month, time.year, time.hour, time.minute, time.second);
-		sprintf(Buffer_logger, "%d.%d.%d - %d:%d:%d Event: Timer Triggered saved\r\n", time.day, time.month, time.year, time.hour, time.minute, time.second);
-
-		// Open log for writing
-		Log_File = (char *)FileName;
 		if(first_time){
-			result = f_open(&file1, Log_File, FA_CREATE_ALWAYS | FA_WRITE | FA_READ);
+			result = create_logfile();
 			first_time = false;
 		}
-		else result = f_open(&file1, Log_File,FA_WRITE);
-		if (result!=0) {
-			xil_printf("%d) f open failed = %d\r\n", count_timer, result);
-		}
-		else{
-			// Point to the end of log
-			result = f_lseek(&file1,accum);
-			if (result!=0) {
-				xil_printf("%d) f_lseek failed = %d\r\n", count_timer, result);
-			}
-			else{
-				// Write to log
-				result = f_write(&file1, (const void*)Buffer_logger, Buffer_size,&BytesWr);
-				if (result!=0) {
-					xil_printf("%d) f_write failed = %d\r\n", count_timer, result);
-				}
-				else{
-					// Increment file EOF pointer
-					len = strlen(Buffer_logger);
-					accum=accum+len;
-
-					 //Close file.
-					result = f_close(&file1);
-					if (result!=0) {
-						xil_printf("%d) f_close failed = %d\r\n", count_timer, result);
-					}
-				}
-			}
-		}
+		result = write_logfile("testt", 5);
     }
     else xil_printf("SD card not mounted\r\n");
     // Increment counter

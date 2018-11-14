@@ -8,16 +8,19 @@ LD_SRCS += \
 
 C_SRCS += \
 ../src/interrupt.c \
+../src/log_file.c \
 ../src/main.c \
 ../src/time_hm.c 
 
 OBJS += \
 ./src/interrupt.o \
+./src/log_file.o \
 ./src/main.o \
 ./src/time_hm.o 
 
 C_DEPS += \
 ./src/interrupt.d \
+./src/log_file.d \
 ./src/main.d \
 ./src/time_hm.d 
 

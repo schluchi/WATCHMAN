@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include "xtime_l.h"
 
+// Structure to get or set the time
 typedef struct time_cplt_st{
 	int year;
 	int month;

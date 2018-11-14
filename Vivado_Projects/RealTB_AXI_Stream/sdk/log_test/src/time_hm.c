@@ -7,6 +7,7 @@
 
 #include "time_hm.h"
 
+// Variable which contain the offset which can be changed with settime_hm
 time_cplt offset_time = {
 	.year = 2000,
 	.month = 1,
@@ -17,10 +18,23 @@ time_cplt offset_time = {
 	.milisecond = 0
 	};
 
+// Variable which contain the value of the XTime_GetTime when the time was set
 uint64_t offset_timer = 0;
-
+// "Constant" wich contain the number of day for every month (ex: january = day_per_mont[1])
 int day_per_month[13] = {(int)NULL, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
+/****************************************************************************/
+/**
+* @brief	Get the time (year, month, day, hour,...) depending on the offset.
+*
+* @param	t: Pointer to the time_cplt structure wich will return the current
+* 				time.
+*
+* @return	None.
+*
+* @note		None.
+*
+****************************************************************************/
 void gettime_hm(time_cplt* t){
 	XTime time;
 	XTime_GetTime(&time);
@@ -67,6 +81,19 @@ void gettime_hm(time_cplt* t){
 	}
 }
 
+/****************************************************************************/
+/**
+* @brief	Set the time (year, month, day, hour,...) meaning set the offset.
+*
+* @param	t: Pointer to the time_cplt structure wich will be written in the
+* 				global offset value
+*
+* @return	None.
+*
+* @note		When this function, we need to save the state of the Global Timer
+* 			Counter Register (XTime_GetTime)
+*
+****************************************************************************/
 void settime_hm(time_cplt* t){
 	offset_time.milisecond = t->milisecond % 1000;
 	offset_time.second = t->second % 60;
@@ -82,6 +109,19 @@ void settime_hm(time_cplt* t){
 	XTime_GetTime(&offset_timer);
 }
 
+
+/****************************************************************************/
+/**
+* @brief	Return if the year is leap or not
+*
+* @param	year: the year to be tested
+*
+* @return	- True: if the year is leap
+* 			- False: if the year is not leap
+*
+* @note		None.
+*
+****************************************************************************/
 bool isALeapYear(int year){
 	bool ret;
 	/*

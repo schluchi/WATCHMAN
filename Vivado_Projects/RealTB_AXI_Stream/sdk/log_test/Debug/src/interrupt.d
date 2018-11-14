@@ -20,7 +20,7 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/xil_exception.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/xscutimer.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
- ../../log_test_bsp/ps7_cortexa9_0/include/ff.h \
+ ../src/log_file.h ../../log_test_bsp/ps7_cortexa9_0/include/ff.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/integer.h \
  ../../log_test_bsp/ps7_cortexa9_0/include/ffconf.h ../src/time_hm.h
 
@@ -67,6 +67,8 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
 ../../log_test_bsp/ps7_cortexa9_0/include/xscutimer.h:
 
 ../../log_test_bsp/ps7_cortexa9_0/include/xscutimer_hw.h:
+
+../src/log_file.h:
 
 ../../log_test_bsp/ps7_cortexa9_0/include/ff.h:
 
