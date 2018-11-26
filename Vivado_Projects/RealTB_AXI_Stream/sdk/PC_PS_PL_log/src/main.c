@@ -109,7 +109,7 @@ int main()
 
 	echo_netif = &server_netif;
 
-	xil_printf("\n\r\n\r------START------test\r\n");
+	xil_printf("\n\r\n\r------START------\r\n");
 
 	/* Initial the interrupt timer, axidma, ... */
 	if(init_interrupts() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
