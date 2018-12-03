@@ -8,18 +8,15 @@ LD_SRCS += \
 
 C_SRCS += \
 ../src/interrupt.c \
-../src/main.c \
-../src/xscuwdt_intr_example.c 
+../src/main.c 
 
 OBJS += \
 ./src/interrupt.o \
-./src/main.o \
-./src/xscuwdt_intr_example.o 
+./src/main.o 
 
 C_DEPS += \
 ./src/interrupt.d \
-./src/main.d \
-./src/xscuwdt_intr_example.d 
+./src/main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

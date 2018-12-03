@@ -8,7 +8,7 @@
 #include "interrupt.h"
 
 static XScuTimer TimerScuInstance;
-XScuWdt WdtScuInstance;
+static XScuWdt WdtScuInstance;
 static XScuGic Intc;
 int count_timer = 0;
 int count_wdt = 0;

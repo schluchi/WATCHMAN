@@ -9,8 +9,10 @@ LD_SRCS += \
 C_SRCS += \
 ../src/axis_peripheral.c \
 ../src/data_test.c \
+../src/features_extraction.c \
+../src/file_hm.c \
+../src/global.c \
 ../src/interrupt.c \
-../src/log_file.c \
 ../src/main.c \
 ../src/platform_mb.c \
 ../src/platform_ppc.c \
@@ -23,8 +25,10 @@ C_SRCS += \
 OBJS += \
 ./src/axis_peripheral.o \
 ./src/data_test.o \
+./src/features_extraction.o \
+./src/file_hm.o \
+./src/global.o \
 ./src/interrupt.o \
-./src/log_file.o \
 ./src/main.o \
 ./src/platform_mb.o \
 ./src/platform_ppc.o \
@@ -37,8 +41,10 @@ OBJS += \
 C_DEPS += \
 ./src/axis_peripheral.d \
 ./src/data_test.d \
+./src/features_extraction.d \
+./src/file_hm.d \
+./src/global.d \
 ./src/interrupt.d \
-./src/log_file.d \
 ./src/main.d \
 ./src/platform_mb.d \
 ./src/platform_ppc.d \

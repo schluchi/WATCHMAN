@@ -56,13 +56,18 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xaxidma_hw.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xdebug.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_cache.h \
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt.h \
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt_hw.h \
  ../src/data_test.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/udp.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
  ../src/udp_peripheral.h ../src/time_hm.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xtime_l.h \
  ../src/global.h ../src/axis_peripheral.h \
- ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h \
+ ../src/file_hm.h ../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h \
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h \
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h
 
 ../src/interrupt.h:
 
@@ -180,6 +185,10 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_cache.h:
 
+../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt.h:
+
+../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt_hw.h:
+
 ../src/data_test.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/udp.h:
@@ -197,3 +206,11 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
 ../src/axis_peripheral.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h:
+
+../src/file_hm.h:
+
+../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h:
+
+../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h:
+
+../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h:
