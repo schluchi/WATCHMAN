@@ -27,13 +27,11 @@ int main()
 	/* Initialize the global variables */
 	init_global_var();
 
-	/* Initialize "echo_netif" to avoid warnings with function "xemac_add"*/
+	/* Initialize "echo_netif" to avoid warnings with function "xemac_add" */
 	echo_netif = &server_netif;
 
 	// Mount SD Card and create log file
 	FRESULT result = mount_sd_card();
-	if (result != 0) return -1;
-	result = create_logfile();
 	if (result != 0) return -1;
 
 	/* Initial the interrupt timer, axidma, ... */
@@ -46,6 +44,9 @@ int main()
 	/* Initilize the LWip */
 	lwip_init();
 
+	/* now enable interrupts */
+	enable_interrupts();
+
 	/* Add network interface to the netif_list, and set it as default */
 	ipaddr.addr = 0;
 	gw.addr = 0;
@@ -55,9 +56,6 @@ int main()
 		printf("-------END-------\r\n");
 		return -1;
 	}
-
-	/* now enable interrupts */
-	enable_interrupts();
 
 	/* specify that the network if is up */
 	netif_set_default(echo_netif);
@@ -79,10 +77,16 @@ int main()
 	/* Set the UDP connections and callback for data and commands */
 	setup_udp_settings(pc_ipaddr);
 
+	flag_while_loop = true;
 	while (run_flag){
+		if(flag_assertion) break;
 		if(flag_ttcps_timer){
 			update_timefile();
 			flag_ttcps_timer = false;
+		}
+		if(flag_scu_timer){
+			XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+			flag_scu_timer = false;
 		}
 	}
 

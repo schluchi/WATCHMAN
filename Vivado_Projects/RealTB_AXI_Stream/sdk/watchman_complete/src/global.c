@@ -26,7 +26,12 @@ void init_global_var(void){
 	PtrData = (int *)malloc(NBR_DATA);
 	nbre_of_bytes = 0;
 	flag_ttcps_timer = false;
+	flag_scu_timer = false;
 	flag_timefile = false;
+	list = malloc(sizeof(struct data_list_st));
+	list->next = NULL;
+	flag_assertion = false;
+	flag_while_loop = false;
 }
 
 /****************************************************************************/

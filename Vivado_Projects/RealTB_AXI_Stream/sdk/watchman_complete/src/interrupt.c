@@ -58,7 +58,6 @@ static int ResetRxCntr = 0;
 static XScuTimer TimerScuInstance;
 static XTtcPs TimerTtcPsInstance;
 static XScuGic TestCompInstance;
-static XScuWdt WdtScuInstance;
 static XScuGic Intc;
 
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
@@ -66,6 +65,29 @@ char dummy_data[MAX_STREAM_SIZE];
 uint16_t length_dummy_data;
 static XTime tStart_dma, tEnd_dma;
 static XTime tStart_wdt, tEnd_wdt;
+
+/****************************************************************************/
+/**
+* @brief	Callback for assertion
+*
+* @param	File: filename where the assertion is called
+* @param	Line: line number in the File
+*
+* @return	None
+*
+* @note		When this callback is called, the filename and line number are
+* 			stored in the log file, and then the programm stops
+*
+****************************************************************************/
+static void AssertPrint(const char8 *File, s32 Line)
+{
+	char text[100];
+	sprintf((char *)text, "Assert in file %s @ line %d", File, (int)Line);
+	write_logfile(text, strlen(text));
+	flag_assertion = true; // stop the app
+	xil_printf("%s : strlen = %d\r\n", text, strlen(text));
+	//Xil_AssertWait = 0; // avoid the infinity loop
+}
 
 /****************************************************************************/
 /**
@@ -81,7 +103,7 @@ static XTime tStart_wdt, tEnd_wdt;
 void timer_scu_callback(XScuTimer * TimerInstance)
 {
 	count_scu_timer++;
-	XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+	flag_scu_timer = true;
 
 #ifndef USE_SOFTETH_ON_ZYNQ
 	/* For providing an SW alternative for the SI #692601. Under heavy
@@ -103,8 +125,9 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 	//xemacpsif_resetrx_on_no_rxdata(echo_netif); // Now the function is called every 250ms
 #endif
 
-	// Need to call this function every 250ms
-	xemacif_input(echo_netif);
+	// Need to call this function every 250ms, but not before the network is set
+	if(flag_while_loop) xemacif_input(echo_netif);
+	if((!flag_while_loop) && (!flag_assertion)) XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
 
 	// Clear timer's interrupt
 	XScuTimer_ClearInterruptStatus(TimerInstance);
@@ -128,6 +151,7 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
 	if ((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0){
 		flag_ttcps_timer = true;
+		if(!flag_while_loop) update_timefile();
 	}
 }
 
@@ -480,6 +504,7 @@ int setup_scu_wdt_int(void){
 	else{
 		xil_printf("%s: Watch dog has not expired\r\n", __func__);
 		create_wdtfile();
+		create_logfile();
 	}
 	create_timefile();
 	flag_timefile = true;
@@ -648,6 +673,9 @@ void enable_interrupts()
 	XScuWdt_LoadWdt(&WdtScuInstance, WDT_LOAD_VALUE);
 	XTime_GetTime(&tStart_wdt);
 
+	/* Catch assertion */
+	Xil_AssertSetCallback((Xil_AssertCallback) AssertPrint);
+
 	return;
 }
 
@@ -665,6 +693,7 @@ void enable_interrupts()
 int init_interrupts()
 {
 	int Status;
+
 	Status = setup_scu_timer_int();
 	if(Status != XST_SUCCESS){
 		xil_printf("In %s: Scu timer failed...\r\n",

@@ -1,6 +1,4 @@
 src/global.o src/global.o: ../src/global.c ../src/global.h \
- ../src/axis_peripheral.h \
- ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xaxidma.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xstatus.h \
@@ -18,6 +16,8 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xpseudo_asm_gcc.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xdebug.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_cache.h \
+ ../src/axis_peripheral.h \
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xparameters.h \
  ../src/interrupt.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
@@ -72,10 +72,6 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 
 ../src/global.h:
 
-../src/axis_peripheral.h:
-
-../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h:
-
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xaxidma.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:
@@ -109,6 +105,10 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xdebug.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_cache.h:
+
+../src/axis_peripheral.h:
+
+../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xparameters.h:
 

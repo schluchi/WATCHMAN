@@ -33,6 +33,23 @@
 
 #define NBR_DATA	1000
 
+struct data_axi_st{
+	int64_t wdo_time;
+	int64_t dig_time;
+	int32_t trigger;
+	int32_t data[16][16];
+};
+
+union data_axi_un{
+	struct data_axi_st data_struct;
+	int32_t data_array[261];
+};
+
+struct data_list_st{
+	union data_axi_un data;
+	struct data_list_st* next;
+};
+
 /*** Function prototype *********************************************/
 void XAxiDma_SimpleTransfer_Hej(XAxiDma *InstancePtr, UINTPTR BuffAddr, int LengthOfBytes);
 int dma_transfert(int start);

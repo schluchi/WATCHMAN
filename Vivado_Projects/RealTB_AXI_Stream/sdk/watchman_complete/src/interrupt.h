@@ -55,6 +55,7 @@ void dhcp_fine_tmr();
 void dhcp_coarse_tmr();
 #endif
 
+static void AssertPrint(const char8 *File, s32 Line);
 void timer_scu_callback(XScuTimer * TimerInstance);
 void timer_ttcps_callback(XTtcPs * TimerInstance);
 void axidma_rx_callback(XAxiDma* AxiDmaInstance);

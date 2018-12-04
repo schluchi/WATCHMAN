@@ -88,6 +88,7 @@ FRESULT write_logfile(char *tmp_text, uint length)
 		result = f_open(&log_file, log_filename,FA_WRITE);
 		if(result != FR_OK) printf("Write log file failed during f_open, result = %d\r\n", result);
 		else {
+			file_index = file_size(&log_file);
 			result = f_lseek(&log_file,file_index);
 			if(result != FR_OK) printf("Write log file failed during f_lseek, result = %d\r\n", result);
 			else{
@@ -102,7 +103,7 @@ FRESULT write_logfile(char *tmp_text, uint length)
 						result = f_close(&log_file);
 						if(result != FR_OK) printf("Write log file failed during f_close, result = %d\r\n", result);
 					}
-					file_index += nbr_byte;
+					//file_index += nbr_byte;
 				}
 			}
 		}
