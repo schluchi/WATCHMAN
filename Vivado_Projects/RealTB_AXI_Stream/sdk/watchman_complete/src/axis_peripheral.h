@@ -37,12 +37,12 @@ typedef struct data_axi_st{
 	int64_t dig_time;
 	int32_t trigger;
 	int32_t	wdo_id;
-	int32_t data[16][16];
+	int32_t data[16][32];
 }data_axi;
 
 typedef union data_axi_union{
 	struct data_axi_st data_struct;
-	int32_t data_array[262];
+	int32_t data_array[518];
 }data_axi_un;
 
 typedef struct data_list_st data_list;
