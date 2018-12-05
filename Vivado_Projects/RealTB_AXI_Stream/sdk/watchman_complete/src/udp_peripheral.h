@@ -16,7 +16,6 @@
 #include "stdbool.h"
 #include "time_hm.h"
 #include "interrupt.h"
-#include "global.h"
 
 #if defined (__arm__) || defined (__aarch64__)
 #include "xil_printf.h"

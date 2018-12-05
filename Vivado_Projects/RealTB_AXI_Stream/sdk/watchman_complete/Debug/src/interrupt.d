@@ -63,7 +63,7 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
  ../src/udp_peripheral.h ../src/time_hm.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xtime_l.h \
- ../src/global.h ../src/axis_peripheral.h \
+ ../src/axis_peripheral.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../src/file_hm.h ../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h \
@@ -200,8 +200,6 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
 ../src/time_hm.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xtime_l.h:
-
-../src/global.h:
 
 ../src/axis_peripheral.h:
 

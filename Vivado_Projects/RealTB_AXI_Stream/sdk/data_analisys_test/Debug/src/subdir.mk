@@ -7,17 +7,17 @@ LD_SRCS += \
 ../src/lscript.ld 
 
 C_SRCS += \
-../src/features_extraction.c \
+../src/data_analysis.c \
 ../src/main.c \
 ../src/platform.c 
 
 OBJS += \
-./src/features_extraction.o \
+./src/data_analysis.o \
 ./src/main.o \
 ./src/platform.o 
 
 C_DEPS += \
-./src/features_extraction.d \
+./src/data_analysis.d \
 ./src/main.d \
 ./src/platform.d 
 

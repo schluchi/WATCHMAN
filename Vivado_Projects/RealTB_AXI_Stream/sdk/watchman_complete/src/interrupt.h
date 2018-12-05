@@ -29,7 +29,6 @@
 #include "axis_peripheral.h"
 #include "xtime_l.h"
 #include "file_hm.h"
-#include "global.h"
 
 #define INTC_DEVICE_ID		XPAR_SCUGIC_SINGLE_DEVICE_ID
 #define TIMER_DEVICE_ID		XPAR_SCUTIMER_DEVICE_ID

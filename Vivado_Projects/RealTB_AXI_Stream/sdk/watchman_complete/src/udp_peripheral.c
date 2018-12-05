@@ -32,12 +32,19 @@
 
 #include "udp_peripheral.h"
 
+/* Global variables */
 int regmap[REGMAP_SIZE];
-
 struct udp_pcb *pcb_data;
 struct udp_pcb *pcb_cmd;
 struct pbuf *buf_data;
 char return_buf[MAX_ARRAY_SIZE];
+
+/* Extern global variables */
+extern volatile int count_ttcps_timer;
+extern volatile int count_scu_timer;
+extern int nbre_of_bytes;
+extern volatile bool run_flag;
+extern volatile bool stream_flag;
 
 /****************************************************************************/
 /**

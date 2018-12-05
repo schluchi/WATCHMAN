@@ -7,6 +7,12 @@
 
 #include "axis_peripheral.h"
 
+/* Extern lobal variables */
+extern int* PtrData;
+extern char axidma_error;
+extern char axidma_rx_done;
+extern XAxiDma AxiDmaInstance;
+
 /****************************************************************************
 *
 * This is the DMA Simple Packet Transfert Function

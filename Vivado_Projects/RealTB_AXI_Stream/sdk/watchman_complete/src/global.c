@@ -7,6 +7,25 @@
 
 #include "global.h"
 
+/* Global variables */
+struct netif *echo_netif;
+volatile int count_ttcps_timer;
+volatile int count_scu_timer;
+volatile bool run_flag;
+int *PtrData;
+volatile bool stream_flag;
+volatile bool flag_ttcps_timer;
+volatile bool flag_scu_timer;
+volatile bool flag_timefile;
+XAxiDma AxiDmaInstance;
+XScuWdt WdtScuInstance;
+char axidma_error;
+char axidma_rx_done;
+int nbre_of_bytes;
+data_list* list;
+volatile bool flag_assertion;
+volatile bool flag_while_loop;
+
 /****************************************************************************/
 /**
 * @brief	Initiate all the global variables declared in global.h file
@@ -47,5 +66,10 @@ void init_global_var(void){
 ****************************************************************************/
 void cleanup_global_var(void){
 	free(PtrData);
+	do{
+		data_list* tmp = list->next;
+		free(list);
+		list = tmp;
+	} while(list != NULL);
 }
 

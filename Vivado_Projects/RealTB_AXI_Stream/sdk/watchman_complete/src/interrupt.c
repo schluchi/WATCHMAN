@@ -55,16 +55,31 @@
 static int ResetRxCntr = 0;
 #endif
 
+/* Global variables */
 static XScuTimer TimerScuInstance;
 static XTtcPs TimerTtcPsInstance;
 static XScuGic TestCompInstance;
 static XScuGic Intc;
-
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
 char dummy_data[MAX_STREAM_SIZE];
 uint16_t length_dummy_data;
 static XTime tStart_dma, tEnd_dma;
 static XTime tStart_wdt, tEnd_wdt;
+
+/* Extern global variables */
+extern volatile int count_ttcps_timer;
+extern volatile int count_scu_timer;
+extern XAxiDma AxiDmaInstance;
+extern XScuWdt WdtScuInstance;
+extern char axidma_error;
+extern char axidma_rx_done;
+extern struct netif *echo_netif;
+extern int *PtrData;
+extern volatile bool flag_ttcps_timer;
+extern volatile bool flag_scu_timer;
+extern volatile bool flag_timefile;
+extern volatile bool flag_assertion;
+extern volatile bool flag_while_loop;
 
 /****************************************************************************/
 /**

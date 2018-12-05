@@ -18,7 +18,6 @@
 #include "xparameters.h"
 #include "interrupt.h"
 #include "xtime_l.h"
-#include "global.h"
 
 /*** Definition of Registers ****************************************/
 #define	CONTROL_REG			0
@@ -33,21 +32,23 @@
 
 #define NBR_DATA	1000
 
-struct data_axi_st{
+typedef struct data_axi_st{
 	int64_t wdo_time;
 	int64_t dig_time;
 	int32_t trigger;
+	int32_t	wdo_id;
 	int32_t data[16][16];
-};
+}data_axi;
 
-union data_axi_un{
+typedef union data_axi_union{
 	struct data_axi_st data_struct;
-	int32_t data_array[261];
-};
+	int32_t data_array[262];
+}data_axi_un;
 
+typedef struct data_list_st data_list;
 struct data_list_st{
-	union data_axi_un data;
-	struct data_list_st* next;
+	data_axi_un data;
+	data_list* next;
 };
 
 /*** Function prototype *********************************************/

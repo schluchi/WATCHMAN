@@ -48,9 +48,11 @@
 #include <stdio.h>
 #include "platform.h"
 #include "xil_printf.h"
-#include "features_extraction.h"
 #include "xtime_l.h"
+#include "data_analysis.h"
 
+extern double period[512][16][32];
+extern int16_t pedestal[512][16][32];
 
 int main()
 {
@@ -63,18 +65,46 @@ int main()
 	for(i=64;i<128;i++) data[i]=0;
 	init_platform();
 
-    printf("--------START-------\n\r");
+    printf("\r\n\r\n--------START-------\n\r");
     length = sizeof(data)/4;
     for(i=0; i<length; i++) data[i] += 1024;
     //for(i=0; i<length; i++) printf("%d) %d\n\r",i,data[i]);
     XTime_GetTime(&tStart);
     extract_features(1024, data, length, &features, &tInt);
     XTime_GetTime(&tEnd);
+    printf("-------extract_fetures-------\r\n");
     printf("inter     Output took %llu clock cycles.\n", 2*(tInt - tStart));
 	printf("inter     Output took %.2f us.\n",1.0 * (tInt - tStart) / (COUNTS_PER_SECOND/1000000));
-	printf("     Output took %llu clock cycles.\n", 2*(tEnd - tStart));
-		printf("     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+	printf("total     Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+	printf("total     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
     printf("amplitude=%d | time=%f\n\r", features.amplitude, features.time);
+
+    pedestal[1][1][1] = 1000;
+    int16_t mesure = 500;
+    XTime_GetTime(&tStart);
+	int16_t Vc = substract_pedestal(mesure, 1024,1,1,1);
+    XTime_GetTime(&tEnd);
+	printf("-----substract_pedestal------\r\n");
+	printf("total     Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+	printf("total     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+	printf("mesure = %d -> Vc = %d\r\n", mesure, Vc);
+
+    period[1][1][1] = 30;
+    XTime_GetTime(&tStart);
+    int16_t Vo = capacitor_discharge(Vc, 10, 40, 1,1,1);
+    XTime_GetTime(&tEnd);
+    printf("-----capacitor_discharge-----\r\n");
+    printf("total     Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+	printf("total     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+    printf("Vc = %d -> Vo = %d\r\n", Vc, Vo);
+
+    XTime_GetTime(&tStart);
+	Vo = correct_data(mesure, 10, 40, 1024, 1, 1, 1);
+	XTime_GetTime(&tEnd);
+	printf("--------correct_data--------\r\n");
+	printf("total     Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+	printf("total     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+	printf("Vo = %d\r\n", Vo);
 
     cleanup_platform();
     printf("-------END----------\n\r");

@@ -14,6 +14,15 @@
 #include "file_hm.h"
 #include "global.h"
 
+/* Extern global variables */
+extern struct netif *echo_netif;
+extern volatile bool run_flag;
+extern volatile bool flag_ttcps_timer;
+extern volatile bool flag_scu_timer;
+extern XScuWdt WdtScuInstance;
+extern volatile bool flag_assertion;
+extern volatile bool flag_while_loop;
+
 int main()
 {
 	ip_addr_t ipaddr, netmask, gw, pc_ipaddr;

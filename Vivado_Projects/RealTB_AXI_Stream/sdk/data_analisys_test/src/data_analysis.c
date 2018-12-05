@@ -5,7 +5,31 @@
  *      Author: Anthony
  */
 
-#include "features_extraction.h"
+#include "data_analysis.h"
+
+double period[512][16][32];
+int16_t pedestal[512][16][32];
+
+int16_t capacitor_discharge(int16_t Vc, int64_t t1, int64_t t2, int32_t wdo_id, int ch, int sample){
+	double t = (double)(t2 - t1);
+	int16_t Vo;
+	Vo = (int16_t)((double)Vc / (exp(-t/period[wdo_id][ch][sample])));
+	return Vo;
+}
+
+int16_t substract_pedestal(int16_t v, int16_t vped, int32_t wdo_id, int ch, int sample){
+	int16_t ret;
+	ret = v - pedestal[wdo_id][ch][sample] + vped;
+	return ret;
+}
+
+int16_t correct_data(int16_t mes, int64_t t1, int64_t t2, int16_t vped, int32_t wdo_id, int ch, int sample){
+	int16_t Vo, Vc;
+	double t = (double)(t2 - t1);
+	Vc = mes - pedestal[wdo_id][ch][sample] + vped;
+	Vo = (int16_t)((double)Vc / (exp(-t/period[wdo_id][ch][sample])));
+	return Vo;
+}
 
 void extract_features(int vped, int* data, int length, features_ext* features, XTime* tInt){
 	int i, sample, amplitude;
