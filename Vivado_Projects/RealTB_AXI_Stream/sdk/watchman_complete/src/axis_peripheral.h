@@ -18,31 +18,26 @@
 #include "xparameters.h"
 #include "interrupt.h"
 #include "xtime_l.h"
+#include "data_analysis.h"
 
-/*** Definition of Registers ****************************************/
-#define	CONTROL_REG			0
-#define	NBR_OF_PACKETS_REG	1
-#define	CONTENT_PACKET_1	2
-#define	MODE_REG			3
+#define SIZE_DATA_ARRAY 518*4 // int32_t is 4 bytes
 
-// Modes for MODE REGISTER
-#define	RAMP_MODE			0
-#define	SAW_MODE			1
-#define	BIT_MODE			2
-
-#define NBR_DATA	1000
+#define TRIG_SHIFT		0
+#define LAST_SHIFT		4
+#define	TOO_LONG_SHIFT	8
+#define MASK_INFO		0xF
 
 typedef struct data_axi_st{
-	int64_t wdo_time;
-	int64_t dig_time;
-	int32_t trigger;
-	int32_t	wdo_id;
-	int32_t data[16][32];
+	uint64_t wdo_time;
+	uint64_t dig_time;
+	uint32_t info;
+	uint32_t wdo_id;
+	uint32_t data[16][32];
 }data_axi;
 
 typedef union data_axi_union{
 	struct data_axi_st data_struct;
-	int32_t data_array[518];
+	uint32_t data_array[SIZE_DATA_ARRAY];
 }data_axi_un;
 
 typedef struct data_list_st data_list;
@@ -53,6 +48,7 @@ struct data_list_st{
 
 /*** Function prototype *********************************************/
 void XAxiDma_SimpleTransfer_Hej(XAxiDma *InstancePtr, UINTPTR BuffAddr, int LengthOfBytes);
-int dma_transfert(int start);
+void dma_first_adress(void);
+int dma_received_data(void);
 
 #endif /* SRC_AXIS_PERIPHERAL_H_ */

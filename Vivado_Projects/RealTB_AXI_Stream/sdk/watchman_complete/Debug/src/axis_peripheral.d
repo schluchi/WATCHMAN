@@ -68,7 +68,8 @@ src/axis_peripheral.o src/axis_peripheral.o: ../src/axis_peripheral.c \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xtime_l.h \
  ../src/file_hm.h ../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h \
- ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h \
+ ../src/data_analysis.h
 
 ../src/axis_peripheral.h:
 
@@ -213,3 +214,5 @@ src/axis_peripheral.o src/axis_peripheral.o: ../src/axis_peripheral.c \
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h:
+
+../src/data_analysis.h:

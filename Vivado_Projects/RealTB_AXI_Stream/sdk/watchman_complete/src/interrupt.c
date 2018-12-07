@@ -58,12 +58,10 @@ static int ResetRxCntr = 0;
 /* Global variables */
 static XScuTimer TimerScuInstance;
 static XTtcPs TimerTtcPsInstance;
-static XScuGic TestCompInstance;
 static XScuGic Intc;
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
 char dummy_data[MAX_STREAM_SIZE];
 uint16_t length_dummy_data;
-static XTime tStart_dma, tEnd_dma;
 static XTime tStart_wdt, tEnd_wdt;
 
 /* Extern global variables */
@@ -94,7 +92,7 @@ extern volatile bool flag_while_loop;
 * 			stored in the log file, and then the programm stops
 *
 ****************************************************************************/
-static void AssertPrint(const char8 *File, s32 Line)
+void AssertPrint(const char8 *File, s32 Line)
 {
 	char text[100];
 	sprintf((char *)text, "Assert in file %s @ line %d", File, (int)Line);
@@ -201,36 +199,14 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	 * processing.
 	 */
 	if ((IrqStatus & XAXIDMA_IRQ_ERROR_MASK)) {
-		axidma_error = 1;
+		axidma_error = true;
 		return;
 	}
 
 	/* If completion interrupt is asserted, then set RxDone flag */
 	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
-		transfer_data(PtrData, NBR_DATA*4);
-		XTime_GetTime(&tEnd_dma);
-		axidma_rx_done = 1;
-		xil_printf("TIMING DMA TRANFSERT:\r\n");
-		printf("     Output took %llu clock cycles.\n", 2*(tEnd_dma - tStart_dma));
-		printf("     Output took %.2f us.\n",1.0 * (tEnd_dma - tStart_dma) / (COUNTS_PER_SECOND/1000000));
-		//printf("     Output took %.2f ms.\n",1.0 * (tEnd_dma - tStart_dma) / (COUNTS_PER_SECOND/1000));
-		//printf("Bandwidth:%.2f Mbit/s\r\n",PacketsToSend*32/(1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000)) );
+		axidma_rx_done = true;
 	}
-}
-
-/****************************************************************************/
-/**
-* @brief	Callback when the dma start a transfer
-*
-* @param	callbackInst: pointer on the testcomponent's instance
-*
-* @return	None
-*
-* @note		This callback is used onlay the mesure the duration of a tansfer
-*
-****************************************************************************/
-void testcomponent_callback(void *callbackInst){
-	XTime_GetTime(&tStart_dma);
 }
 
 /****************************************************************************/
@@ -444,31 +420,8 @@ int setup_axidma_int(void)
 	reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET, XAXIDMA_CR_OFFSET);
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET,XAXIDMA_CR_OFFSET,reg & !XAXIDMA_CR_RUNSTOP_MASK);
 
-	axidma_error = 0;
-	axidma_rx_done = 0;
-	return Status;
-}
-
-/****************************************************************************/
-/**
-* @brief	Setup the testcomponent interrupt
-*
-* @param	None
-*
-* @return	XST_SUCCESS or XST_FAILURE (defined in xstatus.h)
-*
-* @note		-
-*
-****************************************************************************/
-int setup_test_component_int(void){
-	int *regbank;
-	int Status = XST_SUCCESS;
-
-	regbank = XPAR_AXIS_TEST_COMPONENT_0_S00_AXI_BASEADDR;
-	regbank[CONTROL_REG] = 0;			// Stop
-	regbank[NBR_OF_PACKETS_REG] = 0;	// Nbr of packets = 0
-	regbank[CONTENT_PACKET_1] = 0;		// Content of 1st packet = 0
-
+	axidma_error = false;
+	axidma_rx_done = false;
 	return Status;
 }
 
@@ -612,19 +565,6 @@ int setup_interrupts(void)
 	 * interrupt for the device occurs, the handler defined above performs
 	 * the specific interrupt processing for the device.
 	 */
-	XScuGic_RegisterHandler(INTC_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR,
-					(Xil_ExceptionHandler)testcomponent_callback,
-					(void *)&TestCompInstance);
-	/*
-	 * Enable the interrupt for test component.
-	 */
-	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
-
-	/*
-	 * Connect the device driver handler that will be called when an
-	 * interrupt for the device occurs, the handler defined above performs
-	 * the specific interrupt processing for the device.
-	 */
 	XScuGic_RegisterHandler(INTC_BASE_ADDR, WDT_IRPT_INTR,
 					(Xil_ExceptionHandler)wdt_scu_callback,
 					(void *)&WdtScuInstance);
@@ -637,7 +577,6 @@ int setup_interrupts(void)
 	XScuGic_SetPriorityTriggerType(&Intc, TIMER_IRPT_INTR, 0xA1, 0x3);
 	XScuGic_SetPriorityTriggerType(&Intc, TTC_TICK_INTR_ID, 0xA2, 0x3);
 	XScuGic_SetPriorityTriggerType(&Intc, XPAR_FABRIC_AXI_DMA_0_S2MM_INTROUT_INTR, 0xA3, 0x3);
-	XScuGic_SetPriorityTriggerType(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR, 0xA0, 0x3);
 	XScuGic_SetPriorityTriggerType(&Intc, WDT_IRPT_INTR, 0xA4, 0x3);
 
 	return Status;
@@ -671,8 +610,6 @@ void enable_interrupts()
 	XTtcPs_Start(&TimerTtcPsInstance);
 
 	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
-
-	XScuGic_Enable(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
 
 	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
 	XScuWdt_SetControlReg(&WdtScuInstance, Reg | XSCUWDT_CONTROL_IT_ENABLE_MASK);
@@ -727,12 +664,6 @@ int init_interrupts()
 		__func__);
 		return Status;
 	}
-	Status = setup_test_component_int();
-	if(Status != XST_SUCCESS){
-		xil_printf("In %s: Test Component failed...\r\n",
-		__func__);
-		return Status;
-	}
 	Status = setup_scu_wdt_int();
 	if(Status != XST_SUCCESS){
 		xil_printf("In %s: WDT timer failed...\r\n",
@@ -770,7 +701,6 @@ void cleanup_interrupts()
 	XTtcPs_DisableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
 	XTtcPs_Stop(&TimerTtcPsInstance);
 	XAxiDma_IntrDisable(&AxiDmaInstance, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
-	XScuGic_Disable(&Intc, XPAR_FABRIC_AXIS_TEST_COMPONENT_0_S00_AXI_INTR_INTR);
 	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
 	XScuWdt_SetControlReg(&WdtScuInstance, Reg & ~(XSCUWDT_CONTROL_IT_ENABLE_MASK));
 	XScuWdt_Stop(&WdtScuInstance);

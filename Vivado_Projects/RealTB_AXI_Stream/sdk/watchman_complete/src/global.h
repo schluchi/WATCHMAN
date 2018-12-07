@@ -13,7 +13,7 @@
 #include "xaxidma.h"
 #include "axis_peripheral.h"
 
-void init_global_var(void);
+int init_global_var(void);
 void cleanup_global_var(void);
 
 #endif /* SRC_GLOBAL_H_ */

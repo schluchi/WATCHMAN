@@ -12,17 +12,17 @@ struct netif *echo_netif;
 volatile int count_ttcps_timer;
 volatile int count_scu_timer;
 volatile bool run_flag;
-int *PtrData;
 volatile bool stream_flag;
 volatile bool flag_ttcps_timer;
 volatile bool flag_scu_timer;
 volatile bool flag_timefile;
 XAxiDma AxiDmaInstance;
 XScuWdt WdtScuInstance;
-char axidma_error;
-char axidma_rx_done;
+volatile bool axidma_error;
+volatile bool axidma_rx_done;
 int nbre_of_bytes;
-data_list* list;
+data_list* first_element;
+data_list* last_element;
 volatile bool flag_assertion;
 volatile bool flag_while_loop;
 
@@ -37,20 +37,25 @@ volatile bool flag_while_loop;
 * @note		-
 *
 ****************************************************************************/
-void init_global_var(void){
+int init_global_var(void){
 	count_ttcps_timer = 0;
 	count_scu_timer = 0;
 	run_flag = true;
 	stream_flag = false;
-	PtrData = (int *)malloc(NBR_DATA);
 	nbre_of_bytes = 0;
 	flag_ttcps_timer = false;
 	flag_scu_timer = false;
 	flag_timefile = false;
-	list = malloc(sizeof(struct data_list_st));
-	list->next = NULL;
+	first_element = malloc(sizeof(data_list));
+	if(!first_element){
+		xil_printf("malloc for first_element failed in function, %s!\r\n", __func__);
+		return XST_FAILURE;
+	}
+	first_element->next = NULL;
+	last_element = first_element;
 	flag_assertion = false;
 	flag_while_loop = false;
+	return XST_SUCCESS;
 }
 
 /****************************************************************************/
@@ -65,11 +70,10 @@ void init_global_var(void){
 *
 ****************************************************************************/
 void cleanup_global_var(void){
-	free(PtrData);
 	do{
-		data_list* tmp = list->next;
-		free(list);
-		list = tmp;
-	} while(list != NULL);
+		data_list* tmp = first_element->next;
+		free(first_element);
+		first_element = tmp;
+	} while(first_element != NULL);
 }
 

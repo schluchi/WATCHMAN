@@ -67,7 +67,8 @@ src/main.o src/main.o: ../src/main.c \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt_hw.h \
  ../src/axis_peripheral.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h \
- ../src/file_hm.h ../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h \
+ ../src/data_analysis.h ../src/file_hm.h \
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h \
  ../src/global.h
@@ -209,6 +210,8 @@ src/main.o src/main.o: ../src/main.c \
 ../src/axis_peripheral.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xil_types.h:
+
+../src/data_analysis.h:
 
 ../src/file_hm.h:
 

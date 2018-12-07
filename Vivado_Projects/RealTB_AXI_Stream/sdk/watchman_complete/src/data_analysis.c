@@ -7,28 +7,45 @@
 
 #include "data_analysis.h"
 
+extern data_list* first_element;
+extern data_list* last_element;
+
 double period[512][16][32];
-int16_t pedestal[512][16][32];
+uint16_t pedestal[512][16][32];
 
-int16_t capacitor_discharge(int16_t Vc, int64_t t1, int64_t t2, int32_t wdo_id, int ch, int sample){
-	double t = (double)(t2 - t1);
-	int16_t Vo;
-	Vo = (int16_t)((double)Vc / (exp(-t/period[wdo_id][ch][sample])));
-	return Vo;
-}
+int correct_data(uint16_t* data, int group, char nbr_wdo, uint32_t* info){
+	int ch = 4*group;
+	int ch_last = ch+3;
+	data_list* ptr;
+	int wdo, sample;
+	int index = 0;
+	uint16_t vped = 1024;
+	uint16_t treshold = 0;
+	bool gain_good = false;
+	bool too_long = false;
 
-int16_t substract_pedestal(int16_t v, int16_t vped, int32_t wdo_id, int ch, int sample){
-	int16_t ret;
-	ret = v - pedestal[wdo_id][ch][sample] + vped;
-	return ret;
-}
-
-int16_t correct_data(int16_t mes, int64_t t1, int64_t t2, int16_t vped, int32_t wdo_id, int ch, int sample){
-	int16_t Vo, Vc;
-	double t = (double)(t2 - t1);
-	Vc = mes - pedestal[wdo_id][ch][sample] + vped;
-	Vo = (int16_t)((double)Vc / (exp(-t/period[wdo_id][ch][sample])));
-	return Vo;
+	while(!gain_good){
+		gain_good = true;
+		ptr = first_element;
+		for(wdo=0; wdo<nbr_wdo; wdo++){
+			// currently there is only the pedestal substraction, still need the transfert function correction
+			for(sample=0; sample<32; sample++){
+				data[index] = (uint16_t)ptr->data.data_struct.data[ch][sample] - pedestal[ptr->data.data_struct.wdo_id][ch][sample] + vped;
+				if(data[index] < treshold){
+					if(ch < ch_last){
+						ch++;
+						gain_good = false;
+						sample = 32;
+						wdo = nbr_wdo;
+					}
+					else too_long = true;
+				}
+			}
+			ptr = ptr->next;
+		}
+	}
+	if(too_long) *info |= 0x1 << (TOO_LONG_SHIFT+group); // if all gain stage are saturated
+	return ch;
 }
 
 void extract_features(int vped, int* data, int length, features_ext* features, XTime* tInt){
@@ -62,3 +79,15 @@ void extract_features(int vped, int* data, int length, features_ext* features, X
 	features->time = (amp_start - b)/a;
 }
 
+uint16_t capacitor_discharge(uint16_t Vc, int64_t t1, int64_t t2, int32_t wdo_id, int ch, int sample){
+	double t = (double)(t2 - t1);
+	uint16_t Vo;
+	Vo = (uint16_t)((double)Vc / (exp(-t/period[wdo_id][ch][sample])));
+	return Vo;
+}
+
+uint16_t substract_pedestal(uint16_t v, uint16_t vped, int32_t wdo_id, int ch, int sample){
+	uint16_t ret;
+	ret = v - pedestal[wdo_id][ch][sample] + vped;
+	return ret;
+}

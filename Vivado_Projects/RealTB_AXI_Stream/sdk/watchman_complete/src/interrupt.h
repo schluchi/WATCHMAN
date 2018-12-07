@@ -54,16 +54,14 @@ void dhcp_fine_tmr();
 void dhcp_coarse_tmr();
 #endif
 
-static void AssertPrint(const char8 *File, s32 Line);
+void AssertPrint(const char8 *File, s32 Line);
 void timer_scu_callback(XScuTimer * TimerInstance);
 void timer_ttcps_callback(XTtcPs * TimerInstance);
 void axidma_rx_callback(XAxiDma* AxiDmaInstance);
-void testcomponent_callback(void *callbackInst);
 void wdt_scu_callback(XScuWdt *WdtInstance);
 int setup_scu_timer_int(void);
 int setup_ttcps_timer_int(void);
 int setup_axidma_int(void);
-int setup_test_component_int(void);
 int setup_interrupts(void);
 void enable_interrupts();
 int init_interrupts();

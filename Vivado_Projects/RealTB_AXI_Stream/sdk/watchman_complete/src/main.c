@@ -22,6 +22,8 @@ extern volatile bool flag_scu_timer;
 extern XScuWdt WdtScuInstance;
 extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
+extern volatile bool axidma_error;
+extern volatile bool axidma_rx_done;
 
 int main()
 {
@@ -34,7 +36,11 @@ int main()
 	printf("\n\r\n\r------START------\r\n");
 
 	/* Initialize the global variables */
-	init_global_var();
+	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
+	else{
+		xil_printf("-------END-------\r\n");
+		return -1;
+	}
 
 	/* Initialize "echo_netif" to avoid warnings with function "xemac_add" */
 	echo_netif = &server_netif;
@@ -87,6 +93,7 @@ int main()
 	setup_udp_settings(pc_ipaddr);
 
 	flag_while_loop = true;
+	dma_first_adress();
 	while (run_flag){
 		if(flag_assertion) break;
 		if(flag_ttcps_timer){
@@ -96,6 +103,10 @@ int main()
 		if(flag_scu_timer){
 			XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
 			flag_scu_timer = false;
+		}
+		if(axidma_rx_done){
+			dma_received_data();
+			axidma_rx_done = false;
 		}
 	}
 

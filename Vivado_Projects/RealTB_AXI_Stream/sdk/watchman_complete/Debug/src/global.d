@@ -68,7 +68,8 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xtime_l.h \
  ../src/file_hm.h ../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h \
- ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h
+ ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h \
+ ../src/data_analysis.h
 
 ../src/global.h:
 
@@ -215,3 +216,5 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/ffconf.h:
+
+../src/data_analysis.h:
