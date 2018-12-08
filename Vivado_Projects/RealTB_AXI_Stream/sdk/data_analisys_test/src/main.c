@@ -50,12 +50,20 @@
 #include "xil_printf.h"
 #include "xtime_l.h"
 #include "data_analysis.h"
+#include "global.h"
 
 extern double period[512][16][32];
 extern int16_t pedestal[512][16][32];
 
 int main()
 {
+	/* Initialize the global variables */
+	if(init_global_var() == 0) printf("Global variables initialization pass!\r\n");
+	else{
+		printf("-------END-------\r\n");
+		return -1;
+	}
+
 	XTime tStart, tEnd, tInt;
 	int tmp[] = {0,0,0,0,0,-1,-1,-1,-1,2,2,2,3,3,3,1,1,1,1,-2,-5,-6,-9,-20,-30,-36,-53,-62,-80,-102,-120,-164,-201,-356,-400,-434,-399,-354,-270,-202,-155,-118,-99,-78,-63,-45,-31,-13,-3,-1,0,0,0,2,3,1,4,2,1,0,1,1,0,0};
 	int data[128];
@@ -99,7 +107,7 @@ int main()
     printf("Vc = %d -> Vo = %d\r\n", Vc, Vo);
 
     XTime_GetTime(&tStart);
-	Vo = correct_data(mesure, 10, 40, 1024, 1, 1, 1);
+	//Vo = correct_data(mesure, 10, 40, 1024, 1, 1, 1);
 	XTime_GetTime(&tEnd);
 	printf("--------correct_data--------\r\n");
 	printf("total     Output took %llu clock cycles.\n", 2*(tEnd - tStart));

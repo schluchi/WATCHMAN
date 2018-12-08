@@ -6,7 +6,7 @@ src/main.o src/main.o: ../src/main.c ../src/platform.h \
  ../../data_analisys_test_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
  ../../data_analisys_test_bsp/ps7_cortexa9_0/include/bspconfig.h \
  ../../data_analisys_test_bsp/ps7_cortexa9_0/include/xtime_l.h \
- ../src/data_analysis.h
+ ../src/data_analysis.h ../src/global.h
 
 ../src/platform.h:
 
@@ -25,3 +25,5 @@ src/main.o src/main.o: ../src/main.c ../src/platform.h \
 ../../data_analisys_test_bsp/ps7_cortexa9_0/include/xtime_l.h:
 
 ../src/data_analysis.h:
+
+../src/global.h:

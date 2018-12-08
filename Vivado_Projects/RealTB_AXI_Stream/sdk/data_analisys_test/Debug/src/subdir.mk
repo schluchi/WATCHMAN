@@ -8,16 +8,19 @@ LD_SRCS += \
 
 C_SRCS += \
 ../src/data_analysis.c \
+../src/global.c \
 ../src/main.c \
 ../src/platform.c 
 
 OBJS += \
 ./src/data_analysis.o \
+./src/global.o \
 ./src/main.o \
 ./src/platform.o 
 
 C_DEPS += \
 ./src/data_analysis.d \
+./src/global.d \
 ./src/main.d \
 ./src/platform.d 
 

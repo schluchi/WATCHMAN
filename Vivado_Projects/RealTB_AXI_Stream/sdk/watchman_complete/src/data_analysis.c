@@ -54,6 +54,7 @@ void extract_features(int vped, int* data, int length, features_ext* features, X
 	coordinates p1, p2;
 
 	/* Get the minimum amplitude of the pulse */
+	// if it takes too, maybe possible to do it in the function correct data
 	amplitude = vped;
 	for(i=0; i<length; i++){
 		if(data[i] < amplitude){

@@ -261,7 +261,7 @@ FRESULT update_timefile(void)
 	gettime_hm(&time);
 
 	sprintf((char *)text, "%02d.%02d.%04d @ %02d:%02d:%02d",  time.day, time.month, time.year, time.hour, time.minute, time.second);
-	printf("update_timefile: %s\r\n", text);
+	//printf("update_timefile: %s\r\n", text);
 	result = f_open(&time_file, time_filename,FA_WRITE);
 	if(result != FR_OK) printf("Write time file failed during f_open, result = %d\r\n", result);
 	else {

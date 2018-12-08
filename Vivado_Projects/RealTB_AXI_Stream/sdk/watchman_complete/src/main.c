@@ -5,6 +5,7 @@
  *      Author: Anthony
  */
 
+#include <stdint.h>
 #include "lwip/init.h"
 #include "netif/xadapter.h"
 #include "platform_config.h"
