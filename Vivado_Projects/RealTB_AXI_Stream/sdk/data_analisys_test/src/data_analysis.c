@@ -7,30 +7,47 @@
 
 #include "data_analysis.h"
 
+extern double period[512][16][32];
+extern int16_t pedestal[512][16][32];
 extern data_list* first_element;
 extern data_list* last_element;
 
-double period[512][16][32];
-uint16_t pedestal[512][16][32];
 
-int correct_data(uint16_t* data, int group, char nbr_wdo, uint32_t* info){
-	int ch = 4*group;
+/****************************************************************************/
+/**
+* @brief	Correct the data received from the PL side (pedestal subtraction &
+* 			transfer function correction)
+*
+* @param	data: pointer on array to return the data corrected
+* 			pmt: PMT's ID (4 PMTs per ASIC, 16 ch per ASIC -> 4 ch per PMT)
+* 			nbr_wdo: number of window for the pulse
+* 			info: pointer to return info of pulse too long or not
+*
+* @return	ch: channel chose (gain stage chose)
+*
+* @note		-
+*
+****************************************************************************/
+int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info){
+	int ch = 4*pmt;
 	int ch_last = ch+3;
 	data_list* ptr;
 	int wdo, sample;
 	int index = 0;
-	uint16_t vped = 1024;
-	uint16_t treshold = 0;
+	uint16_t vped = 0; // because pedestal are null too
+	uint16_t treshold = 500;
 	bool gain_good = false;
 	bool too_long = false;
 
 	while(!gain_good){
 		gain_good = true;
 		ptr = first_element;
+		index = 0;
 		for(wdo=0; wdo<nbr_wdo; wdo++){
 			// currently there is only the pedestal substraction, still need the transfert function correction
 			for(sample=0; sample<32; sample++){
-				data[index] = (uint16_t)ptr->data.data_struct.data[ch][sample] - pedestal[ptr->data.data_struct.wdo_id][ch][sample] + vped;
+				data[index] = (uint16_t)ptr->data.data_struct.data[ch][sample] + vped - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
+				printf("data = %d - %d = %d| sample = %d | index = %d | wdo = %d | wdo_id = %d | ch = %d\r\n", (uint16_t)ptr->data.data_struct.data[ch][sample], pedestal[ptr->data.data_struct.wdo_id][ch][sample], data[index], sample, index, wdo, ptr->data.data_struct.wdo_id, ch);
 				if(data[index] < treshold){
 					if(ch < ch_last){
 						ch++;
@@ -40,15 +57,16 @@ int correct_data(uint16_t* data, int group, char nbr_wdo, uint32_t* info){
 					}
 					else too_long = true;
 				}
+				index++;
 			}
 			ptr = ptr->next;
 		}
 	}
-	if(too_long) *info |= 0x1 << (TOO_LONG_SHIFT+group); // if all gain stage are saturated
+	if(too_long) *info |= 0x1 << (TOO_LONG_SHIFT+pmt); // if all gain stage are saturated
 	return ch;
 }
 
-void extract_features(int vped, int* data, int length, features_ext* features, XTime* tInt){
+void extract_features_previous(int vped, int* data, int length, features_ext* features, XTime* tInt){
 	int i, sample, amplitude;
 	float amp_start, a, b;
 	coordinates p1, p2;

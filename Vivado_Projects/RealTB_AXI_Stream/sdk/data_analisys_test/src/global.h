@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE_DATA_ARRAY 518*4 // int32_t is 4 bytes
+#define SIZE_DATA_ARRAY 518 // (16*32+6)
 
 #define TRIG_SHIFT		0
 #define LAST_SHIFT		4
@@ -29,7 +29,7 @@ typedef struct data_axi_st{
 }data_axi;
 
 typedef union data_axi_union{
-	struct data_axi_st data_struct;
+	data_axi data_struct;
 	uint32_t data_array[SIZE_DATA_ARRAY];
 }data_axi_un;
 

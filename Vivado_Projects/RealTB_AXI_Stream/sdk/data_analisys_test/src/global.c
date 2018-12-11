@@ -7,6 +7,8 @@
 
 #include "global.h"
 
+double period[512][16][32];
+uint16_t pedestal[512][16][32];
 data_list* first_element;
 data_list* last_element;
 
@@ -22,9 +24,10 @@ data_list* last_element;
 *
 ****************************************************************************/
 int init_global_var(void){
+	//printf("sizeof(data_axi_un) = %d | sizeof(data_axi) = %d\r\n", sizeof(data_axi_un), sizeof(data_axi));
 	first_element = malloc(sizeof(data_list));
 	if(!first_element){
-		printf("malloc for first_element failed in function, %s!\r\n", __func__);
+		printf("malloc(%d) for first_element failed in function, %s!\r\n", sizeof(data_list), __func__);
 		return 1;
 	}
 	first_element->next = NULL;
