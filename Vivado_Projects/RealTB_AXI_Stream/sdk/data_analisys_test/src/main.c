@@ -60,7 +60,7 @@ extern data_list* last_element;
 int main()
 {
 	XTime tStart, tEnd, tInt;
-	int tmp1[] = {0,0,0,0,0,-1,-1,-1,-1,2,2,2,3,3,3,1,1,1,1,-2,-5,-6,-9,-20,-30,-36,-53,-62,-80,-102,-120,-164,-201,-356,-400,-534,-399,-354,-270,-202,-155,-118,-99,-78,-63,-45,-31,-13,-3,-1,0,0,0,2,3,1,4,2,1,0,1,1,0,0};
+	int tmp1[] = {0,0,0,0,0,-1,-1,-1,-1,2,2,2,3,3,3,1,1,1,1,-2,-5,-6,-9,-20,-30,-36,-53,-62,-80,-102,-120,-164,-201,-356,-400,-434,-399,-354,-270,-202,-155,-118,-99,-78,-63,-45,-31,-13,-3,-1,0,0,0,2,3,1,4,2,1,0,1,1,0,0};
 	int tmp2[] = {0,0,0,0,0,-1,-1,-1,-1,2,2,2,3,3,3,1,1,1,1,-2,-5,-6,-9,-20,-30,-36,-53,-62,-80,-102,-120,-164,-201,-356,-400,-434,-399,-354,-270,-202,-155,-118,-99,-78,-63,-45,-31,-13,-3,-1,0,0,0,2,3,1,4,2,1,0,1,1,0,0};
 	int tmp3[] = {0,0,0,0,0,-1,-1,-1,-1,2,2,2,3,3,3,1,1,1,1,-2,-5,-6,-9,-20,-30,-36,-53,-62,-80,-102,-120,-164,-201,-356,-400,-434,-399,-354,-270,-202,-155,-118,-99,-78,-63,-45,-31,-13,-3,-1,0,0,0,2,3,1,4,2,1,0,1,1,0,0};
 	int tmp4[] = {0,0,0,0,0,-1,-1,-1,-1,2,2,2,3,3,3,1,1,1,1,-2,-5,-6,-9,-20,-30,-36,-53,-62,-80,-102,-120,-164,-201,-356,-400,-434,-399,-354,-270,-202,-155,-118,-99,-78,-63,-45,-31,-13,-3,-1,0,0,0,2,3,1,4,2,1,0,1,1,0,0};
@@ -80,7 +80,7 @@ int main()
 
 	last_element->data.data_struct.wdo_id = 0;
 	last_element->data.data_struct.info = 0;
-	//for(k=0;k<16;k++){
+
 	for(i=0;i<32;i++){
 		last_element->data.data_struct.data[0][i] = tmp1[i] + 1024;
 		last_element->data.data_struct.data[1][i] = tmp2[i] + 1024;
@@ -139,7 +139,7 @@ int main()
 
 	for(i=0; i<512; i++){
 		for(j=0; j<16; j++){
-			for(k=0; k<32; k++) pedestal[i][j][k] = 0;
+			for(k=0; k<32; k++) pedestal[i][j][k] = 1024;
 		}
 	}
     length = sizeof(data)/4;
@@ -151,15 +151,15 @@ int main()
 	printf("total     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
 	printf("ch = %d | info = 0x%08X\r\n", ch, info);
 
-//    XTime_GetTime(&tStart);
-//    extract_features_previous(1024, data, length, &features, &tInt);
-//    XTime_GetTime(&tEnd);
-//    printf("-------extract_fetures-------\r\n");
-//    printf("inter     Output took %llu clock cycles.\n", 2*(tInt - tStart));
-//	printf("inter     Output took %.2f us.\n",1.0 * (tInt - tStart) / (COUNTS_PER_SECOND/1000000));
-//	printf("total     Output took %llu clock cycles.\n", 2*(tEnd - tStart));
-//	printf("total     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
-//    printf("amplitude=%d | time=%f\n\r", features.amplitude, features.time);
+    XTime_GetTime(&tStart);
+    extract_features(data, length, &features, &tInt);
+    XTime_GetTime(&tEnd);
+    printf("-------extract_fetures-------\r\n");
+    printf("inter     Output took %llu clock cycles.\n", 2*(tInt - tStart));
+	printf("inter     Output took %.2f us.\n",1.0 * (tInt - tStart) / (COUNTS_PER_SECOND/1000000));
+	printf("total     Output took %llu clock cycles.\n", 2*(tEnd - tStart));
+	printf("total     Output took %.2f us.\n",1.0 * (tEnd - tStart) / (COUNTS_PER_SECOND/1000000));
+    printf("amplitude=%d | time=%f\n\r", features.amplitude, features.time);
 
     cleanup_platform();
     cleanup_global_var();

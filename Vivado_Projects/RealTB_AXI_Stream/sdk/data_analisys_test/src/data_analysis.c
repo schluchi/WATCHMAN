@@ -34,7 +34,7 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info){
 	data_list* ptr;
 	int wdo, sample;
 	int index = 0;
-	uint16_t vped = 0; // because pedestal are null too
+	uint16_t vped = 1024; // because pedestal are null too
 	uint16_t treshold = 500;
 	bool gain_good = false;
 	bool too_long = false;
@@ -47,7 +47,7 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info){
 			// currently there is only the pedestal substraction, still need the transfert function correction
 			for(sample=0; sample<32; sample++){
 				data[index] = (uint16_t)ptr->data.data_struct.data[ch][sample] + vped - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
-				printf("data = %d - %d = %d| sample = %d | index = %d | wdo = %d | wdo_id = %d | ch = %d\r\n", (uint16_t)ptr->data.data_struct.data[ch][sample], pedestal[ptr->data.data_struct.wdo_id][ch][sample], data[index], sample, index, wdo, ptr->data.data_struct.wdo_id, ch);
+				//printf("data = %d - %d = %d| sample = %d | index = %d | wdo = %d | wdo_id = %d | ch = %d\r\n", (uint16_t)ptr->data.data_struct.data[ch][sample], pedestal[ptr->data.data_struct.wdo_id][ch][sample], data[index], sample, index, wdo, ptr->data.data_struct.wdo_id, ch);
 				if(data[index] < treshold){
 					if(ch < ch_last){
 						ch++;
@@ -66,7 +66,8 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info){
 	return ch;
 }
 
-void extract_features_previous(int vped, int* data, int length, features_ext* features, XTime* tInt){
+void extract_features(uint16_t* data, int length, features_ext* features, XTime* tInt){
+	int vped = 1024;
 	int i, sample, amplitude;
 	float amp_start, a, b;
 	coordinates p1, p2;
@@ -80,6 +81,7 @@ void extract_features_previous(int vped, int* data, int length, features_ext* fe
 			sample = i;
 		}
 	}
+
 	XTime_GetTime(tInt);
 	features->amplitude = amplitude;
 

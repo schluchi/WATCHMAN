@@ -25,7 +25,7 @@ typedef struct coordinates_st{
 } coordinates;
 
 int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info);
-void extract_features_previous(int vped, int* data, int length, features_ext* features, XTime* tInt);
+void extract_features(uint16_t* data, int length, features_ext* features, XTime* tInt);
 uint16_t capacitor_discharge(uint16_t Vc, int64_t t1, int64_t t2, int32_t wdo_id, int ch, int sample);
 uint16_t substract_pedestal(uint16_t v, uint16_t vped, int32_t wdo_id, int ch, int sample);
 
