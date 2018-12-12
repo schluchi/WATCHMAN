@@ -23,13 +23,19 @@ extern volatile bool flag_scu_timer;
 extern XScuWdt WdtScuInstance;
 extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
-extern volatile bool axidma_error;
-extern volatile bool axidma_rx_done;
+extern volatile bool flag_axidma_error;
+extern int flag_axidma_rx[4];
 
+/*TEST***************************/
+extern data_list* first_element;
+extern data_list* last_element;
+extern uint16_t pedestal[512][16][32];
+/********************************/
 int main()
 {
 	ip_addr_t ipaddr, netmask, gw, pc_ipaddr;
 	struct netif server_netif;
+	int group;
 
 	/* the mac address of the board. this should be unique per board */
 	unsigned char mac_ethernet_address[] = { 0x00, 0x0a, 0x35, 0x00, 0x01, 0x02 };
@@ -94,20 +100,94 @@ int main()
 	setup_udp_settings(pc_ipaddr);
 
 	flag_while_loop = true;
-	dma_first_adress();
+	/* TEST**************************/
+	//dma_first_adress();
+	int i,k,m;
+	data_list* tmp_ptr;
+	for(m=0; m<512; m++){
+		for(k=0; k<16; k++){
+			for(i=0; i<32; i++) pedestal[m][k][i] = 1024;
+		}
+	}
+
+	first_element->data.data_struct.wdo_time = 0x0000000100000002;
+	first_element->data.data_struct.dig_time = 0;
+	first_element->data.data_struct.info = 0x001;
+	first_element->data.data_struct.wdo_id = 0;
+
+	for(k=0; k<16; k++){
+		for(i=0; i<32; i++) first_element->data.data_struct.data[k][i] = i;
+	}
+
+	tmp_ptr = last_element;
+	last_element = (data_list *)malloc(sizeof(data_list));
+	if(!last_element){
+		xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+	}
+	last_element->next = NULL;
+	last_element->previous = tmp_ptr;
+	tmp_ptr->next = last_element;
+	last_element->data.data_struct.wdo_time = 0x0000000200000003;
+	last_element->data.data_struct.dig_time = 0;
+	last_element->data.data_struct.info = 0x001;
+	last_element->data.data_struct.wdo_id = 1;
+	for(k=0; k<16; k++){
+		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+32;
+	}
+
+	tmp_ptr = last_element;
+	last_element = (data_list *)malloc(sizeof(data_list));
+	if(!last_element){
+		xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+	}
+	last_element->next = NULL;
+	last_element->previous = tmp_ptr;
+	tmp_ptr->next = last_element;
+	last_element->data.data_struct.wdo_time = 0x0000000400000005;
+	last_element->data.data_struct.dig_time = 0;
+	last_element->data.data_struct.info = 0x001;
+	last_element->data.data_struct.wdo_id = 2;
+	for(k=0; k<16; k++){
+		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+64;
+	}
+
+	tmp_ptr = last_element;
+	last_element = (data_list *)malloc(sizeof(data_list));
+	if(!last_element){
+		xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+	}
+	last_element->next = NULL;
+	last_element->previous = tmp_ptr;
+	tmp_ptr->next = last_element;
+	//last_element->data.data_struct.wdo_time = 0x0000000600000007;
+	last_element->data.data_array[0] = 0x00000007;
+	last_element->data.data_array[1] = 0x00000006;
+	last_element->data.data_struct.dig_time = 0;
+	last_element->data.data_struct.info = 0x011;
+	last_element->data.data_struct.wdo_id = 3;
+	for(k=0; k<16; k++){
+		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+96;
+	}
+	flag_axidma_rx[0]++;
+	/******************************/
 	while (run_flag){
 		if(flag_assertion) break;
+
 		if(flag_ttcps_timer){
 			update_timefile();
 			flag_ttcps_timer = false;
 		}
+
 		if(flag_scu_timer){
 			XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
 			flag_scu_timer = false;
 		}
-		if(axidma_rx_done){
-			dma_received_data();
-			axidma_rx_done = false;
+
+		for(group=0; group<4; group++){
+			if(flag_axidma_rx[group] > 0){
+				dma_received_data(group);
+				flag_axidma_rx[group]--;
+			}
 		}
 	}
 

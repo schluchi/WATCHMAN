@@ -59,6 +59,8 @@ extern volatile bool stream_flag;
 *
 ****************************************************************************/
 err_t transfer_data(char* frame, uint16_t length) {
+	int i;
+	for(i=0; i<length; i++) printf("0x%x\r\n", frame[i]);
 	if(sizeof(frame) <= MAX_STREAM_SIZE){
 		buf_data->payload = frame;
 		buf_data->tot_len = length;
@@ -86,7 +88,6 @@ err_t transfer_data(char* frame, uint16_t length) {
 void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
 	int length;
-	err_t ret;
     if (p != NULL) {
 
     	//reset each buffer before each use
@@ -102,7 +103,7 @@ void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_
 			p->payload = return_buf;
 			p->len = length;
 			p->tot_len = length;
-			ret = udp_sendto(pcb, p, addr, port);
+			udp_sendto(pcb, p, addr, port);
 		}
     	else xil_printf("ERROR with the command received\r\n");
     }

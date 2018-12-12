@@ -8,8 +8,6 @@
 #include "axis_peripheral.h"
 
 /* Extern lobal variables */
-extern char axidma_error;
-extern char axidma_rx_done;
 extern XAxiDma AxiDmaInstance;
 extern data_list* first_element;
 extern data_list* last_element;
@@ -33,70 +31,100 @@ void XAxiDma_SimpleTransfer_Hej(XAxiDma *InstancePtr, UINTPTR BuffAddr, int Leng
 }
 
 void dma_first_adress(void){
+	/*******************************************/
 	// set pulse
+	/*******************************************/
 	XAxiDma_SimpleTransfer_Hej(&AxiDmaInstance,(UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY);
-	// Reset pulse
+	/*******************************************/
+	// reset pulse
+	/*******************************************/
 }
-int dma_received_data(void){
-	static char group_nbr_wdo[4] = {0, 0, 0, 0};
-	int group, ch;
-	data_list* tmp_ptr_1;
-	data_list* tmp_ptr_2;
-	uint32_t info, mask;
-	bool first = false;
-	uint16_t* data;
-	// set pulse
-	Xil_DCacheInvalidateRange((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY);
 
-	for(group=0; group<4; group++){
-		info = last_element->data.data_struct.info;
+void dma_received_data(int group){
+	data_list* tmp_first_element;
+	data_list* tmp_last_element;
+	data_list* tmp_ptr;
+	uint32_t info, mask;
+	bool flag = true;
+	char nbr_wdo = 1;
+	uint16_t data[32*MAX_WINDOW];
+	int ch, length, i;
+	features_ext features;
+
+	tmp_first_element = first_element;
+	while(flag){
+		info = tmp_first_element->data.data_struct.info;
 		mask = 0x1 << (TRIG_SHIFT+group);
-		if((info && mask) != 0) group_nbr_wdo[group]++;
+		if((info && mask) != 0) flag = false;
+		else tmp_first_element = tmp_first_element->next;
+	}
+
+	flag = true;
+	tmp_last_element = tmp_first_element;
+	while(flag){
+		info = tmp_last_element->data.data_struct.info;
 		mask = 0x1 << (LAST_SHIFT+group);
-		if((info && mask) != 0){
-			mask = 0x1 << (TOO_LONG_SHIFT+group);
-			data = (uint16_t *)malloc(2*32*group_nbr_wdo[group]);
-			if(!data){
-				xil_printf("malloc for data failed in function, %s!\r\n", __func__);
-				return XST_FAILURE;
-			}
-			// pedestal substraction and transfert function
-			// choose the gain stage (wich channel in the group of 4, (CH0-3, CH4-7,... | High gain on smallest channel of each group (CH0,CH4,...))
-			ch = correct_data(data, group, group_nbr_wdo[group], &info);
-			if((info && mask) != 0){
-				//send full wave form
-			}
-			else{
-				//find amplitude and time
-			}
-			tmp_ptr_1 = first_element;
-			do{
-				tmp_ptr_2 = tmp_ptr_1->next;
-				info = tmp_ptr_1->data.data_struct.info & ((~(0x1 << (TRIG_SHIFT+group))) | (~(0x1 << (LAST_SHIFT+group))) | (~(0x1 << (TOO_LONG_SHIFT+group))));
-				if(!((info >> TRIG_SHIFT) && MASK_INFO)) free(tmp_ptr_1);
-				else{
-					tmp_ptr_1->data.data_struct.info = info;
-					if(first){
-						first_element = tmp_ptr_1;
-						first = false;
-					}
-				}
-				tmp_ptr_1 = tmp_ptr_2;
-			}while(tmp_ptr_1 != NULL);
-			group_nbr_wdo[group] = 0;
-			free(data);
+		if((info && mask) != 0) flag = false;
+		else{
+			nbr_wdo++;
+			tmp_last_element = tmp_last_element->next;
 		}
 	}
 
-	tmp_ptr_1 = last_element;
-	last_element = malloc(sizeof(data_list));
-	if(!last_element){
-		xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
-		return XST_FAILURE;
+	ch = correct_data(data, group, nbr_wdo, &info, tmp_first_element);
+	mask = 0x1 << (TOO_LONG_SHIFT+group);
+	length = 32 * nbr_wdo;
+	if((info && mask) != 0){
+		//send full wave form
+		length = length*2;
+		char* frame = (char *)malloc(length+15);
+		frame[0] = 0x55;
+		frame[1] = 0xAA;
+		frame[2] = (char)(length+14);
+		frame[3] = (char)((length+14) >> 8);
+		frame[4] = (FULL_WAVEFORM_ID << 7) + (nbr_wdo << 4) + (ch);
+		for(i=0; i<8; i++) frame[5+i] = (char)(tmp_first_element->data.data_struct.wdo_time >> i*8);
+		for(i=0; i<length; i++){
+			frame[13+i] = (char)data[i];
+			i++;
+			frame[13+i] = (char)((int)data[i] >> 8);
+		}
+		frame[length+13] = 0x33;
+		frame[length+14] = 0xCC;
+		transfer_data(frame, (length+15));
+		free(frame);
 	}
-	last_element->next = NULL;
-	tmp_ptr_1->next = last_element;
-	XAxiDma_SimpleTransfer_Hej(&AxiDmaInstance,(UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY);
-	// reset pulse
-	return XST_SUCCESS;
+	else{
+		//find amplitude and time, and send
+		extract_features(data, length, &features);
+		char* frame = (char *)malloc(21);
+		frame[0] = 0x55;
+		frame[1] = 0xAA;
+		frame[2] = 21;
+		frame[3] = 0;
+		frame[4] = (FEATURES_ID << 7) + (nbr_wdo << 4) + (ch);
+		for(i=0; i<8; i++) frame[5+i] = (char)(tmp_first_element->data.data_struct.wdo_time >> (i*8));
+		frame[13] = (char)features.amplitude;
+		frame[14] = (char)(features.amplitude >> 8);
+		for(i=0; i<4; i++) frame[15+i] = (char)(features.time.time_t >> (i*8));
+		frame[19] = 0x33;
+		frame[20] = 0xCC;
+		transfer_data(frame, 21);
+		free(frame);
+	}
+
+	tmp_ptr = tmp_first_element->previous;
+	do{
+		info = tmp_first_element->data.data_struct.info & ((~(0x1 << (TRIG_SHIFT+group))) | (~(0x1 << (LAST_SHIFT+group))) | (~(0x1 << (TOO_LONG_SHIFT+group))));
+		if(!(info && (MASK_INFO << TRIG_SHIFT))){
+			tmp_ptr->next = tmp_first_element->next;
+			free(tmp_first_element);
+			tmp_first_element = tmp_ptr->next;
+			tmp_first_element->previous = tmp_ptr;
+		}
+		else{
+			tmp_ptr = tmp_first_element;
+			tmp_first_element = tmp_ptr->next;
+		}
+	}while(tmp_first_element != tmp_last_element->next);
 }

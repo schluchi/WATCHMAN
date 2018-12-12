@@ -69,8 +69,6 @@ extern volatile int count_ttcps_timer;
 extern volatile int count_scu_timer;
 extern XAxiDma AxiDmaInstance;
 extern XScuWdt WdtScuInstance;
-extern char axidma_error;
-extern char axidma_rx_done;
 extern struct netif *echo_netif;
 extern int *PtrData;
 extern volatile bool flag_ttcps_timer;
@@ -78,6 +76,9 @@ extern volatile bool flag_scu_timer;
 extern volatile bool flag_timefile;
 extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
+extern volatile bool flag_axidma_error;
+extern int flag_axidma_rx[4];
+extern data_list* last_element;
 
 /****************************************************************************/
 /**
@@ -181,6 +182,9 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 ****************************************************************************/
 void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	uint32_t IrqStatus;
+	int group;
+	data_list* tmp_ptr;
+	uint32_t info, mask;
 
 	/* Read pending interrupts */
 	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
@@ -199,13 +203,37 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	 * processing.
 	 */
 	if ((IrqStatus & XAXIDMA_IRQ_ERROR_MASK)) {
-		axidma_error = true;
+		flag_axidma_error = true;
 		return;
 	}
 
 	/* If completion interrupt is asserted, then set RxDone flag */
 	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
-		axidma_rx_done = true;
+		/*******************************************/
+		// set pulse
+		/*******************************************/
+
+		// Invalid the cache to update the value change in memory by the PL
+		Xil_DCacheInvalidateRange((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY);
+
+		for(group=0; group<4; group++){
+			info = last_element->data.data_struct.info;
+			mask = 0x1 << (LAST_SHIFT+group);
+			if((info && mask) != 0) flag_axidma_rx[group]++;
+		}
+
+		tmp_ptr = last_element;
+		last_element = (data_list *)malloc(sizeof(data_list));
+		if(!last_element){
+			xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+		}
+		last_element->next = NULL;
+		last_element->previous = tmp_ptr;
+		tmp_ptr->next = last_element;
+		XAxiDma_SimpleTransfer_Hej(&AxiDmaInstance,(UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY);
+		/*******************************************/
+		// reset pulse
+		/*******************************************/
 	}
 }
 
@@ -403,14 +431,14 @@ int setup_axidma_int(void)
 	int TimeOutCnt = 5;
 	while(TimeOutCnt){
 		reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_CR_OFFSET);
-		if((reg &  XAXIDMA_CR_RESET_MASK) == NULL) {
+		if((reg &  XAXIDMA_CR_RESET_MASK) == (uint32_t)NULL) {
 			break;
 		}
 		TimeOutCnt-=1;
 		sleep(1);
 	}
 
-	if((reg &  XAXIDMA_CR_RESET_MASK) != NULL) {
+	if((reg &  XAXIDMA_CR_RESET_MASK) != (uint32_t)NULL) {
 		xil_printf("In %s: AxiDMA Reset failed...\r\n",
 		__func__);
 		return XST_FAILURE;
@@ -420,8 +448,6 @@ int setup_axidma_int(void)
 	reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET, XAXIDMA_CR_OFFSET);
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_TX_OFFSET,XAXIDMA_CR_OFFSET,reg & !XAXIDMA_CR_RUNSTOP_MASK);
 
-	axidma_error = false;
-	axidma_rx_done = false;
 	return Status;
 }
 

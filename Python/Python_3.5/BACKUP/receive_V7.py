@@ -18,7 +18,6 @@ import sys
 import socket
 import optparse
 import time
-import struct
 
 ## This classe the graphic window
 class Watchman_graphic_window():
@@ -95,7 +94,7 @@ class Watchman_graphic_window():
                 self.__canvas.get_tk_widget().update_idletasks()
                 end = time.time()
                 # release the lock
-            #print("frame received : " + str(self.count)+" | thread engaged : " + str(len(self.thread_list)) + " | time : " + str(end-start))
+            print("frame received : " + str(self.count)+" | thread engaged : " + str(len(self.thread_list)) + " | time : " + str(end-start))
             # check in the thread's list if some have ended and can be removed
             length=len(self.thread_list)
             k=0
@@ -121,7 +120,6 @@ class Watchman_graphic_window():
             d = bytearray()
             try:
                 d, a = self.sock.recvfrom(4300) # wait on data
-                print(d)
                 # group of multiple frames 
                 data.append(d)
                 adress.append(a)
@@ -171,38 +169,48 @@ class Watchman_graphic_window():
             adress = list_adress[r]
             if(adress[0] == self.UDP_IP): # test the emitter's ip
                 if((len(data) >= 2) and (data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # look for the start code
-                    length = data[2] + (data[3] << 8) # length of the frame contained in the frame
-                    if((length >= 15) and (length <= len(data))):
+                    length = data[2]*256 + data[3] # length of the frame contained in the frame
+                    if((length >= 4) and (length <= len(data))):
                         if((data[length-2] == int("0x33", 0)) and (data[length-1] == int("0xCC", 0))): # look for the end code
                             flag = True # flag if frame is uncorrupted
                             index = 4 # index to parse the data array
-                            channel = data[index] & int("0x0F", 0) # channel
-                            nbr_wdo = (data[index] >> 4) & int("0x07", 0)
-                            frame_id = (data[index] >> 7) & 1
-                            index += 1
-                            wdo_time = (data[index] + (data[index+1] << 8) + (data[index+2] << 16) + (data[index+3] << 24)) / 4 # counter's frequency is 250MHz -> now wdo_time is in ns
-                            index += 4
-                            # update the data to be plot in the graphics
-                            # separate them in the different columns
-                            with self.lock_graph: 
-                                self.hit_per_ch[channel] += 1 
-                                if(frame_id == 0): # frame contains time and amplitude
-                                    amp = data[index] + data[index+1]*256 # amplitude
-                                    index += 2
-                                    self.amplitude[channel][amp//205] += 1 #2^10 / 5 = 204.8 -> 205
-                                    index += 2
-                                    time_bin = (data[index] + (data[index+1] << 8) + (data[index+2] << 16) + (data[index+3] << 24))
-                                    time = struct.unpack('!f',struct.pack('!i',time_bin))[0]
-                                    index += 4
-                                    if(time >= 128):
-                                        self.time[channel][3] += 1 
+                            ch = 0 # index of the ch
+                            amp = 0 # amplitude of pedestal
+                            time = 0 # time of pedestal
+                            data_type = 0 # type of data (0: no data / 1: pedestal / 2: full wave)
+                            channel = 0 # channel id
+                            while(ch<16 and flag): # for every channel since the frame is uncorrupted
+                                channel = data[index] # get the channel number
+                                index += 1
+                                if(channel < 16):
+                                    data_type = data[index] # get the type of data
+                                    index += 1
+                                    if(data_type == 0):    # payload=0, no hit (= no data) for this channel
+                                            dummy = 0
                                     else:
-                                        self.time[channel][time//32] += 1 
-                                    index += 2
-                                else: # frame contains the full waveform
-                                    self.time[channel][4] += 1
-                                    index += nbr_wdo * 32 * 2
-
+                                        # update the data to be plot in the graphics
+                                        # separate them in the different columns
+                                        with self.lock_graph: 
+                                            if(data_type == 1): # Pedestal
+                                                self.hit_per_ch[channel] += 1 
+                                                amp = data[index]*256 + data[index+1]
+                                                self.amplitude[channel][amp//13108] += 1 #65535 / 5 = 13107 -> 13108
+                                                index += 2
+                                                time = data[index]*256 + data[index+1]
+                                                self.time[channel][time//16384] += 1 #65535 / 4 = 16383.75 -> 16384
+                                                index += 2
+                                            else:
+                                                if(data_type == 2): # Full Wave
+                                                    self.hit_per_ch[channel] += 1 
+                                                    self.time[channel][4] += 1
+                                                    index += 256
+                                                else:
+                                                    # error: data type not normal, frame corrupted
+                                                    flag = False 
+                                else: 
+                                    # error: channel id not normal, frame corrupted
+                                    flag = False 
+                                ch += 1 # process next channel
                             if(flag): # report if the frame was corrupted of not
                                 self.__file.write(data)
                                 self.count += 1
