@@ -61,10 +61,10 @@ src/axis_peripheral.o src/axis_peripheral.o: ../src/axis_peripheral.c \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xttcps_hw.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt_hw.h \
- ../src/data_test.h \
+ ../src/udp_peripheral.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/udp.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
- ../src/udp_peripheral.h ../src/time_hm.h \
+ ../src/time_hm.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/xtime_l.h \
  ../src/file_hm.h ../../watchman_complete_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_complete_bsp/ps7_cortexa9_0/include/integer.h \
@@ -195,13 +195,11 @@ src/axis_peripheral.o src/axis_peripheral.o: ../src/axis_peripheral.c \
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/xscuwdt_hw.h:
 
-../src/data_test.h:
+../src/udp_peripheral.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/udp.h:
 
 ../../watchman_complete_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h:
-
-../src/udp_peripheral.h:
 
 ../src/time_hm.h:
 

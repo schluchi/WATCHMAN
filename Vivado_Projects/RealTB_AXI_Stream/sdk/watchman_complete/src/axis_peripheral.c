@@ -7,10 +7,11 @@
 
 #include "axis_peripheral.h"
 
-/* Extern lobal variables */
+/* Extern global variables */
 extern XAxiDma AxiDmaInstance;
 extern data_list* first_element;
 extern data_list* last_element;
+extern char* frame_buf;
 
 /****************************************************************************
 *
@@ -55,7 +56,7 @@ void dma_received_data(int group){
 	while(flag){
 		info = tmp_first_element->data.data_struct.info;
 		mask = 0x1 << (TRIG_SHIFT+group);
-		if((info && mask) != 0) flag = false;
+		if((info & mask) != 0) flag = false;
 		else tmp_first_element = tmp_first_element->next;
 	}
 
@@ -64,7 +65,7 @@ void dma_received_data(int group){
 	while(flag){
 		info = tmp_last_element->data.data_struct.info;
 		mask = 0x1 << (LAST_SHIFT+group);
-		if((info && mask) != 0) flag = false;
+		if((info & mask) != 0) flag = false;
 		else{
 			nbr_wdo++;
 			tmp_last_element = tmp_last_element->next;
@@ -74,49 +75,46 @@ void dma_received_data(int group){
 	ch = correct_data(data, group, nbr_wdo, &info, tmp_first_element);
 	mask = 0x1 << (TOO_LONG_SHIFT+group);
 	length = 32 * nbr_wdo;
-	if((info && mask) != 0){
+	if((info & mask) != 0){
 		//send full wave form
 		length = length*2;
-		char* frame = (char *)malloc(length+15);
-		frame[0] = 0x55;
-		frame[1] = 0xAA;
-		frame[2] = (char)(length+14);
-		frame[3] = (char)((length+14) >> 8);
-		frame[4] = (FULL_WAVEFORM_ID << 7) + (nbr_wdo << 4) + (ch);
-		for(i=0; i<8; i++) frame[5+i] = (char)(tmp_first_element->data.data_struct.wdo_time >> i*8);
+		frame_buf[0] = 0x55;
+		frame_buf[1] = 0xAA;
+		frame_buf[2] = (char)(length+14);
+		frame_buf[3] = (char)((length+14) >> 8);
+		frame_buf[4] = (FULL_WAVEFORM_ID << 7) + (nbr_wdo << 4) + (ch);
+		for(i=0; i<8; i++) frame_buf[5+i] = (char)(tmp_first_element->data.data_struct.wdo_time >> i*8);
 		for(i=0; i<length; i++){
-			frame[13+i] = (char)data[i];
+			frame_buf[13+i] = (char)data[i];
 			i++;
-			frame[13+i] = (char)((int)data[i] >> 8);
+			frame_buf[13+i] = (char)((int)data[i] >> 8);
 		}
-		frame[length+13] = 0x33;
-		frame[length+14] = 0xCC;
-		transfer_data(frame, (length+15));
-		free(frame);
+		frame_buf[length+13] = 0x33;
+		frame_buf[length+14] = 0xCC;
+		transfer_data(frame_buf, (length+15));
 	}
 	else{
 		//find amplitude and time, and send
 		extract_features(data, length, &features);
-		char* frame = (char *)malloc(21);
-		frame[0] = 0x55;
-		frame[1] = 0xAA;
-		frame[2] = 21;
-		frame[3] = 0;
-		frame[4] = (FEATURES_ID << 7) + (nbr_wdo << 4) + (ch);
-		for(i=0; i<8; i++) frame[5+i] = (char)(tmp_first_element->data.data_struct.wdo_time >> (i*8));
-		frame[13] = (char)features.amplitude;
-		frame[14] = (char)(features.amplitude >> 8);
-		for(i=0; i<4; i++) frame[15+i] = (char)(features.time.time_t >> (i*8));
-		frame[19] = 0x33;
-		frame[20] = 0xCC;
-		transfer_data(frame, 21);
-		free(frame);
+		frame_buf[0] = 0x55;
+		frame_buf[1] = 0xAA;
+		frame_buf[2] = 21;
+		frame_buf[3] = 0;
+		frame_buf[4] = (FEATURES_ID << 7) + (nbr_wdo << 4) + (ch);
+		for(i=0; i<8; i++) frame_buf[5+i] = (char)(tmp_first_element->data.data_struct.wdo_time >> (i*8));
+		frame_buf[13] = (char)features.amplitude;
+		frame_buf[14] = (char)(features.amplitude >> 8);
+		for(i=0; i<4; i++) frame_buf[15+i] = (char)(features.time.time_t >> (i*8));
+		frame_buf[19] = 0x33;
+		frame_buf[20] = 0xCC;
+		transfer_data(frame_buf, 21);
 	}
 
 	tmp_ptr = tmp_first_element->previous;
 	do{
-		info = tmp_first_element->data.data_struct.info & ((~(0x1 << (TRIG_SHIFT+group))) | (~(0x1 << (LAST_SHIFT+group))) | (~(0x1 << (TOO_LONG_SHIFT+group))));
-		if(!(info && (MASK_INFO << TRIG_SHIFT))){
+		mask = ~((0x1 << (TRIG_SHIFT+group)) + (0x1 << (LAST_SHIFT+group)) + (0x1 << (TOO_LONG_SHIFT+group)));
+		info = tmp_first_element->data.data_struct.info & mask;
+		if(!(info & (MASK_INFO << TRIG_SHIFT))){
 			tmp_ptr->next = tmp_first_element->next;
 			free(tmp_first_element);
 			tmp_first_element = tmp_ptr->next;

@@ -18,6 +18,7 @@
 /* Extern global variables */
 extern struct netif *echo_netif;
 extern volatile bool run_flag;
+extern volatile bool stream_flag;
 extern volatile bool flag_ttcps_timer;
 extern volatile bool flag_scu_timer;
 extern XScuWdt WdtScuInstance;
@@ -25,6 +26,9 @@ extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
 extern int flag_axidma_rx[4];
+
+/* Global variables */
+static struct netif server_netif;
 
 /*TEST***************************/
 extern data_list* first_element;
@@ -34,7 +38,6 @@ extern uint16_t pedestal[512][16][32];
 int main()
 {
 	ip_addr_t ipaddr, netmask, gw, pc_ipaddr;
-	struct netif server_netif;
 	int group;
 
 	/* the mac address of the board. this should be unique per board */
@@ -93,13 +96,17 @@ int main()
 	print_ip_settings(&ipaddr, &netmask, &gw);
 
 	/* Set the PC address */
-	IP4_ADDR(&pc_ipaddr, 192, 16, 1, 11);
+	IP4_ADDR(&pc_ipaddr, 192, 168, 1, 11);
 	print_ip("\r\nPC IP: ", &pc_ipaddr);
 
 	/* Set the UDP connections and callback for data and commands */
-	setup_udp_settings(pc_ipaddr);
+	if(setup_udp_settings(pc_ipaddr) < 0){
+		printf("Error setting up the UDP interface\n\r");
+		printf("-------END-------\r\n");
+		return -1;
+	}
+	else xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
 
-	flag_while_loop = true;
 	/* TEST**************************/
 	//dma_first_adress();
 	int i,k,m;
@@ -110,7 +117,7 @@ int main()
 		}
 	}
 
-	first_element->data.data_struct.wdo_time = 0x0000000100000002;
+	first_element->data.data_struct.wdo_time = 0x1111111122222222;
 	first_element->data.data_struct.dig_time = 0;
 	first_element->data.data_struct.info = 0x001;
 	first_element->data.data_struct.wdo_id = 0;
@@ -127,7 +134,7 @@ int main()
 	last_element->next = NULL;
 	last_element->previous = tmp_ptr;
 	tmp_ptr->next = last_element;
-	last_element->data.data_struct.wdo_time = 0x0000000200000003;
+	last_element->data.data_struct.wdo_time = 0x0123456789876543;
 	last_element->data.data_struct.dig_time = 0;
 	last_element->data.data_struct.info = 0x001;
 	last_element->data.data_struct.wdo_id = 1;
@@ -143,9 +150,10 @@ int main()
 	last_element->next = NULL;
 	last_element->previous = tmp_ptr;
 	tmp_ptr->next = last_element;
-	last_element->data.data_struct.wdo_time = 0x0000000400000005;
+	last_element->data.data_array[0] = 0x89876543;
+	last_element->data.data_array[1] = 0x01234567;
 	last_element->data.data_struct.dig_time = 0;
-	last_element->data.data_struct.info = 0x001;
+	last_element->data.data_struct.info = 0x011;
 	last_element->data.data_struct.wdo_id = 2;
 	for(k=0; k<16; k++){
 		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+64;
@@ -159,17 +167,16 @@ int main()
 	last_element->next = NULL;
 	last_element->previous = tmp_ptr;
 	tmp_ptr->next = last_element;
-	//last_element->data.data_struct.wdo_time = 0x0000000600000007;
-	last_element->data.data_array[0] = 0x00000007;
-	last_element->data.data_array[1] = 0x00000006;
-	last_element->data.data_struct.dig_time = 0;
-	last_element->data.data_struct.info = 0x011;
-	last_element->data.data_struct.wdo_id = 3;
-	for(k=0; k<16; k++){
-		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+96;
-	}
+//	last_element->data.data_struct.wdo_time = 0x0000000600000007;
+//	last_element->data.data_struct.dig_time = 0;
+//	last_element->data.data_struct.info = 0x001;
+//	last_element->data.data_struct.wdo_id = 3;
+//	for(k=0; k<16; k++){
+//		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+96;
+//	}
 	flag_axidma_rx[0]++;
 	/******************************/
+	flag_while_loop = true;
 	while (run_flag){
 		if(flag_assertion) break;
 

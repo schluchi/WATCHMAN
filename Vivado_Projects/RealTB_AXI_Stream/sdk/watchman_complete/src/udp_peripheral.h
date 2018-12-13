@@ -10,7 +10,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "data_test.h"
 #include "lwip/err.h"
 #include "lwip/udp.h"
 #include "stdbool.h"
@@ -37,7 +36,7 @@ void print_ip_settings(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw);
 /* defined by each RAW mode application */
 void tcp_fasttmr(void);
 void tcp_slowtmr(void);
-int setup_pcb_data(struct udp_pcb * pcb ,ip_addr_t pc_ipaddr, uint16_t port);
-int setup_pcb_cmd(struct udp_pcb *pcb, uint16_t port);
+int setup_pcb_data(ip_addr_t pc_ipaddr, uint16_t port);
+int setup_pcb_cmd(uint16_t port);
 
 #endif /* SRC_UDP_PERIPHERAL_H_ */

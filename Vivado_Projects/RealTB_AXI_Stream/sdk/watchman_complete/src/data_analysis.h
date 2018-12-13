@@ -14,8 +14,12 @@
 #include "xtime_l.h"
 #include "axis_peripheral.h"
 
-#define SIZE_DATA_ARRAY 518*4 // int32_t is 4 bytes
+#define SIZE_DATA_ARRAY 518*4 // 32samples * 16ch = 512 + header = 518 -> int32_t is 4 bytes
+#define BUF_HEADER_SIZE 50 // frame's header: ethernet (14) + Ipv4(20) + UDP(8) = 42 -> 50
+#define MAX_STREAM_SIZE MAX_WINDOW*SAMPLE*2+15+BUF_HEADER_SIZE // payload int16_t is 2 bytes + header + frame's header
 
+#define CHANNEL 		16
+#define SAMPLE 			32
 #define MAX_WINDOW		4
 
 #define TRIG_SHIFT		0

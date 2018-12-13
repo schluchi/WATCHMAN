@@ -55,12 +55,16 @@ extern volatile bool stream_flag;
 *
 * @return	type err_enum_t: enumaration from err.h file
 *
-* @note		-
+* @note		frame must take in consideration the header ex:
+* 			for a buffer of size 6
+* 			char* test_array = (char *)malloc(6 + BUF_HEADER_SIZE);
+* 			and then
+* 			transfer_data(&test_array[BUF_HEADER_SIZE], 6)
 *
 ****************************************************************************/
 err_t transfer_data(char* frame, uint16_t length) {
 	int i;
-	for(i=0; i<length; i++) printf("0x%x\r\n", frame[i]);
+	for(i=0; i<length; i++) printf("%d) 0x%x\r\n", i, frame[i]);
 	if(sizeof(frame) <= MAX_STREAM_SIZE){
 		buf_data->payload = frame;
 		buf_data->tot_len = length;
@@ -246,13 +250,19 @@ int setup_udp_settings(ip_addr_t pc_ipaddr)
 
 
 	/* create new UDP PCB structure for the data */
-	ret += setup_pcb_data(pcb_data, pc_ipaddr, PORT_DATA);
+	ret = setup_pcb_data(pc_ipaddr, PORT_DATA);
+	if(ret < 0){
+		xil_printf("set up the pcb for data failed, in function %s returned: %d\r\n", __func__, ret);
+		return ret;
+	}
 	buf_data = pbuf_alloc(PBUF_TRANSPORT,MAX_STREAM_SIZE,PBUF_RAM);
 
 	/* create new UDP PCB structure for the commands */
-	ret += setup_pcb_cmd(pcb_cmd, PORT_CMD);
-
-	xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
+	ret = setup_pcb_cmd(PORT_CMD);
+	if(ret < 0){
+		xil_printf("set up the pcb for command failed, in function %s returned: %d\r\n", __func__, ret);
+		return ret;
+	}
 
 	return ret;
 }
@@ -270,26 +280,26 @@ int setup_udp_settings(ip_addr_t pc_ipaddr)
 * @note		-
 *
 ****************************************************************************/
-int setup_pcb_data(struct udp_pcb *pcb, ip_addr_t pc_ipaddr, uint16_t port){
+int setup_pcb_data(ip_addr_t pc_ipaddr, uint16_t port){
 
 	err_t err;
 
 	/* create new UDP PCB structure */
-	pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
-	if (!pcb) {
+	pcb_data = udp_new_ip_type(IPADDR_TYPE_ANY);
+	if (!pcb_data) {
 		xil_printf("Error creating PCB. Out of Memory\n\r");
 		return -1;
 	}
 
 	/* bind zynq to specified @port */
-	err = udp_bind(pcb, IP_ANY_TYPE, port); //bind = port we are listenning to (zynq input port)
+	err = udp_bind(pcb_data, IP_ANY_TYPE, port); //bind = port we are listenning to (zynq input port)
 	if (err != ERR_OK) {
 		xil_printf("Unable to bind port %d: err = %d\n\r", port, err);
 		return -2;
 	}
 
 	/*connect zynq to pc @ip addr & port*/
-	err = udp_connect(pcb, &pc_ipaddr, port); // connect = the input port of the PC
+	err = udp_connect(pcb_data, &pc_ipaddr, port); // connect = the input port of the PC
 	if (err != ERR_OK) {
 		xil_printf("Unable to bind to port %d: err = %d\n\r", port, err);
 		return -2;
@@ -302,7 +312,6 @@ int setup_pcb_data(struct udp_pcb *pcb, ip_addr_t pc_ipaddr, uint16_t port){
 /**
 * @brief	Setup the UDP Protocol Control Block for the command frame
 *
-* @param	pcb: pointer to the UDP PCB for the command
 * @param	port: UDP port of the computer used for the command
 *
 * @return	0 if ok, negative values if there is a problem
@@ -310,24 +319,24 @@ int setup_pcb_data(struct udp_pcb *pcb, ip_addr_t pc_ipaddr, uint16_t port){
 * @note		-
 *
 ****************************************************************************/
-int setup_pcb_cmd(struct udp_pcb *pcb, uint16_t port){
+int setup_pcb_cmd(uint16_t port){
 	err_t err;
 
 	/* create new UDP PCB structure */
-	pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
-	if (!pcb) {
+	pcb_cmd = udp_new_ip_type(IPADDR_TYPE_ANY);
+	if (!pcb_cmd) {
 		xil_printf("Error creating PCB. Out of Memory\n\r");
 		return -1;
 	}
 
 	/* bind to specified @port */
-	err = udp_bind(pcb, IP_ANY_TYPE, port);
+	err = udp_bind(pcb_cmd, IP_ANY_TYPE, port);
 	if (err != ERR_OK) {
 		xil_printf("Unable to bind port %d: err = %d\n\r", port, err);
 		return -2;
 	}
 
-	udp_recv(pcb, udp_cmd_recv, NULL);
+	udp_recv(pcb_cmd, udp_cmd_recv, NULL);
 	return 0;
 }
 

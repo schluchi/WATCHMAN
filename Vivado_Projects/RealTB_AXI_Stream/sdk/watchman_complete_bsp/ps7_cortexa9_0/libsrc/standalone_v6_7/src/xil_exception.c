@@ -63,6 +63,7 @@
 #include "xil_exception.h"
 #include "xpseudo_asm.h"
 #include "xdebug.h"
+#include <stdio.h>
 /************************** Constant Definitions ****************************/
 
 /**************************** Type Definitions ******************************/
@@ -286,10 +287,11 @@ void Xil_SErrorAbortHandler(void *CallBackRef){
 
 void Xil_DataAbortHandler(void *CallBackRef){
 	(void) CallBackRef;
-#ifdef DEBUG
+//#ifdef DEBUG
 	u32 FaultStatus;
 
         xdbg_printf(XDBG_DEBUG_ERROR, "Data abort \n");
+        printf("Data abort \n");
         #ifdef __GNUC__
 	FaultStatus = mfcp(XREG_CP15_DATA_FAULT_STATUS);
 	    #elif defined (__ICCARM__)
@@ -300,7 +302,9 @@ void Xil_DataAbortHandler(void *CallBackRef){
 	    #endif
 	xdbg_printf(XDBG_DEBUG_GENERAL, "Data abort with Data Fault Status Register  %lx\n",FaultStatus);
 	xdbg_printf(XDBG_DEBUG_GENERAL, "Address of Instruction causing Data abort %lx\n",DataAbortAddr);
-#endif
+	printf("Data abort with Data Fault Status Register  %lx\n",FaultStatus);
+	printf("Address of Instruction causing Data abort %lx\n",DataAbortAddr);
+//#endif
 	while(1) {
 		;
 	}
@@ -356,6 +360,7 @@ void Xil_PrefetchAbortHandler(void *CallBackRef){
 void Xil_UndefinedExceptionHandler(void *CallBackRef){
 	(void) CallBackRef;
 	xdbg_printf(XDBG_DEBUG_GENERAL, "Address of the undefined instruction %lx\n",UndefinedExceptionAddr);
+	printf("Address of the undefined instruction %lx\n",UndefinedExceptionAddr);
 	while(1) {
 		;
 	}

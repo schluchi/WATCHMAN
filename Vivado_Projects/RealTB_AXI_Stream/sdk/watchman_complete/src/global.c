@@ -25,6 +25,8 @@ data_list* first_element;
 data_list* last_element;
 volatile bool flag_assertion;
 volatile bool flag_while_loop;
+char* frame_buf_tmp;
+char* frame_buf;
 
 /****************************************************************************/
 /**
@@ -60,6 +62,12 @@ int init_global_var(void){
 	flag_while_loop = false;
 	flag_axidma_error = false;
 	for(i=0; i<4; i++) flag_axidma_rx[i] = 0;
+	frame_buf_tmp = (char *)malloc(MAX_STREAM_SIZE);
+	if(!frame_buf_tmp){
+		xil_printf("malloc for frame_buf_tmp failed in function, %s!\r\n", __func__);
+		return XST_FAILURE;
+	}
+	frame_buf = &frame_buf_tmp[MAX_STREAM_SIZE];
 	return XST_SUCCESS;
 }
 
@@ -80,5 +88,6 @@ void cleanup_global_var(void){
 		free(first_element);
 		first_element = tmp;
 	} while(first_element != NULL);
+	free(frame_buf_tmp);
 }
 

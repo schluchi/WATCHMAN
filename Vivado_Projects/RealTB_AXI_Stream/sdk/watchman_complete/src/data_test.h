@@ -24,7 +24,7 @@
  * 258 * 16 (ch.) + 4 (0x55AA <-> start | 0x33CC <-> end) + 2 (frame's length) = 4134
  * Real max value for UDP is 65507
  */
-#define MAX_STREAM_SIZE CHANNEL*(FRAME*2+2)+6
+//#define MAX_STREAM_SIZE CHANNEL*(FRAME*2+2)+6
 
 uint16_t made_frame(char stream[], uint16_t length);
 

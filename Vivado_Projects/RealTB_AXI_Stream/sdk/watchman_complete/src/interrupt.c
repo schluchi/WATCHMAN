@@ -60,7 +60,6 @@ static XScuTimer TimerScuInstance;
 static XTtcPs TimerTtcPsInstance;
 static XScuGic Intc;
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
-char dummy_data[MAX_STREAM_SIZE];
 uint16_t length_dummy_data;
 static XTime tStart_wdt, tEnd_wdt;
 
@@ -637,19 +636,19 @@ void enable_interrupts()
 
 	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
 
-	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
-	XScuWdt_SetControlReg(&WdtScuInstance, Reg | XSCUWDT_CONTROL_IT_ENABLE_MASK);
-	/*
-	 * In Watchdog mode, we must start to see the event after the reboot
-	 * Useless in Time mode
-	 */
-	XScuWdt_Start(&WdtScuInstance);
-	/*
-	 * Load the watchdog counter register.
-	 * When the counter is loaded, the count-down start
-	 */
-	XScuWdt_LoadWdt(&WdtScuInstance, WDT_LOAD_VALUE);
-	XTime_GetTime(&tStart_wdt);
+//	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
+//	XScuWdt_SetControlReg(&WdtScuInstance, Reg | XSCUWDT_CONTROL_IT_ENABLE_MASK);
+//	/*
+//	 * In Watchdog mode, we must start to see the event after the reboot
+//	 * Useless in Time mode
+//	 */
+//	XScuWdt_Start(&WdtScuInstance);
+//	/*
+//	 * Load the watchdog counter register.
+//	 * When the counter is loaded, the count-down start
+//	 */
+//	XScuWdt_LoadWdt(&WdtScuInstance, WDT_LOAD_VALUE);
+//	XTime_GetTime(&tStart_wdt);
 
 	/* Catch assertion */
 	Xil_AssertSetCallback((Xil_AssertCallback) AssertPrint);
@@ -702,8 +701,6 @@ int init_interrupts()
 		__func__);
 		return Status;
 	}
-
-	length_dummy_data = made_frame(dummy_data, MAX_STREAM_SIZE);
 
 	return XST_SUCCESS;
 }
