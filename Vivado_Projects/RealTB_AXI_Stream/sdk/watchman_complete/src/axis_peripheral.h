@@ -20,8 +20,8 @@
 #include "xtime_l.h"
 #include "data_analysis.h"
 
-#define FULL_WAVEFORM_ID	0
-#define FEATURES_ID			1
+#define FEATURES_ID			0
+#define FULL_WAVEFORM_ID	1
 
 /*** Function prototype *********************************************/
 void XAxiDma_SimpleTransfer_Hej(XAxiDma *InstancePtr, UINTPTR BuffAddr, int LengthOfBytes);

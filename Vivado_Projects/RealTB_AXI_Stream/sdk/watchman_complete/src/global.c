@@ -67,7 +67,7 @@ int init_global_var(void){
 		xil_printf("malloc for frame_buf_tmp failed in function, %s!\r\n", __func__);
 		return XST_FAILURE;
 	}
-	frame_buf = &frame_buf_tmp[MAX_STREAM_SIZE];
+	frame_buf = &frame_buf_tmp[BUF_HEADER_SIZE];
 	return XST_SUCCESS;
 }
 

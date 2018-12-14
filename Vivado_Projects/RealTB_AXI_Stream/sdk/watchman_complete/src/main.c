@@ -120,10 +120,25 @@ int main()
 	first_element->data.data_struct.wdo_time = 0x1111111122222222;
 	first_element->data.data_struct.dig_time = 0;
 	first_element->data.data_struct.info = 0x001;
-	first_element->data.data_struct.wdo_id = 0;
-
+	first_element->data.data_struct.wdo_id = 511;
 	for(k=0; k<16; k++){
-		for(i=0; i<32; i++) first_element->data.data_struct.data[k][i] = i;
+		for(i=0; i<32; i++) first_element->data.data_struct.data[k][i] = 1024-i;
+	}
+
+	tmp_ptr = last_element;
+	last_element = (data_list *)malloc(sizeof(data_list));
+	if(!last_element){
+		xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+	}
+	last_element->next = NULL;
+	last_element->previous = tmp_ptr;
+	tmp_ptr->next = last_element;
+	last_element->data.data_struct.wdo_time = 0x5555555555555555;
+	last_element->data.data_struct.dig_time = 0;
+	last_element->data.data_struct.info = 0x001;
+	last_element->data.data_struct.wdo_id = 0;
+	for(k=0; k<16; k++){
+		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = 1024-(i+32);
 	}
 
 	tmp_ptr = last_element;
@@ -139,7 +154,7 @@ int main()
 	last_element->data.data_struct.info = 0x001;
 	last_element->data.data_struct.wdo_id = 1;
 	for(k=0; k<16; k++){
-		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+32;
+		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = 1024-(i+64);
 	}
 
 	tmp_ptr = last_element;
@@ -153,10 +168,10 @@ int main()
 	last_element->data.data_array[0] = 0x89876543;
 	last_element->data.data_array[1] = 0x01234567;
 	last_element->data.data_struct.dig_time = 0;
-	last_element->data.data_struct.info = 0x011;
+	last_element->data.data_struct.info = 0x015;
 	last_element->data.data_struct.wdo_id = 2;
 	for(k=0; k<16; k++){
-		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+64;
+		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = 1024-(i+32);
 	}
 
 	tmp_ptr = last_element;
@@ -167,13 +182,13 @@ int main()
 	last_element->next = NULL;
 	last_element->previous = tmp_ptr;
 	tmp_ptr->next = last_element;
-//	last_element->data.data_struct.wdo_time = 0x0000000600000007;
-//	last_element->data.data_struct.dig_time = 0;
-//	last_element->data.data_struct.info = 0x001;
-//	last_element->data.data_struct.wdo_id = 3;
-//	for(k=0; k<16; k++){
-//		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = i+96;
-//	}
+	last_element->data.data_struct.wdo_time = 0x0000000600000007;
+	last_element->data.data_struct.dig_time = 0;
+	last_element->data.data_struct.info = 0x004;
+	last_element->data.data_struct.wdo_id = 56;
+	for(k=0; k<16; k++){
+		for(i=0; i<32; i++) last_element->data.data_struct.data[k][i] = 1024-i;
+	}
 	flag_axidma_rx[0]++;
 	/******************************/
 	flag_while_loop = true;

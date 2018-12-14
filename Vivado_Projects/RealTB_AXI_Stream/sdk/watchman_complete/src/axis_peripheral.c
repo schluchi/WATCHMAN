@@ -80,14 +80,14 @@ void dma_received_data(int group){
 		length = length*2;
 		frame_buf[0] = 0x55;
 		frame_buf[1] = 0xAA;
-		frame_buf[2] = (char)(length+14);
-		frame_buf[3] = (char)((length+14) >> 8);
+		frame_buf[2] = (char)(length+15);
+		frame_buf[3] = (char)((length+15) >> 8);
 		frame_buf[4] = (FULL_WAVEFORM_ID << 7) + (nbr_wdo << 4) + (ch);
 		for(i=0; i<8; i++) frame_buf[5+i] = (char)(tmp_first_element->data.data_struct.wdo_time >> i*8);
 		for(i=0; i<length; i++){
-			frame_buf[13+i] = (char)data[i];
+			frame_buf[13+i] = (char)data[i/2];
 			i++;
-			frame_buf[13+i] = (char)((int)data[i] >> 8);
+			frame_buf[13+i] = (char)((int)data[i/2] >> 8);
 		}
 		frame_buf[length+13] = 0x33;
 		frame_buf[length+14] = 0xCC;
@@ -96,6 +96,7 @@ void dma_received_data(int group){
 	else{
 		//find amplitude and time, and send
 		extract_features(data, length, &features);
+		printf("amplitude = %d | time = %f\r\n", features.amplitude, features.time.time_fl);
 		frame_buf[0] = 0x55;
 		frame_buf[1] = 0xAA;
 		frame_buf[2] = 21;
@@ -110,7 +111,14 @@ void dma_received_data(int group){
 		transfer_data(frame_buf, 21);
 	}
 
-	tmp_ptr = tmp_first_element->previous;
+	if(tmp_first_element == first_element){
+		tmp_ptr = first_element;
+		flag = true;
+	}
+	else{
+		tmp_ptr = tmp_first_element->previous;
+		flag = false;
+	}
 	do{
 		mask = ~((0x1 << (TRIG_SHIFT+group)) + (0x1 << (LAST_SHIFT+group)) + (0x1 << (TOO_LONG_SHIFT+group)));
 		info = tmp_first_element->data.data_struct.info & mask;
@@ -121,8 +129,13 @@ void dma_received_data(int group){
 			tmp_first_element->previous = tmp_ptr;
 		}
 		else{
+			tmp_first_element->data.data_struct.info = info;
 			tmp_ptr = tmp_first_element;
 			tmp_first_element = tmp_ptr->next;
 		}
 	}while(tmp_first_element != tmp_last_element->next);
+	if(flag){
+		first_element = tmp_ptr;
+		first_element->previous = 0;
+	}
 }

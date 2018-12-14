@@ -121,7 +121,6 @@ class Watchman_graphic_window():
             d = bytearray()
             try:
                 d, a = self.sock.recvfrom(4300) # wait on data
-                print(d)
                 # group of multiple frames 
                 data.append(d)
                 adress.append(a)
@@ -168,36 +167,56 @@ class Watchman_graphic_window():
         # process every frame received
         for r in range(0, len(list_data)):
             data = list_data[r]
+            for q in range(0, len(data)):
+                print(str(q) + ") " + hex(data[q]))
             adress = list_adress[r]
             if(adress[0] == self.UDP_IP): # test the emitter's ip
                 if((len(data) >= 2) and (data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # look for the start code
                     length = data[2] + (data[3] << 8) # length of the frame contained in the frame
+                    print("length = "+str(length))
                     if((length >= 15) and (length <= len(data))):
                         if((data[length-2] == int("0x33", 0)) and (data[length-1] == int("0xCC", 0))): # look for the end code
                             flag = True # flag if frame is uncorrupted
                             index = 4 # index to parse the data array
                             channel = data[index] & int("0x0F", 0) # channel
+                            print("channel = "+str(channel))
                             nbr_wdo = (data[index] >> 4) & int("0x07", 0)
+                            print("nbr_wdo = "+str(nbr_wdo))
                             frame_id = (data[index] >> 7) & 1
+                            print("frame_id = "+str(frame_id))
                             index += 1
-                            wdo_time = (data[index] + (data[index+1] << 8) + (data[index+2] << 16) + (data[index+3] << 24)) / 4 # counter's frequency is 250MHz -> now wdo_time is in ns
-                            index += 4
+                            wdo_time = 0
+                            for s in range(0, 8):
+                                wdo_time = wdo_time + (data[index+s] << 8*s)
+                            print("wdo_time = "+hex(wdo_time))
+                            wdo_time = wdo_time/4 # counter's frequency is 250MHz -> now wdo_time is in ns
+                            print("wdo_time = "+str(wdo_time))
+                            index += 8 
                             # update the data to be plot in the graphics
                             # separate them in the different columns
                             with self.lock_graph: 
                                 self.hit_per_ch[channel] += 1 
                                 if(frame_id == 0): # frame contains time and amplitude
-                                    amp = data[index] + data[index+1]*256 # amplitude
+                                    print("data["+str(index)+"] = "+hex(data[index]))
+                                    print("data["+str(index+1)+"] = "+hex(data[index+1]))
+                                    amp = data[index] + (data[index+1] << 8) # amplitude
+                                    print("amp = "+str(amp))
                                     index += 2
                                     self.amplitude[channel][amp//205] += 1 #2^10 / 5 = 204.8 -> 205
-                                    index += 2
                                     time_bin = (data[index] + (data[index+1] << 8) + (data[index+2] << 16) + (data[index+3] << 24))
                                     time = struct.unpack('!f',struct.pack('!i',time_bin))[0]
+                                    print("time = "+str(time))
                                     index += 4
-                                    if(time >= 128):
-                                        self.time[channel][3] += 1 
+                                    if(time <= 32):
+                                        self.time[channel][1] += 1 
                                     else:
-                                        self.time[channel][time//32] += 1 
+                                        if(time <= 64):
+                                            self.time[channel][2] += 1 
+                                        else:
+                                            if(time <= 96):
+                                                self.time[channel][3] += 1 
+                                            else:
+                                                self.time[channel][4] += 1  
                                     index += 2
                                 else: # frame contains the full waveform
                                     self.time[channel][4] += 1
@@ -205,6 +224,7 @@ class Watchman_graphic_window():
 
                             if(flag): # report if the frame was corrupted of not
                                 self.__file.write(data)
+                                print("writing file")
                                 self.count += 1
                             else:
                                 self.lostcnt += 1
@@ -253,7 +273,7 @@ class Watchman_graphic_window():
         self.__subplot_amp.set_title('CH0')
         # create time graphic
         self.__subplot_time = self.__figure.add_subplot(223)
-        cat_graph_time = ('1', '2', '3', '4', 'to long')
+        cat_graph_time = ('0', '32', '64', '96', 'to long')
         y_pos_graph_time = np.arange(len(cat_graph_time))
         self.__graph_time = self.__subplot_time.bar(y_pos_graph_time, self.time[0], align='center', alpha=0.5)
         self.__subplot_time.set_xticks(y_pos_graph_time)
@@ -279,7 +299,7 @@ class Watchman_graphic_window():
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 2097152)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 131072) # change the size of the socket buffer
-        print("sock buz:", self.sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF))
+        #print("sock buz:", self.sock.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF))
         self.sock.bind(('', self.UDP_PORT))
         self.sock.settimeout(0.1) # method sock.recvfrom return after maximum 0.1sec if no data are received
 
