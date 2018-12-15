@@ -167,56 +167,54 @@ class Watchman_graphic_window():
         # process every frame received
         for r in range(0, len(list_data)):
             data = list_data[r]
-            for q in range(0, len(data)):
-                print(str(q) + ") " + hex(data[q]))
+            """for q in range(0, len(data)):
+                print(str(q) + ") " + hex(data[q]))"""
             adress = list_adress[r]
             if(adress[0] == self.UDP_IP): # test the emitter's ip
                 if((len(data) >= 2) and (data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # look for the start code
                     length = data[2] + (data[3] << 8) # length of the frame contained in the frame
-                    print("length = "+str(length))
+                    #print("length = "+str(length))
                     if((length >= 15) and (length <= len(data))):
                         if((data[length-2] == int("0x33", 0)) and (data[length-1] == int("0xCC", 0))): # look for the end code
                             flag = True # flag if frame is uncorrupted
                             index = 4 # index to parse the data array
                             channel = data[index] & int("0x0F", 0) # channel
-                            print("channel = "+str(channel))
+                            #print("channel = "+str(channel))
                             nbr_wdo = (data[index] >> 4) & int("0x07", 0)
-                            print("nbr_wdo = "+str(nbr_wdo))
+                            #print("nbr_wdo = "+str(nbr_wdo))
                             frame_id = (data[index] >> 7) & 1
-                            print("frame_id = "+str(frame_id))
+                            #print("frame_id = "+str(frame_id))
                             index += 1
                             wdo_time = 0
                             for s in range(0, 8):
                                 wdo_time = wdo_time + (data[index+s] << 8*s)
-                            print("wdo_time = "+hex(wdo_time))
+                            #print("wdo_time = "+hex(wdo_time))
                             wdo_time = wdo_time/4 # counter's frequency is 250MHz -> now wdo_time is in ns
-                            print("wdo_time = "+str(wdo_time))
+                            #print("wdo_time = "+str(wdo_time))
                             index += 8 
                             # update the data to be plot in the graphics
                             # separate them in the different columns
                             with self.lock_graph: 
                                 self.hit_per_ch[channel] += 1 
                                 if(frame_id == 0): # frame contains time and amplitude
-                                    print("data["+str(index)+"] = "+hex(data[index]))
-                                    print("data["+str(index+1)+"] = "+hex(data[index+1]))
                                     amp = data[index] + (data[index+1] << 8) # amplitude
-                                    print("amp = "+str(amp))
+                                    #print("amp = "+str(amp))
                                     index += 2
                                     self.amplitude[channel][amp//205] += 1 #2^10 / 5 = 204.8 -> 205
                                     time_bin = (data[index] + (data[index+1] << 8) + (data[index+2] << 16) + (data[index+3] << 24))
                                     time = struct.unpack('!f',struct.pack('!i',time_bin))[0]
-                                    print("time = "+str(time))
+                                    #print("time = "+str(time))
                                     index += 4
-                                    if(time <= 32):
-                                        self.time[channel][1] += 1 
+                                    if(time < 32):
+                                        self.time[channel][0] += 1 
                                     else:
-                                        if(time <= 64):
-                                            self.time[channel][2] += 1 
+                                        if(time < 64):
+                                            self.time[channel][1] += 1 
                                         else:
-                                            if(time <= 96):
-                                                self.time[channel][3] += 1 
+                                            if(time < 96):
+                                                self.time[channel][2] += 1 
                                             else:
-                                                self.time[channel][4] += 1  
+                                                self.time[channel][3] += 1  
                                     index += 2
                                 else: # frame contains the full waveform
                                     self.time[channel][4] += 1
@@ -224,7 +222,7 @@ class Watchman_graphic_window():
 
                             if(flag): # report if the frame was corrupted of not
                                 self.__file.write(data)
-                                print("writing file")
+                                #print("writing file")
                                 self.count += 1
                             else:
                                 self.lostcnt += 1
@@ -239,6 +237,7 @@ class Watchman_graphic_window():
                     self.lostcnt += 1
         del list_data[:]
         del list_adress[:]
+        print("data received: count = "+str(self.count)+" | lostcount = "+str(self.lostcnt))
 
     ## Method to initialize the windows and create its graphical objects
     # @param self : The object pointer
@@ -264,7 +263,7 @@ class Watchman_graphic_window():
         self.__subplot_hit.set_title('Hitmap') # set the graphic's title
         # create amplitude graphic
         self.__subplot_amp = self.__figure.add_subplot(221)
-        cat_graph_ampl = ('1', '2', '3', '4', '5')
+        cat_graph_ampl = ('[0;205[', '[205;410[', '[410;615[', '[615;820[', '[820;1024]')
         y_pos_graph_ampl = np.arange(len(cat_graph_ampl))
         self.__graph_amp = self.__subplot_amp.bar(y_pos_graph_ampl, self.amplitude[0], align='center', alpha=0.5)
         self.__subplot_amp.set_xticks(y_pos_graph_ampl)
@@ -273,7 +272,7 @@ class Watchman_graphic_window():
         self.__subplot_amp.set_title('CH0')
         # create time graphic
         self.__subplot_time = self.__figure.add_subplot(223)
-        cat_graph_time = ('0', '32', '64', '96', 'to long')
+        cat_graph_time = ('[0;32[', '[32;64[', '[64;96[', '[96;128]', 'to long')
         y_pos_graph_time = np.arange(len(cat_graph_time))
         self.__graph_time = self.__subplot_time.bar(y_pos_graph_time, self.time[0], align='center', alpha=0.5)
         self.__subplot_time.set_xticks(y_pos_graph_time)

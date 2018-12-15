@@ -64,7 +64,7 @@ extern volatile bool stream_flag;
 ****************************************************************************/
 err_t transfer_data(char* frame, uint16_t length) {
 	int i;
-	for(i=0; i<length; i++) printf("%d) 0x%x\r\n", i, frame[i]);
+	//for(i=0; i<length; i++) printf("%d) 0x%x\r\n", i, frame[i]);
 	if(sizeof(frame) <= MAX_STREAM_SIZE){
 		buf_data->payload = frame;
 		buf_data->tot_len = length;
