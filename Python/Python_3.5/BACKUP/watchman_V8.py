@@ -33,11 +33,6 @@ class Watchman_main_window():
         self.master = master
         ## Contain the value to read from or write to the registers in the zynq
         self.regs = []
-        self.regs_name_1_64 = 'VDLYTUNE '
-        self.regs_name_65_92 = ['SSTOUTFB', 'SSPIN_LE', 'SSPIN_TE', 'WR_STRB2_LE', 'WR_STRB2_TE', 'WR2_ADDR_LE', 'WR2_ADDR_TE', 'WR_STRB1_LE', 'WR_STRB1_TE', 'WR1_ADDR_LE', 'WR1_ADDR_TE', 
-                                'MONTIMING', 'VQBUFF', 'QBIAS', 'VTRIMT', 'VBIAS', 'VAPBUFF', 'VADJP', 'VANBUFF', 'VADJN', 'SBBIAS', 'VDISCH', 'ISEL', 'DBBIAS', 'CMPBIAS2', 'PUBIAS', 'CMPBIASIN', 'MISCDIG']
-        self.regs_name_93_127 = 'unused'
-        self.regs_name_128 = 'TPG'
         ## List of flags for every register value which indicates if the value is good or not (0 -> good value, 1 -> wrong value => sum of list should be 0)
         self.flag_data = []
         ## Contain the zynq's ip
@@ -77,46 +72,39 @@ class Watchman_main_window():
         self.__filemenu.add_command(label='EXIT',command=self.exit_prog)
         self.__menu.add_cascade(label='HELP',command=self.help_callback)
         # Table for the registers
-        count = 1
-        for column in range(0,8,2):
-            for row in range(32):
-                if(count <= 64):
-                    l = Label(self.master, relief=RIDGE,text= (str(count) + ") " + self.regs_name_1_64 + str(count)))
-                if(count > 64) & (count <= 92):
-                    l = Label(self.master, relief=RIDGE,text= (str(count) + ") " + self.regs_name_65_92[count-65]))
-                if(count > 92) & (count <= 127):
-                    l = Label(self.master, relief=RIDGE,text= (str(count) + ") " + self.regs_name_93_127))
-                if(count == 128):
-                    l = Label(self.master, relief=RIDGE,text= (str(count) + ") " + self.regs_name_128))
-                l.grid(column=column, row=row, sticky=N+S+E+W)
+        count = 0
+        for i in range(0,4,2):
+            for j in range(25):
+                l = Label(self.master, relief=RIDGE,text= ("    Reg. " + str(count) + "   "))
+                l.grid(column=i, row=j, sticky=N+S+E+W)
                 var = StringVar()
-                var.trace('w', partial(self.entry_callback, (count-1), var))
+                var.trace('w', partial(self.entry_callback, count, var))
                 e = Entry(self.master, relief=RIDGE, textvariable=var)
-                e.grid(column=(column+1), row=row, sticky=N+S+E+W)
+                e.grid(column=(i+1), row=j, sticky=N+S+E+W)
                 self.regs.append(e)
                 self.flag_data.append(1)
                 count += 1
         # Buttons
         self.__btn_write_all = Button(self.master,text="Write all reg.", command=partial(self.send_command, 0))
-        self.__btn_write_all.grid(column=8, row=0, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_write_all.grid(column=4, row=0, rowspan=2, padx=5, sticky=W+E)
         self.__btn_write_all.configure(state="disable")
         self.__btn_read_all = Button(self.master,text="Read all reg.", command=partial(self.send_command, 1))
-        self.__btn_read_all.grid(column=8, row=2, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_read_all.grid(column=4, row=2, rowspan=2, padx=5, sticky=W+E)
         self.__btn_ping = Button(self.master,text="Ping", command=partial(self.send_command, 2))
-        self.__btn_ping.grid(column=8, row=4, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_ping.grid(column=4, row=4, rowspan=2, padx=5, sticky=W+E)
         self.__btn_stream = Button(self.master,text="Start stream.", command=partial(self.send_command, 3))
-        self.__btn_stream.grid(column=8, row=6, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_stream.grid(column=4, row=6, rowspan=2, padx=5, sticky=W+E)
         self.__btn_stop = Button(self.master,text="Stop uC", command=partial(self.send_command, 4))
-        self.__btn_stop.grid(column=8, row=8, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_stop.grid(column=4, row=8, rowspan=2, padx=5, sticky=W+E)
         self.__btn_settime = Button(self.master,text="Set time", command=partial(self.send_command, 5))
-        self.__btn_settime.grid(column=8, row=10, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_settime.grid(column=4, row=10, rowspan=2, padx=5, sticky=W+E)
         self.__btn_graph = Button(self.master,text="Open graph\nStore data", command=self.open_graph)
-        self.__btn_graph.grid(column=8, row=29, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_graph.grid(column=4, row=22, rowspan=2, padx=5, sticky=W+E)
         # Listbox to show data transfert
         self.__text = Text(self.master, width=40)
-        self.__text.grid(column=9, row=0, rowspan=32, pady=10, sticky=N+S)
+        self.__text.grid(column=5, row=0, rowspan=25, pady=10, sticky=N+S)
         self.__scrlbar = Scrollbar(self.master)
-        self.__scrlbar.grid(column=10, row=0, rowspan=32, pady=10, padx=5, sticky=N+S)
+        self.__scrlbar.grid(column=6, row=0, rowspan=25, pady=10, padx=5, sticky=N+S)
         self.__text.configure(yscrollcommand = self.__scrlbar.set)
         self.__scrlbar.configure(command=self.__text.yview)
         self.__text.insert(END, "List of command sent and received\n-------------------------")
@@ -195,7 +183,6 @@ class Watchman_main_window():
     def entry_callback(self, count, var, *args):
         # Get entry's contain
         s = var.get()
-        print(str(count)+") "+s)
         # Test if it's a number that can stored in a 12bits register
         if(self.is_number(s) and (len(s) != 0)):
             if((int(s) < 4096) and (int(s) >= 0)):
@@ -284,10 +271,9 @@ class Watchman_main_window():
         while self.run_flag: # running flag
             try:
                 data = bytearray()
-                data, adress = self.sock.recvfrom(2*128+20) # wait on data
+                data, adress = self.sock.recvfrom(200) # wait on data
                 # process the data received (echo command)
                 if(adress[0] == self.UDP_IP): # test the emitter's ip
-                    i = 0
                     if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
                         # stop/start command
                         if(self.cmd[data[2]] == 'start_stop_stream'):  
@@ -311,7 +297,7 @@ class Watchman_main_window():
                             self.stream_flag = False
                         # read all registers command
                         if(self.cmd[data[2]] == 'read_all_reg'): # adapt index to find the frame's end code
-                            offset = 128*2
+                            offset = 100
                         else:
                             offset = 0
                         # for every command look for the end code

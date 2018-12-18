@@ -7,11 +7,13 @@ LD_SRCS += \
 ../src/lscript.ld 
 
 C_SRCS += \
+../src/TARGETC_RegisterMap.c \
 ../src/axis_peripheral.c \
 ../src/data_analysis.c \
 ../src/data_test.c \
 ../src/file_hm.c \
 ../src/global.c \
+../src/iic_DAC_LTC2657.c \
 ../src/interrupt.c \
 ../src/main.c \
 ../src/platform_mb.c \
@@ -23,11 +25,13 @@ C_SRCS += \
 ../src/utility.c 
 
 OBJS += \
+./src/TARGETC_RegisterMap.o \
 ./src/axis_peripheral.o \
 ./src/data_analysis.o \
 ./src/data_test.o \
 ./src/file_hm.o \
 ./src/global.o \
+./src/iic_DAC_LTC2657.o \
 ./src/interrupt.o \
 ./src/main.o \
 ./src/platform_mb.o \
@@ -39,11 +43,13 @@ OBJS += \
 ./src/utility.o 
 
 C_DEPS += \
+./src/TARGETC_RegisterMap.d \
 ./src/axis_peripheral.d \
 ./src/data_analysis.d \
 ./src/data_test.d \
 ./src/file_hm.d \
 ./src/global.d \
+./src/iic_DAC_LTC2657.d \
 ./src/interrupt.d \
 ./src/main.d \
 ./src/platform_mb.d \

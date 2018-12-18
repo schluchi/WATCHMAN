@@ -12,3 +12,4 @@
 #include "xil_printf.h"
 
 void decToHexa(int n);
+void decToBin(unsigned int n);

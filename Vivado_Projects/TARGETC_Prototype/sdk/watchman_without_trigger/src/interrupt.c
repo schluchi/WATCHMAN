@@ -76,6 +76,7 @@ extern volatile bool flag_timefile;
 extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
+extern volatile bool flag_axidma_rx_done;
 extern int flag_axidma_rx[4];
 extern data_list* last_element;
 
@@ -92,7 +93,7 @@ extern data_list* last_element;
 * 			stored in the log file, and then the programm stops
 *
 ****************************************************************************/
-void AssertPrint(const char8 *File, s32 Line)
+void assert_callback(const char8 *File, s32 Line)
 {
 	char text[100];
 	sprintf((char *)text, "Assert in file %s @ line %d", File, (int)Line);
@@ -208,31 +209,36 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 
 	/* If completion interrupt is asserted, then set RxDone flag */
 	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
-		/*******************************************/
-		// set pulse
-		/*******************************************/
+		if(flag_while_loop){
+			/*******************************************/
+			// set pulse
+			/*******************************************/
 
-		// Invalid the cache to update the value change in memory by the PL
-		Xil_DCacheInvalidateRange((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY);
+			// Invalid the cache to update the value change in memory by the PL
+			Xil_DCacheInvalidateRange((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 
-		for(group=0; group<4; group++){
-			info = last_element->data.data_struct.info;
-			mask = 0x1 << (LAST_SHIFT+group);
-			if((info && mask) != 0) flag_axidma_rx[group]++;
+			for(group=0; group<4; group++){
+				info = last_element->data.data_struct.info;
+				mask = 0x1 << (LAST_SHIFT+group);
+				if((info && mask) != 0) flag_axidma_rx[group]++;
+			}
+
+			tmp_ptr = last_element;
+			last_element = (data_list *)malloc(sizeof(data_list));
+			if(!last_element){
+				xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+			}
+			last_element->next = NULL;
+			last_element->previous = tmp_ptr;
+			tmp_ptr->next = last_element;
+			XAxiDma_SimpleTransfer_Hej((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
+			/*******************************************/
+			// reset pulse
+			/*******************************************/
 		}
-
-		tmp_ptr = last_element;
-		last_element = (data_list *)malloc(sizeof(data_list));
-		if(!last_element){
-			xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+		else{
+			flag_axidma_rx_done = true;
 		}
-		last_element->next = NULL;
-		last_element->previous = tmp_ptr;
-		tmp_ptr->next = last_element;
-		XAxiDma_SimpleTransfer_Hej(&AxiDmaInstance,(UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY);
-		/*******************************************/
-		// reset pulse
-		/*******************************************/
 	}
 }
 
@@ -651,7 +657,7 @@ void enable_interrupts()
 //	XTime_GetTime(&tStart_wdt);
 
 	/* Catch assertion */
-	Xil_AssertSetCallback((Xil_AssertCallback) AssertPrint);
+	Xil_AssertSetCallback((Xil_AssertCallback) assert_callback);
 
 	return;
 }

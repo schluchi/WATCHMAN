@@ -9,9 +9,7 @@
  */
 
 #include <stdio.h>
-#include "platform.h"
 #include "xil_printf.h"
-
 #include "global.h"
 //#include "interrupt.h"
 
@@ -22,7 +20,7 @@
 //	Register Map Target C
 //	Date : 9th October 2018
 // ------------------------------------------------------
-#define TC_VDLYTUNE_REG			1
+#define TC_VDLYTUNE_REG		1
 
 #define TC_SSTOUTFB_REG			65
 #define TC_SSPIN_LE_REG			66
@@ -151,24 +149,16 @@
 	#define WL_CLK_250MHz	0x00000003
 	#define WL_CLK_300MHz	0x00000004
 
-	// Global Variables
-	//static int* regptr = XPAR_TARGETC_0_TC_AXI_BASEADDR;
-	static int* regptr = XPAR_TARGETC_IP_PROTOTYPE_0_BASEADDR ; //XPAR_TARGETC_INTERFACE_IP_0_BASEADDR;
-
-
 //	int TPG_intr_flg;
 //	int SSVALID_intr_flg;
 
-	// Prototypes
-	int SetTargetCRegisters(void);
-	int GetTargetCStatus();
-	int GetTargetCControl();
-	int ControlRegisterWrite(int mask, int actionID);
-	int WriteRegister(int regID, int regData);
-	int WriteReadBackRegister(int regID, int regData);
-	int TestPatternGenerator(int tpg);
-	void decToHexa(unsigned int n);
-	void decToBin(unsigned int n);
+// Prototypes
+void SetTargetCRegisters(void);
+void GetTargetCStatus();
+void GetTargetCControl();
+void ControlRegisterWrite(int mask, int actionID);
+void WriteRegister(int regID, int regData);
+void WriteReadBackRegister(int regID, int regData);
 
 #define ENABLE 		1
 #define DISABLE 	0

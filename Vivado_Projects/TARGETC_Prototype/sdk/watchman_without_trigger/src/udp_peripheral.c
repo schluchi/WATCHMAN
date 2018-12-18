@@ -33,7 +33,7 @@
 #include "udp_peripheral.h"
 
 /* Global variables */
-int regmap[REGMAP_SIZE];
+int* regptr;
 struct udp_pcb *pcb_data;
 struct udp_pcb *pcb_cmd;
 struct pbuf *buf_data;
@@ -152,10 +152,10 @@ int command_parser(struct pbuf *p, char* return_buf){
 		return_buf[3] = payload[start+3];
 		switch(payload[start+2]){
 			case 0: // cmd write all reg.
-				if(start + 4 + 2*REGMAP_SIZE == end){
-					k = 0;
-					for(i = 4; i < (4 + 2*REGMAP_SIZE); i += 2){
-						regmap[k] = payload[i]*256 + payload[i+1];
+				if(start + 4 + 2*REGMAP_SIZE_UDP == end){
+					k = 1;
+					for(i = 4; i < (4 + 2*REGMAP_SIZE_UDP); i += 2){
+						regptr[k] = payload[i]*256 + payload[i+1];
 						k++;
 					}
 					xil_printf("Command write_all_reg received\r\n");
@@ -165,14 +165,14 @@ int command_parser(struct pbuf *p, char* return_buf){
 				break;
 			case 1: // cmd read all reg
 				if(start + 4 == end){
-					k = 0;
-					for(i = 4; i < (4 + 2*REGMAP_SIZE); i += 2){
-						return_buf[i] = (char)(regmap[k] >> 8);
-						return_buf[i+1] = (char)(regmap[k]);
+					k = 1;
+					for(i = 4; i < (4 + 2*REGMAP_SIZE_UDP); i += 2){
+						return_buf[i] = (char)(regptr[k] >> 8);
+						return_buf[i+1] = (char)(regptr[k]);
 						k++;
 					}
 					xil_printf("Command read_all_reg received\r\n");
-					return (6 + 2*REGMAP_SIZE);
+					return (6 + 2*REGMAP_SIZE_UDP);
 				}
 				else return -1;
 				break;
@@ -246,7 +246,7 @@ int setup_udp_settings(ip_addr_t pc_ipaddr)
 {
 	int ret = 0;
 	/* Initialize the regmap for test */
-	for(int i = 0; i<REGMAP_SIZE; i++) regmap[i] = i;
+	for(int i = 0; i<REGMAP_SIZE_UDP; i++) regptr[i] = i;
 
 
 	/* create new UDP PCB structure for the data */

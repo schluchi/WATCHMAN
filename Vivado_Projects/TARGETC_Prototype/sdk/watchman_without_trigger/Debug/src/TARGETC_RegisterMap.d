@@ -1,16 +1,19 @@
-src/global.o src/global.o: ../src/global.c ../src/global.h \
+src/TARGETC_RegisterMap.o src/TARGETC_RegisterMap.o: \
+ ../src/TARGETC_RegisterMap.c ../src/TARGETC_RegisterMap.h \
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_printf.h \
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h \
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters.h \
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/bspconfig.h \
+ ../src/global.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xaxidma.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_assert.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xaxidma_bd.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xaxidma_hw.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_io.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_printf.h \
- ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters.h \
- ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
- ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/bspconfig.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xpseudo_asm.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xreg_cortexa9.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xpseudo_asm_gcc.h \
@@ -50,7 +53,6 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/prot/ip.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/icmp.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/prot/icmp.h \
- ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_printf.h \
  ../src/platform_config.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/netif/xadapter.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/netif/xtopology.h \
@@ -69,7 +71,19 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
- ../src/data_analysis.h ../src/TARGETC_RegisterMap.h
+ ../src/data_analysis.h
+
+../src/TARGETC_RegisterMap.h:
+
+../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_printf.h:
+
+../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h:
+
+../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters.h:
+
+../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters_ps.h:
+
+../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/bspconfig.h:
 
 ../src/global.h:
 
@@ -78,8 +92,6 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xaxidma_bdring.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h:
-
-../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_assert.h:
 
@@ -90,12 +102,6 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_io.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_printf.h:
-
-../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters.h:
-
-../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xparameters_ps.h:
-
-../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/bspconfig.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xpseudo_asm.h:
 
@@ -175,8 +181,6 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/prot/icmp.h:
 
-../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_printf.h:
-
 ../src/platform_config.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/netif/xadapter.h:
@@ -214,5 +218,3 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h:
 
 ../src/data_analysis.h:
-
-../src/TARGETC_RegisterMap.h:

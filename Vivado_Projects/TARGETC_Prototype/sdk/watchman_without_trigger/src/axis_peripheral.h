@@ -24,7 +24,7 @@
 #define FULL_WAVEFORM_ID	1
 
 /*** Function prototype *********************************************/
-void XAxiDma_SimpleTransfer_Hej(XAxiDma *InstancePtr, UINTPTR BuffAddr, int LengthOfBytes);
+void XAxiDma_SimpleTransfer_Hej(UINTPTR BuffAddr, int LengthOfBytes);
 void dma_first_adress(void);
 void dma_received_data(int group);
 

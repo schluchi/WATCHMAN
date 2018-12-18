@@ -57,10 +57,11 @@ int main(void)
     sleep(2);
 
 
-    xil_printf("DLLlocked...");
+    xil_printf("PLLlocked...");
 
-	while(regptr[TC_STATUS_REG] & LOCKED_MASK != LOCKED_MASK){
-		usleep(100000); //sleep 100ms
+	while((regptr[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
+		sleep(1); //sleep 100ms
+		printf("0x%X\r\n", regptr[TC_STATUS_REG]);
 	}
 	xil_printf("OK\r\n");
 	xil_printf("\r\n");
@@ -414,7 +415,7 @@ int main(void)
 		ControlRegisterWrite(SS_TPG_MASK ,ENABLE);
 		ControlRegisterWrite(WINDOW_MASK,ENABLE);
 
-		sleep(1);
+		//sleep(1);
 		ControlRegisterWrite(WINDOW_MASK,DISABLE);
 		
 		timeout= 10;

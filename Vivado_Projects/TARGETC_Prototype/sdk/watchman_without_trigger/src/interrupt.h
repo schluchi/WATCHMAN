@@ -45,15 +45,7 @@
 
 #define RESET_RX_CNTR_LIMIT	400
 
-void tcp_fasttmr(void);
-void tcp_slowtmr(void);
-
-#if LWIP_DHCP==1
-void dhcp_fine_tmr();
-void dhcp_coarse_tmr();
-#endif
-
-void AssertPrint(const char8 *File, s32 Line);
+void assert_callback(const char8 *File, s32 Line);
 void timer_scu_callback(XScuTimer * TimerInstance);
 void timer_ttcps_callback(XTtcPs * TimerInstance);
 void axidma_rx_callback(XAxiDma* AxiDmaInstance);

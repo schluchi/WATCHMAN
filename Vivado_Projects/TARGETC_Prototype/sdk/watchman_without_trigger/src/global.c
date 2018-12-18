@@ -19,6 +19,7 @@ volatile bool flag_timefile;
 XAxiDma AxiDmaInstance;
 XScuWdt WdtScuInstance;
 volatile bool flag_axidma_error;
+volatile bool flag_axidma_rx_done;
 int flag_axidma_rx[4];
 int nbre_of_bytes;
 data_list* first_element;
@@ -26,7 +27,8 @@ data_list* last_element;
 volatile bool flag_assertion;
 volatile bool flag_while_loop;
 char* frame_buf_tmp;
-char* frame_buf;
+char* frame_buf;\
+int* regptr;
 
 /****************************************************************************/
 /**
@@ -61,6 +63,7 @@ int init_global_var(void){
 	flag_assertion = false;
 	flag_while_loop = false;
 	flag_axidma_error = false;
+	flag_axidma_rx_done = false;
 	for(i=0; i<4; i++) flag_axidma_rx[i] = 0;
 	frame_buf_tmp = (char *)malloc(MAX_STREAM_SIZE);
 	if(!frame_buf_tmp){
@@ -68,6 +71,8 @@ int init_global_var(void){
 		return XST_FAILURE;
 	}
 	frame_buf = &frame_buf_tmp[BUF_HEADER_SIZE];
+	regptr = XPAR_TARGETC_IP_PROTOTYPE_0_BASEADDR ; //XPAR_TARGETC_INTERFACE_IP_0_BASEADDR;
+	for(i = TC_VDLYTUNE_REG; i<= TC_WL_DIV_REG; i++) regptr[i] = 0;
 	return XST_SUCCESS;
 }
 

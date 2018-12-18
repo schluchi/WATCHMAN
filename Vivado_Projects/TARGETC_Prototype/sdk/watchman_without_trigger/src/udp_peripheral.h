@@ -20,8 +20,8 @@
 #include "xil_printf.h"
 #endif
 
-#define REGMAP_SIZE		50
-#define MAX_ARRAY_SIZE	3*REGMAP_SIZE
+#define REGMAP_SIZE_UDP	128
+#define MAX_ARRAY_SIZE	2*REGMAP_SIZE_UDP+20
 #define PORT_CMD		7
 #define PORT_DATA		8
 

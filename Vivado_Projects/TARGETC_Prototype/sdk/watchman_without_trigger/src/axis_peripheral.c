@@ -18,8 +18,9 @@ extern char* frame_buf;
 * This is the DMA Simple Packet Transfert Function
 *
 ******************************************************************************/
-void XAxiDma_SimpleTransfer_Hej(XAxiDma *InstancePtr, UINTPTR BuffAddr, int LengthOfBytes)
+void XAxiDma_SimpleTransfer_Hej(UINTPTR BuffAddr, int LengthOfBytes)
 {
+	XAxiDma *InstancePtr = &AxiDmaInstance;
 	uint32_t reg;
 
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET,XAXIDMA_DESTADDR_OFFSET, LOWER_32_BITS(BuffAddr));
@@ -35,7 +36,7 @@ void dma_first_adress(void){
 	/*******************************************/
 	// set pulse
 	/*******************************************/
-	XAxiDma_SimpleTransfer_Hej(&AxiDmaInstance,(UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY);
+	XAxiDma_SimpleTransfer_Hej((UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 	/*******************************************/
 	// reset pulse
 	/*******************************************/

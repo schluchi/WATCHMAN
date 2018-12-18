@@ -69,7 +69,9 @@ src/main.o src/main.o: ../src/main.c \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
- ../src/global.h
+ ../src/global.h ../src/TARGETC_RegisterMap.h ../src/iic_DAC_LTC2657.h \
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic.h \
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/init.h:
 
@@ -216,3 +218,11 @@ src/main.o src/main.o: ../src/main.c \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h:
 
 ../src/global.h:
+
+../src/TARGETC_RegisterMap.h:
+
+../src/iic_DAC_LTC2657.h:
+
+../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic.h:
+
+../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h:
