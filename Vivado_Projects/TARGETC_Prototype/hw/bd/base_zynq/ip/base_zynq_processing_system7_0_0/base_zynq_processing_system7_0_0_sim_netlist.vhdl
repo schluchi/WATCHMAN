@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
--- Date        : Wed Dec 19 14:33:24 2018
--- Host        : Anthony-THINK running 64-bit Service Pack 1  (build 7601)
+-- Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
+-- Date        : Thu Dec 20 09:07:24 2018
+-- Host        : jonathan-Latitude-E7450 running 64-bit Linux Mint 18.1 Serena
 -- Command     : write_vhdl -force -mode funcsim
---               C:/Users/Anthony/Hawaii/WATCHMAN/Vivado_Projects/TARGETC_Prototype/hw/bd/base_zynq/ip/base_zynq_processing_system7_0_0/base_zynq_processing_system7_0_0_sim_netlist.vhdl
+--               /home/jonathan/VivadoProjects/00_WATCHMANN/TARGETC_Prototype/hw/bd/base_zynq/ip/base_zynq_processing_system7_0_0/base_zynq_processing_system7_0_0_sim_netlist.vhdl
 -- Design      : base_zynq_processing_system7_0_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -599,7 +599,7 @@ entity base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_syste
     IRQ_P2F_SPI1 : out STD_LOGIC;
     IRQ_P2F_UART1 : out STD_LOGIC;
     IRQ_P2F_CAN1 : out STD_LOGIC;
-    IRQ_F2P : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    IRQ_F2P : in STD_LOGIC_VECTOR ( 5 downto 0 );
     Core0_nFIQ : in STD_LOGIC;
     Core0_nIRQ : in STD_LOGIC;
     Core1_nFIQ : in STD_LOGIC;
@@ -721,7 +721,7 @@ entity base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_syste
   attribute C_FCLK_CLK0_BUF : string;
   attribute C_FCLK_CLK0_BUF of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "TRUE";
   attribute C_FCLK_CLK1_BUF : string;
-  attribute C_FCLK_CLK1_BUF of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "TRUE";
+  attribute C_FCLK_CLK1_BUF of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "FALSE";
   attribute C_FCLK_CLK2_BUF : string;
   attribute C_FCLK_CLK2_BUF of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "FALSE";
   attribute C_FCLK_CLK3_BUF : string;
@@ -751,7 +751,7 @@ entity base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_syste
   attribute C_M_AXI_GP1_THREAD_ID_WIDTH : integer;
   attribute C_M_AXI_GP1_THREAD_ID_WIDTH of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is 12;
   attribute C_NUM_F2P_INTR_INPUTS : integer;
-  attribute C_NUM_F2P_INTR_INPUTS of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is 2;
+  attribute C_NUM_F2P_INTR_INPUTS of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is 6;
   attribute C_PACKAGE_NAME : string;
   attribute C_PACKAGE_NAME of base_zynq_processing_system7_0_0_processing_system7_v5_5_processing_system7 : entity is "clg400";
   attribute C_PS7_SI_REV : string;
@@ -827,7 +827,7 @@ architecture STRUCTURE of base_zynq_processing_system7_0_0_processing_system7_v5
   signal \<const1>\ : STD_LOGIC;
   signal ENET0_MDIO_T_n : STD_LOGIC;
   signal ENET1_MDIO_T_n : STD_LOGIC;
-  signal FCLK_CLK_unbuffered : STD_LOGIC_VECTOR ( 1 downto 0 );
+  signal FCLK_CLK_unbuffered : STD_LOGIC_VECTOR ( 0 to 0 );
   signal I2C0_SCL_T_n : STD_LOGIC;
   signal I2C0_SDA_T_n : STD_LOGIC;
   signal I2C1_SCL_T_n : STD_LOGIC;
@@ -939,7 +939,6 @@ architecture STRUCTURE of base_zynq_processing_system7_0_0_processing_system7_v5
   attribute BOX_TYPE of PS_PORB_BIBUF : label is "PRIMITIVE";
   attribute BOX_TYPE of PS_SRSTB_BIBUF : label is "PRIMITIVE";
   attribute BOX_TYPE of \buffer_fclk_clk_0.FCLK_CLK_0_BUFG\ : label is "PRIMITIVE";
-  attribute BOX_TYPE of \buffer_fclk_clk_1.FCLK_CLK_1_BUFG\ : label is "PRIMITIVE";
   attribute BOX_TYPE of \genblk13[0].MIO_BIBUF\ : label is "PRIMITIVE";
   attribute BOX_TYPE of \genblk13[10].MIO_BIBUF\ : label is "PRIMITIVE";
   attribute BOX_TYPE of \genblk13[11].MIO_BIBUF\ : label is "PRIMITIVE";
@@ -1950,7 +1949,8 @@ PS7_i: unisim.vcomponents.PS7
       EVENTSTANDBYWFI(1 downto 0) => EVENT_STANDBYWFI(1 downto 0),
       FCLKCLK(3) => FCLK_CLK3,
       FCLKCLK(2) => FCLK_CLK2,
-      FCLKCLK(1 downto 0) => FCLK_CLK_unbuffered(1 downto 0),
+      FCLKCLK(1) => FCLK_CLK1,
+      FCLKCLK(0) => FCLK_CLK_unbuffered(0),
       FCLKCLKTRIGN(3 downto 0) => B"0000",
       FCLKRESETN(3) => FCLK_RESET3_N,
       FCLKRESETN(2) => FCLK_RESET2_N,
@@ -1983,8 +1983,8 @@ PS7_i: unisim.vcomponents.PS7
       IRQF2P(18) => Core0_nFIQ,
       IRQF2P(17) => Core1_nIRQ,
       IRQF2P(16) => Core0_nIRQ,
-      IRQF2P(15 downto 2) => B"00000000000000",
-      IRQF2P(1 downto 0) => IRQ_F2P(1 downto 0),
+      IRQF2P(15 downto 6) => B"0000000000",
+      IRQF2P(5 downto 0) => IRQ_F2P(5 downto 0),
       IRQP2F(28) => IRQ_P2F_DMAC_ABORT,
       IRQP2F(27) => IRQ_P2F_DMAC7,
       IRQP2F(26) => IRQ_P2F_DMAC6,
@@ -2583,11 +2583,6 @@ VCC: unisim.vcomponents.VCC
      port map (
       I => FCLK_CLK_unbuffered(0),
       O => FCLK_CLK0
-    );
-\buffer_fclk_clk_1.FCLK_CLK_1_BUFG\: unisim.vcomponents.BUFG
-     port map (
-      I => FCLK_CLK_unbuffered(1),
-      O => FCLK_CLK1
     );
 \genblk13[0].MIO_BIBUF\: unisim.vcomponents.BIBUF
      port map (
@@ -3455,9 +3450,8 @@ entity base_zynq_processing_system7_0_0 is
     S_AXI_HP0_WID : in STD_LOGIC_VECTOR ( 5 downto 0 );
     S_AXI_HP0_WDATA : in STD_LOGIC_VECTOR ( 31 downto 0 );
     S_AXI_HP0_WSTRB : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    IRQ_F2P : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    IRQ_F2P : in STD_LOGIC_VECTOR ( 5 downto 0 );
     FCLK_CLK0 : out STD_LOGIC;
-    FCLK_CLK1 : out STD_LOGIC;
     FCLK_RESET0_N : out STD_LOGIC;
     MIO : inout STD_LOGIC_VECTOR ( 53 downto 0 );
     DDR_CAS_n : inout STD_LOGIC;
@@ -3537,6 +3531,7 @@ architecture STRUCTURE of base_zynq_processing_system7_0_0 is
   signal NLW_inst_ENET1_SOF_RX_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_ENET1_SOF_TX_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_EVENT_EVENTO_UNCONNECTED : STD_LOGIC;
+  signal NLW_inst_FCLK_CLK1_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_FCLK_CLK2_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_FCLK_CLK3_UNCONNECTED : STD_LOGIC;
   signal NLW_inst_FCLK_RESET1_N_UNCONNECTED : STD_LOGIC;
@@ -3785,7 +3780,7 @@ architecture STRUCTURE of base_zynq_processing_system7_0_0 is
   attribute C_FCLK_CLK0_BUF : string;
   attribute C_FCLK_CLK0_BUF of inst : label is "TRUE";
   attribute C_FCLK_CLK1_BUF : string;
-  attribute C_FCLK_CLK1_BUF of inst : label is "TRUE";
+  attribute C_FCLK_CLK1_BUF of inst : label is "FALSE";
   attribute C_FCLK_CLK2_BUF : string;
   attribute C_FCLK_CLK2_BUF of inst : label is "FALSE";
   attribute C_FCLK_CLK3_BUF : string;
@@ -3815,7 +3810,7 @@ architecture STRUCTURE of base_zynq_processing_system7_0_0 is
   attribute C_M_AXI_GP1_THREAD_ID_WIDTH : integer;
   attribute C_M_AXI_GP1_THREAD_ID_WIDTH of inst : label is 12;
   attribute C_NUM_F2P_INTR_INPUTS : integer;
-  attribute C_NUM_F2P_INTR_INPUTS of inst : label is 2;
+  attribute C_NUM_F2P_INTR_INPUTS of inst : label is 6;
   attribute C_PACKAGE_NAME : string;
   attribute C_PACKAGE_NAME of inst : label is "clg400";
   attribute C_PS7_SI_REV : string;
@@ -3897,8 +3892,6 @@ architecture STRUCTURE of base_zynq_processing_system7_0_0 is
   attribute X_INTERFACE_INFO of FCLK_CLK0 : signal is "xilinx.com:signal:clock:1.0 FCLK_CLK0 CLK";
   attribute X_INTERFACE_PARAMETER : string;
   attribute X_INTERFACE_PARAMETER of FCLK_CLK0 : signal is "XIL_INTERFACENAME FCLK_CLK0, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN base_zynq_processing_system7_0_0_FCLK_CLK0";
-  attribute X_INTERFACE_INFO of FCLK_CLK1 : signal is "xilinx.com:signal:clock:1.0 FCLK_CLK1 CLK";
-  attribute X_INTERFACE_PARAMETER of FCLK_CLK1 : signal is "XIL_INTERFACENAME FCLK_CLK1, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN base_zynq_processing_system7_0_0_FCLK_CLK1";
   attribute X_INTERFACE_INFO of FCLK_RESET0_N : signal is "xilinx.com:signal:reset:1.0 FCLK_RESET0_N RST";
   attribute X_INTERFACE_PARAMETER of FCLK_RESET0_N : signal is "XIL_INTERFACENAME FCLK_RESET0_N, POLARITY ACTIVE_LOW";
   attribute X_INTERFACE_INFO of M_AXI_GP0_ACLK : signal is "xilinx.com:signal:clock:1.0 M_AXI_GP0_ACLK CLK";
@@ -3943,7 +3936,7 @@ architecture STRUCTURE of base_zynq_processing_system7_0_0 is
   attribute X_INTERFACE_PARAMETER of DDR_DQS : signal is "XIL_INTERFACENAME DDR, CAN_DEBUG false, TIMEPERIOD_PS 1250, MEMORY_TYPE COMPONENTS, DATA_WIDTH 8, CS_ENABLED true, DATA_MASK_ENABLED true, SLOT Single, MEM_ADDR_MAP ROW_COLUMN_BANK, BURST_LENGTH 8, AXI_ARBITRATION_SCHEME TDM, CAS_LATENCY 11, CAS_WRITE_LATENCY 11";
   attribute X_INTERFACE_INFO of DDR_DQS_n : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_N";
   attribute X_INTERFACE_INFO of IRQ_F2P : signal is "xilinx.com:signal:interrupt:1.0 IRQ_F2P INTERRUPT";
-  attribute X_INTERFACE_PARAMETER of IRQ_F2P : signal is "XIL_INTERFACENAME IRQ_F2P, SENSITIVITY LEVEL_HIGH:LEVEL_HIGH, PortWidth 2";
+  attribute X_INTERFACE_PARAMETER of IRQ_F2P : signal is "XIL_INTERFACENAME IRQ_F2P, SENSITIVITY LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH:LEVEL_HIGH, PortWidth 6";
   attribute X_INTERFACE_INFO of MIO : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO";
   attribute X_INTERFACE_INFO of M_AXI_GP0_ARADDR : signal is "xilinx.com:interface:aximm:1.0 M_AXI_GP0 ARADDR";
   attribute X_INTERFACE_INFO of M_AXI_GP0_ARBURST : signal is "xilinx.com:interface:aximm:1.0 M_AXI_GP0 ARBURST";
@@ -4123,7 +4116,7 @@ inst: entity work.base_zynq_processing_system7_0_0_processing_system7_v5_5_proce
       EVENT_STANDBYWFE(1 downto 0) => NLW_inst_EVENT_STANDBYWFE_UNCONNECTED(1 downto 0),
       EVENT_STANDBYWFI(1 downto 0) => NLW_inst_EVENT_STANDBYWFI_UNCONNECTED(1 downto 0),
       FCLK_CLK0 => FCLK_CLK0,
-      FCLK_CLK1 => FCLK_CLK1,
+      FCLK_CLK1 => NLW_inst_FCLK_CLK1_UNCONNECTED,
       FCLK_CLK2 => NLW_inst_FCLK_CLK2_UNCONNECTED,
       FCLK_CLK3 => NLW_inst_FCLK_CLK3_UNCONNECTED,
       FCLK_CLKTRIG0_N => '0',
@@ -4172,7 +4165,7 @@ inst: entity work.base_zynq_processing_system7_0_0_processing_system7_v5_5_proce
       I2C1_SDA_I => '0',
       I2C1_SDA_O => NLW_inst_I2C1_SDA_O_UNCONNECTED,
       I2C1_SDA_T => NLW_inst_I2C1_SDA_T_UNCONNECTED,
-      IRQ_F2P(1 downto 0) => IRQ_F2P(1 downto 0),
+      IRQ_F2P(5 downto 0) => IRQ_F2P(5 downto 0),
       IRQ_P2F_CAN0 => NLW_inst_IRQ_P2F_CAN0_UNCONNECTED,
       IRQ_P2F_CAN1 => NLW_inst_IRQ_P2F_CAN1_UNCONNECTED,
       IRQ_P2F_CTI => NLW_inst_IRQ_P2F_CTI_UNCONNECTED,

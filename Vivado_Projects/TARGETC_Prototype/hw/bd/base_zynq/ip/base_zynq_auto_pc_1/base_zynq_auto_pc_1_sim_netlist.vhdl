@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
--- Tool Version: Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
--- Date        : Wed Dec 19 14:36:48 2018
--- Host        : Anthony-THINK running 64-bit Service Pack 1  (build 7601)
--- Command     : write_vhdl -force -mode funcsim
---               c:/Users/Anthony/Hawaii/WATCHMAN/Vivado_Projects/TARGETC_Prototype/hw/bd/base_zynq/ip/base_zynq_auto_pc_1/base_zynq_auto_pc_1_sim_netlist.vhdl
+-- Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
+-- Date        : Fri Dec  7 09:07:33 2018
+-- Host        : jonathan-Latitude-E7450 running 64-bit Linux Mint 18.1 Serena
+-- Command     : write_vhdl -force -mode funcsim -rename_top base_zynq_auto_pc_1 -prefix
+--               base_zynq_auto_pc_1_ base_zynq_auto_pc_1_sim_netlist.vhdl
 -- Design      : base_zynq_auto_pc_1
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -27,8 +27,6 @@ entity base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_b_downsizer is
     dout : in STD_LOGIC_VECTOR ( 4 downto 0 );
     m_axi_bresp : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_b_downsizer : entity is "axi_protocol_converter_v2_1_17_b_downsizer";
 end base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_b_downsizer;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_b_downsizer is
@@ -245,8 +243,6 @@ entity base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_w_axi3_conv is
     \goreg_dm.dout_i_reg[2]\ : in STD_LOGIC;
     cmd_push_block_reg : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_w_axi3_conv : entity is "axi_protocol_converter_v2_1_17_w_axi3_conv";
 end base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_w_axi3_conv;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_w_axi3_conv is
@@ -579,8 +575,6 @@ entity base_zynq_auto_pc_1_xpm_cdc_async_rst is
   attribute INIT_SYNC_FF of base_zynq_auto_pc_1_xpm_cdc_async_rst : entity is 0;
   attribute INV_DEF_VAL : string;
   attribute INV_DEF_VAL of base_zynq_auto_pc_1_xpm_cdc_async_rst : entity is "1'b1";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_xpm_cdc_async_rst : entity is "xpm_cdc_async_rst";
   attribute RST_ACTIVE_HIGH : integer;
   attribute RST_ACTIVE_HIGH of base_zynq_auto_pc_1_xpm_cdc_async_rst : entity is 1;
   attribute VERSION : integer;
@@ -715,8 +709,6 @@ entity base_zynq_auto_pc_1_dmem is
     I17 : in STD_LOGIC_VECTOR ( 4 downto 0 );
     \gpregsm1.curr_fwft_state_reg[0]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_dmem : entity is "dmem";
 end base_zynq_auto_pc_1_dmem;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_dmem is
@@ -913,8 +905,6 @@ entity base_zynq_auto_pc_1_rd_bin_cntr is
     clk : in STD_LOGIC;
     \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_rd_bin_cntr : entity is "rd_bin_cntr";
 end base_zynq_auto_pc_1_rd_bin_cntr;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_rd_bin_cntr is
@@ -1290,8 +1280,6 @@ entity base_zynq_auto_pc_1_rd_fwft is
     rd_en : in STD_LOGIC;
     ram_empty_fb_i_reg : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_rd_fwft : entity is "rd_fwft";
 end base_zynq_auto_pc_1_rd_fwft;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_rd_fwft is
@@ -1754,8 +1742,6 @@ entity base_zynq_auto_pc_1_rd_status_flags_ss is
     clk : in STD_LOGIC;
     \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]\ : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_rd_status_flags_ss : entity is "rd_status_flags_ss";
 end base_zynq_auto_pc_1_rd_status_flags_ss;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_rd_status_flags_ss is
@@ -1870,8 +1856,6 @@ entity base_zynq_auto_pc_1_wr_bin_cntr is
     clk : in STD_LOGIC;
     AR : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_wr_bin_cntr : entity is "wr_bin_cntr";
 end base_zynq_auto_pc_1_wr_bin_cntr;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_wr_bin_cntr is
@@ -2467,8 +2451,6 @@ entity base_zynq_auto_pc_1_wr_status_flags_ss is
     AR : in STD_LOGIC_VECTOR ( 0 to 0 );
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_wr_status_flags_ss : entity is "wr_status_flags_ss";
 end base_zynq_auto_pc_1_wr_status_flags_ss;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_wr_status_flags_ss is
@@ -2642,8 +2624,6 @@ entity base_zynq_auto_pc_1_memory is
     I17 : in STD_LOGIC_VECTOR ( 4 downto 0 );
     \gpregsm1.curr_fwft_state_reg[0]\ : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_memory : entity is "memory";
 end base_zynq_auto_pc_1_memory;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_memory is
@@ -2821,8 +2801,6 @@ entity base_zynq_auto_pc_1_rd_logic is
     \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]\ : in STD_LOGIC;
     rd_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_rd_logic : entity is "rd_logic";
 end base_zynq_auto_pc_1_rd_logic;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_rd_logic is
@@ -2926,8 +2904,6 @@ entity base_zynq_auto_pc_1_reset_blk_ramfifo is
     rd_en : in STD_LOGIC;
     \gpregsm1.curr_fwft_state_reg[1]\ : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_reset_blk_ramfifo : entity is "reset_blk_ramfifo";
 end base_zynq_auto_pc_1_reset_blk_ramfifo;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_reset_blk_ramfifo is
@@ -3117,8 +3093,6 @@ entity base_zynq_auto_pc_1_wr_logic is
     \gc0.count_d1_reg[4]\ : in STD_LOGIC_VECTOR ( 4 downto 0 );
     \gc0.count_reg[4]\ : in STD_LOGIC_VECTOR ( 4 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_wr_logic : entity is "wr_logic";
 end base_zynq_auto_pc_1_wr_logic;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_wr_logic is
@@ -3222,8 +3196,6 @@ entity base_zynq_auto_pc_1_fifo_generator_ramfifo is
     rd_en : in STD_LOGIC;
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_fifo_generator_ramfifo : entity is "fifo_generator_ramfifo";
 end base_zynq_auto_pc_1_fifo_generator_ramfifo;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_fifo_generator_ramfifo is
@@ -3390,8 +3362,6 @@ entity base_zynq_auto_pc_1_fifo_generator_top is
     rd_en : in STD_LOGIC;
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_fifo_generator_top : entity is "fifo_generator_top";
 end base_zynq_auto_pc_1_fifo_generator_top;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_fifo_generator_top is
@@ -3456,8 +3426,6 @@ entity base_zynq_auto_pc_1_fifo_generator_v13_2_2_synth is
     rd_en : in STD_LOGIC;
     wr_en : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_fifo_generator_v13_2_2_synth : entity is "fifo_generator_v13_2_2_synth";
 end base_zynq_auto_pc_1_fifo_generator_v13_2_2_synth;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_fifo_generator_v13_2_2_synth is
@@ -4149,8 +4117,6 @@ entity base_zynq_auto_pc_1_fifo_generator_v13_2_2 is
   attribute C_WR_PNTR_WIDTH_WRCH of base_zynq_auto_pc_1_fifo_generator_v13_2_2 : entity is 4;
   attribute C_WR_RESPONSE_LATENCY : integer;
   attribute C_WR_RESPONSE_LATENCY of base_zynq_auto_pc_1_fifo_generator_v13_2_2 : entity is 1;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_fifo_generator_v13_2_2 : entity is "fifo_generator_v13_2_2";
 end base_zynq_auto_pc_1_fifo_generator_v13_2_2;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_fifo_generator_v13_2_2 is
@@ -6089,8 +6055,6 @@ entity base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_fifo_gen is
     \cmd_id_check__3\ : in STD_LOGIC;
     incr_need_to_split_q_reg : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_fifo_gen : entity is "axi_data_fifo_v2_1_16_fifo_gen";
 end base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_fifo_gen;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_fifo_gen is
@@ -8350,8 +8314,6 @@ entity base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_axic_fifo is
     \cmd_id_check__3\ : in STD_LOGIC;
     incr_need_to_split_q_reg : in STD_LOGIC
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_axic_fifo : entity is "axi_data_fifo_v2_1_16_axic_fifo";
 end base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_axic_fifo;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_axi_data_fifo_v2_1_16_axic_fifo is
@@ -8576,8 +8538,6 @@ entity base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_a_axi3_conv is
     s_axi_awqos : in STD_LOGIC_VECTOR ( 3 downto 0 );
     empty_fwft_i_reg : in STD_LOGIC_VECTOR ( 0 to 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_a_axi3_conv : entity is "axi_protocol_converter_v2_1_17_a_axi3_conv";
 end base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_a_axi3_conv;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_a_axi3_conv is
@@ -11885,8 +11845,6 @@ entity base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi3_conv is
     s_axi_wvalid : in STD_LOGIC;
     m_axi_bresp : in STD_LOGIC_VECTOR ( 1 downto 0 )
   );
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi3_conv : entity is "axi_protocol_converter_v2_1_17_axi3_conv";
 end base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi3_conv;
 
 architecture STRUCTURE of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi3_conv is
@@ -12125,8 +12083,6 @@ entity base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi_protocol_converter
   attribute C_TRANSLATION_MODE of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi_protocol_converter : entity is 2;
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi_protocol_converter : entity is "yes";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi_protocol_converter : entity is "axi_protocol_converter_v2_1_17_axi_protocol_converter";
   attribute P_AXI3 : integer;
   attribute P_AXI3 of base_zynq_auto_pc_1_axi_protocol_converter_v2_1_17_axi_protocol_converter : entity is 1;
   attribute P_AXI4 : integer;

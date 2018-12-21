@@ -65,7 +65,7 @@ set run_remote_bd_flow 1
 if { $run_remote_bd_flow == 1 } {
   # Set the reference directory for source file relative paths (by default 
   # the value is script directory path)
-  set origin_dir ./bd
+  set origin_dir ./VivadoProjects/00_WATCHMANN/TARGETC_Prototype/hw/bd
 
   # Use origin directory path location variable, if specified in the tcl shell
   if { [info exists ::origin_dir_loc] } {
@@ -209,6 +209,10 @@ proc create_root_design { parentCell } {
   set SS_LD_DIR [ create_bd_port -dir O SS_LD_DIR ]
   set SS_LD_SIN [ create_bd_port -dir O SS_LD_SIN ]
   set SS_RESET [ create_bd_port -dir O -type rst SS_RESET ]
+  set TRIGA [ create_bd_port -dir I TRIGA ]
+  set TRIGB [ create_bd_port -dir I TRIGB ]
+  set TRIGC [ create_bd_port -dir I TRIGC ]
+  set TRIGD [ create_bd_port -dir I TRIGD ]
   set WL_CLK_N [ create_bd_port -dir O -type clk WL_CLK_N ]
   set WL_CLK_P [ create_bd_port -dir O -type clk WL_CLK_P ]
   set WR_CS_S0 [ create_bd_port -dir O WR_CS_S0 ]
@@ -307,7 +311,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_ACT_ENET0_PERIPHERAL_FREQMHZ {25.000000} \
    CONFIG.PCW_ACT_ENET1_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_FPGA0_PERIPHERAL_FREQMHZ {100.000000} \
-   CONFIG.PCW_ACT_FPGA1_PERIPHERAL_FREQMHZ {100.000000} \
+   CONFIG.PCW_ACT_FPGA1_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_FPGA2_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_FPGA3_PERIPHERAL_FREQMHZ {10.000000} \
    CONFIG.PCW_ACT_I2C_PERIPHERAL_FREQMHZ {50} \
@@ -350,7 +354,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_CAN_PERIPHERAL_FREQMHZ {23.8095} \
    CONFIG.PCW_CAN_PERIPHERAL_VALID {0} \
    CONFIG.PCW_CLK0_FREQ {100000000} \
-   CONFIG.PCW_CLK1_FREQ {100000000} \
+   CONFIG.PCW_CLK1_FREQ {10000000} \
    CONFIG.PCW_CLK2_FREQ {10000000} \
    CONFIG.PCW_CLK3_FREQ {10000000} \
    CONFIG.PCW_CORE0_FIQ_INTR {0} \
@@ -411,7 +415,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_EN_CAN0 {0} \
    CONFIG.PCW_EN_CAN1 {0} \
    CONFIG.PCW_EN_CLK0_PORT {1} \
-   CONFIG.PCW_EN_CLK1_PORT {1} \
+   CONFIG.PCW_EN_CLK1_PORT {0} \
    CONFIG.PCW_EN_CLK2_PORT {0} \
    CONFIG.PCW_EN_CLK3_PORT {0} \
    CONFIG.PCW_EN_CLKTRIG0_PORT {0} \
@@ -476,8 +480,8 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_FCLK0_PERIPHERAL_DIVISOR0 {5} \
    CONFIG.PCW_FCLK0_PERIPHERAL_DIVISOR1 {2} \
    CONFIG.PCW_FCLK1_PERIPHERAL_CLKSRC {IO PLL} \
-   CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR0 {5} \
-   CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR1 {2} \
+   CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR1 {1} \
    CONFIG.PCW_FCLK2_PERIPHERAL_CLKSRC {IO PLL} \
    CONFIG.PCW_FCLK2_PERIPHERAL_DIVISOR0 {1} \
    CONFIG.PCW_FCLK2_PERIPHERAL_DIVISOR1 {1} \
@@ -485,7 +489,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_FCLK3_PERIPHERAL_DIVISOR0 {1} \
    CONFIG.PCW_FCLK3_PERIPHERAL_DIVISOR1 {1} \
    CONFIG.PCW_FCLK_CLK0_BUF {TRUE} \
-   CONFIG.PCW_FCLK_CLK1_BUF {TRUE} \
+   CONFIG.PCW_FCLK_CLK1_BUF {FALSE} \
    CONFIG.PCW_FCLK_CLK2_BUF {FALSE} \
    CONFIG.PCW_FCLK_CLK3_BUF {FALSE} \
    CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {100} \
@@ -493,7 +497,7 @@ proc create_root_design { parentCell } {
    CONFIG.PCW_FPGA2_PERIPHERAL_FREQMHZ {50} \
    CONFIG.PCW_FPGA3_PERIPHERAL_FREQMHZ {50} \
    CONFIG.PCW_FPGA_FCLK0_ENABLE {1} \
-   CONFIG.PCW_FPGA_FCLK1_ENABLE {1} \
+   CONFIG.PCW_FPGA_FCLK1_ENABLE {0} \
    CONFIG.PCW_FPGA_FCLK2_ENABLE {0} \
    CONFIG.PCW_FPGA_FCLK3_ENABLE {0} \
    CONFIG.PCW_GP0_EN_MODIFIABLE_TXN {1} \
@@ -1119,6 +1123,9 @@ proc create_root_design { parentCell } {
 
   # Create instance: xlconcat_1, and set properties
   set xlconcat_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconcat:2.1 xlconcat_1 ]
+  set_property -dict [ list \
+   CONFIG.NUM_PORTS {6} \
+ ] $xlconcat_1
 
   # Create interface connections
   connect_bd_intf_net -intf_net axi_dma_0_M_AXI_S2MM [get_bd_intf_pins axi_dma_0/M_AXI_S2MM] [get_bd_intf_pins axi_interconnect_0/S00_AXI]
@@ -1157,7 +1164,6 @@ proc create_root_design { parentCell } {
   connect_bd_net -net MONTIMING_P_1 [get_bd_ports MONTIMING_P] [get_bd_pins TARGETC_IP_Prototype_0/MONTIMING_P]
   connect_bd_net -net Net [get_bd_ports SDA] [get_bd_pins iobuf_0/IO]
   connect_bd_net -net Net1 [get_bd_ports SCL] [get_bd_pins iobuf_1/IO]
-  connect_bd_net -net Net2 [get_bd_pins TARGETC_IP_Prototype_0/RefCLK_i1] [get_bd_pins TARGETC_IP_Prototype_0/RefCLK_i2] [get_bd_pins processing_system7_0/FCLK_CLK1]
   connect_bd_net -net SHOUT_1 [get_bd_ports SHOUT] [get_bd_pins TARGETC_IP_Prototype_0/SHOUT]
   connect_bd_net -net TARGETC_IP_Prototype_0_CH0 [get_bd_pins FifoManagerV4_0/CH0] [get_bd_pins TARGETC_IP_Prototype_0/CH0]
   connect_bd_net -net TARGETC_IP_Prototype_0_CH1 [get_bd_pins FifoManagerV4_0/CH1] [get_bd_pins TARGETC_IP_Prototype_0/CH1]
@@ -1199,6 +1205,10 @@ proc create_root_design { parentCell } {
   connect_bd_net -net TARGETC_IP_Prototype_0_SS_LD_SIN [get_bd_ports SS_LD_SIN] [get_bd_pins TARGETC_IP_Prototype_0/SS_LD_SIN]
   connect_bd_net -net TARGETC_IP_Prototype_0_SS_RESET [get_bd_ports SS_RESET] [get_bd_pins TARGETC_IP_Prototype_0/SS_RESET]
   connect_bd_net -net TARGETC_IP_Prototype_0_SSvalid [get_bd_pins FifoManagerV4_0/PRECvalid] [get_bd_pins TARGETC_IP_Prototype_0/SSvalid]
+  connect_bd_net -net TARGETC_IP_Prototype_0_TrigA_intr [get_bd_pins TARGETC_IP_Prototype_0/TrigA_intr] [get_bd_pins xlconcat_1/In2]
+  connect_bd_net -net TARGETC_IP_Prototype_0_TrigB_intr [get_bd_pins TARGETC_IP_Prototype_0/TrigB_intr] [get_bd_pins xlconcat_1/In3]
+  connect_bd_net -net TARGETC_IP_Prototype_0_TrigC_intr [get_bd_pins TARGETC_IP_Prototype_0/TrigC_intr] [get_bd_pins xlconcat_1/In4]
+  connect_bd_net -net TARGETC_IP_Prototype_0_TrigD_intr [get_bd_pins TARGETC_IP_Prototype_0/TrigD_intr] [get_bd_pins xlconcat_1/In5]
   connect_bd_net -net TARGETC_IP_Prototype_0_Trigger [get_bd_pins FifoManagerV4_0/Trigger] [get_bd_pins TARGETC_IP_Prototype_0/Trigger]
   connect_bd_net -net TARGETC_IP_Prototype_0_WDONbr [get_bd_pins FifoManagerV4_0/WDONBR] [get_bd_pins TARGETC_IP_Prototype_0/WDONbr]
   connect_bd_net -net TARGETC_IP_Prototype_0_WDOTime [get_bd_pins FifoManagerV4_0/WDOTime] [get_bd_pins TARGETC_IP_Prototype_0/WDOTime]
@@ -1212,6 +1222,10 @@ proc create_root_design { parentCell } {
   connect_bd_net -net TARGETC_IP_Prototype_0_WR_CS_S5 [get_bd_ports WR_CS_S5] [get_bd_pins TARGETC_IP_Prototype_0/WR_CS_S5]
   connect_bd_net -net TARGETC_IP_Prototype_0_WR_RS_S0 [get_bd_ports WR_RS_S0] [get_bd_pins TARGETC_IP_Prototype_0/WR_RS_S0]
   connect_bd_net -net TARGETC_IP_Prototype_0_WR_RS_S1 [get_bd_ports WR_RS_S1] [get_bd_pins TARGETC_IP_Prototype_0/WR_RS_S1]
+  connect_bd_net -net TRIGA_1 [get_bd_ports TRIGA] [get_bd_pins TARGETC_IP_Prototype_0/TrigA]
+  connect_bd_net -net TRIGB_1 [get_bd_ports TRIGB] [get_bd_pins TARGETC_IP_Prototype_0/TrigB]
+  connect_bd_net -net TRIGC_1 [get_bd_ports TRIGC] [get_bd_pins TARGETC_IP_Prototype_0/TrigC]
+  connect_bd_net -net TRIGD_1 [get_bd_ports TRIGD] [get_bd_pins TARGETC_IP_Prototype_0/TrigD]
   connect_bd_net -net axi_dma_0_s2mm_introut [get_bd_pins axi_dma_0/s2mm_introut] [get_bd_pins xlconcat_1/In1]
   connect_bd_net -net axi_iic_0_scl_o [get_bd_pins axi_iic_0/scl_o] [get_bd_pins iobuf_1/I]
   connect_bd_net -net axi_iic_0_scl_t [get_bd_pins axi_iic_0/scl_t] [get_bd_pins iobuf_1/T]
@@ -1220,7 +1234,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net axistream_0_StreamReady [get_bd_pins FifoManagerV4_0/ready_i] [get_bd_pins axistream_0/StreamReady]
   connect_bd_net -net iobuf_0_O [get_bd_pins axi_iic_0/sda_i] [get_bd_pins iobuf_0/O]
   connect_bd_net -net iobuf_1_O [get_bd_pins axi_iic_0/scl_i] [get_bd_pins iobuf_1/O]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins FifoManagerV4_0/CLK] [get_bd_pins TARGETC_IP_Prototype_0/tc_axi_aclk] [get_bd_pins axi_dma_0/m_axi_s2mm_aclk] [get_bd_pins axi_dma_0/s_axi_lite_aclk] [get_bd_pins axi_iic_0/s_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axistream_0/M_AXIS_ACLK] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_50M/slowest_sync_clk]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins FifoManagerV4_0/CLK] [get_bd_pins TARGETC_IP_Prototype_0/RefCLK_i1] [get_bd_pins TARGETC_IP_Prototype_0/RefCLK_i2] [get_bd_pins TARGETC_IP_Prototype_0/tc_axi_aclk] [get_bd_pins axi_dma_0/m_axi_s2mm_aclk] [get_bd_pins axi_dma_0/s_axi_lite_aclk] [get_bd_pins axi_iic_0/s_axi_aclk] [get_bd_pins axi_interconnect_0/ACLK] [get_bd_pins axi_interconnect_0/M00_ACLK] [get_bd_pins axi_interconnect_0/S00_ACLK] [get_bd_pins axistream_0/M_AXIS_ACLK] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/M01_ACLK] [get_bd_pins ps7_0_axi_periph/M02_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_50M/slowest_sync_clk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_50M/ext_reset_in]
   connect_bd_net -net rst_ps7_0_50M_peripheral_aresetn [get_bd_pins FifoManagerV4_0/nRST] [get_bd_pins TARGETC_IP_Prototype_0/tc_axi_aresetn] [get_bd_pins axi_dma_0/axi_resetn] [get_bd_pins axi_iic_0/s_axi_aresetn] [get_bd_pins axi_interconnect_0/ARESETN] [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins axistream_0/M_AXIS_ARESETN] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/M01_ARESETN] [get_bd_pins ps7_0_axi_periph/M02_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins rst_ps7_0_50M/peripheral_aresetn]
   connect_bd_net -net xlconcat_0_dout [get_bd_pins TARGETC_IP_Prototype_0/DO] [get_bd_pins xlconcat_0/dout]
