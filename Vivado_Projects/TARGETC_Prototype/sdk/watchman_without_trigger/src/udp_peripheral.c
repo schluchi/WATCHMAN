@@ -45,6 +45,7 @@ extern volatile int count_scu_timer;
 extern int nbre_of_bytes;
 extern volatile bool run_flag;
 extern volatile bool stream_flag;
+extern volatile bool recover_data_flag;
 
 /****************************************************************************/
 /**
@@ -223,6 +224,15 @@ int command_parser(struct pbuf *p, char* return_buf){
 				}
 				else return -1;
 				break;
+			case 6: // recover data for the transfer function
+				if(start + 4 == end){
+					xil_printf("Command recover_data received\r\n");
+					recover_data_flag = true;
+					return 6;
+				}
+				else return -1;
+				break;
+
 			default:
 				return -1;
 

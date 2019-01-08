@@ -72,7 +72,7 @@ src/iic_DAC_LTC2657.o src/iic_DAC_LTC2657.o: ../src/iic_DAC_LTC2657.c \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../src/data_analysis.h ../src/TARGETC_RegisterMap.h
+ ../src/data_analysis.h ../src/TARGETC_RegisterMap.h ../src/utility.h
 
 ../src/iic_DAC_LTC2657.h:
 
@@ -227,3 +227,5 @@ src/iic_DAC_LTC2657.o src/iic_DAC_LTC2657.o: ../src/iic_DAC_LTC2657.c \
 ../src/data_analysis.h:
 
 ../src/TARGETC_RegisterMap.h:
+
+../src/utility.h:

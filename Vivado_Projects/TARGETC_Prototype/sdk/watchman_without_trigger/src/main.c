@@ -17,6 +17,7 @@
 #include "iic_DAC_LTC2657.h"
 #include "pedestal.h"
 #include "xtime_l.h"
+#include "transfer_function.h"
 
 /* Extern global variables */
 extern struct netif *echo_netif;
@@ -30,6 +31,7 @@ extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
 extern int flag_axidma_rx[4];
 extern int* regptr;
+extern volatile bool recover_data_flag;
 
 /* Global variables */
 static struct netif server_netif;
@@ -204,6 +206,16 @@ int main()
 				dma_received_data(group);
 				flag_axidma_rx[group]--;
 			}
+		}
+
+		if(recover_data_flag){
+			if(send_data_transfer_fct() == XST_SUCCESS) printf("Recover data pass!\r\n");
+			else{
+				printf("Recover data failed!\n\r");
+				end_main(GLOBAL_VAR | INTERRUPT | UDP);
+				return -1;
+			}
+			recover_data_flag = false;
 		}
 	}
 

@@ -30,7 +30,7 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 	data_list* ptr;
 	int wdo, sample;
 	int index = 0;
-	uint16_t vped = 1024; // because pedestal are null too
+	uint16_t vped = VPED; // because pedestal are null too
 	uint16_t treshold = 500;
 	bool gain_good = false;
 	bool too_long = false;

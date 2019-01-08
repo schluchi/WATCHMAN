@@ -70,7 +70,7 @@ src/pedestal.o src/pedestal.o: ../src/pedestal.c ../src/pedestal.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../src/TARGETC_RegisterMap.h ../src/global.h \
+ ../src/TARGETC_RegisterMap.h ../src/global.h ../src/utility.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h
 
 ../src/pedestal.h:
@@ -222,5 +222,7 @@ src/pedestal.o src/pedestal.o: ../src/pedestal.c ../src/pedestal.h \
 ../src/TARGETC_RegisterMap.h:
 
 ../src/global.h:
+
+../src/utility.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h:

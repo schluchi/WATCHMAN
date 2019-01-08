@@ -44,8 +44,9 @@ class Watchman_main_window():
         self.UDP_IP = '192.168.1.10'
         ## Contain the port number for UDP communication
         self.UDP_PORT = 7
+        self.UDP_PORT_data = 8
         ## List of all the commands
-        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime']
+        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'recover_data']
         ## Flag which indicates if the streaming is running
         self.stream_flag = False
         ## Flag which indicates that the user want to close the GUI (to avoid problem when accessing graphical object after "WM_DELETE_WINDOW" event)
@@ -59,9 +60,11 @@ class Watchman_main_window():
         self.init_window()
         self.init_UDP_connection()
         ## Thread object which run constantly and process the data received
-        self.thread=Thread(target=self.thread_int, args=())
+        self.thread_cmd=Thread(target=self.thread_cmd_int, args=())
         self.run_flag = True
-        self.thread.start()
+        self.thread_cmd.start()
+        ## Thread object which process the data received
+        self.thread_data=Thread(target=self.thread_data_int, args=())
 
     ## Method to initialize the windows and create its graphical objects
     # @param self : The object pointer
@@ -110,6 +113,8 @@ class Watchman_main_window():
         self.__btn_stop.grid(column=8, row=8, rowspan=2, padx=5, sticky=W+E)
         self.__btn_settime = Button(self.master,text="Set time", command=partial(self.send_command, 5))
         self.__btn_settime.grid(column=8, row=10, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_settime = Button(self.master,text="Recover data", command=partial(self.send_command, 6))
+        self.__btn_settime.grid(column=8, row=12, rowspan=2, padx=5, sticky=W+E)
         self.__btn_graph = Button(self.master,text="Open graph\nStore data", command=self.open_graph)
         self.__btn_graph.grid(column=8, row=29, rowspan=2, padx=5, sticky=W+E)
         # Listbox to show data transfert
@@ -162,7 +167,8 @@ class Watchman_main_window():
             time.sleep(0.1)
          # Stop the thread and wait on it to finish
         self.run_flag = False
-        self.thread.join()
+        self.thread_cmd.join()
+        self.thread_cmd.join()
         # Close the socket and destroy the main window
         self.sock.close()
         self.master.destroy()
@@ -222,13 +228,28 @@ class Watchman_main_window():
         self.__text.see("end") # scroll to the last add-on
         self.__text.configure(state="disable") # disable the listbox, so the user can not change its content
 
-    ## Method to initialize the UDP connection
+    ## Method to initialize the UDP connection for the commands
     # @param self : The object pointer
     def init_UDP_connection(self):
         ## Socket object used to established the UDP connection with the zynq
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind(('', self.UDP_PORT))
         self.sock.settimeout(0.1) # method sock.recvfrom return after maximum 0.1sec if no data are received
+
+    ## Method to initialize the UDP connection for the data recovering
+    # @param self : The object pointer
+    def init_UDP_connection_data(self):
+        ## Socket object used to established the UDP connection with the zynq
+        self.sock_data = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.sock_data.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 131072) # change the size of the socket buffer
+        self.sock_data.bind(('', self.UDP_PORT_data))
+        self.sock_data.settimeout(0.1) # method sock.recvfrom return after maximum 0.1sec if no data are received
+    
+    ## Method to close the UDP connection for the data recovering
+    # @param self : The object pointer
+    def close_UDP_connection_data(self):
+        self.sock_data.shutdown(socket.SHUT_RDWR)
+        self.sock_data.close()
 
     ## Method to send a command to the zynq
     # @param self : The object pointer
@@ -256,6 +277,14 @@ class Watchman_main_window():
         payload.append(int("0x33", 0)) # frame's end code 0x33CC
         payload.append(int("0xCC", 0))
         # show in the listbox the command to be send and send it
+        if(self.cmd[cmd] == 'recover_data'):
+            if(self.toplevel_flag == True):
+                self.write_txt("To recover data, the graph window must be closed!")
+                return
+            else:
+                self.__btn_graph.configure(state="disable")
+                self.init_UDP_connection_data()
+                self.thread_data.start()
         self.write_txt("Tx: " + self.cmd[cmd] + " rand=" + str(payload[3])) 
         self.sock.sendto(payload, (self.UDP_IP, self.UDP_PORT)) 
 
@@ -278,17 +307,53 @@ class Watchman_main_window():
         self.window_data.exit_prog()
         self.toplevel_flag = False
 
-    ## Method thread to process to command received by UDP (running all the time)
+    ## Method thread to process the data received by UDP
     # @param self : The object pointer
-    def thread_int(self):
+    def thread_data_int(self):
+        count = 0
+        while(count < 5120):
+            try:
+                data = bytearray()
+                data, adress = self.sock_data.recvfrom(1031) # wait on data
+                # process the data received
+                if(adress[0] == self.UDP_IP): # test the emitter's ip
+                    if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
+                        if((data[1029] == int("0x33", 0)) and (data[1031] == int("0xCC", 0))):
+                            count += 1
+                            print("Rx: vped = "+str(data[2]*0.25)+"V -> window = "+str(data[3] + data[4]*256))
+                        else:
+                            # error: no end code
+                            self.write_txt("Rx: ERROR end of data")
+                            count = 5120
+                    else:
+                        # error: no start code
+                        self.write_txt("Rx: ERROR start of data")
+                        count = 5120
+                else:
+                    # error: wrong emitter's ip
+                    self.write_txt("Rx: ERROR ip of data")
+                    count = 5120
+            # socket exception: no data for received before timeout
+            except socket.timeout:
+                time.sleep(0.1)
+            # socket exception: problem during execution of socket.recvfrom
+            except socket.error:
+                dummy = 0 # dummy execution to catch the exception
+        self.__btn_graph.configure(state="normal")
+        self.close_UDP_connection_data()
+        print("end of data thread", file=sys.stderr)
+
+    ## Method thread to process the command received by UDP (running all the time)
+    # @param self : The object pointer
+    def thread_cmd_int(self):
         while self.run_flag: # running flag
             try:
                 data = bytearray()
                 data, adress = self.sock.recvfrom(2*128+20) # wait on data
                 # process the data received (echo command)
                 if(adress[0] == self.UDP_IP): # test the emitter's ip
-                    i = 0
                     if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
+                        offset = 0
                         # stop/start command
                         if(self.cmd[data[2]] == 'start_stop_stream'):  
                             if(self.stream_flag): # stop streaming
@@ -312,13 +377,11 @@ class Watchman_main_window():
                         # read all registers command
                         if(self.cmd[data[2]] == 'read_all_reg'): # adapt index to find the frame's end code
                             offset = 128*2
-                        else:
-                            offset = 0
                         # for every command look for the end code
                         if((data[4+offset] == int("0x33", 0)) and (data[5+offset] == int("0xCC", 0))):
                             if(self.destroy_flag == False):
                                 self.write_txt("Rx: " + self.cmd[data[2]] + " rand=" + str(data[3]))
-                                if(offset != 0): # in case of read all register command
+                                if(offset == 128*2): # in case of read all register command
                                     count = 4
                                     for reg in self.regs: # update the value registers value
                                         reg.delete(0,END)
@@ -343,7 +406,7 @@ class Watchman_main_window():
             except socket.error:
                 dummy = 0 # dummy execution to catch the exception
             #time.sleep(0.5)
-        print("end of main thread", file=sys.stderr)
+        print("end of command thread", file=sys.stderr)
 
 # create the main window
 root = Tk()

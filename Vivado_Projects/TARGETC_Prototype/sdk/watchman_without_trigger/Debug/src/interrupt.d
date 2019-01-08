@@ -66,7 +66,7 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
  ../src/axis_peripheral.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
  ../src/data_analysis.h ../src/TARGETC_RegisterMap.h ../src/global.h \
- ../src/file_hm.h \
+ ../src/utility.h ../src/file_hm.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h
@@ -210,6 +210,8 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
 ../src/TARGETC_RegisterMap.h:
 
 ../src/global.h:
+
+../src/utility.h:
 
 ../src/file_hm.h:
 

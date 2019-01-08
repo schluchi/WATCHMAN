@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "xil_printf.h"
 #include "global.h"
+#include "utility.h"
 //#include "interrupt.h"
 
 /*** Definition of Registers ****************************************/

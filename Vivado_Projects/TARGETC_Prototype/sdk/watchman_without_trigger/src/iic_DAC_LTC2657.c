@@ -44,6 +44,7 @@ int DAC_LTC2657_initialize(void){
 int DAC_LTC2657_SetChannelVoltage(int channel, float voltage){
 
 	int Status;
+	int intvolt;
 	char WriteBuffer[3];
 		
 	Status = XIic_SetAddress(&Iic, XII_ADDR_TO_SEND_TYPE, IIC_SLAVE_ADDRESS);
@@ -67,8 +68,9 @@ int DAC_LTC2657_SetChannelVoltage(int channel, float voltage){
 			break;	
 	}
 	
-		//Voltage 
-	int intvolt = (int)(65536.0 * voltage / 2.5);	
+		//Voltage
+	if(voltage >= 2.5) intvolt = 65535;
+	else intvolt = (int)(65536.0 * voltage / 2.5);
 	printf("%lf V\r\n",voltage);
 	
 	

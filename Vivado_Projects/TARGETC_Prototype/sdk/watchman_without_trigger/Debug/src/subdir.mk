@@ -22,6 +22,7 @@ C_SRCS += \
 ../src/sfp.c \
 ../src/si5324.c \
 ../src/time_hm.c \
+../src/transfer_function.c \
 ../src/udp_peripheral.c \
 ../src/utility.c 
 
@@ -41,6 +42,7 @@ OBJS += \
 ./src/sfp.o \
 ./src/si5324.o \
 ./src/time_hm.o \
+./src/transfer_function.o \
 ./src/udp_peripheral.o \
 ./src/utility.o 
 
@@ -60,6 +62,7 @@ C_DEPS += \
 ./src/sfp.d \
 ./src/si5324.d \
 ./src/time_hm.d \
+./src/transfer_function.d \
 ./src/udp_peripheral.d \
 ./src/utility.d 
 

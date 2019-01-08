@@ -72,7 +72,7 @@ src/TARGETC_RegisterMap.o src/TARGETC_RegisterMap.o: \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../src/data_analysis.h
+ ../src/data_analysis.h ../src/utility.h
 
 ../src/TARGETC_RegisterMap.h:
 
@@ -221,3 +221,5 @@ src/TARGETC_RegisterMap.o src/TARGETC_RegisterMap.o: \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h:
 
 ../src/data_analysis.h:
+
+../src/utility.h:
