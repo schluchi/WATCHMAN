@@ -14,7 +14,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import ttk
 from functools import partial
-from threading import Thread
+from threading import Thread, Timer
 import time
 import sys
 import socket
@@ -73,7 +73,7 @@ class Watchman_main_window():
         self.master.config(menu=self.__menu)
         self.__filemenu = Menu(self.__menu)
         self.__menu.add_cascade(label='File', menu=self.__filemenu)
-        self.__filemenu.add_command(label='Load sequence...',command=self.openfile)
+        self.__filemenu.add_command(label='Load sequence...',command=self.writefile)
         self.__filemenu.add_command(label='Save sequence...',command=self.savefile)
         self.__filemenu.add_command(label='EXIT',command=self.exit_prog)
         self.__menu.add_cascade(label='HELP',command=self.help_callback)
@@ -111,8 +111,8 @@ class Watchman_main_window():
         self.__btn_stop.grid(column=8, row=8, rowspan=2, padx=5, sticky=W+E)
         self.__btn_settime = Button(self.master,text="Set time", command=partial(self.send_command, 5))
         self.__btn_settime.grid(column=8, row=10, rowspan=2, padx=5, sticky=W+E)
-        self.__btn_settime = Button(self.master,text="Recover data", command=partial(self.send_command, 6))
-        self.__btn_settime.grid(column=8, row=12, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_recover = Button(self.master,text="Recover data", command=partial(self.send_command, 6))
+        self.__btn_recover.grid(column=8, row=12, rowspan=2, padx=5, sticky=W+E)
         self.__btn_graph = Button(self.master,text="Open graph\nStore data", command=self.open_graph)
         self.__btn_graph.grid(column=8, row=29, rowspan=2, padx=5, sticky=W+E)
         # Listbox to show data transfert
@@ -127,7 +127,7 @@ class Watchman_main_window():
 
     ## Method to open a file with the register's value
     # @param self : The object pointer
-    def openfile(self):
+    def writefile(self):
         file_path=filedialog.askopenfilename()
         if len(file_path) != 0:
             ff=open(file_path,'r')
@@ -166,7 +166,8 @@ class Watchman_main_window():
          # Stop the thread and wait on it to finish
         self.run_flag = False
         self.thread_cmd.join()
-        self.thread_cmd.join()
+        self.thread_data.join()
+        self.thread_timer.join()
         # Close the socket and destroy the main window
         self.sock.close()
         self.master.destroy()
@@ -283,6 +284,7 @@ class Watchman_main_window():
                 self.init_UDP_connection_data()
                 ## Thread object which process the data received
                 self.thread_data=Thread(target=self.thread_data_int, args=())
+                self.thread_timer=Timer(25, self.thread_timer_int)
                 self.thread_data.start()
         self.write_txt("Tx: " + self.cmd[cmd] + " rand=" + str(payload[3])) 
         self.sock.sendto(payload, (self.UDP_IP, self.UDP_PORT)) 
@@ -306,11 +308,20 @@ class Watchman_main_window():
         self.window_data.exit_prog()
         self.toplevel_flag = False
 
+    ## Method thread to timeout the thread_data
+    # @param self : The object pointer
+    def thread_timer_int(self):
+        self.cnt_data_recover = 5632
+        print("end of timer thread", file=sys.stderr)
+
     ## Method thread to process the data received by UDP
     # @param self : The object pointer
     def thread_data_int(self):
-        count = 0
-        while(count < 5120):
+        self.thread_timer.start()
+        self.__btn_recover.configure(state="disable")
+        file_data = open("recovered_data.bin", "wb")
+        self.cnt_data_recover = 0
+        while(self.cnt_data_recover < 5632):
             try:
                 data = bytearray()
                 data, adress = self.sock_data.recvfrom(1031) # wait on data
@@ -318,20 +329,22 @@ class Watchman_main_window():
                 if(adress[0] == self.UDP_IP): # test the emitter's ip
                     if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
                         if((data[1029] == int("0x33", 0)) and (data[1030] == int("0xCC", 0))):
-                            count += 1
-                            print("Rx: vped = "+str(data[2]*0.25)+"V -> window = "+str(data[3] + data[4]*256))
+                            self.cnt_data_recover += 1
+                            file_data.write(data)
+                            if(((data[3] + data[4]*256) == 0) or ((data[3] + data[4]*256) == 511)):
+                                print("Rx: vped = "+str(data[2]*0.25)+"V -> window = "+str(data[3] + data[4]*256))
                         else:
                             # error: no end code
                             self.write_txt("Rx: ERROR end of data")
-                            count = 5120
+                            self.cnt_data_recover = 5632
                     else:
                         # error: no start code
                         self.write_txt("Rx: ERROR start of data")
-                        count = 5120
+                        self.cnt_data_recover = 5632
                 else:
                     # error: wrong emitter's ip
                     self.write_txt("Rx: ERROR ip of data")
-                    count = 5120
+                    self.cnt_data_recover = 5632
             # socket exception: no data for received before timeout
             except socket.timeout:
                 time.sleep(0.1)
@@ -339,7 +352,9 @@ class Watchman_main_window():
             except socket.error:
                 dummy = 0 # dummy execution to catch the exception
         self.__btn_graph.configure(state="normal")
+        self.__btn_recover.configure(state="normal")
         self.close_UDP_connection_data()
+        file_data.close()
         print("end of data thread", file=sys.stderr)
 
     ## Method thread to process the command received by UDP (running all the time)
