@@ -14,6 +14,7 @@
 #include "axis_peripheral.h"
 #include "xparameters.h"
 #include "TARGETC_RegisterMap.h"
+#include "udp_peripheral.h"
 
 int init_global_var(void);
 void cleanup_global_var(void);

@@ -77,6 +77,7 @@ extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
 extern volatile bool flag_axidma_rx_done;
+extern volatile bool recover_data_flag;
 extern int flag_axidma_rx[4];
 extern data_list* last_element;
 
@@ -209,11 +210,11 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 
 	/* If completion interrupt is asserted, then set RxDone flag */
 	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
-		if(flag_while_loop){
+		if(flag_while_loop && (!recover_data_flag)){
 			/*******************************************/
 			// set pulse
 			/*******************************************/
-
+			printf("AXIDMA interruption\r\n");
 			// Invalid the cache to update the value change in memory by the PL
 			Xil_DCacheInvalidateRange((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 

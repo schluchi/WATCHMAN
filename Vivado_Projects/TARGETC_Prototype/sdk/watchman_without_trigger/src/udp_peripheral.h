@@ -20,8 +20,10 @@
 #include "xil_printf.h"
 #endif
 
+#define BUF_HEADER_SIZE 	50 // frame's header: ethernet (14) + Ipv4(20) + UDP(8) = 42 -> 50
+#define MAX_DATA_SIZE 		CHANNEL*SAMPLE*2+15+BUF_HEADER_SIZE // payload int16_t is 2 bytes + header + frame's header
 #define REGMAP_SIZE_UDP	128
-#define MAX_ARRAY_SIZE	2*REGMAP_SIZE_UDP+20
+#define MAX_CMD_SIZE	2*REGMAP_SIZE_UDP+20+BUF_HEADER_SIZE
 #define PORT_CMD		7
 #define PORT_DATA		8
 
@@ -37,6 +39,6 @@ void print_ip_settings(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw);
 void tcp_fasttmr(void);
 void tcp_slowtmr(void);
 int setup_pcb_data(ip_addr_t pc_ipaddr, uint16_t port);
-int setup_pcb_cmd(uint16_t port);
+int setup_pcb_cmd(ip_addr_t pc_ipaddr, uint16_t port);
 
 #endif /* SRC_UDP_PERIPHERAL_H_ */

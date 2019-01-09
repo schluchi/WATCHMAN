@@ -37,7 +37,8 @@ int* regptr;
 struct udp_pcb *pcb_data;
 struct udp_pcb *pcb_cmd;
 struct pbuf *buf_data;
-char return_buf[MAX_ARRAY_SIZE];
+struct pbuf *buf_cmd;
+char frame_buf_cmd_tmp[MAX_CMD_SIZE];
 
 /* Extern global variables */
 extern volatile int count_ttcps_timer;
@@ -64,13 +65,37 @@ extern volatile bool recover_data_flag;
 *
 ****************************************************************************/
 err_t transfer_data(char* frame, uint16_t length) {
-	//int i;
-	//for(i=0; i<length; i++) printf("%d) 0x%x\r\n", i, frame[i]);
-	if(sizeof(frame) <= MAX_STREAM_SIZE){
+	if(sizeof(frame) <= MAX_DATA_SIZE){
 		buf_data->payload = frame;
 		buf_data->tot_len = length;
 		buf_data->len = length;
 		return udp_send(pcb_data, buf_data);
+	}
+	else return ERR_BUF;
+}
+
+/****************************************************************************/
+/**
+* @brief	Send a frame trought UDP
+*
+* @param	frame: pointer to the frame to send
+* @param	length: size of the frame
+*
+* @return	type err_enum_t: enumaration from err.h file
+*
+* @note		frame must take in consideration the header ex:
+* 			for a buffer of size 6
+* 			char* test_array = (char *)malloc(6 + BUF_HEADER_SIZE);
+* 			and then
+* 			transfer_data(&test_array[BUF_HEADER_SIZE], 6)
+*
+****************************************************************************/
+err_t transfer_cmd(char* frame, uint16_t length) {
+	if(sizeof(frame) <= MAX_CMD_SIZE){
+		buf_cmd->payload = frame;
+		buf_cmd->tot_len = length;
+		buf_cmd->len = length;
+		return udp_send(pcb_cmd, buf_cmd);
 	}
 	else return ERR_BUF;
 }
@@ -93,26 +118,22 @@ err_t transfer_data(char* frame, uint16_t length) {
 void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
 	int length;
+	char *frame_buf_cmd = &frame_buf_cmd_tmp[BUF_HEADER_SIZE]; // avoid problem with udp header
     if (p != NULL) {
+    	frame_buf_cmd[0] = 0x55;
+    	frame_buf_cmd[1] = 0xAA;
 
-    	//reset each buffer before each use
-    	memset(return_buf, 0, MAX_ARRAY_SIZE);
-    	return_buf[0] = 0x55;
-    	return_buf[1] = 0xAA;
-
-    	length = command_parser(p, return_buf);
+    	length = command_parser(p, frame_buf_cmd);
     	if(length > 0){
     		//send data back
-			return_buf[length-2] = 0x33;
-			return_buf[length-1] = 0xCC;
-			p->payload = return_buf;
-			p->len = length;
-			p->tot_len = length;
-			udp_sendto(pcb, p, addr, port);
+    		frame_buf_cmd[length-2] = 0x33;
+    		frame_buf_cmd[length-1] = 0xCC;
+    		transfer_cmd(frame_buf_cmd, length);
 		}
     	else xil_printf("ERROR with the command received\r\n");
     }
-    	free(p);
+    //free(p);
+    //pbuf_free(p);
 
 }
 
@@ -265,14 +286,15 @@ int setup_udp_settings(ip_addr_t pc_ipaddr)
 		xil_printf("set up the pcb for data failed, in function %s returned: %d\r\n", __func__, ret);
 		return ret;
 	}
-	buf_data = pbuf_alloc(PBUF_TRANSPORT,MAX_STREAM_SIZE,PBUF_RAM);
+	buf_data = pbuf_alloc(PBUF_TRANSPORT,MAX_DATA_SIZE,PBUF_RAM);
 
 	/* create new UDP PCB structure for the commands */
-	ret = setup_pcb_cmd(PORT_CMD);
+	ret = setup_pcb_cmd(pc_ipaddr, PORT_CMD);
 	if(ret < 0){
 		xil_printf("set up the pcb for command failed, in function %s returned: %d\r\n", __func__, ret);
 		return ret;
 	}
+	buf_cmd = pbuf_alloc(PBUF_TRANSPORT,MAX_CMD_SIZE,PBUF_RAM);
 
 	return ret;
 }
@@ -281,7 +303,6 @@ int setup_udp_settings(ip_addr_t pc_ipaddr)
 /**
 * @brief	Setup the UDP Protocol Control Block for the data frame
 *
-* @param	pcb: pointer to the UDP PCB for the data
 * @param	pc_ipaddr: IP address of the computer
 * @param	port: UDP port of the computer used for the data
 *
@@ -322,6 +343,7 @@ int setup_pcb_data(ip_addr_t pc_ipaddr, uint16_t port){
 /**
 * @brief	Setup the UDP Protocol Control Block for the command frame
 *
+* @param	pc_ipaddr: IP address of the computer
 * @param	port: UDP port of the computer used for the command
 *
 * @return	0 if ok, negative values if there is a problem
@@ -329,7 +351,7 @@ int setup_pcb_data(ip_addr_t pc_ipaddr, uint16_t port){
 * @note		-
 *
 ****************************************************************************/
-int setup_pcb_cmd(uint16_t port){
+int setup_pcb_cmd(ip_addr_t pc_ipaddr, uint16_t port){
 	err_t err;
 
 	/* create new UDP PCB structure */
@@ -346,6 +368,14 @@ int setup_pcb_cmd(uint16_t port){
 		return -2;
 	}
 
+	/*connect zynq to pc @ip addr & port*/
+	err = udp_connect(pcb_cmd, &pc_ipaddr, port); // connect = the input port of the PC
+	if (err != ERR_OK) {
+		xil_printf("Unable to bind to port %d: err = %d\n\r", port, err);
+		return -2;
+	}
+
+	/* connect the function udp_cmd_recv as the callback when a command is received*/
 	udp_recv(pcb_cmd, udp_cmd_recv, NULL);
 	return 0;
 }

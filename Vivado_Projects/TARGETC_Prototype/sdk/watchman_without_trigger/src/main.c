@@ -185,6 +185,7 @@ int main()
 
 	flag_while_loop = true;
 	//dma_first_adress();
+	data_list* tmp_ptr;
 	printf("Start while loop\r\n");
 	while (run_flag){
 		if(flag_assertion){
@@ -207,6 +208,16 @@ int main()
 				flag_axidma_rx[group]--;
 			}
 		}
+
+		tmp_ptr  = (data_list *)malloc(sizeof(data_list));
+		if(!tmp_ptr){
+			printf("malloc for tmp_ptr failed in function, %s!\r\n", __func__);
+			end_main(GLOBAL_VAR | INTERRUPT | UDP);
+			return -1;
+		}
+		tmp_ptr->next = NULL;
+		tmp_ptr->previous = NULL;
+		free(tmp_ptr);
 
 		if(recover_data_flag){
 			if(send_data_transfer_fct() == XST_SUCCESS) printf("Recover data pass!\r\n");

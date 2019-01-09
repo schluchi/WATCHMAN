@@ -63,8 +63,6 @@ class Watchman_main_window():
         self.thread_cmd=Thread(target=self.thread_cmd_int, args=())
         self.run_flag = True
         self.thread_cmd.start()
-        ## Thread object which process the data received
-        self.thread_data=Thread(target=self.thread_data_int, args=())
 
     ## Method to initialize the windows and create its graphical objects
     # @param self : The object pointer
@@ -201,7 +199,6 @@ class Watchman_main_window():
     def entry_callback(self, count, var, *args):
         # Get entry's contain
         s = var.get()
-        print(str(count)+") "+s)
         # Test if it's a number that can stored in a 12bits register
         if(self.is_number(s) and (len(s) != 0)):
             if((int(s) < 4096) and (int(s) >= 0)):
@@ -241,7 +238,7 @@ class Watchman_main_window():
     def init_UDP_connection_data(self):
         ## Socket object used to established the UDP connection with the zynq
         self.sock_data = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock_data.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 131072) # change the size of the socket buffer
+        self.sock_data.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 2097152) # change the size of the socket buffer
         self.sock_data.bind(('', self.UDP_PORT_data))
         self.sock_data.settimeout(0.1) # method sock.recvfrom return after maximum 0.1sec if no data are received
     
@@ -284,6 +281,8 @@ class Watchman_main_window():
             else:
                 self.__btn_graph.configure(state="disable")
                 self.init_UDP_connection_data()
+                ## Thread object which process the data received
+                self.thread_data=Thread(target=self.thread_data_int, args=())
                 self.thread_data.start()
         self.write_txt("Tx: " + self.cmd[cmd] + " rand=" + str(payload[3])) 
         self.sock.sendto(payload, (self.UDP_IP, self.UDP_PORT)) 
@@ -318,7 +317,7 @@ class Watchman_main_window():
                 # process the data received
                 if(adress[0] == self.UDP_IP): # test the emitter's ip
                     if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
-                        if((data[1029] == int("0x33", 0)) and (data[1031] == int("0xCC", 0))):
+                        if((data[1029] == int("0x33", 0)) and (data[1030] == int("0xCC", 0))):
                             count += 1
                             print("Rx: vped = "+str(data[2]*0.25)+"V -> window = "+str(data[3] + data[4]*256))
                         else:
