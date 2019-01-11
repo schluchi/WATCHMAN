@@ -56,6 +56,8 @@ class Watchman_main_window():
         ## Flag which indicates to the main thread if it needs to stop
         self.run_flag = False
 
+        self.recover_data_flag = False
+
         # initialization
         self.init_window()
         self.init_UDP_connection()
@@ -166,8 +168,9 @@ class Watchman_main_window():
          # Stop the thread and wait on it to finish
         self.run_flag = False
         self.thread_cmd.join()
-        self.thread_data.join()
-        self.thread_timer.join()
+        if(self.recover_data_flag):
+            self.thread_data.join()
+            self.thread_timer.join()
         # Close the socket and destroy the main window
         self.sock.close()
         self.master.destroy()
@@ -286,6 +289,7 @@ class Watchman_main_window():
                 self.thread_data=Thread(target=self.thread_data_int, args=())
                 self.thread_timer=Timer(25, self.thread_timer_int)
                 self.thread_data.start()
+                self.recover_data_flag = True
         self.write_txt("Tx: " + self.cmd[cmd] + " rand=" + str(payload[3])) 
         self.sock.sendto(payload, (self.UDP_IP, self.UDP_PORT)) 
 
@@ -319,7 +323,7 @@ class Watchman_main_window():
     def thread_data_int(self):
         self.thread_timer.start()
         self.__btn_recover.configure(state="disable")
-        file_data = open("recovered_data.bin", "wb")
+        file_data = open("recovered_data_no_pedestal.bin", "wb")
         self.cnt_data_recover = 0
         while(self.cnt_data_recover < 5632):
             try:

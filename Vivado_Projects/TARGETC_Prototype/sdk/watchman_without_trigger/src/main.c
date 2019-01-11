@@ -64,7 +64,7 @@ int main()
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED,2.00) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED,VPED_ANALOG) != XST_SUCCESS){
 		xil_printf("DAC: setting vped voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;

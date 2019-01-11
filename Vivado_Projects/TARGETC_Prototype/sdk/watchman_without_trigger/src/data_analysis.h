@@ -26,7 +26,8 @@
 #define	TOO_LONG_SHIFT	8
 #define MASK_INFO		0xF
 
-#define VPED			1638 // 2.5V <=> 2047 -> 2V <=> 1637.6
+#define VPED_DIGITAL	1638//1024 // 2.5V <=> 2047 -> 2V <=> 1637.6
+#define VPED_ANALOG		2.0//1.25
 
 typedef union time_union{
 	float time_fl;

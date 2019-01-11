@@ -30,7 +30,6 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 	data_list* ptr;
 	int wdo, sample;
 	int index = 0;
-	uint16_t vped = VPED; // because pedestal are null too
 	uint16_t treshold = 500;
 	bool gain_good = false;
 	bool too_long = false;
@@ -42,7 +41,7 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 		for(wdo=0; wdo<nbr_wdo; wdo++){
 			// currently there is only the pedestal substraction, still need the transfert function correction
 			for(sample=0; sample<32; sample++){
-				data[index] = (uint16_t)ptr->data.data_struct.data[ch][sample] + vped - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
+				data[index] = (uint16_t)ptr->data.data_struct.data[ch][sample] + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
 				//printf("data = %d - %d = %d| sample = %d | index = %d | wdo = %d | wdo_id = %d | ch = %d\r\n", (uint16_t)ptr->data.data_struct.data[ch][sample], pedestal[ptr->data.data_struct.wdo_id][ch][sample], data[index], sample, index, wdo, ptr->data.data_struct.wdo_id, ch);
 				if(data[index] < treshold){
 					if(ch < ch_last){

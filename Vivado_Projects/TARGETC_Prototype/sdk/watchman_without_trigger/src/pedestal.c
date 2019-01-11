@@ -77,7 +77,9 @@ int init_pedestals(void){
 		}
 
 		for(i=0; i<16; i++){
-			for(j=0; j<32; j++) pedestal[window][i][j]= data[i][j]/10;
+			for(j=0; j<32; j++){
+				pedestal[window][i][j]= data[i][j]/10;
+			}
 		}
 	}
 	free(tmp_ptr);

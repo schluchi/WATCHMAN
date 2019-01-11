@@ -80,7 +80,7 @@ int send_data_transfer_fct(void){
 				frame_buf[index++] = (char)(window >> 8);
 				for(i=0; i<16; i++){
 					for(j=0; j<32; j++){
-						tmp_ptr->data.data_struct.data[i][j] = tmp_ptr->data.data_struct.data[i][j] + VPED - pedestal[window][i][j];
+						tmp_ptr->data.data_struct.data[i][j] = tmp_ptr->data.data_struct.data[i][j] + VPED_DIGITAL - pedestal[window][i][j];
 						frame_buf[index++] = (char)tmp_ptr->data.data_struct.data[i][j];
 						frame_buf[index++] = (char)(tmp_ptr->data.data_struct.data[i][j] >> 8);
 					}
@@ -94,7 +94,7 @@ int send_data_transfer_fct(void){
 	}
 	free(tmp_ptr);
 
-	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED, 2.00) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED, VPED_ANALOG) != XST_SUCCESS){
 		xil_printf("DAC: setting vped voltage failed!\r\n");
 		return XST_FAILURE;
 	}
