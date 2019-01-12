@@ -19,6 +19,7 @@ C_SRCS += \
 ../src/pedestal.c \
 ../src/platform_mb.c \
 ../src/platform_ppc.c \
+../src/polyfit.c \
 ../src/sfp.c \
 ../src/si5324.c \
 ../src/time_hm.c \
@@ -39,6 +40,7 @@ OBJS += \
 ./src/pedestal.o \
 ./src/platform_mb.o \
 ./src/platform_ppc.o \
+./src/polyfit.o \
 ./src/sfp.o \
 ./src/si5324.o \
 ./src/time_hm.o \
@@ -59,6 +61,7 @@ C_DEPS += \
 ./src/pedestal.d \
 ./src/platform_mb.d \
 ./src/platform_ppc.d \
+./src/polyfit.d \
 ./src/sfp.d \
 ./src/si5324.d \
 ./src/time_hm.d \

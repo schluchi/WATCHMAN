@@ -56,6 +56,7 @@ class Watchman_main_window():
         ## Flag which indicates to the main thread if it needs to stop
         self.run_flag = False
 
+        self.timer_thread_flag = False
         self.recover_data_flag = False
 
         # initialization
@@ -316,14 +317,17 @@ class Watchman_main_window():
     # @param self : The object pointer
     def thread_timer_int(self):
         self.cnt_data_recover = 5632
+        self.timer_thread_flag = True
         print("end of timer thread", file=sys.stderr)
 
     ## Method thread to process the data received by UDP
     # @param self : The object pointer
-    def thread_data_int(self):
+    def thread_data_int(self): 
+        flag_tmp = True
         self.thread_timer.start()
+        self.timer_thread_flag = False
         self.__btn_recover.configure(state="disable")
-        file_data = open("recovered_data_no_pedestal.bin", "wb")
+        file_data = open("recovered_data_1_25.bin", "wb")
         self.cnt_data_recover = 0
         while(self.cnt_data_recover < 5632):
             try:
@@ -341,14 +345,17 @@ class Watchman_main_window():
                             # error: no end code
                             self.write_txt("Rx: ERROR end of data")
                             self.cnt_data_recover = 5632
+                            flag_tmp = False
                     else:
                         # error: no start code
                         self.write_txt("Rx: ERROR start of data")
                         self.cnt_data_recover = 5632
+                        flag_tmp = False
                 else:
                     # error: wrong emitter's ip
                     self.write_txt("Rx: ERROR ip of data")
                     self.cnt_data_recover = 5632
+                    flag_tmp = False
             # socket exception: no data for received before timeout
             except socket.timeout:
                 time.sleep(0.1)
@@ -359,6 +366,10 @@ class Watchman_main_window():
         self.__btn_recover.configure(state="normal")
         self.close_UDP_connection_data()
         file_data.close()
+        if(flag_tmp and (self.timer_thread_flag == False)):
+            self.write_txt("Recover data: passed!")
+        else:
+            self.write_txt("Recover data: failed!")
         print("end of data thread", file=sys.stderr)
 
     ## Method thread to process the command received by UDP (running all the time)
