@@ -327,7 +327,7 @@ class Watchman_main_window():
         self.thread_timer.start()
         self.timer_thread_flag = False
         self.__btn_recover.configure(state="disable")
-        file_data = open("recovered_data_1_25.bin", "wb")
+        file_data = open("data_vped1_25_inputfloating.bin", "wb")
         self.cnt_data_recover = 0
         while(self.cnt_data_recover < 5632):
             try:
