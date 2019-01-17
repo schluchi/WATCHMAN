@@ -1,7 +1,7 @@
 /*
  * transfer_function.h
  *
- *  Created on: 7 janv. 2019
+ *  Created on: 16 janv. 2019
  *      Author: antho
  */
 
@@ -14,9 +14,8 @@
 #include "axis_peripheral.h"
 #include "TARGETC_RegisterMap.h"
 #include "iic_DAC_LTC2657.h"
-#include "udp_peripheral.h"
+#include "GMHeader.h"
 
-int send_data_transfer_fct(void);
-
+int init_transfer_function(void);
 
 #endif /* SRC_TRANSFER_FUNCTION_H_ */

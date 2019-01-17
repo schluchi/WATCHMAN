@@ -1,7 +1,7 @@
 /*
  * transfer_function.c
  *
- *  Created on: 7 janv. 2019
+ *  Created on: 16 janv. 2019
  *      Author: antho
  */
 
@@ -11,12 +11,17 @@
 extern int* regptr;
 extern volatile bool flag_axidma_rx_done;
 extern uint16_t pedestal[512][16][32];
-extern char* frame_buf;
+extern uint16_t lookup_table[2048];
 
-int send_data_transfer_fct(void){
-	int window = 0;
+int init_transfer_function(void){
 	int timeout;
-	int k,i,j,index;
+	int window, channel, sample, voltage;
+	double data_tmp;
+	GMtype_Data DataX, DataY;
+	GMtype_Polynomial Polynomial;
+	int range_min = 3;
+	int range_max = 10;
+	double y_voltage[2048];
 
 	data_list* tmp_ptr  = (data_list *)malloc(sizeof(data_list));
 	if(!tmp_ptr){
@@ -26,8 +31,9 @@ int send_data_transfer_fct(void){
 	tmp_ptr->next = NULL;
 	tmp_ptr->previous = NULL;
 
-	for(k=0; k< 11; k ++){
-		if(DAC_LTC2657_SetChannelVoltage(DAC_VPED, k*0.25) != XST_SUCCESS){
+	for(voltage=range_min; voltage< range_max; voltage ++){
+		data_tmp = 0;
+		if(DAC_LTC2657_SetChannelVoltage(DAC_VPED, voltage*0.25) != XST_SUCCESS){
 			xil_printf("DAC: setting vped voltage failed!\r\n");
 			return XST_FAILURE;
 		}
@@ -56,9 +62,9 @@ int send_data_transfer_fct(void){
 				printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
 				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
-				for(j=1; j<32; j++){
-					for(i=0; i<16; i++){
-						printf("%d\t", (uint)tmp_ptr->data.data_struct.data[i][j]);
+				for(sample=0; sample<32; sample++){
+					for(channel=0; channel<16; channel++){
+						printf("%d\t", (uint)tmp_ptr->data.data_struct.data[channel][sample]);
 					}
 					printf("\r\n");
 				}
@@ -72,27 +78,28 @@ int send_data_transfer_fct(void){
 				return XST_FAILURE;
 			}
 			else{
-				index = 0;
-				frame_buf[index++] = 0x55;
-				frame_buf[index++] = 0xAA;
-				frame_buf[index++] = k;
-				frame_buf[index++] = (char)window;
-				frame_buf[index++] = (char)(window >> 8);
-				for(i=0; i<16; i++){
-					for(j=0; j<32; j++){
-						tmp_ptr->data.data_struct.data[i][j] = tmp_ptr->data.data_struct.data[i][j] + VPED_DIGITAL - pedestal[window][i][j];
-						frame_buf[index++] = (char)tmp_ptr->data.data_struct.data[i][j];
-						frame_buf[index++] = (char)(tmp_ptr->data.data_struct.data[i][j] >> 8);
+				for(channel=0; channel<16; channel++){
+					for(sample=0; sample<32; sample++){
+						data_tmp += (double)(tmp_ptr->data.data_struct.data[channel][sample] + VPED_DIGITAL - pedestal[window][channel][sample]);
 					}
 				}
-				frame_buf[index++] = 0x33;
-				frame_buf[index++] = 0xCC;
-				transfer_data(frame_buf, index);
+
 			}
 		}
-		printf("transfer function -> vped = %lf\r\n", k*0.25);
+		DataX.element[voltage-range_min] = data_tmp/(512*16*32);
 	}
 	free(tmp_ptr);
+
+	DataX.size = range_max-range_min;
+	DataY.size = range_max-range_min;
+	for(int i=range_min; i<range_max; i++) DataY.element[i-range_min] = i*0.25;
+	Polynomial.degree = 3;
+	for(int i=0; i<30; i++) Polynomial.coef[i] = 0;
+	GM_PolyFit(DataX, DataY, &Polynomial);
+	for(int i=0; i<2048; i++){
+		y_voltage[i] = GM_SolvePolynomial(Polynomial, (double)i);
+		lookup_table[i] = (uint16_t)(y_voltage[i]*2048/2.5);
+	}
 
 	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED, VPED_ANALOG) != XST_SUCCESS){
 		xil_printf("DAC: setting vped voltage failed!\r\n");
@@ -101,4 +108,3 @@ int send_data_transfer_fct(void){
 
 	return XST_SUCCESS;
 }
-

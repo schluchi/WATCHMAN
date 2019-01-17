@@ -7,6 +7,7 @@ LD_SRCS += \
 ../src/lscript.ld 
 
 C_SRCS += \
+../src/GM_SubLibrary.c \
 ../src/TARGETC_RegisterMap.c \
 ../src/axis_peripheral.c \
 ../src/data_analysis.c \
@@ -19,7 +20,7 @@ C_SRCS += \
 ../src/pedestal.c \
 ../src/platform_mb.c \
 ../src/platform_ppc.c \
-../src/polyfit.c \
+../src/recover_data.c \
 ../src/sfp.c \
 ../src/si5324.c \
 ../src/time_hm.c \
@@ -28,6 +29,7 @@ C_SRCS += \
 ../src/utility.c 
 
 OBJS += \
+./src/GM_SubLibrary.o \
 ./src/TARGETC_RegisterMap.o \
 ./src/axis_peripheral.o \
 ./src/data_analysis.o \
@@ -40,7 +42,7 @@ OBJS += \
 ./src/pedestal.o \
 ./src/platform_mb.o \
 ./src/platform_ppc.o \
-./src/polyfit.o \
+./src/recover_data.o \
 ./src/sfp.o \
 ./src/si5324.o \
 ./src/time_hm.o \
@@ -49,6 +51,7 @@ OBJS += \
 ./src/utility.o 
 
 C_DEPS += \
+./src/GM_SubLibrary.d \
 ./src/TARGETC_RegisterMap.d \
 ./src/axis_peripheral.d \
 ./src/data_analysis.d \
@@ -61,7 +64,7 @@ C_DEPS += \
 ./src/pedestal.d \
 ./src/platform_mb.d \
 ./src/platform_ppc.d \
-./src/polyfit.d \
+./src/recover_data.d \
 ./src/sfp.d \
 ./src/si5324.d \
 ./src/time_hm.d \

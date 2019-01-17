@@ -91,7 +91,7 @@ file_name = "data_vped1_25_amplifiershorted.bin"
 data_file = list()
 y_average = list()
 ax = list()
-suptitle_name = file_name+" | all channels | degree="+str(degree)+" | range("+str(range_min*0.25)+"V; "+str(range_max*0.25)+"V)"
+suptitle_name = file_name+" | without ch12 | degree="+str(degree)+" | range("+str(range_min*0.25)+"V; "+str(range_max*0.25)+"V)"
 fig, ax = plt.subplots(2,1)
 fig.suptitle(suptitle_name)
 y_ideal = np.linspace(0,2047,11)
@@ -102,8 +102,10 @@ for voltage in range(0,11):
     for window in range(0,512):
         for channel in range(0,16):
             for sample in range(0,32):
-                y_tmp = y_tmp + data_file[voltage][window][channel][sample]
-    y_average.append(y_tmp/(512*16*32))
+                if((channel != 12)):
+                    y_tmp = y_tmp + data_file[voltage][window][channel][sample] 
+    y_average.append(y_tmp/(512*15*32))
+    #y_average.append(y_tmp/(512*16*32))
 ax[0].plot(x, y_average, label=('data average'))
 y_diff = y_average - y_ideal
 ax[1].plot(x, y_diff, ':', label='difference average')
@@ -120,24 +122,48 @@ ax[1].legend()
 #mng = plt.get_current_fig_manager()
 #mng.full_screen_toggle()
 
-y_diff_hist = list()
-suptitle_name = file_name+" | all channels | histogram"
+"""y_diff_hist = list()
+suptitle_name = file_name+" | without ch12 | histogram of difference with average"
 fig = plt.figure()
 #fig, ax = plt.subplots(6,2)
 fig.suptitle(suptitle_name)
 ax = list()
+window_l = list()
+channel_l = list()
+sample_l= list()
 for voltage in range(0,11):
     ax.append(plt.subplot(6,2,voltage+1))
     y_diff_hist.append(list())
     for window in range(0,512):
         for channel in range(0,16):
             for sample in range(0,32):
-                y_diff_hist[voltage].append(data_file[voltage][window][channel][sample] - y_average[voltage])
+                if((channel != 12)):
+                    y_diff_hist[voltage].append(data_file[voltage][window][channel][sample] - y_average[voltage])
+                    if((y_diff_hist[voltage][-1] < -150) or (y_diff_hist[voltage][-1] > 150)):
+                        window_l.append(window)
+                        channel_l.append(channel)
+                        sample_l.append(sample)
     bins = np.linspace(min(y_diff_hist[voltage]),max(y_diff_hist[voltage]),max(y_diff_hist[voltage])-min(y_diff_hist[voltage]))
     plt.hist(y_diff_hist[voltage], bins)
     #ax[voltage].plt.hist(y_diff_hist[voltage], bins)
     ax[voltage].grid(True)
 #mng = plt.get_current_fig_manager()
 #mng.full_screen_toggle()
+
+suptitle_name = file_name+" | histogram of value <-150 or >150 in histogram of difference with average"
+fig = plt.figure()
+fig.suptitle(suptitle_name)
+ax = plt.subplot(3,1,1)
+ax.set_title('window')
+bins = np.linspace(0,512,513)
+plt.hist(window_l, bins)
+ax = plt.subplot(3,1,2)
+ax.set_title('channel')
+bins = np.linspace(0,16,17)
+plt.hist(channel_l, bins)
+ax = plt.subplot(3,1,3)
+ax.set_title('sample')
+bins = np.linspace(0,32,33)
+plt.hist(sample_l, bins)"""
 
 plt.show()

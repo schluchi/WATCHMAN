@@ -31,6 +31,7 @@ char* frame_buf_tmp;
 char* frame_buf;
 int* regptr;
 uint16_t pedestal[512][16][32];
+uint16_t lookup_table[2048];
 
 /****************************************************************************/
 /**

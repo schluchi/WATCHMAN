@@ -75,7 +75,8 @@ src/transfer_function.o src/transfer_function.o: \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../src/iic_DAC_LTC2657.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic.h \
- ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h \
+ ../src/GMHeader.h
 
 ../src/transfer_function.h:
 
@@ -236,3 +237,5 @@ src/transfer_function.o src/transfer_function.o: \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h:
+
+../src/GMHeader.h:
