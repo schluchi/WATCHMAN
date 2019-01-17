@@ -8,6 +8,7 @@
 #include "data_analysis.h"
 
 extern uint16_t pedestal[512][16][32];
+extern uint16_t lookup_table[2048];
 
 /****************************************************************************/
 /**
@@ -33,6 +34,7 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 	uint16_t treshold = 500;
 	bool gain_good = false;
 	bool too_long = false;
+	uint16_t data_tmp;
 
 	while(!gain_good){
 		gain_good = true;
@@ -41,7 +43,9 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 		for(wdo=0; wdo<nbr_wdo; wdo++){
 			// currently there is only the pedestal substraction, still need the transfert function correction
 			for(sample=0; sample<32; sample++){
-				data[index] = (uint16_t)ptr->data.data_struct.data[ch][sample] + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
+				data_tmp = (uint16_t)ptr->data.data_struct.data[ch][sample] + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
+				if(data_tmp > 2047) data_tmp = 2047;
+				data[index] = lookup_table[data_tmp];
 				//printf("data = %d - %d = %d| sample = %d | index = %d | wdo = %d | wdo_id = %d | ch = %d\r\n", (uint16_t)ptr->data.data_struct.data[ch][sample], pedestal[ptr->data.data_struct.wdo_id][ch][sample], data[index], sample, index, wdo, ptr->data.data_struct.wdo_id, ch);
 				if(data[index] < treshold){
 					if(ch < ch_last){

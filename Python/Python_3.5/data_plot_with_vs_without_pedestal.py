@@ -91,7 +91,7 @@ x = np.linspace(0,2.5,11)
 ax = plt.subplot(2,1,1)
 ax.set_title("wdo="+str(window)+" | ch="+str(channel)+" | sample="+str(sample))
 y_ideal = np.linspace(0,2047,11)
-ax.plot(x, y_ideal, 'g:', label='data ideal')
+ax.plot(x, y_ideal, 'g-.', label='data ideal')
 
 data_file.append(list())
 file_name = "data_vped1_25_inputfloating.bin"
@@ -99,7 +99,7 @@ data_of_file(file_name, data_file[0])
 y.append(list())
 for voltage in range(0,11):
     y[0].append(data_file[0][voltage][window][channel][sample])
-ax.plot(x, y[0], 'r', label=('data with pedestal, vped@1.25V'))
+ax.plot(x, y[0], 'r--', label=('data with pedestal, vped@1.25V'))
 
 data_file.append(list())
 file_name = "data_vped1_25_inputfloating_nopedestal.bin"
@@ -115,7 +115,7 @@ data_of_file(file_name, data_file[2])
 y.append(list())
 for voltage in range(0,11):
     y[2].append(data_file[2][voltage][window][channel][sample])
-ax.plot(x, y[2], 'b', label=('data with pedestal, vped@2V'))
+ax.plot(x, y[2], 'b--', label=('data with pedestal, vped@2V'))
 
 data_file.append(list())
 file_name = "data_vped2_inputfloating_nopedestal.bin"

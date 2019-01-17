@@ -12,11 +12,14 @@ extern int* regptr;
 extern volatile bool flag_axidma_rx_done;
 extern uint16_t pedestal[512][16][32];
 extern char* frame_buf;
+extern uint16_t lookup_table[2048];
+
 
 int send_data_transfer_fct(void){
 	int window = 0;
 	int timeout;
 	int k,i,j,index;
+	uint16_t data_tmp;
 
 	data_list* tmp_ptr  = (data_list *)malloc(sizeof(data_list));
 	if(!tmp_ptr){
@@ -80,9 +83,10 @@ int send_data_transfer_fct(void){
 				frame_buf[index++] = (char)(window >> 8);
 				for(i=0; i<16; i++){
 					for(j=0; j<32; j++){
-						tmp_ptr->data.data_struct.data[i][j] = tmp_ptr->data.data_struct.data[i][j] + VPED_DIGITAL - pedestal[window][i][j];
-						frame_buf[index++] = (char)tmp_ptr->data.data_struct.data[i][j];
-						frame_buf[index++] = (char)(tmp_ptr->data.data_struct.data[i][j] >> 8);
+						data_tmp = (uint16_t)(tmp_ptr->data.data_struct.data[i][j] + VPED_DIGITAL - pedestal[window][i][j]);
+						if(data_tmp > 2047) data_tmp = 2047;
+						frame_buf[index++] = (char)lookup_table[data_tmp];
+						frame_buf[index++] = (char)(lookup_table[data_tmp] >> 8);
 					}
 				}
 				frame_buf[index++] = 0x33;

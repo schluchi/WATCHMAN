@@ -16,7 +16,7 @@ extern uint16_t lookup_table[2048];
 int init_transfer_function(void){
 	int timeout;
 	int window, channel, sample, voltage;
-	double data_tmp;
+	double data_tmp[11];
 	GMtype_Data DataX, DataY;
 	GMtype_Polynomial Polynomial;
 	int range_min = 3;
@@ -31,8 +31,8 @@ int init_transfer_function(void){
 	tmp_ptr->next = NULL;
 	tmp_ptr->previous = NULL;
 
-	for(voltage=range_min; voltage< range_max; voltage ++){
-		data_tmp = 0;
+	for(voltage=0; voltage< 11; voltage ++){
+		data_tmp[voltage] = 0;
 		if(DAC_LTC2657_SetChannelVoltage(DAC_VPED, voltage*0.25) != XST_SUCCESS){
 			xil_printf("DAC: setting vped voltage failed!\r\n");
 			return XST_FAILURE;
@@ -80,26 +80,42 @@ int init_transfer_function(void){
 			else{
 				for(channel=0; channel<16; channel++){
 					for(sample=0; sample<32; sample++){
-						data_tmp += (double)(tmp_ptr->data.data_struct.data[channel][sample] + VPED_DIGITAL - pedestal[window][channel][sample]);
+						data_tmp[voltage] += (double)(tmp_ptr->data.data_struct.data[channel][sample] + VPED_DIGITAL - pedestal[window][channel][sample]);
 					}
 				}
 
 			}
 		}
-		DataX.element[voltage-range_min] = data_tmp/(512*16*32);
+		data_tmp[voltage] = data_tmp[voltage]/(512*16*32);
 	}
 	free(tmp_ptr);
 
+	printf("data_tmp:\r\n[");
+	for(int i=0; i<10; i++) printf("%.17g, ", data_tmp[i]);
+	printf("%.17g]\r\n", data_tmp[10]);
+	for(int i=range_min; i<range_max; i++) DataX.element[i-range_min] = data_tmp[i];
 	DataX.size = range_max-range_min;
 	DataY.size = range_max-range_min;
 	for(int i=range_min; i<range_max; i++) DataY.element[i-range_min] = i*0.25;
+	printf("DataX:\r\n[");
+	for(int i=0; i<(DataX.size-1); i++) printf("%.17g, ", DataX.element[i]);
+	printf("%.17g]\r\n", DataX.element[DataX.size-1]);
+	printf("DataY:\r\n[");
+	for(int i=0; i<(DataY.size-1); i++) printf("%.17g, ", DataY.element[i]);
+	printf("%.17g]\r\n", DataY.element[DataY.size-1]);
 	Polynomial.degree = 3;
 	for(int i=0; i<30; i++) Polynomial.coef[i] = 0;
 	GM_PolyFit(DataX, DataY, &Polynomial);
+	printf("coefficient:\r\n[");
+	for(int i=0; i<(Polynomial.degree); i++) printf("%.17g, ",Polynomial.coef[i]);
+	printf("%.17g]\r\n",Polynomial.coef[3]);
+	printf("lookup table:\r\n[");
 	for(int i=0; i<2048; i++){
 		y_voltage[i] = GM_SolvePolynomial(Polynomial, (double)i);
 		lookup_table[i] = (uint16_t)(y_voltage[i]*2048/2.5);
 	}
+	for(int i=0; i<2047; i++) printf("%d, ", lookup_table[i]);
+	printf("%d]\r\n", lookup_table[2047]);
 
 	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED, VPED_ANALOG) != XST_SUCCESS){
 		xil_printf("DAC: setting vped voltage failed!\r\n");

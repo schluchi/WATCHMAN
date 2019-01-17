@@ -184,7 +184,7 @@ int main()
 	/* Initialize transfer function coefficients */
 	if(init_transfer_function() == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
 	else{
-		printf("Pedestal initialization failed!\n\r");
+		printf("Transfer function initialization failed!\n\r");
 		end_main(GLOBAL_VAR | INTERRUPT | UDP);
 		return -1;
 	}
