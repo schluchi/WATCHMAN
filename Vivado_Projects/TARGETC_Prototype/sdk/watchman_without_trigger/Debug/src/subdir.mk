@@ -13,6 +13,7 @@ C_SRCS += \
 ../src/data_analysis.c \
 ../src/data_test.c \
 ../src/file_hm.c \
+../src/get_1000_windows.c \
 ../src/global.c \
 ../src/iic_DAC_LTC2657.c \
 ../src/interrupt.c \
@@ -35,6 +36,7 @@ OBJS += \
 ./src/data_analysis.o \
 ./src/data_test.o \
 ./src/file_hm.o \
+./src/get_1000_windows.o \
 ./src/global.o \
 ./src/iic_DAC_LTC2657.o \
 ./src/interrupt.o \
@@ -57,6 +59,7 @@ C_DEPS += \
 ./src/data_analysis.d \
 ./src/data_test.d \
 ./src/file_hm.d \
+./src/get_1000_windows.d \
 ./src/global.d \
 ./src/iic_DAC_LTC2657.d \
 ./src/interrupt.d \

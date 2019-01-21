@@ -78,6 +78,7 @@ extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
 extern volatile bool flag_axidma_rx_done;
 extern volatile bool recover_data_flag;
+extern volatile bool get_1000_windows_flag;
 extern int flag_axidma_rx[4];
 extern data_list* last_element;
 
@@ -163,11 +164,11 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 {
 	u32 StatusEvent;
 	StatusEvent = XTtcPs_GetInterruptStatus(TimerInstance);
-	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
 	if ((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0){
 		flag_ttcps_timer = true;
 		if(!flag_while_loop) update_timefile();
 	}
+	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
 }
 
 /****************************************************************************/
@@ -210,7 +211,7 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 
 	/* If completion interrupt is asserted, then set RxDone flag */
 	if ((IrqStatus & XAXIDMA_IRQ_IOC_MASK)) {
-		if(flag_while_loop && (!recover_data_flag)){
+		if(flag_while_loop && (!recover_data_flag) && (!get_1000_windows_flag)){
 			/*******************************************/
 			// set pulse
 			/*******************************************/

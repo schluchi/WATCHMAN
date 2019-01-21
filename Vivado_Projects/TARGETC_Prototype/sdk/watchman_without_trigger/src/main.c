@@ -19,6 +19,7 @@
 #include "xtime_l.h"
 #include "transfer_function.h"
 #include "recover_data.h"
+#include "get_1000_windows.h"
 
 /* Extern global variables */
 extern struct netif *echo_netif;
@@ -33,6 +34,7 @@ extern volatile bool flag_axidma_error;
 extern int flag_axidma_rx[4];
 extern int* regptr;
 extern volatile bool recover_data_flag;
+extern volatile bool get_1000_windows_flag;
 
 /* Global variables */
 static struct netif server_netif;
@@ -222,6 +224,16 @@ int main()
 				return -1;
 			}
 			recover_data_flag = false;
+		}
+
+		if(get_1000_windows_flag){
+			if(get_1000_windows_fct() == XST_SUCCESS) printf("Get a 1000 windows pass!\r\n");
+			else{
+				printf("Get a 1000 windows failed!\n\r");
+				end_main(GLOBAL_VAR | INTERRUPT | UDP);
+				return -1;
+			}
+			get_1000_windows_flag = false;
 		}
 	}
 

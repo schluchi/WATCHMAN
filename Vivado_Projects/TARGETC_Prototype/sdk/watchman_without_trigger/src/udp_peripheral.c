@@ -47,6 +47,7 @@ extern int nbre_of_bytes;
 extern volatile bool run_flag;
 extern volatile bool stream_flag;
 extern volatile bool recover_data_flag;
+extern volatile bool get_1000_windows_flag;
 
 /****************************************************************************/
 /**
@@ -249,6 +250,14 @@ int command_parser(struct pbuf *p, char* return_buf){
 				if(start + 4 == end){
 					xil_printf("Command recover_data received\r\n");
 					recover_data_flag = true;
+					return 6;
+				}
+				else return -1;
+				break;
+			case 7: // get 1000 windows
+				if(start + 4 == end){
+					xil_printf("Command get_1000_windows received\r\n");
+					get_1000_windows_flag = true;
 					return 6;
 				}
 				else return -1;

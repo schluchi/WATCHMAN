@@ -46,7 +46,7 @@ class Watchman_main_window():
         self.UDP_PORT = 7
         self.UDP_PORT_data = 8
         ## List of all the commands
-        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'recover_data']
+        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'recover_data', 'get_1000_windows']
         ## Flag which indicates if the streaming is running
         self.stream_flag = False
         ## Flag which indicates that the user want to close the GUI (to avoid problem when accessing graphical object after "WM_DELETE_WINDOW" event)
@@ -58,6 +58,8 @@ class Watchman_main_window():
 
         self.timer_thread_flag = False
         self.recover_data_flag = False
+        self.timer_thread_flag_2 = False
+        self.get_windows_flag = False
 
         # initialization
         self.init_window()
@@ -116,6 +118,8 @@ class Watchman_main_window():
         self.__btn_settime.grid(column=8, row=10, rowspan=2, padx=5, sticky=W+E)
         self.__btn_recover = Button(self.master,text="Recover data", command=partial(self.send_command, 6))
         self.__btn_recover.grid(column=8, row=12, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_1000_windows = Button(self.master,text="Get 1000\nwindows", command=partial(self.send_command, 7))
+        self.__btn_1000_windows.grid(column=8, row=14, rowspan=2, padx=5, sticky=W+E)
         self.__btn_graph = Button(self.master,text="Open graph\nStore data", command=self.open_graph)
         self.__btn_graph.grid(column=8, row=29, rowspan=2, padx=5, sticky=W+E)
         # Listbox to show data transfert
@@ -172,6 +176,9 @@ class Watchman_main_window():
         if(self.recover_data_flag):
             self.thread_data.join()
             self.thread_timer.join()
+        if(self.get_windows_flag):
+            self.thread_data_2.join()
+            self.thread_timer_2.join()
         # Close the socket and destroy the main window
         self.sock.close()
         self.master.destroy()
@@ -285,12 +292,26 @@ class Watchman_main_window():
                 return
             else:
                 self.__btn_graph.configure(state="disable")
+                self.__btn_1000_windows.configure(state="disable")
                 self.init_UDP_connection_data()
                 ## Thread object which process the data received
                 self.thread_data=Thread(target=self.thread_data_int, args=())
                 self.thread_timer=Timer(25, self.thread_timer_int)
                 self.thread_data.start()
                 self.recover_data_flag = True
+        if(self.cmd[cmd] == 'get_1000_windows'):
+            if(self.toplevel_flag == True):
+                self.write_txt("To get 1000 windows, the graph window must be closed!")
+                return
+            else:
+                self.__btn_graph.configure(state="disable")
+                self.__btn_recover.configure(state="disable")
+                self.init_UDP_connection_data()
+                ## Thread object which process the data received
+                self.thread_data_2=Thread(target=self.thread_data_int_2, args=())
+                self.thread_timer_2=Timer(5, self.thread_timer_int_2)
+                self.thread_data_2.start()
+                self.get_windows_flag = True
         self.write_txt("Tx: " + self.cmd[cmd] + " rand=" + str(payload[3])) 
         self.sock.sendto(payload, (self.UDP_IP, self.UDP_PORT)) 
 
@@ -364,6 +385,7 @@ class Watchman_main_window():
                 dummy = 0 # dummy execution to catch the exception
         self.__btn_graph.configure(state="normal")
         self.__btn_recover.configure(state="normal")
+        self.__btn_1000_windows.configure(state="normal")
         self.close_UDP_connection_data()
         file_data.close()
         if(flag_tmp and (self.timer_thread_flag == False)):
@@ -371,6 +393,65 @@ class Watchman_main_window():
         else:
             self.write_txt("Recover data: failed!")
         print("end of data thread", file=sys.stderr)
+
+    ## Method thread to timeout the thread_data_@
+    # @param self : The object pointer
+    def thread_timer_int_2(self):
+        self.cnt_1000_windows = 1000
+        self.timer_thread_flag_2 = True
+        print("end of timer thread 2", file=sys.stderr)
+
+    ## Method thread to process the data received by UDP
+    # @param self : The object pointer
+    def thread_data_int_2(self): 
+        flag_tmp = True
+        self.thread_timer_2.start()
+        self.timer_thread_flag_2 = False
+        self.__btn_1000_windows.configure(state="disable")
+        file_data = open("1000_windows.bin", "wb")
+        self.cnt_1000_windows = 0
+        while(self.cnt_1000_windows < 1000):
+            try:
+                data = bytearray()
+                data, adress = self.sock_data.recvfrom(1030) # wait on data
+                # process the data received
+                if(adress[0] == self.UDP_IP): # test the emitter's ip
+                    if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
+                        if((data[1028] == int("0x33", 0)) and (data[1029] == int("0xCC", 0))):
+                            self.cnt_1000_windows += 1
+                            file_data.write(data)
+                        else:
+                            # error: no end code
+                            self.write_txt("Rx: ERROR end of data")
+                            self.cnt_1000_windows = 1000
+                            flag_tmp = False
+                    else:
+                        # error: no start code
+                        self.write_txt("Rx: ERROR start of data")
+                        self.cnt_1000_windows = 1000
+                        flag_tmp = False
+                else:
+                    # error: wrong emitter's ip
+                    self.write_txt("Rx: ERROR ip of data")
+                    self.cnt_1000_windows = 1000
+                    flag_tmp = False
+            # socket exception: no data for received before timeout
+            except socket.timeout:
+                time.sleep(0.1)
+            # socket exception: problem during execution of socket.recvfrom
+            except socket.error:
+                dummy = 0 # dummy execution to catch the exception
+        self.__btn_graph.configure(state="normal")
+        self.__btn_1000_windows.configure(state="normal")
+        self.__btn_recover.configure(state="normal")
+        self.close_UDP_connection_data()
+        file_data.close()
+        if(flag_tmp and (self.timer_thread_flag_2 == False)):
+            self.write_txt("Get 1000 windows: passed!")
+        else:
+            self.write_txt("Get 1000 windows: failed!")
+        print("end of data thread 2", file=sys.stderr)
+
 
     ## Method thread to process the command received by UDP (running all the time)
     # @param self : The object pointer
