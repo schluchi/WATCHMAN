@@ -192,6 +192,16 @@ int main()
 	}
 
 	flag_while_loop = true;
+	//**************************************************************************
+	//**************************************************************************
+
+	/*
+	 * 				TO DO !!!!!!!!
+	 * 	Reactivate wdt, but problem with recover data because of changing dac value (sleep(1) in fct)
+	 * 	in infinity loop, when fct return error, after calling fct end_main, log problem and inifity loop to reboot with wdt (like assertion)
+	 */
+	//**************************************************************************
+	//**************************************************************************
 	//dma_first_adress();
 	printf("Start while loop\r\n");
 	while (run_flag){
@@ -245,6 +255,7 @@ int main()
 
 
 void end_main(clean_state_en state){
+
 	if(state & INTERRUPT) cleanup_interrupts();
 	if(state & UDP) cleanup_udp();
 	if(state & GLOBAL_VAR) cleanup_global_var();
