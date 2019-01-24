@@ -41,7 +41,6 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 		ptr = tmp_first_element;
 		index = 0;
 		for(wdo=0; wdo<nbr_wdo; wdo++){
-			// currently there is only the pedestal substraction, still need the transfert function correction
 			for(sample=0; sample<32; sample++){
 				data_tmp = (uint16_t)ptr->data.data_struct.data[ch][sample] + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
 				if(data_tmp > 2047) data_tmp = 2047;

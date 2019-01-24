@@ -72,22 +72,22 @@ int main()
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_0,1.75) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_0,THRESHOLD) != XST_SUCCESS){
 		xil_printf("DAC: setting group 0 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_1,1.75) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_1,THRESHOLD) != XST_SUCCESS){
 		xil_printf("DAC: setting group 1 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_2,1.75) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_2,THRESHOLD) != XST_SUCCESS){
 		xil_printf("DAC: setting group 2 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_3,1.75) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_3,THRESHOLD) != XST_SUCCESS){
 		xil_printf("DAC: setting group 3 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;

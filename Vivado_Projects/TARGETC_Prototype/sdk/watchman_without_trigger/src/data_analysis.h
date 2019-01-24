@@ -28,6 +28,7 @@
 
 #define VPED_DIGITAL	1024//1638 // 2.5V <=> 2047 -> 2V <=> 1637.6
 #define VPED_ANALOG		1.25//2.0
+#define THRESHOLD		1.75
 
 typedef union time_union{
 	float time_fl;
