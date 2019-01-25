@@ -49,60 +49,41 @@
 * </pre>
  */
 
-#ifdef __arm__
+#include "platform_zynq.h"
 
-#include "xparameters.h"
-#include "xparameters_ps.h"	/* defines XPAR values */
-#include "xil_cache.h"
-#include "xscugic.h"
-#include "lwip/tcp.h"
-#include "xil_printf.h"
-#include "platform.h"
-#include "platform_config.h"
-#include "netif/xadapter.h"
-#ifdef PLATFORM_ZYNQ
-#include "xscutimer.h"
-
-#define INTC_DEVICE_ID		XPAR_SCUGIC_SINGLE_DEVICE_ID
-#define TIMER_DEVICE_ID		XPAR_SCUTIMER_DEVICE_ID
-#define INTC_BASE_ADDR		XPAR_SCUGIC_0_CPU_BASEADDR
-#define INTC_DIST_BASE_ADDR	XPAR_SCUGIC_0_DIST_BASEADDR
-#define TIMER_IRPT_INTR		XPAR_SCUTIMER_INTR
-
-#define RESET_RX_CNTR_LIMIT	400
-
-void tcp_fasttmr(void);
-void tcp_slowtmr(void);
-
-static XScuTimer TimerInstance;
+static XScuTimer TimerScuInstance;
+static XTtcPs TimerTtcPsInstance;
+static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
+volatile int count_ttcps_timer = 0;
+volatile int count_scu_timer = 0;
 
 #ifndef USE_SOFTETH_ON_ZYNQ
 static int ResetRxCntr = 0;
-#endif
-
 extern struct netif *echo_netif;
+#endif
 
 volatile int TcpFastTmrFlag = 0;
 volatile int TcpSlowTmrFlag = 0;
 
+char dummy_data[MAX_STREAM_SIZE];
+uint16_t length_dummy_data;
+
 #if LWIP_DHCP==1
 volatile int dhcp_timoutcntr = 24;
-void dhcp_fine_tmr();
-void dhcp_coarse_tmr();
 #endif
 
-void
-timer_callback(XScuTimer * TimerInstance)
+extern bool stream_flag;
+
+void timer_scu_callback(XScuTimer * TimerInstance)
 {
-	static int DetectEthLinkStatus = 0;
 	/* we need to call tcp_fasttmr & tcp_slowtmr at intervals specified
 	 * by lwIP. It is not important that the timing is absoluetly accurate.
 	 */
 	static int odd = 1;
+
 #if LWIP_DHCP==1
     static int dhcp_timer = 0;
 #endif
-	DetectEthLinkStatus++;
 	 TcpFastTmrFlag = 1;
 
 	odd = !odd;
@@ -138,32 +119,58 @@ timer_callback(XScuTimer * TimerInstance)
 		ResetRxCntr = 0;
 	}
 #endif
-	/* For detecting Ethernet phy link status periodically */
-	if (DetectEthLinkStatus == ETH_LINK_DETECT_INTERVAL) {
-		eth_link_detect(echo_netif);
-		DetectEthLinkStatus = 0;
-	}
+	// Need to call this function every 250ms
+	xemacif_input(echo_netif);
+//	struct xemac_s *emac = (struct xemac_s *)echo_netif->state;
+//	xil_printf("emac->state = %d\r\n",emac->type) ;
 
+	count_scu_timer++;
 	XScuTimer_ClearInterruptStatus(TimerInstance);
 }
 
-void platform_setup_timer(void)
+void timer_ttcps_callback(XTtcPs * TimerInstance)
+{
+	u32 StatusEvent;
+	uint16_t length;
+	static char test = 0;
+	StatusEvent = XTtcPs_GetInterruptStatus(TimerInstance);
+	XTtcPs_ClearInterruptStatus(TimerInstance, StatusEvent);
+	if (((StatusEvent & XTTCPS_IXR_INTERVAL_MASK) != 0) && (stream_flag)){
+		count_ttcps_timer++;
+		length = sizeof(dummy_data);
+		length_dummy_data = made_frame(dummy_data, length);
+		transfer_data(dummy_data, length_dummy_data);
+		test = 0;
+	}
+	else{
+		if(test == 0){
+			//xil_printf("send data count=%d | 2count=%d\r\n", count_ttcps_timer, count_scu_timer);
+			test = 1;
+		}
+	}
+}
+
+void platform_setup_scu_timer(void)
 {
 	int Status = XST_SUCCESS;
 	XScuTimer_Config *ConfigPtr;
 	int TimerLoadValue = 0;
 
 	ConfigPtr = XScuTimer_LookupConfig(TIMER_DEVICE_ID);
-	Status = XScuTimer_CfgInitialize(&TimerInstance, ConfigPtr,
+	if (ConfigPtr == NULL){
+		xil_printf("In %s: Scutimer timer Look up config failed...\r\n",
+		__func__);
+		return;
+	}
+	Status = XScuTimer_CfgInitialize(&TimerScuInstance, ConfigPtr,
 			ConfigPtr->BaseAddr);
 	if (Status != XST_SUCCESS) {
-
 		xil_printf("In %s: Scutimer Cfg initialization failed...\r\n",
 		__func__);
 		return;
 	}
 
-	Status = XScuTimer_SelfTest(&TimerInstance);
+	Status = XScuTimer_SelfTest(&TimerScuInstance);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: Scutimer Self test failed...\r\n",
 		__func__);
@@ -171,19 +178,75 @@ void platform_setup_timer(void)
 
 	}
 
-	XScuTimer_EnableAutoReload(&TimerInstance);
+	XScuTimer_EnableAutoReload(&TimerScuInstance);
 	/*
-	 * Set for 250 milli seconds timeout.
+	 * Set for 100 ms timeout. (XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ/2 -> 1s)
 	 */
-	TimerLoadValue = XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ / 8;
+	TimerLoadValue = XPAR_CPU_CORTEXA9_0_CPU_CLK_FREQ_HZ / 20;//8;
 
-	XScuTimer_LoadTimer(&TimerInstance, TimerLoadValue);
+	XScuTimer_LoadTimer(&TimerScuInstance, TimerLoadValue);
 	return;
+}
+
+void platform_setup_ttcps_timer(void){
+	int Status = XST_SUCCESS;
+	XTtcPs_Config *ConfigPtr;
+	XTtcPs *Timer;
+	TmrCntrSetup *TimerSetup;
+
+
+	ConfigPtr = XTtcPs_LookupConfig(TTC_TICK_DEVICE_ID);
+	if (ConfigPtr == NULL){
+		xil_printf("In %s: TtcPs timer Look up config failed...\r\n",
+		__func__);
+		return;
+	}
+
+	Status = XTtcPs_CfgInitialize(&TimerTtcPsInstance, ConfigPtr,
+			ConfigPtr->BaseAddress);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: TtcPs timer Cfg initialization failed...\r\n",
+		__func__);
+		return;
+	}
+
+	Status = XTtcPs_SelfTest(&TimerTtcPsInstance);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: TtcPs timer Self test failed...\r\n",
+		__func__);
+		return;
+
+	}
+
+	Timer = &TimerTtcPsInstance;
+	TimerSetup = &SettingsTable;
+	/*
+	 * Set up appropriate options for Ticker: interval mode without
+	 * waveform output.
+	 */
+	TimerSetup->Options |= (XTTCPS_OPTION_INTERVAL_MODE | XTTCPS_OPTION_WAVE_DISABLE);
+	TimerSetup->OutputHz = TTCPS_TIMER_FREQ_HZ;
+	XTtcPs_SetOptions(Timer, TimerSetup->Options);
+
+	/*
+	 * Timer frequency is preset in the TimerSetup structure,
+	 * however, the value is not reflected in its other fields, such as
+	 * IntervalValue and PrescalerValue. The following call will map the
+	 * frequency to the interval and prescaler values.
+	 */
+	XTtcPs_CalcIntervalFromFreq(Timer, TimerSetup->OutputHz,
+		&(TimerSetup->Interval), &(TimerSetup->Prescaler));
+
+	/*
+	 * Set the interval and prescale
+	 */
+	XTtcPs_SetInterval(Timer, TimerSetup->Interval);
+	XTtcPs_SetPrescaler(Timer, TimerSetup->Prescaler);
 }
 
 void platform_setup_interrupts(void)
 {
-	Xil_ExceptionInit();
+	Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
 
 	XScuGic_DeviceInitialize(INTC_DEVICE_ID);
 
@@ -200,12 +263,25 @@ void platform_setup_interrupts(void)
 	 * the specific interrupt processing for the device.
 	 */
 	XScuGic_RegisterHandler(INTC_BASE_ADDR, TIMER_IRPT_INTR,
-					(Xil_ExceptionHandler)timer_callback,
-					(void *)&TimerInstance);
+					(Xil_ExceptionHandler)timer_scu_callback,
+					(void *)&TimerScuInstance);
 	/*
 	 * Enable the interrupt for scu timer.
 	 */
 	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TIMER_IRPT_INTR);
+
+	/*
+	 * Connect the device driver handler that will be called when an
+	 * interrupt for the device occurs, the handler defined above performs
+	 * the specific interrupt processing for the device.
+	 */
+	XScuGic_RegisterHandler(INTC_BASE_ADDR, TTC_TICK_INTR_ID,
+					(Xil_ExceptionHandler)timer_ttcps_callback,
+					(void *)&TimerTtcPsInstance);
+	/*
+	 * Enable the interrupt for ttcps timer.
+	 */
+	XScuGic_EnableIntr(INTC_DIST_BASE_ADDR, TTC_TICK_INTR_ID);
 
 	return;
 }
@@ -216,25 +292,32 @@ void platform_enable_interrupts()
 	 * Enable non-critical exceptions.
 	 */
 	Xil_ExceptionEnableMask(XIL_EXCEPTION_IRQ);
-	XScuTimer_EnableInterrupt(&TimerInstance);
-	XScuTimer_Start(&TimerInstance);
+	XScuTimer_EnableInterrupt(&TimerScuInstance);
+	XScuTimer_Start(&TimerScuInstance);
+	XTtcPs_EnableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
+	XTtcPs_Start(&TimerTtcPsInstance);
 	return;
 }
 
 void init_platform()
 {
-	platform_setup_timer();
+	platform_setup_scu_timer();
+	platform_setup_ttcps_timer();
 	platform_setup_interrupts();
+	uint16_t length = sizeof(dummy_data);
+	length_dummy_data = made_frame(dummy_data, length);
 
 	return;
 }
 
 void cleanup_platform()
 {
+	XTtcPs_DisableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
+	XTtcPs_Stop(&TimerTtcPsInstance);
+	XScuTimer_DisableInterrupt(&TimerScuInstance);
+	XScuTimer_Stop(&TimerScuInstance);
 	Xil_ICacheDisable();
 	Xil_DCacheDisable();
 	return;
 }
-#endif
-#endif
 

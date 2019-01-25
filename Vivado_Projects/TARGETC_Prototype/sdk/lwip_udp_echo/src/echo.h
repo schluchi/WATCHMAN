@@ -30,23 +30,33 @@
 *
 ******************************************************************************/
 
-#ifndef __PLATFORM_H_
-#define __PLATFORM_H_
+#include <stdio.h>
+#include <string.h>
+#include "cmd_interpreter.h"
+#include "data_test.h"
+#include "lwip/err.h"
+#include "lwip/udp.h"
+#include "stdbool.h"
 
-/* Platform timer is calibrated for 250 ms, so kept interval value 4 to call
- * eth_link_detect() at every one second
- */
-#define ETH_LINK_DETECT_INTERVAL 4
+#if defined (__arm__) || defined (__aarch64__)
+#include "xil_printf.h"
+#endif
 
-void init_platform();
-void cleanup_platform();
-#ifdef __MICROBLAZE__
-void timer_callback();
-#endif
-#ifdef __PPC__
-void timer_callback();
-#endif
-void platform_setup_timer();
-void platform_enable_interrupts();
-#endif
+#define REGMAP_SIZE		50
+#define MAX_ARRAY_SIZE	3*REGMAP_SIZE
+#define PORT_ECHO		7
+#define PORT_DATA		8
+
+
+err_t transfer_data(char* frame, uint16_t length);
+void udp_echo_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port);
+int command_parser(struct pbuf *p, int* regmap, char* return_buf);
+void print_app_header();
+int start_application(ip_addr_t pc_ipaddr);
+void print_ip(char *msg, ip_addr_t *ip);
+void print_ip_settings(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw);
+/* defined by each RAW mode application */
+void tcp_fasttmr(void);
+void tcp_slowtmr(void);
+struct udp_pcb * setup_send_data(struct udp_pcb * pcb ,ip_addr_t pc_ipaddr, unsigned port);
 
