@@ -1,4 +1,5 @@
 src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
+ ../src/platform_zynq.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xparameters.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xparameters_ps.h \
@@ -43,11 +44,19 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/lwip/icmp.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/lwip/prot/icmp.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xil_printf.h \
- ../src/platform.h ../src/platform_config.h \
+ ../src/platform_config.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/netif/xadapter.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/netif/xtopology.h \
  ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xscutimer.h \
- ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xscutimer_hw.h
+ ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xscutimer_hw.h \
+ ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xttcps.h \
+ ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xttcps_hw.h \
+ ../src/data_test.h \
+ ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/lwip/udp.h \
+ ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
+ ../src/echo.h ../src/cmd_interpreter.h
+
+../src/platform_zynq.h:
 
 ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xparameters.h:
 
@@ -137,8 +146,6 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
 
 ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xil_printf.h:
 
-../src/platform.h:
-
 ../src/platform_config.h:
 
 ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/netif/xadapter.h:
@@ -148,3 +155,17 @@ src/platform_zynq.o src/platform_zynq.o: ../src/platform_zynq.c \
 ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xscutimer.h:
 
 ../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xscutimer_hw.h:
+
+../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xttcps.h:
+
+../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/xttcps_hw.h:
+
+../src/data_test.h:
+
+../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/lwip/udp.h:
+
+../../lwip_udp_echo_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h:
+
+../src/echo.h:
+
+../src/cmd_interpreter.h:

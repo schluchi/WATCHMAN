@@ -67,11 +67,11 @@ src/recover_data.o src/recover_data.o: ../src/recover_data.c \
  ../src/udp_peripheral.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/udp.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
- ../src/time_hm.h ../src/file_hm.h \
+ ../src/time_hm.h ../src/TARGETC_RegisterMap.h ../src/global.h \
+ ../src/utility.h ../src/file_hm.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
- ../src/TARGETC_RegisterMap.h ../src/global.h ../src/utility.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../src/iic_DAC_LTC2657.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xiic.h \
@@ -215,6 +215,12 @@ src/recover_data.o src/recover_data.o: ../src/recover_data.c \
 
 ../src/time_hm.h:
 
+../src/TARGETC_RegisterMap.h:
+
+../src/global.h:
+
+../src/utility.h:
+
 ../src/file_hm.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h:
@@ -222,12 +228,6 @@ src/recover_data.o src/recover_data.o: ../src/recover_data.c \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h:
-
-../src/TARGETC_RegisterMap.h:
-
-../src/global.h:
-
-../src/utility.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xil_types.h:
 

@@ -65,13 +65,13 @@ src/axis_peripheral.o src/axis_peripheral.o: ../src/axis_peripheral.c \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
  ../src/time_hm.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xtime_l.h \
+ ../src/TARGETC_RegisterMap.h ../src/global.h ../src/utility.h \
  ../src/file_hm.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../src/data_analysis.h ../src/TARGETC_RegisterMap.h ../src/global.h \
- ../src/utility.h
+ ../src/data_analysis.h
 
 ../src/axis_peripheral.h:
 
@@ -205,6 +205,12 @@ src/axis_peripheral.o src/axis_peripheral.o: ../src/axis_peripheral.c \
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xtime_l.h:
 
+../src/TARGETC_RegisterMap.h:
+
+../src/global.h:
+
+../src/utility.h:
+
 ../src/file_hm.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h:
@@ -216,9 +222,3 @@ src/axis_peripheral.o src/axis_peripheral.o: ../src/axis_peripheral.c \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h:
 
 ../src/data_analysis.h:
-
-../src/TARGETC_RegisterMap.h:
-
-../src/global.h:
-
-../src/utility.h:

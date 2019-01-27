@@ -41,6 +41,8 @@ static struct netif server_netif;
 
 /* Typedef */
 typedef enum clean_state_enum {GLOBAL_VAR=0x1,INTERRUPT=0x2,UDP=0x4} clean_state_en;
+
+/* Function declaration */
 void end_main(clean_state_en state);
 
 int main()

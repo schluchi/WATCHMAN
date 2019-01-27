@@ -13,7 +13,7 @@
 
 #define IIC_DEVICE_ID		XPAR_AXI_IIC_0_DEVICE_ID	//Xparameters Base Address
 
-#define IIC_SLAVE_ADDRESS	0x10	// From Schematic of Jose
+#define IIC_SLAVE_ADDRESS	0x10	// ADC i2c address
 
 #define CHANNEL_A	0x00
 #define CHANNEL_B	0x01
@@ -32,9 +32,6 @@
 #define DAC_VPED	CHANNEL_H
 
 
-
-// Variables
-XIic Iic;		  /* The instance of the IIC device */
 
 
 //Prototypes

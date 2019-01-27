@@ -156,17 +156,19 @@ void ControlRegisterWrite(int mask, int actionID){
 
 
 void WriteRegister(int regID, int regData){
+	if(regID <= TC_MISCDIG_REG || regID == TC_TPG_REG){
+		ControlRegisterWrite(WRITE_MASK,DISABLE);
 
-	ControlRegisterWrite(WRITE_MASK,DISABLE);
+		regptr[regID] = regData;
+		regptr[TC_ADDR_REG] = regID;
 
-	regptr[regID] = regData;
-	regptr[TC_ADDR_REG] = regID;
-
-	ControlRegisterWrite(WRITE_MASK ,ENABLE);
-	while(regptr[TC_STATUS_REG] & BUSY_MASK){
-		usleep(100); //sleep 100ms
+		ControlRegisterWrite(WRITE_MASK ,ENABLE);
+		while(regptr[TC_STATUS_REG] & BUSY_MASK){
+			usleep(100); //sleep 100ms
+		}
+		ControlRegisterWrite(WRITE_MASK,DISABLE);
 	}
-	ControlRegisterWrite(WRITE_MASK,DISABLE);
+	else printf("Invalid register!\r\n");
 }
 
 void WriteReadBackRegister(int regID, int regData){

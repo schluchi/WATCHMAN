@@ -15,18 +15,18 @@
 #include "stdbool.h"
 #include "time_hm.h"
 #include "interrupt.h"
+#include "TARGETC_RegisterMap.h"
 
 #if defined (__arm__) || defined (__aarch64__)
 #include "xil_printf.h"
 #endif
 
 #define BUF_HEADER_SIZE 	50 // frame's header: ethernet (14) + Ipv4(20) + UDP(8) = 42 -> 50
-#define MAX_DATA_SIZE 		CHANNEL*SAMPLE*2+15+BUF_HEADER_SIZE // payload int16_t is 2 bytes + header + frame's header
+#define MAX_DATA_SIZE 		CHANNEL*SAMPLE*2+15 // payload int16_t is 2 bytes + header + frame's header
 #define REGMAP_SIZE_UDP	128
-#define MAX_CMD_SIZE	2*REGMAP_SIZE_UDP+20+BUF_HEADER_SIZE
+#define MAX_CMD_SIZE	2*REGMAP_SIZE_UDP+20
 #define PORT_CMD		7
 #define PORT_DATA		8
-
 
 err_t transfer_data(char* frame, uint16_t length);
 void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port);

@@ -65,12 +65,12 @@ src/data_analysis.o src/data_analysis.o: ../src/data_analysis.c \
  ../src/udp_peripheral.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/udp.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
- ../src/time_hm.h ../src/file_hm.h \
+ ../src/time_hm.h ../src/TARGETC_RegisterMap.h ../src/global.h \
+ ../src/utility.h ../src/file_hm.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
- ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../src/TARGETC_RegisterMap.h ../src/global.h ../src/utility.h
+ ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h
 
 ../src/data_analysis.h:
 
@@ -206,6 +206,12 @@ src/data_analysis.o src/data_analysis.o: ../src/data_analysis.c \
 
 ../src/time_hm.h:
 
+../src/TARGETC_RegisterMap.h:
+
+../src/global.h:
+
+../src/utility.h:
+
 ../src/file_hm.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ff.h:
@@ -215,9 +221,3 @@ src/data_analysis.o src/data_analysis.o: ../src/data_analysis.c \
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/ffconf.h:
 
 ../../watchman_without_trigger_bsp/ps7_cortexa9_0/include/xstatus.h:
-
-../src/TARGETC_RegisterMap.h:
-
-../src/global.h:
-
-../src/utility.h:

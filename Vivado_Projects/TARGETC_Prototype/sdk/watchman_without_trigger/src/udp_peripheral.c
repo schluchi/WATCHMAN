@@ -33,12 +33,11 @@
 #include "udp_peripheral.h"
 
 /* Global variables */
-int* regptr;
 struct udp_pcb *pcb_data;
 struct udp_pcb *pcb_cmd;
 struct pbuf *buf_data;
 struct pbuf *buf_cmd;
-char frame_buf_cmd_tmp[MAX_CMD_SIZE];
+char frame_buf_cmd_tmp[MAX_CMD_SIZE+BUF_HEADER_SIZE];
 
 /* Extern global variables */
 extern volatile int count_ttcps_timer;
@@ -48,6 +47,7 @@ extern volatile bool run_flag;
 extern volatile bool stream_flag;
 extern volatile bool recover_data_flag;
 extern volatile bool get_1000_windows_flag;
+extern int* regptr;
 
 /****************************************************************************/
 /**
@@ -120,6 +120,7 @@ void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_
 {
 	int length;
 	char *frame_buf_cmd = &frame_buf_cmd_tmp[BUF_HEADER_SIZE]; // avoid problem with udp header
+	for(int i=0; i<BUF_HEADER_SIZE; i++) frame_buf_cmd_tmp[i] = 0;
     if (p != NULL) {
     	frame_buf_cmd[0] = 0x55;
     	frame_buf_cmd[1] = 0xAA;
@@ -157,8 +158,9 @@ int command_parser(struct pbuf *p, char* return_buf){
 	uint16_t end = 0;
 	bool flag_start = false;
 	bool flag_end = false;
-	int i, k;
+	int i, regID;
 	time_cplt offset_time;
+	int regVal;
 
 	while((start < (length-1)) && (flag_start == false)){
 		if((payload[start] == 0x55) && (payload[start+1] == 0xAA)) flag_start = true;
@@ -176,10 +178,13 @@ int command_parser(struct pbuf *p, char* return_buf){
 		switch(payload[start+2]){
 			case 0: // cmd write all reg.
 				if(start + 4 + 2*REGMAP_SIZE_UDP == end){
-					k = 1;
+					regID = 1;
 					for(i = 4; i < (4 + 2*REGMAP_SIZE_UDP); i += 2){
-						regptr[k] = payload[i]*256 + payload[i+1];
-						k++;
+						if(regID <= TC_MISCDIG_REG || regID == TC_TPG_REG){
+							regVal = payload[i]*256 + payload[i+1];
+							WriteRegister(regID, regVal);
+						}
+						regID++;
 					}
 					xil_printf("Command write_all_reg received\r\n");
 					return 6;
@@ -188,11 +193,11 @@ int command_parser(struct pbuf *p, char* return_buf){
 				break;
 			case 1: // cmd read all reg
 				if(start + 4 == end){
-					k = 1;
+					regID = 1;
 					for(i = 4; i < (4 + 2*REGMAP_SIZE_UDP); i += 2){
-						return_buf[i] = (char)(regptr[k] >> 8);
-						return_buf[i+1] = (char)(regptr[k]);
-						k++;
+						return_buf[i] = (char)(regptr[regID] >> 8);
+						return_buf[i+1] = (char)(regptr[regID]);
+						regID++;
 					}
 					xil_printf("Command read_all_reg received\r\n");
 					return (6 + 2*REGMAP_SIZE_UDP);

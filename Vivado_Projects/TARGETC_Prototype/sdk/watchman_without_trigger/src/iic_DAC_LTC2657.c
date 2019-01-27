@@ -1,22 +1,23 @@
 #include "iic_DAC_LTC2657.h"
 
 
+/* Global variables */
+XIic I2cInstance;		  /* The instance of the IIC device */
+
 int DAC_LTC2657_initialize(void){
 
 	int Status = XST_SUCCESS;
 	
-	XIic_Config *ConfigPtr;	/* Pointer to configuration data */
-	
-	char WriteBuffer[3];
-	
-	ConfigPtr = XIic_LookupConfig(IIC_DEVICE_ID);
+	// Recover i2c IP configuration
+	XIic_Config * ConfigPtr = XIic_LookupConfig(IIC_DEVICE_ID);
 	if (ConfigPtr == NULL) {
 		xil_printf("In %s: DAC Look up config failed...\r\n",
 		__func__);
 		return XST_FAILURE;
 	}
 
-	Status = XIic_CfgInitialize(&Iic, ConfigPtr,
+	// Create and initialize the i2c instance
+	Status = XIic_CfgInitialize(&I2cInstance, ConfigPtr,
 					ConfigPtr->BaseAddress);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: DAC Cfg initialization failed...\r\n",
@@ -26,13 +27,9 @@ int DAC_LTC2657_initialize(void){
 	
 	// No interrupt like it is only write only
 	
-	XIic_Start(&Iic);
-	Status = XIic_SetAddress(&Iic, XII_ADDR_TO_SEND_TYPE, IIC_SLAVE_ADDRESS);
-	if (Status != XST_SUCCESS) {
-		xil_printf("In %s: DAC setting address failed...\r\n",
-		__func__);
-		return XST_FAILURE;
-	}
+	// Start the driver and its interrupt (in this case, no interrupt like it is only write only)
+	XIic_Start(&I2cInstance);
+
 	/*
 	int XIic_MasterSend	(	XIic* 	InstancePtr, u8* 	TxMsgPtr, int 	ByteCount)
 	Function to be called for accessing the IIC device
@@ -46,9 +43,12 @@ int DAC_LTC2657_SetChannelVoltage(int channel, float voltage){
 	int Status;
 	int intvolt;
 	char WriteBuffer[3];
-		
-	Status = XIic_SetAddress(&Iic, XII_ADDR_TO_SEND_TYPE, IIC_SLAVE_ADDRESS);
+
+	// set the ADC address (pdf p.19) and the fact that it's a slave
+	Status = XIic_SetAddress(&I2cInstance, XII_ADDR_TO_SEND_TYPE, IIC_SLAVE_ADDRESS);
 	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: DAC setting address failed...\r\n",
+		__func__);
 		return XST_FAILURE;
 	}
 	
@@ -74,13 +74,13 @@ int DAC_LTC2657_SetChannelVoltage(int channel, float voltage){
 	printf("%lf V\r\n",voltage);
 	
 	
-	WriteBuffer[0] = 0x30 | channel;	
+	WriteBuffer[0] = 0x30 | channel;	// 0x30 command to write and update | channel is channel
 	WriteBuffer[1] = intvolt>>8;	//0b10000000; // MSB First
 	WriteBuffer[2] = intvolt & 0x00FF;	//0b00000000; // LSB Last
 
 	int i;
-	for(i=0; i <5 ; i++){
-		Status = XIic_MasterSend(&Iic,WriteBuffer,4);
+	for(i=0; i <5 ; i++){			// 5 time, because sometime it's busy
+		Status = XIic_MasterSend(&I2cInstance,WriteBuffer,4); // length = 4, because data + 1 for the address
 		if(Status == XST_SUCCESS){
 			break;
 		}

@@ -7,41 +7,50 @@ LD_SRCS += \
 ../src/lscript.ld 
 
 C_SRCS += \
+../src/cmd_interpreter.c \
+../src/data_test.c \
 ../src/echo.c \
 ../src/i2c_access.c \
 ../src/iic_phyreset.c \
 ../src/main.c \
-../src/platform.c \
 ../src/platform_mb.c \
 ../src/platform_ppc.c \
 ../src/platform_zynq.c \
-../src/platform_zynqmp.c \
+../src/reg_read.c \
+../src/reg_write.c \
+../src/send_data.c \
 ../src/sfp.c \
 ../src/si5324.c 
 
 OBJS += \
+./src/cmd_interpreter.o \
+./src/data_test.o \
 ./src/echo.o \
 ./src/i2c_access.o \
 ./src/iic_phyreset.o \
 ./src/main.o \
-./src/platform.o \
 ./src/platform_mb.o \
 ./src/platform_ppc.o \
 ./src/platform_zynq.o \
-./src/platform_zynqmp.o \
+./src/reg_read.o \
+./src/reg_write.o \
+./src/send_data.o \
 ./src/sfp.o \
 ./src/si5324.o 
 
 C_DEPS += \
+./src/cmd_interpreter.d \
+./src/data_test.d \
 ./src/echo.d \
 ./src/i2c_access.d \
 ./src/iic_phyreset.d \
 ./src/main.d \
-./src/platform.d \
 ./src/platform_mb.d \
 ./src/platform_ppc.d \
 ./src/platform_zynq.d \
-./src/platform_zynqmp.d \
+./src/reg_read.d \
+./src/reg_write.d \
+./src/send_data.d \
 ./src/sfp.d \
 ./src/si5324.d 
 
