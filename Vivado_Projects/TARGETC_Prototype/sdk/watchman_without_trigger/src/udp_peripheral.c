@@ -37,7 +37,6 @@ struct udp_pcb *pcb_data;
 struct udp_pcb *pcb_cmd;
 struct pbuf *buf_data;
 struct pbuf *buf_cmd;
-char frame_buf_cmd_tmp[MAX_CMD_SIZE+BUF_HEADER_SIZE];
 
 /* Extern global variables */
 extern volatile int count_ttcps_timer;
@@ -48,6 +47,7 @@ extern volatile bool stream_flag;
 extern volatile bool recover_data_flag;
 extern volatile bool get_1000_windows_flag;
 extern int* regptr;
+extern char* frame_buf_cmd;
 
 /****************************************************************************/
 /**
@@ -119,8 +119,6 @@ err_t transfer_cmd(char* frame, uint16_t length) {
 void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
 	int length;
-	char *frame_buf_cmd = &frame_buf_cmd_tmp[BUF_HEADER_SIZE]; // avoid problem with udp header
-	for(int i=0; i<BUF_HEADER_SIZE; i++) frame_buf_cmd_tmp[i] = 0;
     if (p != NULL) {
     	frame_buf_cmd[0] = 0x55;
     	frame_buf_cmd[1] = 0xAA;

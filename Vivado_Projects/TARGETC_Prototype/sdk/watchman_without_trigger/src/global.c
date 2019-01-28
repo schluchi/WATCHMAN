@@ -30,6 +30,8 @@ volatile bool flag_assertion;
 volatile bool flag_while_loop;
 char* frame_buf_tmp;
 char* frame_buf;
+char* frame_buf_cmd_tmp;
+char* frame_buf_cmd;
 int* regptr;
 uint16_t pedestal[512][16][32];
 uint16_t lookup_table[2048];
@@ -77,6 +79,12 @@ int init_global_var(void){
 		return XST_FAILURE;
 	}
 	frame_buf = &frame_buf_tmp[BUF_HEADER_SIZE];
+	frame_buf_cmd_tmp = (char *)malloc(MAX_CMD_SIZE+BUF_HEADER_SIZE);
+	if(!frame_buf_cmd_tmp){
+		xil_printf("malloc for frame_buf_cmd_tmp failed in function, %s!\r\n", __func__);
+		return XST_FAILURE;
+	}
+	frame_buf_cmd = &frame_buf_cmd_tmp[BUF_HEADER_SIZE];
 	regptr = (int *)XPAR_TARGETC_IP_PROTOTYPE_0_BASEADDR ; //XPAR_TARGETC_INTERFACE_IP_0_BASEADDR;
 	for(i = TC_VDLYTUNE_REG; i<= TC_WL_DIV_REG; i++) regptr[i] = 0;
 	return XST_SUCCESS;
