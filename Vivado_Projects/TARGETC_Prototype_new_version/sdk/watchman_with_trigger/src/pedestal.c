@@ -42,13 +42,14 @@ int init_pedestals(void){
 			ControlRegisterWrite(WINDOW_MASK,DISABLE); // PL side starts on falling edge
 
 			timeout = 200000; // 10sec
-			while(timeout && !flag_axidma_rx_done){
+			while(timeout && (!flag_axidma_rx_done)){
 				usleep(50);
 				timeout--;
 			}
 			Xil_DCacheInvalidateRange((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 			if(timeout <= 0){
+				if(flag_axidma_rx_done) xil_printf("done \r\n");
 				printf("\r\nwindow = %d | count = %d\r\n", window, count);
 				printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
 				printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
@@ -74,6 +75,7 @@ int init_pedestals(void){
 					for(j=0; j<32; j++) data[i][j] += tmp_ptr->data.data_struct.data[i][j];
 				}
 			}
+			ControlRegisterWrite(PSBUSY_MASK,DISABLE);
 		}
 
 		for(i=0; i<16; i++){

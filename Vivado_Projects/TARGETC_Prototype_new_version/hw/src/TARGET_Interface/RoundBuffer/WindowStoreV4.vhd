@@ -215,7 +215,7 @@ begin
 	RDAD_STO_AFIFO :  aFifo
     generic map(
         DATA_WIDTH => 10,
-        ADDR_WIDTH => 4	--Maybe more ?
+        ADDR_WIDTH => 6	--Maybe more ?
     )
     port map (
     	rst 	=> nrst,
@@ -235,7 +235,7 @@ begin
 	AXI_CMD_AFIFO :  aFifo
     generic map(
         DATA_WIDTH => 10,
-        ADDR_WIDTH => 5	--Maybe more ?
+        ADDR_WIDTH => 7	--Maybe more ?
     )
     port map (
     	rst 	=> nrst,
@@ -255,7 +255,7 @@ begin
 	AXI_Time_AFIFO :  aFifo
     generic map(
         DATA_WIDTH => 64,
-        ADDR_WIDTH => 5	--Maybe more ?
+        ADDR_WIDTH => 7	--Maybe more ?
     )
     port map (
     	rst 	=> nrst,
@@ -275,7 +275,7 @@ begin
 	AXI_WdoAddr_AFIFO :  aFifo
 	generic map(
 		DATA_WIDTH => 9,
-		ADDR_WIDTH => 5	--Maybe more ?
+		ADDR_WIDTH => 7	--Maybe more ?
 	)
 	port map (
 		rst 	=> nrst,
@@ -295,7 +295,7 @@ begin
 	AXI_Trig_AFIFO :  aFifo
 	generic map(
 		DATA_WIDTH => 12,
-		ADDR_WIDTH => 5	--Maybe more ?
+		ADDR_WIDTH => 7	--Maybe more ?
 	)
 	port map (
 		rst 	=> nrst,

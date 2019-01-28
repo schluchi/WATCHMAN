@@ -17,9 +17,9 @@ extern uint16_t lookup_table[2048];
 
 
 int get_100_windows_fct(void){
-	int window = 0;
+	int window_start = 0;
 	int timeout;
-	int k,i,j,index;
+	int window,i,j,index;
 	uint16_t data_tmp;
 
 	data_list* tmp_ptr  = (data_list *)malloc(sizeof(data_list));
@@ -30,11 +30,11 @@ int get_100_windows_fct(void){
 	tmp_ptr->next = NULL;
 	tmp_ptr->previous = NULL;
 
-	window = 0;
+	window_start = 0;
 
 	XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
-	regptr[TC_FSTWINDOW_REG] = window;
+	regptr[TC_FSTWINDOW_REG] = window_start;
 	regptr[TC_NBRWINDOW_REG] = 100;
 	ControlRegisterWrite(SMODE_MASK ,ENABLE);
 	ControlRegisterWrite(SS_TPG_MASK ,ENABLE);
@@ -42,8 +42,8 @@ int get_100_windows_fct(void){
 	usleep(50);
 	ControlRegisterWrite(WINDOW_MASK,DISABLE); // PL side starts on falling edge
 
-	for(k =0; k<100; k++){
-		if(k != 0) XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
+	for(window =0; window<100; window++){
+		if(window != 0) XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 		timeout = 200000; // 10sec
 		while(timeout && !flag_axidma_rx_done){
@@ -69,9 +69,9 @@ int get_100_windows_fct(void){
 			return XST_FAILURE;
 		}
 		else flag_axidma_rx_done = false;
-		printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-		printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
-		printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
+		printf("wdo_time: %u\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
+		printf("dig_time: %u\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+		printf("wdo_id: %u\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 
 		if(tmp_ptr->data.data_struct.wdo_id != window){
 			printf("window id is wrong! window = %d | wdo_id = %d\r\n", window, (uint)tmp_ptr->data.data_struct.wdo_id);
@@ -81,8 +81,8 @@ int get_100_windows_fct(void){
 			index = 0;
 			frame_buf[index++] = 0x55;
 			frame_buf[index++] = 0xAA;
-			frame_buf[index++] = (char)k;
-			frame_buf[index++] = (char)(k >> 8);
+			frame_buf[index++] = (char)window;
+			frame_buf[index++] = (char)(window >> 8);
 			for(i=0; i<16; i++){
 				for(j=0; j<32; j++){
 					data_tmp = (uint16_t)(tmp_ptr->data.data_struct.data[i][j] + VPED_DIGITAL - pedestal[window][i][j]);

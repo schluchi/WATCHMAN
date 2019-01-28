@@ -85,6 +85,7 @@ int init_transfer_function(void){
 				}
 
 			}
+			ControlRegisterWrite(PSBUSY_MASK,DISABLE);
 		}
 		data_tmp[voltage] = data_tmp[voltage]/(512*16*32);
 	}

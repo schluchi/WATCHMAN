@@ -261,7 +261,7 @@ int test_TPG(void){
 
 	XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
-	regptr[TC_FSTWINDOW_REG] = 1;
+	regptr[TC_FSTWINDOW_REG] = 10;
 	regptr[TC_NBRWINDOW_REG] = 1;
 	WriteRegister(TC_TPG_REG,	0x50A);	// TPG value
 
@@ -289,7 +289,7 @@ int test_TPG(void){
 	Xil_DCacheInvalidateRange((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 
-	if(tmp_ptr->data.data_struct.wdo_id == 1){
+	if(tmp_ptr->data.data_struct.wdo_id == 10){
 		for(j=0; j<32; j++){
 			for(i=0; i<16; i++){
 				if(tmp_ptr->data.data_struct.data[i][j] != 0x50A){
@@ -324,7 +324,8 @@ int test_TPG(void){
 		return XST_FAILURE;
 	}
 	free(tmp_ptr);
-	ControlRegisterWrite(SS_TPG_MASK ,ENABLE); // enable for real data
+
+	ControlRegisterWrite(PSBUSY_MASK,DISABLE);
 
 	return XST_SUCCESS;
 }
