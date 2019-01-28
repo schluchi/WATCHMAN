@@ -35,14 +35,14 @@ int get_100_windows_fct(void){
 	XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 	regptr[TC_FSTWINDOW_REG] = window_start;
-	regptr[TC_NBRWINDOW_REG] = 100;
+	regptr[TC_NBRWINDOW_REG] = 20;
 	ControlRegisterWrite(SMODE_MASK ,ENABLE);
 	ControlRegisterWrite(SS_TPG_MASK ,ENABLE);
 	ControlRegisterWrite(WINDOW_MASK,ENABLE);
 	usleep(50);
 	ControlRegisterWrite(WINDOW_MASK,DISABLE); // PL side starts on falling edge
 
-	for(window =0; window<100; window++){
+	for(window =0; window<20; window++){
 		if(window != 0) XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 		timeout = 200000; // 10sec

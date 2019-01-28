@@ -74,7 +74,10 @@ int init_transfer_function(void){
 			else flag_axidma_rx_done = false;
 
 			if(tmp_ptr->data.data_struct.wdo_id != window){
-				printf("window id is wrong! window = %d | wdo_id = %d\r\n", window, (uint)tmp_ptr->data.data_struct.wdo_id);
+				printf("window id is wrong! voltage = %d | window = %d | wdo_id = %d\r\n", voltage, window, (uint)tmp_ptr->data.data_struct.wdo_id);
+				printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
+				printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				return XST_FAILURE;
 			}
 			else{
