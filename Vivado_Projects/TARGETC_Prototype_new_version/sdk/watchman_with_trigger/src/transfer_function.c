@@ -59,7 +59,7 @@ int init_transfer_function(void){
 			if(timeout <= 0){
 				printf("\r\nwindow = %d\r\n", window);
 				printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-				printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+				printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 				for(sample=0; sample<32; sample++){
@@ -76,7 +76,7 @@ int init_transfer_function(void){
 			if(tmp_ptr->data.data_struct.wdo_id != window){
 				printf("window id is wrong! voltage = %d | window = %d | wdo_id = %d\r\n", voltage, window, (uint)tmp_ptr->data.data_struct.wdo_id);
 				printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-				printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+				printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				return XST_FAILURE;
 			}

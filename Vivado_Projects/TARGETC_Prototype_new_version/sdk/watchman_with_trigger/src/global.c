@@ -14,7 +14,7 @@ volatile int count_scu_timer;
 volatile bool run_flag;
 volatile bool stream_flag;
 volatile bool recover_data_flag;
-volatile bool get_100_windows_flag;
+volatile bool get_20_windows_flag;
 volatile bool empty_flag;
 volatile bool flag_ttcps_timer;
 volatile bool flag_scu_timer;
@@ -56,7 +56,7 @@ int init_global_var(void){
 	run_flag = true;
 	stream_flag = false;
 	recover_data_flag = false;
-	get_100_windows_flag = false;
+	get_20_windows_flag = false;
 	empty_flag = true;
 	nbre_of_bytes = 0;
 	flag_ttcps_timer = false;

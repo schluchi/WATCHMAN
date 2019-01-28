@@ -294,7 +294,7 @@ int test_TPG(void){
 			for(i=0; i<16; i++){
 				if(tmp_ptr->data.data_struct.data[i][j] != 0x50A){
 					printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-					printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+					printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 					printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 					printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 					for(j=0; j<32; j++){
@@ -311,7 +311,7 @@ int test_TPG(void){
 	}
 	else{
 		printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-		printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+		printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 		printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 		printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 		for(j=0; j<32; j++){

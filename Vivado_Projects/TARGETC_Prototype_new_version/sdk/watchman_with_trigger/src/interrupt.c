@@ -429,6 +429,7 @@ int setup_axidma_int(void)
 		return Status;
 	}
 
+	// Reset DMA
 	XAxiDma_Reset(&AxiDmaInstance);
 	uint32_t reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_CR_OFFSET);
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET,XAXIDMA_CR_OFFSET, reg | XAXIDMA_CR_RESET_MASK);

@@ -52,7 +52,7 @@ int init_pedestals(void){
 				if(flag_axidma_rx_done) xil_printf("done \r\n");
 				printf("\r\nwindow = %d | count = %d\r\n", window, count);
 				printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-				printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+				printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 				for(j=1; j<32; j++){

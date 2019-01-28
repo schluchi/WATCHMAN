@@ -5,8 +5,8 @@
  *      Author: antho
  */
 
-#ifndef SRC_GET_100_WINDOWS_H_
-#define SRC_GET_100_WINDOWS_H_
+#ifndef SRC_GET_20_WINDOWS_H_
+#define SRC_GET_20_WINDOWS_H_
 
 #include "xstatus.h"
 #include "data_analysis.h"
@@ -16,6 +16,6 @@
 #include "iic_DAC_LTC2657.h"
 #include "udp_peripheral.h"
 
-int get_100_windows_fct(void);
+int get_20_windows_fct(void);
 
-#endif /* SRC_GET_100_WINDOWS_H_ */
+#endif /* SRC_GET_20_WINDOWS_H_ */

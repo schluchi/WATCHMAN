@@ -6,7 +6,7 @@
  */
 
 
-#include "get_100_windows.h"
+#include "get_20_windows.h"
 
 /* Extern global variables */
 extern int* regptr;
@@ -16,7 +16,7 @@ extern char* frame_buf;
 extern uint16_t lookup_table[2048];
 
 
-int get_100_windows_fct(void){
+int get_20_windows_fct(void){
 	int window_start = 0;
 	int timeout;
 	int window,i,j,index;
@@ -56,7 +56,7 @@ int get_100_windows_fct(void){
 		if(timeout <= 0){
 			printf("\r\nwindow = %d\r\n", window);
 			printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-			printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+			printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 			printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 			printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 			for(j=0; j<32; j++){
@@ -70,7 +70,7 @@ int get_100_windows_fct(void){
 		}
 		else flag_axidma_rx_done = false;
 		printf("wdo_time: %u\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-		printf("dig_time: %u\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+		printf("PL_spare: %u\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 		printf("wdo_id: %u\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 
 		if(tmp_ptr->data.data_struct.wdo_id != window){

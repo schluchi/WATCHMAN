@@ -18,7 +18,7 @@
 #include "pedestal.h"
 #include "xtime_l.h"
 
-#include "get_100_windows.h"
+#include "get_20_windows.h"
 #include "transfer_function.h"
 #include "recover_data.h"
 
@@ -35,7 +35,7 @@ extern volatile bool flag_axidma_error;
 extern int flag_axidma_rx[4];
 extern int* regptr;
 extern volatile bool recover_data_flag;
-extern volatile bool get_100_windows_flag;
+extern volatile bool get_20_windows_flag;
 extern volatile bool empty_flag;
 extern data_list* first_element;
 
@@ -44,7 +44,7 @@ static struct netif server_netif;
 
 /* Typedef */
 typedef enum clean_state_enum {GLOBAL_VAR=0x1,INTERRUPT=0x2,UDP=0x4} clean_state_en;
-typedef enum dma_stm_enum{IDLE, STREAM, RECOVER_DATA, GET_100_WINDOWS} dma_stm_en;
+typedef enum dma_stm_enum{IDLE, STREAM, RECOVER_DATA, GET_20_WINDOWS} dma_stm_en;
 
 /* Function declaration */
 void end_main(clean_state_en state);
@@ -228,7 +228,7 @@ int main()
 
 		switch(state_main){
 			case IDLE:
-				if(stream_flag && (!recover_data_flag) && (!get_100_windows_flag)){
+				if(stream_flag && (!recover_data_flag) && (!get_20_windows_flag)){
 					XAxiDma_SimpleTransfer_Hej((UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 					ControlRegisterWrite(CPUMODE_MASK,ENABLE); // mode trigger
 					state_main = STREAM;
@@ -237,9 +237,9 @@ int main()
 					ControlRegisterWrite(CPUMODE_MASK,DISABLE); // mode with NBRWINDOS and FSTWINDOW
 					state_main = RECOVER_DATA;
 				}
-				if(get_100_windows_flag && (!stream_flag) && empty_flag){
+				if(get_20_windows_flag && (!stream_flag) && empty_flag){
 					ControlRegisterWrite(CPUMODE_MASK,DISABLE); // mode with NBRWINDOS and FSTWINDOW
-					state_main = GET_100_WINDOWS;
+					state_main = GET_20_WINDOWS;
 				}
 				break;
 			case STREAM:
@@ -266,14 +266,14 @@ int main()
 				recover_data_flag = false;
 				state_main = IDLE;
 				break;
-			case GET_100_WINDOWS:
-				if(get_100_windows_fct() == XST_SUCCESS) printf("Get a 100 windows pass!\r\n");
+			case GET_20_WINDOWS:
+				if(get_20_windows_fct() == XST_SUCCESS) printf("Get a 20 windows pass!\r\n");
 				else{
-					printf("Get a 1000 windows failed!\n\r");
+					printf("Get a 20 windows failed!\n\r");
 					end_main(GLOBAL_VAR | INTERRUPT | UDP);
 					return -1;
 				}
-				get_100_windows_flag = false;
+				get_20_windows_flag = false;
 				state_main = IDLE;
 				break;
 			default:

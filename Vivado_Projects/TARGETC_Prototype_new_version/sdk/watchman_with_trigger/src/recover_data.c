@@ -56,7 +56,7 @@ int send_data_transfer_fct(void){
 			if(timeout <= 0){
 				printf("\r\nwindow = %d\r\n", window);
 				printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-				printf("dig_time: %d\r\n", (uint)tmp_ptr->data.data_struct.dig_time);
+				printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 				for(j=0; j<32; j++){

@@ -47,7 +47,7 @@ typedef struct coordinates_st{
 
 typedef struct data_axi_st{
 	uint64_t wdo_time;
-	uint64_t dig_time;
+	uint64_t PL_spare;
 	uint32_t info;
 	uint32_t wdo_id;
 	uint32_t data[16][32];

@@ -1,5 +1,5 @@
-src/get_100_windows.o src/get_100_windows.o: ../src/get_100_windows.c \
- ../src/get_100_windows.h \
+src/get_20_windows.o src/get_20_windows.o: ../src/get_20_windows.c \
+ ../src/get_20_windows.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_assert.h \
@@ -77,7 +77,7 @@ src/get_100_windows.o src/get_100_windows.o: ../src/get_100_windows.c \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xiic.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h
 
-../src/get_100_windows.h:
+../src/get_20_windows.h:
 
 ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xstatus.h:
 
