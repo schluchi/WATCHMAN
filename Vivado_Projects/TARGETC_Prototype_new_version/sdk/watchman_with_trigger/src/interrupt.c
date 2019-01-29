@@ -186,7 +186,7 @@ void timer_ttcps_callback(XTtcPs * TimerInstance)
 ****************************************************************************/
 void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	uint32_t IrqStatus;
-	int group;
+	int pmt;
 	data_list* tmp_ptr;
 	uint32_t info, mask;
 
@@ -218,10 +218,10 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 			// Invalid the cache to update the value change in memory by the PL
 			Xil_DCacheInvalidateRange((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 
-			for(group=0; group<4; group++){
+			for(pmt=0; pmt<4; pmt++){
 				info = last_element->data.data_struct.info;
-				mask = 0x1 << (LAST_SHIFT+group);
-				if((info && mask) != 0) flag_axidma_rx[group]++;
+				mask = 0x1 << (LAST_SHIFT+pmt);
+				if((info && mask) != 0) flag_axidma_rx[pmt]++;
 			}
 
 			tmp_ptr = last_element;
@@ -232,7 +232,7 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 			last_element->next = NULL;
 			last_element->previous = tmp_ptr;
 			tmp_ptr->next = last_element;
-			XAxiDma_SimpleTransfer_Hej((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
+			XAxiDma_SimpleTransfer_hm((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 			ControlRegisterWrite(PSBUSY_MASK,DISABLE);
 		}
 		else{

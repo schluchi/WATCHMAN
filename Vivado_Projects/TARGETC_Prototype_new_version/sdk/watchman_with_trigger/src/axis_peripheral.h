@@ -26,8 +26,8 @@
 #define FULL_WAVEFORM_ID	1
 
 /*** Function prototype *********************************************/
-void XAxiDma_SimpleTransfer_Hej(UINTPTR BuffAddr, int LengthOfBytes);
-void dma_received_data(int group);
+void XAxiDma_SimpleTransfer_hm(UINTPTR BuffAddr, int LengthOfBytes);
+void dma_received_data(int pmt);
 int test_TPG(void);
 
 #endif /* SRC_AXIS_PERIPHERAL_H_ */

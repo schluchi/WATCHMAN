@@ -39,7 +39,7 @@ int init_transfer_function(void){
 		}
 
 		for(window=0; window<512; window++){
-			XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
+			XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 			regptr[TC_FSTWINDOW_REG] = window;
 			regptr[TC_NBRWINDOW_REG] = 1;

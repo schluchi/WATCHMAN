@@ -53,7 +53,7 @@ int main()
 {
 	//static XTime tStart, tEnd;
 	ip_addr_t ipaddr, netmask, gw, pc_ipaddr;
-	int group;
+	int pmt;
 	dma_stm_en state_main = IDLE;
 
 	/* the mac address of the board. this should be unique per board */
@@ -79,22 +79,22 @@ int main()
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_0,THRESHOLD) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_0,THRESHOLD_CMP) != XST_SUCCESS){
 		xil_printf("DAC: setting group 0 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_1,THRESHOLD) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_1,THRESHOLD_CMP) != XST_SUCCESS){
 		xil_printf("DAC: setting group 1 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_2,THRESHOLD) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_2,THRESHOLD_CMP) != XST_SUCCESS){
 		xil_printf("DAC: setting group 2 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;
 	}
-	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_3,THRESHOLD) != XST_SUCCESS){
+	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_3,THRESHOLD_CMP) != XST_SUCCESS){
 		xil_printf("DAC: setting group 3 voltage failed!\r\n");
 		end_main(GLOBAL_VAR);
 		return -1;
@@ -229,7 +229,7 @@ int main()
 		switch(state_main){
 			case IDLE:
 				if(stream_flag && (!recover_data_flag) && (!get_20_windows_flag)){
-					XAxiDma_SimpleTransfer_Hej((UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY_BYT);
+					XAxiDma_SimpleTransfer_hm((UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 					ControlRegisterWrite(CPUMODE_MASK,ENABLE); // mode trigger
 					state_main = STREAM;
 				}
@@ -249,10 +249,10 @@ int main()
 					ControlRegisterWrite(SWRESET_MASK,ENABLE);
 					state_main = IDLE;
 				}
-				for(group=0; group<4; group++){
-					if(flag_axidma_rx[group] > 0){
-						dma_received_data(group);
-						flag_axidma_rx[group]--;
+				for(pmt=0; pmt<4; pmt++){
+					if(flag_axidma_rx[pmt] > 0){
+						dma_received_data(pmt);
+						flag_axidma_rx[pmt]--;
 					}
 				}
 				break;

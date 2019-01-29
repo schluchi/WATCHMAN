@@ -22,21 +22,23 @@ extern volatile bool empty_flag;
 * This is the DMA Simple Packet Transfert Function
 *
 ******************************************************************************/
-void XAxiDma_SimpleTransfer_Hej(UINTPTR BuffAddr, int LengthOfBytes)
+void XAxiDma_SimpleTransfer_hm(UINTPTR BuffAddr, int LengthOfBytes)
 {
 	uint32_t reg;
 
+	// Update the memory with the value in the cache
 	Xil_DCacheFlushRange(BuffAddr, LengthOfBytes);
+	// Pass the memory address to the DMA
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET,XAXIDMA_DESTADDR_OFFSET, LOWER_32_BITS(BuffAddr));
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET,XAXIDMA_DESTADDR_MSB_OFFSET, 0);
-
+	// Enable the DMA
 	reg = XAxiDma_ReadReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_CR_OFFSET);
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET,XAXIDMA_CR_OFFSET,reg | XAXIDMA_CR_RUNSTOP_MASK);
-
+	// Pass the size of the memory location which will start the DMA
 	XAxiDma_WriteReg(XPAR_AXI_DMA_0_BASEADDR+XAXIDMA_RX_OFFSET, XAXIDMA_BUFFLEN_OFFSET, LengthOfBytes);
 }
 
-void dma_received_data(int group){
+void dma_received_data(int pmt){
 	data_list* tmp_first_element;
 	data_list* tmp_last_element;
 	data_list* tmp_last_element_next;
@@ -52,7 +54,7 @@ void dma_received_data(int group){
 	tmp_first_element = first_element;
 	while(flag){
 		info = tmp_first_element->data.data_struct.info;
-		mask = 0x1 << (TRIG_SHIFT+group);
+		mask = 0x1 << (TRIG_SHIFT+pmt);
 		if((info & mask) != 0) flag = false;
 		else tmp_first_element = tmp_first_element->next;
 	}
@@ -61,7 +63,7 @@ void dma_received_data(int group){
 	tmp_last_element = tmp_first_element;
 	while(flag){
 		info = tmp_last_element->data.data_struct.info;
-		mask = 0x1 << (LAST_SHIFT+group);
+		mask = 0x1 << (LAST_SHIFT+pmt);
 		if((info & mask) != 0) flag = false;
 		else{
 			nbr_wdo++;
@@ -69,8 +71,8 @@ void dma_received_data(int group){
 		}
 	}
 
-	ch = correct_data(data, group, nbr_wdo, &info, tmp_first_element);
-	mask = 0x1 << (TOO_LONG_SHIFT+group);
+	ch = correct_data(data, pmt, nbr_wdo, &info, tmp_first_element);
+	mask = 0x1 << (TOO_LONG_SHIFT+pmt);
 	length = 32 * nbr_wdo;
 	if((info & mask) != 0){
 		//send full wave form
@@ -111,7 +113,7 @@ void dma_received_data(int group){
 
 	tmp_last_element_next = tmp_last_element->next;
 	do{
-		mask = ~((0x1 << (TRIG_SHIFT+group)) + (0x1 << (LAST_SHIFT+group)) + (0x1 << (TOO_LONG_SHIFT+group)));
+		mask = ~((0x1 << (TRIG_SHIFT+pmt)) + (0x1 << (LAST_SHIFT+pmt)) + (0x1 << (TOO_LONG_SHIFT+pmt)));
 		info = tmp_first_element->data.data_struct.info & mask;
 		if(!(info & (MASK_INFO << TRIG_SHIFT))){
 			// if tmp_first_element == first_element
@@ -149,7 +151,7 @@ void dma_received_data(int group){
 }
 
 //
-//void dma_received_data(int group){
+//void dma_received_data(int pmt){
 //	data_list* tmp_first_element;
 //	data_list* tmp_last_element;
 //	data_list* tmp_ptr;
@@ -163,7 +165,7 @@ void dma_received_data(int group){
 //	tmp_first_element = first_element;
 //	while(flag){
 //		info = tmp_first_element->data.data_struct.info;
-//		mask = 0x1 << (TRIG_SHIFT+group);
+//		mask = 0x1 << (TRIG_SHIFT+pmt);
 //		if((info & mask) != 0) flag = false;
 //		else tmp_first_element = tmp_first_element->next;
 //	}
@@ -172,7 +174,7 @@ void dma_received_data(int group){
 //	tmp_last_element = tmp_first_element;
 //	while(flag){
 //		info = tmp_last_element->data.data_struct.info;
-//		mask = 0x1 << (LAST_SHIFT+group);
+//		mask = 0x1 << (LAST_SHIFT+pmt);
 //		if((info & mask) != 0) flag = false;
 //		else{
 //			nbr_wdo++;
@@ -180,8 +182,8 @@ void dma_received_data(int group){
 //		}
 //	}
 //
-//	ch = correct_data(data, group, nbr_wdo, &info, tmp_first_element);
-//	mask = 0x1 << (TOO_LONG_SHIFT+group);
+//	ch = correct_data(data, pmt, nbr_wdo, &info, tmp_first_element);
+//	mask = 0x1 << (TOO_LONG_SHIFT+pmt);
 //	length = 32 * nbr_wdo;
 //	if((info & mask) != 0){
 //		//send full wave form
@@ -229,7 +231,7 @@ void dma_received_data(int group){
 //		flag = false;
 //	}
 //	do{
-//		mask = ~((0x1 << (TRIG_SHIFT+group)) + (0x1 << (LAST_SHIFT+group)) + (0x1 << (TOO_LONG_SHIFT+group)));
+//		mask = ~((0x1 << (TRIG_SHIFT+pmt)) + (0x1 << (LAST_SHIFT+pmt)) + (0x1 << (TOO_LONG_SHIFT+pmt)));
 //		info = tmp_first_element->data.data_struct.info & mask;
 //		if(!(info & (MASK_INFO << TRIG_SHIFT))){
 //			tmp_ptr->next = tmp_first_element->next;
@@ -259,7 +261,7 @@ int test_TPG(void){
 	tmp_ptr->next = NULL;
 	tmp_ptr->previous = NULL;
 
-	XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
+	XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 	regptr[TC_FSTWINDOW_REG] = 10;
 	regptr[TC_NBRWINDOW_REG] = 1;

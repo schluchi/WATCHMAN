@@ -32,7 +32,7 @@ int get_20_windows_fct(void){
 
 	window_start = 0;
 
-	XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
+	XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 	regptr[TC_FSTWINDOW_REG] = window_start;
 	regptr[TC_NBRWINDOW_REG] = 20;
@@ -43,7 +43,7 @@ int get_20_windows_fct(void){
 	ControlRegisterWrite(WINDOW_MASK,DISABLE); // PL side starts on falling edge
 
 	for(window =0; window<20; window++){
-		if(window != 0) XAxiDma_SimpleTransfer_Hej((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
+		if(window != 0) XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 		timeout = 200000; // 10sec
 		while(timeout && !flag_axidma_rx_done){

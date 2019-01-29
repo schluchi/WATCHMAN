@@ -31,7 +31,6 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 	data_list* ptr;
 	int wdo, sample;
 	int index = 0;
-	uint16_t treshold = 500;
 	bool gain_good = false;
 	bool too_long = false;
 	uint16_t data_tmp;
@@ -45,7 +44,7 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 				data_tmp = (uint16_t)ptr->data.data_struct.data[ch][sample] + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
 				if(data_tmp > 2047) data_tmp = 2047;
 				data[index] = lookup_table[data_tmp];
-				if(data[index] < treshold){
+				if(data[index] < THRESHOLD_PULSE){
 					if(ch > ch_last){
 						ch--;
 						gain_good = false;
