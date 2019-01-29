@@ -72,7 +72,6 @@ extern struct netif *echo_netif;
 extern int *PtrData;
 extern volatile bool flag_ttcps_timer;
 extern volatile bool flag_scu_timer;
-extern volatile bool flag_timefile;
 extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
@@ -101,7 +100,7 @@ void assert_callback(const char8 *File, s32 Line)
 {
 	char text[100];
 	sprintf((char *)text, "Assert in file %s @ line %d", File, (int)Line);
-	write_logfile(text, strlen(text));
+	log_event(text, strlen(text));
 	flag_assertion = true; // stop the app
 	xil_printf("%s : strlen = %d\r\n", text, strlen(text));
 	//Xil_AssertWait = 0; // avoid the infinity loop
@@ -498,15 +497,13 @@ int setup_scu_wdt_int(void){
 
 	if(XScuWdt_IsWdtExpired(&WdtScuInstance)){
 		xil_printf("%s: Watch dog has expired\r\n", __func__);
-		write_wdtfile();//if(write_wdtfile() != FR_OK)
+		log_wdtevent();//if(write_wdtfile() != FR_OK)
 	}
 	else{
 		xil_printf("%s: Watch dog has not expired\r\n", __func__);
-		create_wdtfile();
 		create_logfile();
 	}
 	create_timefile();
-	flag_timefile = true;
 
 	return Status;
 }

@@ -18,7 +18,6 @@ volatile bool get_20_windows_flag;
 volatile bool empty_flag;
 volatile bool flag_ttcps_timer;
 volatile bool flag_scu_timer;
-volatile bool flag_timefile;
 XAxiDma AxiDmaInstance;
 XScuWdt WdtScuInstance;
 volatile bool flag_axidma_error;
@@ -61,7 +60,6 @@ int init_global_var(void){
 	nbre_of_bytes = 0;
 	flag_ttcps_timer = false;
 	flag_scu_timer = false;
-	flag_timefile = false;
 	first_element = (data_list *)malloc(sizeof(data_list));
 	if(!first_element){
 		xil_printf("malloc for first_element failed in function, %s!\r\n", __func__);

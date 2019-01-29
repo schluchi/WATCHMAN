@@ -18,9 +18,8 @@
 
 FRESULT mount_sd_card(void);
 FRESULT create_logfile(void);
-FRESULT write_logfile(char *tmp_text, uint length);
-FRESULT create_wdtfile(void);
-FRESULT write_wdtfile(void);
+FRESULT log_event(char *tmp_text, uint length);
+FRESULT log_wdtevent(void);
 FRESULT create_timefile(void);
 FRESULT update_timefile(void);
 

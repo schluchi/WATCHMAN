@@ -11,8 +11,6 @@ char *Path = "0:/";  //  string pointer to the logical drive number
 static FATFS FS_instance; // File System instance
 static char *log_filename = "log.txt"; // pointer to the log file name
 static FIL log_file;	// File instance
-static char *wdt_filename = "wdt.txt"; // pointer to the wdt file name
-static FIL wdt_file;	// File instance
 static char *time_filename = "time.txt"; // pointer to the time file name
 static FIL time_file;	// File instance
 
@@ -73,7 +71,7 @@ FRESULT create_logfile(void)
 * 			ff.c (Generic FAT Filesystem Module)
 *
 ****************************************************************************/
-FRESULT write_logfile(char *tmp_text, uint length)
+FRESULT log_event(char *tmp_text, uint length)
 {
 	static int file_index = 0;
 	FRESULT result;
@@ -117,7 +115,7 @@ FRESULT write_logfile(char *tmp_text, uint length)
 
 /****************************************************************************/
 /**
-* @brief	Create the wdt file to save the the time when the wdt occurs
+* @brief	Write a message in the log file to indicate when the wdt occurs
 *
 * @param	None
 *
@@ -127,31 +125,7 @@ FRESULT write_logfile(char *tmp_text, uint length)
 * 			ff.c (Generic FAT Filesystem Module)
 *
 ****************************************************************************/
-FRESULT create_wdtfile(void)
-{
-	FRESULT result;
-	result = f_open(&wdt_file, wdt_filename, FA_CREATE_ALWAYS | FA_WRITE | FA_READ);
-	if(result != FR_OK) printf("Create wdt file failed during f_open, result = %d\r\n", result);
-	else {
-		result = f_close(&wdt_file);
-		if(result != FR_OK) printf("Create wdt file failed during f_close, result = %d\r\n", result);
-	}
-	return result;
-}
-
-/****************************************************************************/
-/**
-* @brief	Write a message in the wdt file to indicate when the wdt occurs
-*
-* @param	None
-*
-* @return	FRESULT: see enumeration in ff.h and possibility on note's website
-*
-* @note		http://elm-chan.org/fsw/ff/00index_e.html for informations abourt
-* 			ff.c (Generic FAT Filesystem Module)
-*
-****************************************************************************/
-FRESULT write_wdtfile(void)
+FRESULT log_wdtevent(void)
 {
 	int file_index = 0;
 	FRESULT result;
@@ -182,15 +156,15 @@ FRESULT write_wdtfile(void)
 					settime_hm(&time);
 					addtime(); // compensate caused by the reboot
 
-					result = f_open(&wdt_file, wdt_filename,FA_WRITE);
+					result = f_open(&log_file, log_filename,FA_WRITE);
 					if(result != FR_OK) printf("Write wdt file failed during f_open, result = %d\r\n", result);
 					else {
-						file_index = file_size(&wdt_file);
-						result = f_lseek(&wdt_file,file_index);
+						file_index = file_size(&log_file);
+						result = f_lseek(&log_file,file_index);
 						if(result != FR_OK) printf("Write wdt file failed during f_lseek, result = %d\r\n", result);
 						else{
 							length = 48;
-							result = f_write(&wdt_file, (const void*)text, length, &nbr_byte);
+							result = f_write(&log_file, (const void*)text, length, &nbr_byte);
 							printf("write_wdtfile: %s", text);
 							if(result != FR_OK) printf("Write wdt file failed during f_write, result = %d\r\n", result);
 							else{
@@ -199,7 +173,7 @@ FRESULT write_wdtfile(void)
 									printf("Write wdt file failed, disk full\r\n");
 								}
 								else{
-									result = f_close(&wdt_file);
+									result = f_close(&log_file);
 									if(result != FR_OK) printf("Write wdt file failed during f_close, result = %d\r\n", result);
 								}
 							}

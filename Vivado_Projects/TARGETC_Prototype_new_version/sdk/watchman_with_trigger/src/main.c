@@ -207,6 +207,7 @@ int main()
 	 * 	Reactivate wdt, but problem with recover data because of changing dac value (sleep(1) in fct)
 	 * 	and be carefull with oher way to send data
 	 * 	in infinity loop, when fct return error, after calling fct end_main, log problem and inifity loop to reboot with wdt (like assertion)
+	 * 	before infinity loop, do the same, but raise a flag to counterreact the flag_while_loop test in the timer flag
 	 */
 	//**************************************************************************
 	//**************************************************************************
