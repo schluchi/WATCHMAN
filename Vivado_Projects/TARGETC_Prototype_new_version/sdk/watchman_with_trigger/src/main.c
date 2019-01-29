@@ -68,6 +68,29 @@ int main()
 		return -1;
 	}
 
+	/* Initialize "echo_netif" to avoid warnings with function "xemac_add" */
+	echo_netif = &server_netif;
+
+	// Mount SD Card and create log file
+	FRESULT result = mount_sd_card();
+	if (result != 0){
+		end_main(GLOBAL_VAR);
+		return -1;
+	}
+
+	/* Initial the interrupt timer, axidma, ... */
+	if(init_interrupts() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
+	else{
+		end_main(GLOBAL_VAR | INTERRUPT);
+		return -1;
+	}
+
+	/* Initilize the LWip */
+	lwip_init();
+
+	/* now enable interrupts */
+	enable_interrupts();
+
 	/* Initialize the DAC (Vped, Comparator value) */
 	if(DAC_LTC2657_initialize() == XST_SUCCESS) xil_printf("DAC initialization pass!\r\n");
 	else{
@@ -100,28 +123,6 @@ int main()
 		return -1;
 	}
 
-	/* Initialize "echo_netif" to avoid warnings with function "xemac_add" */
-	echo_netif = &server_netif;
-
-	// Mount SD Card and create log file
-	FRESULT result = mount_sd_card();
-	if (result != 0){
-		end_main(GLOBAL_VAR);
-		return -1;
-	}
-
-	/* Initial the interrupt timer, axidma, ... */
-	if(init_interrupts() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
-	else{
-		end_main(GLOBAL_VAR | INTERRUPT);
-		return -1;
-	}
-
-	/* Initilize the LWip */
-	lwip_init();
-
-	/* now enable interrupts */
-	enable_interrupts();
 
 	/* Add network interface to the netif_list, and set it as default */
 	ipaddr.addr = 0;
