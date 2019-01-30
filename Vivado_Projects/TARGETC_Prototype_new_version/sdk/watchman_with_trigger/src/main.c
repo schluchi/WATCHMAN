@@ -78,14 +78,21 @@ int main()
 		return -1;
 	}
 
-	/* Initial the interrupt timer, axidma, ... */
-	if(init_interrupts() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
+	/* Initialize the devices timer, axidma, ... */
+	if(devices_initialization() == XST_SUCCESS) xil_printf("Devices initialization pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR | INTERRUPT);
 		return -1;
 	}
 
-	/* Initilize the LWip */
+	/* Initialize the interrupts */
+	if(interrupts_initialization() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
+	else{
+		end_main(GLOBAL_VAR | INTERRUPT);
+		return -1;
+	}
+
+	/* Initialize the LWip */
 	lwip_init();
 
 	/* now enable interrupts */

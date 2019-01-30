@@ -519,23 +519,31 @@ int setup_scu_wdt_int(void){
 * @note		-
 *
 ****************************************************************************/
-int setup_interrupts(void)
+int interrupts_initialization(void)
 {
-	static XScuGic_Config *IntcConfig;
+	static XScuGic_Config *ConfigPtr;
 	int Status = XST_SUCCESS;
 
-	IntcConfig = XScuGic_LookupConfig(XPAR_SCUGIC_0_DEVICE_ID);
-	if (IntcConfig == NULL){
+	ConfigPtr = XScuGic_LookupConfig(XPAR_SCUGIC_0_DEVICE_ID);
+	if (ConfigPtr == NULL){
 		xil_printf("In %s: XScuGic Look up config failed...\r\n",
 		__func__);
 		return XST_FAILURE;
 	}
 
-	Status = XScuGic_CfgInitialize(&Intc, IntcConfig,IntcConfig->CpuBaseAddress);
+	Status = XScuGic_CfgInitialize(&Intc, ConfigPtr,ConfigPtr->CpuBaseAddress);
 	if (Status != XST_SUCCESS) {
 		xil_printf("In %s: XScuGic Cfg initialization failed...\r\n",
 		__func__);
 		return Status;
+	}
+
+	Status = XScuGic_SelfTest(&Intc);
+	if (Status != XST_SUCCESS) {
+		xil_printf("In %s: XScuGic Self test failed...\r\n",
+		__func__);
+		return Status;
+
 	}
 
 	Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
@@ -670,7 +678,7 @@ void enable_interrupts()
 * @note		-
 *
 ****************************************************************************/
-int init_interrupts()
+int devices_initialization()
 {
 	int Status;
 
@@ -695,12 +703,6 @@ int init_interrupts()
 	Status = setup_scu_wdt_int();
 	if(Status != XST_SUCCESS){
 		xil_printf("In %s: WDT timer failed...\r\n",
-		__func__);
-		return Status;
-	}
-	Status = setup_interrupts();
-	if(Status != XST_SUCCESS){
-		xil_printf("In %s: Setup interrupts failed...\r\n",
 		__func__);
 		return Status;
 	}

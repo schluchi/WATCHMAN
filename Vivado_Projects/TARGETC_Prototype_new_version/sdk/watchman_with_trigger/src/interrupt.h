@@ -53,9 +53,9 @@ void wdt_scu_callback(XScuWdt *WdtInstance);
 int setup_scu_timer_int(void);
 int setup_ttcps_timer_int(void);
 int setup_axidma_int(void);
-int setup_interrupts(void);
+int interrupts_initialization(void);
 void enable_interrupts();
-int init_interrupts();
+int devices_initialization();
 void cleanup_interrupts();
 #endif
 #endif
