@@ -73,7 +73,8 @@ int main()
 
 	// Mount SD Card and create log file
 	FRESULT result = mount_sd_card();
-	if (result != 0){
+	if (result == FR_OK) xil_printf("Mounting SD card pass!\r\n");
+	else{
 		end_main(GLOBAL_VAR);
 		return -1;
 	}

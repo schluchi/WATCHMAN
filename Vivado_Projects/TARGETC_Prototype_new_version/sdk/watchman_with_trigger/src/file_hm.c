@@ -22,7 +22,9 @@ static FIL time_file;	// File instance
 *
 * @return	FRESULT: see enumeration in ff.h and possibility on note's website
 *
-* @note		http://elm-chan.org/fsw/ff/00index_e.html for informations abourt
+* @note		the instance of the SD card must be static, that is why this function
+* 			job is only to call another function
+* 			http://elm-chan.org/fsw/ff/00index_e.html for informations abourt
 * 			ff.c (Generic FAT Filesystem Module)
 *
 ****************************************************************************/

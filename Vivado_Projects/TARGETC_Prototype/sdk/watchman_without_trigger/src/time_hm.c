@@ -39,32 +39,36 @@ void gettime_hm(time_cplt* t){
 	XTime time;
 	XTime_GetTime(&time);
 
-	time = time - offset_timer;
+	time = time - offset_timer;					// difference counter
+	time = (time / (COUNTS_PER_SECOND/1000));	// time in ms
 
-	time = (time / (COUNTS_PER_SECOND/1000)) + offset_time.milisecond;
-	t->milisecond = time % 1000;
-	time -= t->milisecond;
+	time = time + offset_time.milisecond;		// add the ms of the timestamp offset
+	t->milisecond = time % 1000; 				// recalculate the ms of the timestamp
+	time -= t->milisecond;						// subtract the result, now time is in sec
 
-	time = (time / 1000) + offset_time.second;
-	t->second = time % 60;
-	time -= t->second;
+	time = (time / 1000) + offset_time.second;	// add the sec of the timestamp offset
+	t->second = time % 60;						// recalculate the sec of the timestamp
+	time -= t->second;							// subtract the result, now time is in min
 
-	time = (time / 60) + offset_time.minute;
-	t->minute = time % 60;
-	time -= t->minute;
+	time = (time / 60) + offset_time.minute;	// add the min of the timestamp offset
+	t->minute = time % 60;						// recalculate the min of the timestamp
+	time -= t->minute;							// subtract the result, now time is in hour
 
-	time = (time / 60) + offset_time.hour;
-	t->hour = time % 24;
-	time -= t->hour;
+	time = (time / 60) + offset_time.hour;		// add the hour of the timestamp offset
+	t->hour = time % 24;						// recalculate the hour of the timestamp
+	time -= t->hour;							// subtract the result, time is still in hour
+	time = time / 24;							// now time is in day
 
-	time = time / 24;
+	// if it is a leap year, adapt the list containing the number of day per month
+	if(isALeapYear(t->year)) day_per_month[2] = 29;
+	else day_per_month[2] = 28;
+
+	// start from the offset date
 	t->day = offset_time.day;
 	t->month = offset_time.month;
 	t->year = offset_time.year;
 
-	if(isALeapYear(t->year)) day_per_month[2] = 29;
-	else day_per_month[2] = 28;
-
+	// add the time in day to the timestamp
 	while(time > 0){
 		t->day++;
 		if(t->day > day_per_month[t->month]){

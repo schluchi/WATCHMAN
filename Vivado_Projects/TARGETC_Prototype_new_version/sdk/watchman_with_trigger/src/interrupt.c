@@ -510,6 +510,49 @@ int setup_scu_wdt_int(void){
 
 /****************************************************************************/
 /**
+* @brief	Initiate and setup all the interrupts
+*
+* @param	None
+*
+* @return	XST_SUCCESS or XST_FAILURE (defined in xstatus.h)
+*
+* @note		-
+*
+****************************************************************************/
+int devices_initialization()
+{
+	int Status;
+
+	Status = setup_scu_timer_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: Scu timer failed...\r\n",
+		__func__);
+		return Status;
+	}
+	Status = setup_ttcps_timer_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: Ttcps timer failed...\r\n",
+		__func__);
+		return Status;
+	}
+	Status = setup_axidma_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: AxiDMA failed...\r\n",
+		__func__);
+		return Status;
+	}
+	Status = setup_scu_wdt_int();
+	if(Status != XST_SUCCESS){
+		xil_printf("In %s: WDT timer failed...\r\n",
+		__func__);
+		return Status;
+	}
+
+	return XST_SUCCESS;
+}
+
+/****************************************************************************/
+/**
 * @brief	Attach all the interrupt to the system and set the priority
 *
 * @param	None
@@ -665,49 +708,6 @@ void enable_interrupts()
 	Xil_AssertSetCallback((Xil_AssertCallback) assert_callback);
 
 	return;
-}
-
-/****************************************************************************/
-/**
-* @brief	Initiate and setup all the interrupts
-*
-* @param	None
-*
-* @return	XST_SUCCESS or XST_FAILURE (defined in xstatus.h)
-*
-* @note		-
-*
-****************************************************************************/
-int devices_initialization()
-{
-	int Status;
-
-	Status = setup_scu_timer_int();
-	if(Status != XST_SUCCESS){
-		xil_printf("In %s: Scu timer failed...\r\n",
-		__func__);
-		return Status;
-	}
-	Status = setup_ttcps_timer_int();
-	if(Status != XST_SUCCESS){
-		xil_printf("In %s: Ttcps timer failed...\r\n",
-		__func__);
-		return Status;
-	}
-	Status = setup_axidma_int();
-	if(Status != XST_SUCCESS){
-		xil_printf("In %s: AxiDMA failed...\r\n",
-		__func__);
-		return Status;
-	}
-	Status = setup_scu_wdt_int();
-	if(Status != XST_SUCCESS){
-		xil_printf("In %s: WDT timer failed...\r\n",
-		__func__);
-		return Status;
-	}
-
-	return XST_SUCCESS;
 }
 
 /****************************************************************************/
