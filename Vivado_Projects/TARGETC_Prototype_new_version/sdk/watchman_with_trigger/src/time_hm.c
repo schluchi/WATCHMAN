@@ -19,7 +19,7 @@ time_cplt offset_time = {
 	};
 
 // Variable which contain the value of the XTime_GetTime when the time was set
-uint64_t offset_timer = 0;
+uint64_t offset_counter = 0;
 // "Constant" wich contain the number of day for every month (ex: january = day_per_mont[1])
 int day_per_month[13] = {(int)NULL, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
@@ -39,7 +39,7 @@ void gettime_hm(time_cplt* t){
 	XTime time;
 	XTime_GetTime(&time);
 
-	time = time - offset_timer;					// difference counter
+	time = time - offset_counter;					// difference counter
 	time = (time / (COUNTS_PER_SECOND/1000));	// time in ms
 
 	time = time + offset_time.milisecond;		// add the ms of the timestamp offset
@@ -110,7 +110,7 @@ void settime_hm(time_cplt* t){
 	else day_per_month[2] = 28;
 	if((t->day > 0) && (t->day <= day_per_month[t->month])) offset_time.day = t->day;
 
-	XTime_GetTime(&offset_timer);
+	XTime_GetTime(&offset_counter);
 }
 
 
