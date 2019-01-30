@@ -548,7 +548,7 @@ int interrupts_initialization(void)
 
 	Xil_ExceptionInit();  // don't do anythings, prevent problem with other arm
 
-	XScuGic_DeviceInitialize(INTC_DEVICE_ID);
+	//XScuGic_DeviceInitialize(INTC_DEVICE_ID);
 
 	/*
 	 * Connect the interrupt controller interrupt handler to the hardware
