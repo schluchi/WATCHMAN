@@ -84,9 +84,11 @@ int send_data_transfer_fct(void){
 				for(i=0; i<16; i++){
 					for(j=0; j<32; j++){
 						data_tmp = (uint16_t)(tmp_ptr->data.data_struct.data[i][j] + VPED_DIGITAL - pedestal[window][i][j]);
-						if(data_tmp > 2047) data_tmp = 2047;
-						frame_buf[index++] = (char)lookup_table[data_tmp];
-						frame_buf[index++] = (char)(lookup_table[data_tmp] >> 8);
+						//if(data_tmp > 2047) data_tmp = 2047;
+						//frame_buf[index++] = (char)lookup_table[data_tmp];
+						//frame_buf[index++] = (char)(lookup_table[data_tmp] >> 8);
+						frame_buf[index++] = data_tmp;
+						frame_buf[index++] = data_tmp >> 8;
 					}
 				}
 				frame_buf[index++] = 0x33;

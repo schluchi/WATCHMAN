@@ -19,8 +19,8 @@
 #include "xtime_l.h"
 
 #include "get_20_windows.h"
+#include "get_transfer_fct.h"
 #include "transfer_function.h"
-#include "recover_data.h"
 
 /* Extern global variables */
 extern struct netif *echo_netif;
@@ -34,7 +34,7 @@ extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
 extern int flag_axidma_rx[4];
 extern int* regptr;
-extern volatile bool recover_data_flag;
+extern volatile bool get_transfer_fct_flag;
 extern volatile bool get_20_windows_flag;
 extern volatile bool empty_flag;
 extern data_list* first_element;
@@ -200,7 +200,7 @@ int main()
 	}
 
 	/* Initialize transfer function coefficients */
-	if(init_transfer_function() == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
+	if(init_transfer_function() == XST_SUCCESS) printf("Transfer function initialization pass!\r\n");
 	else{
 		printf("Transfer function initialization failed!\n\r");
 		end_main(GLOBAL_VAR | INTERRUPT | UDP);
@@ -217,6 +217,8 @@ int main()
 	 * 	and be carefull with oher way to send data
 	 * 	in infinity loop, when fct return error, after calling fct end_main, log problem and inifity loop to reboot with wdt (like assertion)
 	 * 	before infinity loop, do the same, but raise a flag to counterreact the flag_while_loop test in the timer flag
+	 * 	and dont do that with function called before the device_init function
+	 * 	treat flag axidma error
 	 */
 	//**************************************************************************
 	//**************************************************************************
@@ -238,12 +240,12 @@ int main()
 
 		switch(state_main){
 			case IDLE:
-				if(stream_flag && (!recover_data_flag) && (!get_20_windows_flag)){
+				if(stream_flag && (!get_transfer_fct_flag) && (!get_20_windows_flag)){
 					XAxiDma_SimpleTransfer_hm((UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 					ControlRegisterWrite(CPUMODE_MASK,ENABLE); // mode trigger
 					state_main = STREAM;
 				}
-				if(recover_data_flag && (!stream_flag) && empty_flag){
+				if(get_transfer_fct_flag && (!stream_flag) && empty_flag){
 					ControlRegisterWrite(CPUMODE_MASK,DISABLE); // mode with NBRWINDOS and FSTWINDOW
 					state_main = RECOVER_DATA;
 				}
@@ -273,7 +275,7 @@ int main()
 					end_main(GLOBAL_VAR | INTERRUPT | UDP);
 					return -1;
 				}
-				recover_data_flag = false;
+				get_transfer_fct_flag = false;
 				state_main = IDLE;
 				break;
 			case GET_20_WINDOWS:

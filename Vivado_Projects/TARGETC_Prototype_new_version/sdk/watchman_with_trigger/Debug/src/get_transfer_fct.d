@@ -1,5 +1,5 @@
-src/recover_data.o src/recover_data.o: ../src/recover_data.c \
- ../src/recover_data.h \
+src/get_transfer_fct.o src/get_transfer_fct.o: ../src/get_transfer_fct.c \
+ ../src/get_transfer_fct.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_types.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_assert.h \
@@ -77,7 +77,7 @@ src/recover_data.o src/recover_data.o: ../src/recover_data.c \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xiic.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h
 
-../src/recover_data.h:
+../src/get_transfer_fct.h:
 
 ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xstatus.h:
 

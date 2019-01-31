@@ -14,6 +14,7 @@ C_SRCS += \
 ../src/data_test.c \
 ../src/file_hm.c \
 ../src/get_20_windows.c \
+../src/get_transfer_fct.c \
 ../src/global.c \
 ../src/iic_DAC_LTC2657.c \
 ../src/interrupt.c \
@@ -21,7 +22,6 @@ C_SRCS += \
 ../src/pedestal.c \
 ../src/platform_mb.c \
 ../src/platform_ppc.c \
-../src/recover_data.c \
 ../src/sfp.c \
 ../src/si5324.c \
 ../src/time_hm.c \
@@ -37,6 +37,7 @@ OBJS += \
 ./src/data_test.o \
 ./src/file_hm.o \
 ./src/get_20_windows.o \
+./src/get_transfer_fct.o \
 ./src/global.o \
 ./src/iic_DAC_LTC2657.o \
 ./src/interrupt.o \
@@ -44,7 +45,6 @@ OBJS += \
 ./src/pedestal.o \
 ./src/platform_mb.o \
 ./src/platform_ppc.o \
-./src/recover_data.o \
 ./src/sfp.o \
 ./src/si5324.o \
 ./src/time_hm.o \
@@ -60,6 +60,7 @@ C_DEPS += \
 ./src/data_test.d \
 ./src/file_hm.d \
 ./src/get_20_windows.d \
+./src/get_transfer_fct.d \
 ./src/global.d \
 ./src/iic_DAC_LTC2657.d \
 ./src/interrupt.d \
@@ -67,7 +68,6 @@ C_DEPS += \
 ./src/pedestal.d \
 ./src/platform_mb.d \
 ./src/platform_ppc.d \
-./src/recover_data.d \
 ./src/sfp.d \
 ./src/si5324.d \
 ./src/time_hm.d \

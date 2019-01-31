@@ -76,7 +76,7 @@ extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
 extern volatile bool flag_axidma_rx_done;
-extern volatile bool recover_data_flag;
+extern volatile bool get_transfer_fct_flag;
 extern volatile bool get_100_windows_flag;
 extern volatile bool stream_flag;
 extern volatile bool empty_flag;

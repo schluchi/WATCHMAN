@@ -5,8 +5,8 @@
  *      Author: antho
  */
 
-#ifndef SRC_RECOVER_DATA_H_
-#define SRC_RECOVER_DATA_H_
+#ifndef SRC_GET_TRANSFER_FCT_H_
+#define SRC_GET_TRANSFER_FCT_H_
 
 #include "xstatus.h"
 #include "data_analysis.h"
@@ -19,4 +19,4 @@
 int send_data_transfer_fct(void);
 
 
-#endif /* SRC_RECOVER_DATA_H_ */
+#endif /* SRC_GET_TRANSFER_FCT_H_ */

@@ -46,7 +46,7 @@ class Watchman_main_window():
         self.UDP_PORT = 7
         self.UDP_PORT_data = 8
         ## List of all the commands
-        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'recover_data', 'get_20_windows']
+        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'get_transfer_fct', 'get_20_windows']
         ## Flag which indicates if the streaming is running
         self.stream_flag = False
         ## Flag which indicates that the user want to close the GUI (to avoid problem when accessing graphical object after "WM_DELETE_WINDOW" event)
@@ -57,7 +57,7 @@ class Watchman_main_window():
         self.run_flag = False
 
         self.timer_thread_flag = False
-        self.recover_data_flag = False
+        self.get_transfer_fct_flag = False
         self.timer_thread_flag_2 = False
         self.get_windows_flag = False
 
@@ -116,10 +116,10 @@ class Watchman_main_window():
         self.__btn_stop.grid(column=8, row=8, rowspan=2, padx=5, sticky=W+E)
         self.__btn_settime = Button(self.master,text="Set time", command=partial(self.send_command, 5))
         self.__btn_settime.grid(column=8, row=10, rowspan=2, padx=5, sticky=W+E)
-        self.__btn_recover = Button(self.master,text="Recover data", command=partial(self.send_command, 6))
-        self.__btn_recover.grid(column=8, row=12, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_transfer_fct = Button(self.master,text="Get transfer\nfunction", command=partial(self.send_command, 6))
+        self.__btn_transfer_fct.grid(column=8, row=13, rowspan=2, padx=5, sticky=W+E)
         self.__btn_20_windows = Button(self.master,text="Get 20\nwindows", command=partial(self.send_command, 7))
-        self.__btn_20_windows.grid(column=8, row=14, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_20_windows.grid(column=8, row=16, rowspan=2, padx=5, sticky=W+E)
         self.__btn_graph = Button(self.master,text="Open graph\nStore data", command=self.open_graph)
         self.__btn_graph.grid(column=8, row=29, rowspan=2, padx=5, sticky=W+E)
         # Listbox to show data transfert
@@ -175,7 +175,7 @@ class Watchman_main_window():
          # Stop the thread and wait on it to finish
         self.run_flag = False
         self.thread_cmd.join()
-        if(self.recover_data_flag):
+        if(self.get_transfer_fct_flag):
             self.thread_data.join()
             self.thread_timer.join()
         if(self.get_windows_flag):
@@ -288,7 +288,7 @@ class Watchman_main_window():
         payload.append(int("0x33", 0)) # frame's end code 0x33CC
         payload.append(int("0xCC", 0))
         # show in the listbox the command to be send and send it
-        if(self.cmd[cmd] == 'recover_data'):
+        if(self.cmd[cmd] == 'get_transfer_fct'):
             if(self.toplevel_flag):
                 self.write_txt("To recover data, the graph window must be closed!")
                 return
@@ -301,14 +301,14 @@ class Watchman_main_window():
                 self.thread_data=Thread(target=self.thread_data_int, args=())
                 self.thread_timer=Timer(25, self.thread_timer_int)
                 self.thread_data.start()
-                self.recover_data_flag = True
+                self.get_transfer_fct_flag = True
         if(self.cmd[cmd] == 'get_20_windows'):
             if(self.toplevel_flag):
                 self.write_txt("To get 20 windows, the graph window must be closed!")
                 return
             else:
                 self.__btn_graph.configure(state="disable")
-                self.__btn_recover.configure(state="disable")
+                self.__btn_transfer_fct.configure(state="disable")
                 self.__btn_stream.configure(state="disable")
                 self.init_UDP_connection_data()
                 ## Thread object which process the data received
@@ -351,8 +351,8 @@ class Watchman_main_window():
         flag_tmp = True
         self.thread_timer.start()
         self.timer_thread_flag = False
-        self.__btn_recover.configure(state="disable")
-        file_data = open("data_vped1_25_inputfloating_corrected.bin", "wb")
+        self.__btn_transfer_fct.configure(state="disable")
+        file_data = open("pair_data_vped1_25_inputfloating_withpedestal.bin", "wb")
         self.cnt_data_recover = 0
         while(self.cnt_data_recover < 5632):
             try:
@@ -388,15 +388,15 @@ class Watchman_main_window():
             except socket.error:
                 dummy = 0 # dummy execution to catch the exception
         self.__btn_graph.configure(state="normal")
-        self.__btn_recover.configure(state="normal")
+        self.__btn_transfer_fct.configure(state="normal")
         self.__btn_20_windows.configure(state="normal")
         self.__btn_stream.configure(state="normal")
         self.close_UDP_connection_data()
         file_data.close()
         if(flag_tmp and (self.timer_thread_flag == False)):
-            self.write_txt("Recover data: passed!")
+            self.write_txt("Get transfer function: passed!")
         else:
-            self.write_txt("Recover data: failed!")
+            self.write_txt("Get transfer function: failed!")
         print("end of data thread", file=sys.stderr)
 
     ## Method thread to timeout the thread_data_@
@@ -448,7 +448,7 @@ class Watchman_main_window():
                 dummy = 0 # dummy execution to catch the exception
         self.__btn_graph.configure(state="normal")
         self.__btn_20_windows.configure(state="normal")
-        self.__btn_recover.configure(state="normal")
+        self.__btn_transfer_fct.configure(state="normal")
         self.__btn_stream.configure(state="normal")
         self.close_UDP_connection_data()
         file_data.close()
@@ -474,7 +474,7 @@ class Watchman_main_window():
                         if(self.cmd[data[2]] == 'start_stop_stream'):  
                             if(self.stream_flag): # stop streaming
                                 if(self.destroy_flag == False):
-                                    self.__btn_recover.configure(state="normal")
+                                    self.__btn_transfer_fct.configure(state="normal")
                                     self.__btn_20_windows.configure(state="normal")
                                     self.__btn_stream.configure(text="Start stream") # change the label of the stream button
                                     if(self.toplevel_flag): # if the 2nd window is open, print number of data received and lost
@@ -483,7 +483,7 @@ class Watchman_main_window():
                                 self.stream_flag = False
                             else: # start streaming
                                 if(self.destroy_flag == False):
-                                    self.__btn_recover.configure(state="disable")
+                                    self.__btn_transfer_fct.configure(state="disable")
                                     self.__btn_20_windows.configure(state="disable")
                                     self.__btn_stream.configure(text="Stop stream") # change the label of the stream button
                                     if(self.toplevel_flag): # if the 2nd window is open, reset number of data received and lost
