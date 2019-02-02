@@ -1,2 +1,2 @@
    text	   data	    bss	    dec	    hex	filename
- 305904	   4528	3447136	3757568	 395600	watchman_with_trigger.elf
+ 305752	   4528	3447136	3757416	 395568	watchman_with_trigger.elf

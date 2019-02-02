@@ -39,7 +39,7 @@ int init_pedestals(void){
 		}
 		for(count=0; count<10; count++){
 			window = window_index;
-			for(pair=0; pair<2; pair++){
+			for(pair=0; pair<2; pair++){		// do the pedestal on pair of window to avoid the small offset
 				window += pair;
 				XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
@@ -102,13 +102,13 @@ int init_pedestals(void){
 					rms[pair][i][j] = sqrt(sqr_val[pair][i][j] - (pedestal[window][i][j]*pedestal[window][i][j]));
 				}
 			}
-			if(window == 0){
-				printf("RMS values\r\n");
-				for(j=0; j<32; j++){
-					for(i=0; i<16; i++) printf("%lf\t", rms[pair][i][j]);
-					printf("\r\n");
-				}
-			}
+//			if(window == 0){
+//				printf("RMS values\r\n");
+//				for(j=0; j<32; j++){
+//					for(i=0; i<16; i++) printf("%lf\t", rms[pair][i][j]);
+//					printf("\r\n");
+//				}
+//			}
 		}
 	}
 	free(tmp_ptr);

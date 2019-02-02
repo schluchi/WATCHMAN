@@ -86,7 +86,7 @@ x = np.linspace(0,2.5,11)
 degree = 3
 range_min = 3
 range_max = 9
-file_name = "data_vped1_25_amplifiershorted.bin"
+file_name = "data_vped1_25_inputfloating.bin"
 
 data_file = list()
 y_average = list()
@@ -122,7 +122,7 @@ ax[1].legend()
 #mng = plt.get_current_fig_manager()
 #mng.full_screen_toggle()
 
-"""y_diff_hist = list()
+y_diff_hist = list()
 suptitle_name = file_name+" | without ch12 | histogram of difference with average"
 fig = plt.figure()
 #fig, ax = plt.subplots(6,2)
@@ -164,6 +164,6 @@ plt.hist(channel_l, bins)
 ax = plt.subplot(3,1,3)
 ax.set_title('sample')
 bins = np.linspace(0,32,33)
-plt.hist(sample_l, bins)"""
+plt.hist(sample_l, bins)
 
 plt.show()

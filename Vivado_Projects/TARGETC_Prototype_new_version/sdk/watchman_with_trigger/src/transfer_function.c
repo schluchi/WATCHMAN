@@ -20,7 +20,7 @@ int init_transfer_function(void){
 	GMtype_Data DataX, DataY;
 	GMtype_Polynomial Polynomial;
 	int range_min = 3;
-	int range_max = 10;
+	int range_max = 9;
 	double y_voltage[2048];
 
 	data_list* tmp_ptr  = (data_list *)malloc(sizeof(data_list));
@@ -82,15 +82,18 @@ int init_transfer_function(void){
 			}
 			else{
 				for(channel=0; channel<16; channel++){
-					for(sample=0; sample<32; sample++){
-						data_tmp[voltage] += (double)(tmp_ptr->data.data_struct.data[channel][sample] + VPED_DIGITAL - pedestal[window][channel][sample]);
+					if((channel != 3) && (channel != 7) && (channel != 11) && (channel != 15)){	// these channels are not working correctly on the prototype board 3
+						for(sample=0; sample<32; sample++){
+							data_tmp[voltage] += (double)(tmp_ptr->data.data_struct.data[channel][sample] + VPED_DIGITAL - pedestal[window][channel][sample]);
+						}
 					}
 				}
 
 			}
 			ControlRegisterWrite(PSBUSY_MASK,DISABLE);
 		}
-		data_tmp[voltage] = data_tmp[voltage]/(512*16*32);
+		//data_tmp[voltage] = data_tmp[voltage]/(512*16*32);
+		data_tmp[voltage] = data_tmp[voltage]/(512*12*32);	// because 4 channels are not taken into account
 	}
 	free(tmp_ptr);
 

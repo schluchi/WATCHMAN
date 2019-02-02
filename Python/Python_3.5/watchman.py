@@ -352,7 +352,7 @@ class Watchman_main_window():
         self.thread_timer.start()
         self.timer_thread_flag = False
         self.__btn_transfer_fct.configure(state="disable")
-        file_data = open("pair_data_vped1_25_inputfloating_withpedestal.bin", "wb")
+        file_data = open("pair_data_vped1_25_inputfloating_withoutpedestal.bin", "wb")
         self.cnt_data_recover = 0
         while(self.cnt_data_recover < 5632):
             try:

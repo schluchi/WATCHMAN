@@ -96,7 +96,7 @@ ax_1_25 = plt.subplot(2,1,1)
 ax_1_25.set_title("vped@1.25V, wdo="+str(window)+" | ch="+str(channel)+" | sample="+str(sample))
 y_ideal = np.linspace(0,2047,11)
 ax_1_25.plot(x, y_ideal, ':', label='data ideal')
-file_name = "data_vped1_25_amplificatorshorted.bin"
+file_name = "data_vped1_25_amplifiershorted.bin"
 data_of_file(file_name, data_file)
 for j in range(0,11):
     y.append(data_file[j][window][channel][sample])
