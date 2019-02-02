@@ -13,6 +13,8 @@
 #include "xil_types.h"
 #include "xstatus.h"
 #include "TARGETC_RegisterMap.h"
+#include "file_hm.h"
+#include "xscuwdt.h"
 
 int init_pedestals(void);
 

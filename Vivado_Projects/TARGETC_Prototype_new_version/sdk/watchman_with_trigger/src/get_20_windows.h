@@ -15,6 +15,8 @@
 #include "TARGETC_RegisterMap.h"
 #include "iic_DAC_LTC2657.h"
 #include "udp_peripheral.h"
+#include "file_hm.h"
+#include "xscuwdt.h"
 
 int get_20_windows_fct(void);
 

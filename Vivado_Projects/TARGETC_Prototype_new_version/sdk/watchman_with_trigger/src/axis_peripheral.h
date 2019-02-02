@@ -21,6 +21,8 @@
 #include "xstatus.h"
 #include "data_analysis.h"
 #include "TARGETC_RegisterMap.h"
+#include "file_hm.h"
+#include "xscuwdt.h"
 
 #define FEATURES_ID			0
 #define FULL_WAVEFORM_ID	1

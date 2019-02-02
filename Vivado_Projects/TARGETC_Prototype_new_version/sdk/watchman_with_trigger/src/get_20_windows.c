@@ -14,6 +14,9 @@ extern volatile bool flag_axidma_rx_done;
 extern uint16_t pedestal[512][16][32];
 extern char* frame_buf;
 extern uint16_t lookup_table[2048];
+extern volatile bool flag_ttcps_timer;
+extern volatile bool flag_scu_timer;
+extern XScuWdt WdtScuInstance;
 
 
 int get_20_windows_fct(void){
@@ -46,10 +49,19 @@ int get_20_windows_fct(void){
 		if(window != 0) XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 		timeout = 200000; // 10sec
-		while(timeout && !flag_axidma_rx_done){
+		do{
+			if(flag_ttcps_timer){
+				update_timefile();
+				flag_ttcps_timer = false;
+			}
+
+			if(flag_scu_timer){
+				XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+				flag_scu_timer = false;
+			}
 			usleep(50);
 			timeout--;
-		}
+		}while(timeout && !flag_axidma_rx_done);
 
 		Xil_DCacheInvalidateRange((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 

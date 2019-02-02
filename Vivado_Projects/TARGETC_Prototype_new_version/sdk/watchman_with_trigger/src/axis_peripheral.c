@@ -16,6 +16,9 @@ extern int* regptr;
 extern volatile bool flag_axidma_error;
 extern volatile bool flag_axidma_rx_done;
 extern volatile bool empty_flag;
+extern volatile bool flag_ttcps_timer;
+extern volatile bool flag_scu_timer;
+extern XScuWdt WdtScuInstance;
 
 /****************************************************************************
 *
@@ -274,14 +277,24 @@ int test_TPG(void){
 	ControlRegisterWrite(WINDOW_MASK,DISABLE); // PL side starts on falling edge
 
 	timeout = 200000;
-	while(timeout && !flag_axidma_rx_done){
+	do{
+		if(flag_ttcps_timer){
+			update_timefile();
+			flag_ttcps_timer = false;
+		}
+
+		if(flag_scu_timer){
+			XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+			flag_scu_timer = false;
+		}
 		usleep(50);
 		timeout--;
 		if(flag_axidma_error){
 			printf("Error with DMA interrupt: TPG !\r\n");
 			return XST_FAILURE;
 		}
-	}
+	}while(timeout && !flag_axidma_rx_done);
+
 	if(timeout <= 0){
 		printf("Timeout: TPG failed!\r\n");
 		return XST_FAILURE;

@@ -17,6 +17,7 @@
 #include "iic_DAC_LTC2657.h"
 #include "pedestal.h"
 #include "xtime_l.h"
+#include "xscuwdt.h"
 
 #include "get_20_windows.h"
 #include "get_transfer_fct.h"
@@ -219,6 +220,8 @@ int main()
 	 * 	before infinity loop, do the same, but raise a flag to counterreact the flag_while_loop test in the timer flag
 	 * 	and dont do that with function called before the device_init function
 	 * 	treat flag axidma error
+	 * 	update time file and reload wdt needs to be done during interrupt if during send 20 windows and during send transfer fct
+	 * 	-> normaly done in every fct
 	 */
 	//**************************************************************************
 	//**************************************************************************

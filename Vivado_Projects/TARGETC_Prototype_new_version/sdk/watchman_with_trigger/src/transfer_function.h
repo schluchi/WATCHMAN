@@ -15,6 +15,9 @@
 #include "TARGETC_RegisterMap.h"
 #include "iic_DAC_LTC2657.h"
 #include "GMHeader.h"
+#include "file_hm.h"
+#include "xscuwdt.h"
+
 
 int init_transfer_function(void);
 
