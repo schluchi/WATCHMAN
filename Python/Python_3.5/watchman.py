@@ -43,7 +43,7 @@ class Watchman_main_window():
         ## Contain the zynq's ip
         self.UDP_IP = '192.168.1.10'
         ## Contain the port number for UDP communication
-        self.UDP_PORT = 7
+        self.UDP_PORT_CMD = 7
         self.UDP_PORT_data = 8
         ## List of all the commands
         self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'get_transfer_fct', 'get_20_windows']
@@ -58,12 +58,11 @@ class Watchman_main_window():
 
         self.timer_thread_flag = False
         self.get_transfer_fct_flag = False
-        self.timer_thread_flag_2 = False
-        self.get_windows_flag = False
+        self.get_20_windows_flag = False
 
         # initialization
         self.init_window()
-        self.init_UDP_connection()
+        self.init_UDP_cmd()
         ## Thread object which run constantly and process the data received
         self.thread_cmd=Thread(target=self.thread_cmd_int, args=())
         self.run_flag = True
@@ -78,7 +77,7 @@ class Watchman_main_window():
         self.master.config(menu=self.__menu)
         self.__filemenu = Menu(self.__menu)
         self.__menu.add_cascade(label='File', menu=self.__filemenu)
-        self.__filemenu.add_command(label='Load sequence...',command=self.writefile)
+        self.__filemenu.add_command(label='Load sequence...',command=self.loadfile)
         self.__filemenu.add_command(label='Save sequence...',command=self.savefile)
         self.__filemenu.add_command(label='EXIT',command=self.exit_prog)
         self.__menu.add_cascade(label='HELP',command=self.help_callback)
@@ -132,9 +131,9 @@ class Watchman_main_window():
         self.__text.insert(END, "List of command sent and received\n-------------------------")
         self.__text.configure(state="disable")
 
-    ## Method to open a file with the register's value
+    ## Method to recover the register's value in a file
     # @param self : The object pointer
-    def writefile(self):
+    def loadfile(self):
         file_path=filedialog.askopenfilename()
         if len(file_path) != 0:
             ff=open(file_path,'r')
@@ -143,7 +142,7 @@ class Watchman_main_window():
                 reg.insert(END, str(ff.readline())[:-1])
             ff.close()
 
-    ## Method to save in a file the register's value
+    ## Method to save the register's value in a file
     # @param self : The object pointer
     def savefile(self):
         if(sum(self.flag_data) == 0):
@@ -175,12 +174,8 @@ class Watchman_main_window():
          # Stop the thread and wait on it to finish
         self.run_flag = False
         self.thread_cmd.join()
-        if(self.get_transfer_fct_flag):
+        if(self.get_transfer_fct_flag or self.get_20_windows_flag):
             self.thread_data.join()
-            self.thread_timer.join()
-        if(self.get_windows_flag):
-            self.thread_data_2.join()
-            self.thread_timer_2.join()
         # Close the socket and destroy the main window
         self.sock.close()
         self.master.destroy()
@@ -232,24 +227,24 @@ class Watchman_main_window():
 
     ## Method to write something in the main window's listbox
     # @param self : The object pointer
-    # @param text : The text to write in the listbox
-    def write_txt(self, text):
+    # @param t : The text to write in the listbox
+    def write_txt(self, t):
         self.__text.configure(state="normal") # activate activate the listbox
-        self.__text.insert(END, ("\n" + text)) # add the text
+        self.__text.insert(END, ("\n" + t)) # add the text
         self.__text.see("end") # scroll to the last add-on
         self.__text.configure(state="disable") # disable the listbox, so the user can not change its content
 
     ## Method to initialize the UDP connection for the commands
     # @param self : The object pointer
-    def init_UDP_connection(self):
+    def init_UDP_cmd(self):
         ## Socket object used to established the UDP connection with the zynq
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.bind(('', self.UDP_PORT))
+        self.sock.bind(('', self.UDP_PORT_CMD))
         self.sock.settimeout(0.1) # method sock.recvfrom return after maximum 0.1sec if no data are received
 
     ## Method to initialize the UDP connection for the data recovering
     # @param self : The object pointer
-    def init_UDP_connection_data(self):
+    def init_UDP_data(self):
         ## Socket object used to established the UDP connection with the zynq
         self.sock_data = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock_data.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 2097152) # change the size of the socket buffer
@@ -258,7 +253,7 @@ class Watchman_main_window():
     
     ## Method to close the UDP connection for the data recovering
     # @param self : The object pointer
-    def close_UDP_connection_data(self):
+    def close_UDP_data(self):
         self.sock_data.shutdown(socket.SHUT_RDWR)
         self.sock_data.close()
 
@@ -294,14 +289,17 @@ class Watchman_main_window():
                 return
             else:
                 self.__btn_graph.configure(state="disable")
+                self.__btn_transfer_fct.configure(state="disable")
                 self.__btn_20_windows.configure(state="disable")
                 self.__btn_stream.configure(state="disable")
-                self.init_UDP_connection_data()
+                self.init_UDP_data()
                 ## Thread object which process the data received
-                self.thread_data=Thread(target=self.thread_data_int, args=())
-                self.thread_timer=Timer(25, self.thread_timer_int)
-                self.thread_data.start()
                 self.get_transfer_fct_flag = True
+                self.thread_data=Thread(target=self.thread_data_int, args=())
+                self.thread_timer=Timer(14, self.thread_timer_int)
+                self.thread_data.start()
+                self.thread_timer.start()
+                print("transfer function")
         if(self.cmd[cmd] == 'get_20_windows'):
             if(self.toplevel_flag):
                 self.write_txt("To get 20 windows, the graph window must be closed!")
@@ -309,15 +307,18 @@ class Watchman_main_window():
             else:
                 self.__btn_graph.configure(state="disable")
                 self.__btn_transfer_fct.configure(state="disable")
+                self.__btn_20_windows.configure(state="disable")
                 self.__btn_stream.configure(state="disable")
-                self.init_UDP_connection_data()
+                self.init_UDP_data()
                 ## Thread object which process the data received
-                self.thread_data_2=Thread(target=self.thread_data_int_2, args=())
-                self.thread_timer_2=Timer(5, self.thread_timer_int_2)
-                self.thread_data_2.start()
-                self.get_windows_flag = True
+                self.get_20_windows_flag = True
+                self.thread_data=Thread(target=self.thread_data_int, args=())
+                self.thread_timer=Timer(3, self.thread_timer_int)
+                self.thread_data.start()
+                self.thread_timer.start()
+                print("20 windows")
         self.write_txt("Tx: " + self.cmd[cmd] + " rand=" + str(payload[3])) 
-        self.sock.sendto(payload, (self.UDP_IP, self.UDP_PORT)) 
+        self.sock.sendto(payload, (self.UDP_IP, self.UDP_PORT_CMD)) 
 
     ## Method to open the graph window
     # @param self : The object pointer
@@ -338,126 +339,80 @@ class Watchman_main_window():
         self.window_data.exit_prog()
         self.toplevel_flag = False
 
-    ## Method thread to timeout the thread_data
-    # @param self : The object pointer
-    def thread_timer_int(self):
-        self.cnt_data_recover = 5632
-        self.timer_thread_flag = True
-        print("end of timer thread", file=sys.stderr)
-
     ## Method thread to process the data received by UDP
     # @param self : The object pointer
     def thread_data_int(self): 
-        flag_tmp = True
-        self.thread_timer.start()
+        flag_error = False
         self.timer_thread_flag = False
-        self.__btn_transfer_fct.configure(state="disable")
-        file_data = open("pair_data_vped1_25_inputfloating_withoutpedestal.bin", "wb")
-        self.cnt_data_recover = 0
-        while(self.cnt_data_recover < 5632):
+        if(self.get_transfer_fct_flag == True):
+            print("start of data thread for transfer function")
+            file_data = open("get_transfer_function_test.bin", "wb")
+            count = 5632
+            size = 1031
+        else:
+            print("start of data thread for 20 windows")
+            file_data = open("20_windows_test.bin", "wb")
+            count = 20
+            size = 1030
+        cnt_data_recover = 0
+        while((cnt_data_recover < count) and (self.timer_thread_flag == False) and (flag_error == False)):
             try:
                 data = bytearray()
-                data, adress = self.sock_data.recvfrom(1031) # wait on data
+                data, adress = self.sock_data.recvfrom(size) # wait on data
                 # process the data received
                 if(adress[0] == self.UDP_IP): # test the emitter's ip
                     if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
-                        if((data[1029] == int("0x33", 0)) and (data[1030] == int("0xCC", 0))):
-                            self.cnt_data_recover += 1
+                        if((data[size-2] == int("0x33", 0)) and (data[size-1] == int("0xCC", 0))):
+                            cnt_data_recover += 1
                             file_data.write(data)
-                            if(((data[3] + data[4]*256) == 0) or ((data[3] + data[4]*256) == 511)):
-                                print("Rx: vped = "+str(data[2]*0.25)+"V -> window = "+str(data[3] + data[4]*256))
+                            if(self.get_transfer_fct_flag == True):
+                                if(((data[3] + data[4]*256) == 0) or ((data[3] + data[4]*256) == 511)):
+                                    print("Rx: vped = "+str(data[2]*0.25)+"V -> window = "+str(data[3] + data[4]*256))
                         else:
                             # error: no end code
                             self.write_txt("Rx: ERROR end of data")
-                            self.cnt_data_recover = 5632
-                            flag_tmp = False
+                            flag_error = True
                     else:
                         # error: no start code
                         self.write_txt("Rx: ERROR start of data")
-                        self.cnt_data_recover = 5632
-                        flag_tmp = False
+                        flag_error = True
                 else:
                     # error: wrong emitter's ip
                     self.write_txt("Rx: ERROR ip of data")
-                    self.cnt_data_recover = 5632
-                    flag_tmp = False
+                    flag_error = True
             # socket exception: no data for received before timeout
             except socket.timeout:
                 time.sleep(0.1)
             # socket exception: problem during execution of socket.recvfrom
             except socket.error:
                 dummy = 0 # dummy execution to catch the exception
+        self.close_UDP_data()
+        file_data.close()
+        if((flag_error == False) and (self.timer_thread_flag == False)):
+            if(self.get_transfer_fct_flag == True):
+                self.write_txt("Get transfer function: passed!")
+            else:
+                self.write_txt("Get 20 windows: passed!")
+        else:
+            self.write_txt("Packet received = "+str(cnt_data_recover))
+            if(self.get_transfer_fct_flag == True):
+                self.write_txt("Get transfer function: failed!")
+            else:
+                self.write_txt("Get 20 windows: failed!")
+        self.thread_timer.join()
         self.__btn_graph.configure(state="normal")
         self.__btn_transfer_fct.configure(state="normal")
         self.__btn_20_windows.configure(state="normal")
         self.__btn_stream.configure(state="normal")
-        self.close_UDP_connection_data()
-        file_data.close()
-        if(flag_tmp and (self.timer_thread_flag == False)):
-            self.write_txt("Get transfer function: passed!")
-        else:
-            self.write_txt("Get transfer function: failed!")
+        self.get_transfer_fct_flag = False
+        self.get_20_windows_flag = False
         print("end of data thread", file=sys.stderr)
 
-    ## Method thread to timeout the thread_data_@
+    ## Method thread to timeout the thread_get_20_wdo & thread_data
     # @param self : The object pointer
-    def thread_timer_int_2(self):
-        self.cnt_20_windows = 20
-        self.timer_thread_flag_2 = True
-        print("end of timer thread 2", file=sys.stderr)
-
-    ## Method thread to process the data received by UDP
-    # @param self : The object pointer
-    def thread_data_int_2(self): 
-        flag_tmp = True
-        self.thread_timer_2.start()
-        self.timer_thread_flag_2 = False
-        self.__btn_20_windows.configure(state="disable")
-        file_data = open("20_windows.bin", "wb")
-        self.cnt_20_windows = 0
-        while(self.cnt_20_windows < 20):
-            try:
-                data = bytearray()
-                data, adress = self.sock_data.recvfrom(1030) # wait on data
-                # process the data received
-                if(adress[0] == self.UDP_IP): # test the emitter's ip
-                    if((data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # for every command look for start code
-                        if((data[1028] == int("0x33", 0)) and (data[1029] == int("0xCC", 0))):
-                            self.cnt_20_windows += 1
-                            file_data.write(data)
-                        else:
-                            # error: no end code
-                            self.write_txt("Rx: ERROR end of data")
-                            self.cnt_20_windows = 20
-                            flag_tmp = False
-                    else:
-                        # error: no start code
-                        self.write_txt("Rx: ERROR start of data")
-                        self.cnt_20_windows = 20
-                        flag_tmp = False
-                else:
-                    # error: wrong emitter's ip
-                    self.write_txt("Rx: ERROR ip of data")
-                    self.cnt_20_windows = 20
-                    flag_tmp = False
-            # socket exception: no data for received before timeout
-            except socket.timeout:
-                time.sleep(0.1)
-            # socket exception: problem during execution of socket.recvfrom
-            except socket.error:
-                dummy = 0 # dummy execution to catch the exception
-        self.__btn_graph.configure(state="normal")
-        self.__btn_20_windows.configure(state="normal")
-        self.__btn_transfer_fct.configure(state="normal")
-        self.__btn_stream.configure(state="normal")
-        self.close_UDP_connection_data()
-        file_data.close()
-        if(flag_tmp and (self.timer_thread_flag_2 == False)):
-            self.write_txt("Get 20 windows: passed!")
-        else:
-            self.write_txt("Get 20 windows: failed!")
-        print("end of data thread 2", file=sys.stderr)
-
+    def thread_timer_int(self):
+        self.timer_thread_flag = True
+        print("end of timer thread", file=sys.stderr)
 
     ## Method thread to process the command received by UDP (running all the time)
     # @param self : The object pointer
