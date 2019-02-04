@@ -1,8 +1,8 @@
-/*
- * features_extraction.h
- *
- *  Created on: 28 nov. 2018
- *      Author: Anthony
+/**
+ * @file 	features_extraction.h
+ * @author	Anthony Schluchin
+ * @date	28th November 2018
+ * @version 0.0
  */
 
 
@@ -14,6 +14,7 @@
 #include "xtime_l.h"
 #include "axis_peripheral.h"
 
+/*** DEFINES *********************************************************/
 #define SIZE_DATA_ARRAY 	518 // 32samples * 16ch = 512 + header = 518
 #define SIZE_DATA_ARRAY_BYT	SIZE_DATA_ARRAY*4 // -> int32_t is 4 bytes
 
@@ -31,6 +32,7 @@
 #define THRESHOLD_CMP	1.75	// threshold voltage for the comparator
 #define THRESHOLD_PULSE	500		// threshold used in the correct_data fct to choose the right gain stage
 
+/*** Type definition *************************************************/
 typedef union time_union{
 	float time_fl;
 	int time_t;
@@ -66,6 +68,8 @@ struct data_list_st{
     data_list* next;	// Pointer on the next element
 };
 
+/*** Function prototypes *********************************************/
 int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_list* tmp_first_element);
 void extract_features(uint16_t* data, int length, features_ext* features);
+
 #endif /* SRC_FEATURES_EXTRACTION_H_ */

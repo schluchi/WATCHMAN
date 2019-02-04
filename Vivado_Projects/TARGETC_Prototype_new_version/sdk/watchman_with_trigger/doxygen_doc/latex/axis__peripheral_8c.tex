@@ -1,0 +1,125 @@
+\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/axis\+\_\+peripheral.c File Reference}
+\label{axis__peripheral_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/axis\_peripheral.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/axis\_peripheral.c}}
+{\ttfamily \#include \char`\"{}axis\+\_\+peripheral.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm} (U\+I\+N\+T\+P\+TR Buff\+Addr, int Length\+Of\+Bytes)
+\begin{DoxyCompactList}\small\item\em Pass the address to the D\+MA device with the number of bytes asked. \end{DoxyCompactList}\item 
+void \textbf{ dma\+\_\+received\+\_\+data} (int pmt)
+\begin{DoxyCompactList}\small\item\em Process a complete waveform received by the D\+MA in trigger mode. \end{DoxyCompactList}\item 
+int \textbf{ test\+\_\+\+T\+PG} (void)
+\begin{DoxyCompactList}\small\item\em Test the T\+A\+R\+G\+ET with the Test Pattern Generator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{axis__peripheral_8c_a94f01ed55f54f902dc738539df30427e}} 
+\textbf{ data\+\_\+list} $\ast$ {\bfseries first\+\_\+element}
+\item 
+\mbox{\label{axis__peripheral_8c_ac3c6e218717075ded198514020bb8013}} 
+\textbf{ data\+\_\+list} $\ast$ {\bfseries last\+\_\+element}
+\item 
+\mbox{\label{axis__peripheral_8c_a215c2ec2d3302a5ec51fabb70017e4f9}} 
+char $\ast$ {\bfseries frame\+\_\+buf}
+\item 
+\mbox{\label{axis__peripheral_8c_a39d2cad95814eb9635cca5310d914893}} 
+int $\ast$ {\bfseries regptr}
+\item 
+\mbox{\label{axis__peripheral_8c_a226727c48b3bfd0888096614ee551f89}} 
+volatile bool {\bfseries flag\+\_\+axidma\+\_\+error}
+\item 
+\mbox{\label{axis__peripheral_8c_af3d0d90fb2e8215cab44c4a6c6c268fc}} 
+volatile bool {\bfseries flag\+\_\+axidma\+\_\+rx\+\_\+done}
+\item 
+\mbox{\label{axis__peripheral_8c_ad53968991c134c5dbfc1d0d83e5decdb}} 
+volatile bool {\bfseries empty\+\_\+flag}
+\item 
+\mbox{\label{axis__peripheral_8c_ae1142987fecfa0c02e7edfb9f539805b}} 
+volatile bool {\bfseries flag\+\_\+ttcps\+\_\+timer}
+\item 
+\mbox{\label{axis__peripheral_8c_a92815e63a8bb041c9594c7229d49cd89}} 
+volatile bool {\bfseries flag\+\_\+scu\+\_\+timer}
+\item 
+\mbox{\label{axis__peripheral_8c_afd1f6e74a3d4d317436684e7fa64a8fa}} 
+X\+Scu\+Wdt {\bfseries Wdt\+Scu\+Instance}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Anthony Schluchin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+24th October 2018 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+0 
+\end{DoxyVersion}
+
+
+\subsection{Function Documentation}
+\mbox{\label{axis__peripheral_8c_ac643f94e9731b6cb46c9c2897887a0d4}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!dma\_received\_data@{dma\_received\_data}}
+\index{dma\_received\_data@{dma\_received\_data}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{dma\_received\_data()}
+{\footnotesize\ttfamily void dma\+\_\+received\+\_\+data (\begin{DoxyParamCaption}\item[{int}]{pmt }\end{DoxyParamCaption})}
+
+
+
+Process a complete waveform received by the D\+MA in trigger mode. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pmt} & ID of the pmt which triggered a pulse\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{axis__peripheral_8c_afc766563120c4048da238dee8ac2ea49}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!test\_TPG@{test\_TPG}}
+\index{test\_TPG@{test\_TPG}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{test\_TPG()}
+{\footnotesize\ttfamily int test\+\_\+\+T\+PG (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Test the T\+A\+R\+G\+ET with the Test Pattern Generator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{axis__peripheral_8c_aec2c436529dde9db3cac39062e46cce4}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!XAxiDma\_SimpleTransfer\_hm@{XAxiDma\_SimpleTransfer\_hm}}
+\index{XAxiDma\_SimpleTransfer\_hm@{XAxiDma\_SimpleTransfer\_hm}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{XAxiDma\_SimpleTransfer\_hm()}
+{\footnotesize\ttfamily void X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm (\begin{DoxyParamCaption}\item[{U\+I\+N\+T\+P\+TR}]{Buff\+Addr,  }\item[{int}]{Length\+Of\+Bytes }\end{DoxyParamCaption})}
+
+
+
+Pass the address to the D\+MA device with the number of bytes asked. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Buff\+Addr} & pointer on array to return the data \\
+\hline
+{\em Length\+Of\+Bytes} & Number of bytes to write in array\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}

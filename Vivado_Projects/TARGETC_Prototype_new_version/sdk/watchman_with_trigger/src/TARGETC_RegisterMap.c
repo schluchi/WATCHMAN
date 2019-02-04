@@ -4,16 +4,21 @@
  * @date	14th November 2018
  * @version 0.0
  */
+
 #include "TARGETC_RegisterMap.h"
 
 /* Extern global variables */
 extern int* regptr;
 
 /** **********************************************************
- * @brief 	Set the TargetC Registers using AXI Lite control
+ * @brief 	Set the TargetC Registers to default value using AXI Lite control
  *
- * @param	  void
+ * @param	-
+ *
  * @return	status
+ *
+ * @note	-
+ *
  ************************************************************* */
 void SetTargetCRegisters(void){
 
@@ -71,6 +76,17 @@ void SetTargetCRegisters(void){
 	xil_printf("TragetC's registers initialized!\r\n");
 }
 
+/****************************************************************************/
+/**
+* @brief	In VERBOSE mode, print the status bit
+*
+* @param	-
+*
+* @return	-
+*
+* @note		-
+*
+****************************************************************************/
 void GetTargetCStatus(){
 	xil_printf(">> STATUS:\t ");
 	decToHexa(regptr[TC_STATUS_REG] );
@@ -87,6 +103,17 @@ void GetTargetCStatus(){
 	xil_printf("\r\n");
 }
 
+/****************************************************************************/
+/**
+* @brief	In VERBOSE mode, print the control bit
+*
+* @param	-
+*
+* @return	-
+*
+* @note		-
+*
+****************************************************************************/
 void GetTargetCControl(){
 	xil_printf(">> CONTROL:\t ");
 	decToHexa(regptr[TC_CONTROL_REG] );
@@ -113,6 +140,18 @@ void GetTargetCControl(){
 	xil_printf("\r\n");
 }
 
+/****************************************************************************/
+/**
+* @brief	Change a bit in the control register
+*
+* @param	mask: which to change
+* @param	actionID: set with ENABLE and reset with DISABLE
+*
+* @return	-
+*
+* @note		-
+*
+****************************************************************************/
 void ControlRegisterWrite(int mask, int actionID){
 
 	//int* regptr = XPAR_TARGETC_0_TC_AXI_BASEADDR;
@@ -154,7 +193,18 @@ void ControlRegisterWrite(int mask, int actionID){
 #endif
 }
 
-
+/****************************************************************************/
+/**
+* @brief	Change the value of a TARGET register
+*
+* @param	regID: register ID
+* @param	regData: new value to set
+*
+* @return	-
+*
+* @note		-
+*
+****************************************************************************/
 void WriteRegister(int regID, int regData){
 	if(regID <= TC_MISCDIG_REG || regID == TC_TPG_REG){
 		ControlRegisterWrite(WRITE_MASK,DISABLE);
@@ -171,6 +221,18 @@ void WriteRegister(int regID, int regData){
 	else printf("Invalid register!\r\n");
 }
 
+/****************************************************************************/
+/**
+* @brief	Change the value of a TARGET register and reads it back
+*
+* @param	regID: register ID
+* @param	regData: new value to set
+*
+* @return	-
+*
+* @note		Result is printed
+*
+****************************************************************************/
 void WriteReadBackRegister(int regID, int regData){
 
 	//int* regptr = XPAR_TARGETC_0_TC_AXI_BASEADDR;

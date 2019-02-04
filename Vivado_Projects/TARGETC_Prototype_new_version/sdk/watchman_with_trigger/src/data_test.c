@@ -1,12 +1,13 @@
-/*
- * data_testp.c
- *
- *  Created on: Jul 30, 2018
- *      Author: Jose Idlabs
+/**
+ * @file 	data_testp.c
+ * @author	Anthony Schluchin
+ * @date	28th September 2018
+ * @version 0.0
  */
 
 #include "data_test.h"
 
+/* Global variables */
 uint16_t data[CHANNEL][FRAME];
 
 /****************************************************************************/

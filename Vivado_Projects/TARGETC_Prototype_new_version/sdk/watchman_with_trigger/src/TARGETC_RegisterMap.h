@@ -12,11 +12,11 @@
 #include "xil_printf.h"
 #include "global.h"
 #include "utility.h"
-//#include "interrupt.h"
 
-/*** Definition of Registers ****************************************/
+/*** DEFINES *********************************************************/
 
-	//Register Map for PCLK clock instance inside the ASIC value to send to C_TC_ADDR_REG
+/** Definition of Registers **/
+//Register Map for PCLK clock instance inside the ASIC value to send to C_TC_ADDR_REG
 // ------------------------------------------------------
 //	Register Map Target C
 //	Date : 9th October 2018
@@ -72,7 +72,7 @@
 #define TC_MISCDIG_REG			92
 
 #define TC_TPG_REG				128
-/************PL-PS User registers***************/
+/** PL-PS User registers **/
 #define TC_CONTROL_REG 		 129
 	//MASK for bits in TC_CONTROL_REG
 	#define			WRITE_MASK		0x00000001
@@ -154,16 +154,17 @@
 //	int TPG_intr_flg;
 //	int SSVALID_intr_flg;
 
-// Prototypes
+/** Utility define **/
+#define ENABLE 		1
+#define DISABLE 	0
+#define INIT		2
+
+/*** Function prototypes *********************************************/
 void SetTargetCRegisters(void);
 void GetTargetCStatus();
 void GetTargetCControl();
 void ControlRegisterWrite(int mask, int actionID);
 void WriteRegister(int regID, int regData);
 void WriteReadBackRegister(int regID, int regData);
-
-#define ENABLE 		1
-#define DISABLE 	0
-#define INIT		2
 
 #endif  /* end of protection macro */

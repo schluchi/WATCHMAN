@@ -1,3 +1,10 @@
+/**
+ * @file 	iic_DAC_LTC2657.h
+ * @author	Anthony Schluchin
+ * @date	15th December 2018
+ * @version 0.0
+ */
+
 #ifndef IIC_DAC_LTC2657_H   /* prevent circular inclusions */
 #define IIC_DAC_LTC2657_H   /* by using protection macros */
 
@@ -10,7 +17,7 @@
 
 #include "global.h"
 
-
+/*** DEFINES *********************************************************/
 #define IIC_DEVICE_ID		XPAR_AXI_IIC_0_DEVICE_ID	//Xparameters Base Address
 
 #define IIC_SLAVE_ADDRESS	0x10	// ADC i2c address
@@ -34,8 +41,9 @@
 
 
 
-//Prototypes
+/*** Function prototypes *********************************************/
 int DAC_LTC2657_initialize();
 int DAC_LTC2657_SetChannelVoltage(int channel, float voltage);
+
 #endif
 

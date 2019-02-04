@@ -1,8 +1,8 @@
-/*
- * log_file.h
- *
- *  Created on: 13 nov. 2018
- *      Author: Anthony
+/**
+ * @file 	log_file.h
+ * @author	Anthony Schluchin
+ * @date	13th November 2018
+ * @version 0.0
  */
 
 #ifndef SRC_FILE_HM_H_
@@ -16,6 +16,7 @@
 #include "ff.h"
 #include "time_hm.h"
 
+/*** Function prototypes *********************************************/
 FRESULT mount_sd_card(void);
 FRESULT create_logfile(void);
 FRESULT log_event(char *tmp_text, uint length);

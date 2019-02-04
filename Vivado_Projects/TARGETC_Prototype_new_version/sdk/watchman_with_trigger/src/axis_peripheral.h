@@ -1,8 +1,8 @@
-/*
- * axis_peripheral.h
- *
- *  Created on: 24 oct. 2018
- *      Author: Anthony
+/**
+ * @file 	axis_peripheral.h
+ * @author	Anthony Schluchin
+ * @date	24th October 2018
+ * @version 0.0
  */
 
 #ifndef SRC_AXIS_PERIPHERAL_H_
@@ -13,7 +13,6 @@
 #include <errno.h>
 #include <stdlib.h>
 
-//#include "xil_types.h"
 #include "xaxidma.h"
 #include "xparameters.h"
 #include "interrupt.h"
@@ -24,10 +23,11 @@
 #include "file_hm.h"
 #include "xscuwdt.h"
 
+/*** DEFINES *********************************************************/
 #define FEATURES_ID			0
 #define FULL_WAVEFORM_ID	1
 
-/*** Function prototype *********************************************/
+/*** Function prototypes *********************************************/
 void XAxiDma_SimpleTransfer_hm(UINTPTR BuffAddr, int LengthOfBytes);
 void dma_received_data(int pmt);
 int test_TPG(void);

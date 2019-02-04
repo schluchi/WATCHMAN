@@ -1,0 +1,129 @@
+\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/iic\+\_\+\+D\+A\+C\+\_\+\+L\+T\+C2657.h File Reference}
+\label{iic___d_a_c___l_t_c2657_8h}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/iic\_DAC\_LTC2657.h@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/iic\_DAC\_LTC2657.h}}
+{\ttfamily \#include \char`\"{}xparameters.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xil\+\_\+cache.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xscugic.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xil\+\_\+printf.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xtime\+\_\+l.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xiic.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}global.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a6f97f5840f25f052ecd761e57bc11d4b}} 
+\#define {\bfseries I\+I\+C\+\_\+\+D\+A\+C\+\_\+\+L\+T\+C2657\+\_\+H}~/$\ast$ by using protection macros $\ast$/
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a0e6e0ffd0c4cccde95481cdd329e887a}} 
+\#define {\bfseries I\+I\+C\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}~X\+P\+A\+R\+\_\+\+A\+X\+I\+\_\+\+I\+I\+C\+\_\+0\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a7f689be1799011edd5f489aac3e9153e}} 
+\#define {\bfseries I\+I\+C\+\_\+\+S\+L\+A\+V\+E\+\_\+\+A\+D\+D\+R\+E\+SS}~0x10
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_ac0d7906cb15245de34095a6b4885e7f2}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+A}~0x00
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a0dd7f83e17aef557e421aae81d420e35}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+B}~0x01
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a40c7502184031ecffb444903756bffd6}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+C}~0x02
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a5fcb80e10b36c7bbf78e2a10995163fb}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+D}~0x03
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a40ed4915f367ae1590a5c97d2741234c}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+E}~0x04
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a39a5c618c958cafb4805405275a38078}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+F}~0x05
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a61c7328e62fb5f5a7e114940561b43e1}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+G}~0x06
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a104804e3fa6e19f7c59d27b10b7c3cb7}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+H}~0x07
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a22bebb2d35ffb38b9bb202e88822d74c}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+\+A\+LL}~0x0F
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a1ee468817a52afdaae4ad9dd6c26ffd6}} 
+\#define {\bfseries D\+A\+C\+\_\+\+G\+R\+P\+\_\+0}~C\+H\+A\+N\+N\+E\+L\+\_\+A
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a7553e301a32d04e36fdc1f7d407c40eb}} 
+\#define {\bfseries D\+A\+C\+\_\+\+G\+R\+P\+\_\+1}~C\+H\+A\+N\+N\+E\+L\+\_\+B
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a35bc5295652e07c0ed462db755a8749b}} 
+\#define {\bfseries D\+A\+C\+\_\+\+G\+R\+P\+\_\+2}~C\+H\+A\+N\+N\+E\+L\+\_\+C
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a40d6c8cfc4052da2965aa829315403cd}} 
+\#define {\bfseries D\+A\+C\+\_\+\+G\+R\+P\+\_\+3}~C\+H\+A\+N\+N\+E\+L\+\_\+D
+\item 
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_ac5933bb221aa4ae329cd34d835b6f15c}} 
+\#define {\bfseries D\+A\+C\+\_\+\+V\+P\+ED}~C\+H\+A\+N\+N\+E\+L\+\_\+H
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \textbf{ D\+A\+C\+\_\+\+L\+T\+C2657\+\_\+initialize} ()
+\begin{DoxyCompactList}\small\item\em Initialize the device I2C to communicate with the D\+AC. \end{DoxyCompactList}\item 
+int \textbf{ D\+A\+C\+\_\+\+L\+T\+C2657\+\_\+\+Set\+Channel\+Voltage} (int channel, float voltage)
+\begin{DoxyCompactList}\small\item\em Set the voltage of a channel of the D\+AC. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Anthony Schluchin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+15th December 2018 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+0 
+\end{DoxyVersion}
+
+
+\subsection{Function Documentation}
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a39243dba9cbf38663f886dd1197bc399}} 
+\index{iic\_DAC\_LTC2657.h@{iic\_DAC\_LTC2657.h}!DAC\_LTC2657\_initialize@{DAC\_LTC2657\_initialize}}
+\index{DAC\_LTC2657\_initialize@{DAC\_LTC2657\_initialize}!iic\_DAC\_LTC2657.h@{iic\_DAC\_LTC2657.h}}
+\subsubsection{DAC\_LTC2657\_initialize()}
+{\footnotesize\ttfamily int D\+A\+C\+\_\+\+L\+T\+C2657\+\_\+initialize (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the device I2C to communicate with the D\+AC. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{iic___d_a_c___l_t_c2657_8h_a8fc10bb603177039a45001f7b24b4622}} 
+\index{iic\_DAC\_LTC2657.h@{iic\_DAC\_LTC2657.h}!DAC\_LTC2657\_SetChannelVoltage@{DAC\_LTC2657\_SetChannelVoltage}}
+\index{DAC\_LTC2657\_SetChannelVoltage@{DAC\_LTC2657\_SetChannelVoltage}!iic\_DAC\_LTC2657.h@{iic\_DAC\_LTC2657.h}}
+\subsubsection{DAC\_LTC2657\_SetChannelVoltage()}
+{\footnotesize\ttfamily int D\+A\+C\+\_\+\+L\+T\+C2657\+\_\+\+Set\+Channel\+Voltage (\begin{DoxyParamCaption}\item[{int}]{channel,  }\item[{float}]{voltage }\end{DoxyParamCaption})}
+
+
+
+Set the voltage of a channel of the D\+AC. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & which channel to change (see D\+E\+F\+I\+N\+ES) \\
+\hline
+{\em voltage} & voltage to set\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}

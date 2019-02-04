@@ -1,9 +1,27 @@
+/**
+ * @file 	iic_DAC_LTC2657.c
+ * @author	Anthony Schluchin
+ * @date	15th December 2018
+ * @version 0.0
+ */
+
 #include "iic_DAC_LTC2657.h"
 
 
 /* Global variables */
 XIic I2cInstance;		  /* The instance of the IIC device */
 
+/****************************************************************************/
+/**
+* @brief	Initialize the device I2C to communicate with the DAC
+*
+* @param	-
+*
+* @return	XST_SUCCESS or XST_FAILURE (defined in xstatus.h)
+*
+* @note		-
+*
+****************************************************************************/
 int DAC_LTC2657_initialize(void){
 
 	int Status = XST_SUCCESS;
@@ -29,15 +47,22 @@ int DAC_LTC2657_initialize(void){
 	
 	// Start the driver and its interrupt (in this case, no interrupt like it is only write only)
 	XIic_Start(&I2cInstance);
-
-	/*
-	int XIic_MasterSend	(	XIic* 	InstancePtr, u8* 	TxMsgPtr, int 	ByteCount)
-	Function to be called for accessing the IIC device
-	*/
 		
 	return Status;	
 }
 
+/****************************************************************************/
+/**
+* @brief	Set the voltage of a channel of the DAC
+*
+* @param	channel: which channel to change (see DEFINES)
+* @param	voltage: voltage to set
+*
+* @return	XST_SUCCESS or XST_FAILURE (defined in xstatus.h)
+*
+* @note		-
+*
+****************************************************************************/
 int DAC_LTC2657_SetChannelVoltage(int channel, float voltage){
 
 	int Status;
@@ -80,7 +105,7 @@ int DAC_LTC2657_SetChannelVoltage(int channel, float voltage){
 
 	int i;
 	for(i=0; i <5 ; i++){			// 5 time, because sometime it's busy
-		Status = XIic_MasterSend(&I2cInstance,WriteBuffer,4); // length = 4, because data + 1 for the address
+		Status = XIic_MasterSend(&I2cInstance,WriteBuffer,(int)4); // length = 4, because data + 1 for the address
 		if(Status == XST_SUCCESS){
 			break;
 		}

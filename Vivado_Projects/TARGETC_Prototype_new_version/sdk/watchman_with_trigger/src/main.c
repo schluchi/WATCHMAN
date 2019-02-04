@@ -1,8 +1,8 @@
-/*
- * main.c
- *
- *  Created on: 16 nov. 2018
- *      Author: Anthony
+/**
+ * @file 	main.c
+ * @author	Anthony Schluchin
+ * @date	16th November 2018
+ * @version 0.0
  */
 
 #include <stdint.h>
@@ -32,7 +32,6 @@ extern volatile bool flag_scu_timer;
 extern XScuWdt WdtScuInstance;
 extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
-extern volatile bool flag_axidma_error;
 extern int flag_axidma_rx[4];
 extern int* regptr;
 extern volatile bool get_transfer_fct_flag;
@@ -43,11 +42,11 @@ extern data_list* first_element;
 /* Global variables */
 static struct netif server_netif;
 
-/* Typedef */
+/*** Type definition *************************************************/
 typedef enum clean_state_enum {GLOBAL_VAR=0x1,INTERRUPT=0x2,UDP=0x4} clean_state_en;
 typedef enum dma_stm_enum{IDLE, STREAM, RECOVER_DATA, GET_20_WINDOWS} dma_stm_en;
 
-/* Function declaration */
+/*** Function prototypes *********************************************/
 void end_main(clean_state_en state);
 
 int main()

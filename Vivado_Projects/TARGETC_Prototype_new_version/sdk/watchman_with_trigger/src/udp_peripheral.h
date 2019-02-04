@@ -1,8 +1,8 @@
-/*
- * udp_peripheral.h
- *
- *  Created on: 24 oct. 2018
- *      Author: Anthony
+/**
+ * @file 	interrupt.h
+ * @author	Anthony Schluchin
+ * @date	24th October 2018
+ * @version 0.0
  */
 
 #ifndef SRC_UDP_PERIPHERAL_H_
@@ -21,6 +21,7 @@
 #include "xil_printf.h"
 #endif
 
+/*** DEFINES *********************************************************/
 #define BUF_HEADER_SIZE 	50 // frame's header: ethernet (14) + Ipv4(20) + UDP(8) = 42 -> 50
 #define MAX_DATA_SIZE 		CHANNEL*SAMPLE*2+15 // payload int16_t is 2 bytes + header + frame's header
 #define REGMAP_SIZE_UDP	128
@@ -28,6 +29,7 @@
 #define PORT_CMD		7
 #define PORT_DATA		8
 
+/*** Function prototypes *********************************************/
 err_t transfer_data(char* frame, uint16_t length);
 void udp_cmd_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port);
 int command_parser(struct pbuf *p, char* return_buf);

@@ -1,8 +1,8 @@
-/*
- * get_1000_windows.h
- *
- *  Created on: 21 janv. 2019
- *      Author: antho
+/**
+ * @file 	get_1000_windows.h
+ * @author	Anthony Schluchin
+ * @date	21st January 2019
+ * @version 0.0
  */
 
 #ifndef SRC_GET_20_WINDOWS_H_
@@ -18,6 +18,7 @@
 #include "file_hm.h"
 #include "xscuwdt.h"
 
+/*** Function prototypes *********************************************/
 int get_20_windows_fct(void);
 
 #endif /* SRC_GET_20_WINDOWS_H_ */

@@ -1,8 +1,8 @@
-/*
- * pedestal.h
- *
- *  Created on: 18 déc. 2018
- *      Author: Anthony
+/**
+ * @file 	pedestal.h
+ * @author	Anthony Schluchin
+ * @date	18th December 2018
+ * @version 0.0
  */
 
 #ifndef SRC_PEDESTAL_H_

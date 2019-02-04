@@ -1,8 +1,8 @@
-/*
- * time_hm.c
- *
- *  Created on: 9 nov. 2018
- *      Author: Anthony
+/**
+ * @file 	time_hm.c
+ * @author	Anthony Schluchin
+ * @date	9th November 2018
+ * @version 0.0
  */
 
 #include "time_hm.h"

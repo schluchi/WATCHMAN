@@ -1,0 +1,68 @@
+\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/pedestal.c File Reference}
+\label{pedestal_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/pedestal.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/pedestal.c}}
+{\ttfamily \#include \char`\"{}pedestal.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \textbf{ init\+\_\+pedestals} (void)
+\begin{DoxyCompactList}\small\item\em Calculate the pedestal value for every memory location in the T\+A\+R\+G\+ET C. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{pedestal_8c_a39d2cad95814eb9635cca5310d914893}} 
+int $\ast$ {\bfseries regptr}
+\item 
+\mbox{\label{pedestal_8c_a9f38c959b992d18ac787045dc9d4a7ab}} 
+uint16\+\_\+t {\bfseries pedestal} [512][16][32]
+\item 
+\mbox{\label{pedestal_8c_a226727c48b3bfd0888096614ee551f89}} 
+volatile bool {\bfseries flag\+\_\+axidma\+\_\+error}
+\item 
+\mbox{\label{pedestal_8c_af3d0d90fb2e8215cab44c4a6c6c268fc}} 
+volatile bool {\bfseries flag\+\_\+axidma\+\_\+rx\+\_\+done}
+\item 
+\mbox{\label{pedestal_8c_ae1142987fecfa0c02e7edfb9f539805b}} 
+volatile bool {\bfseries flag\+\_\+ttcps\+\_\+timer}
+\item 
+\mbox{\label{pedestal_8c_a92815e63a8bb041c9594c7229d49cd89}} 
+volatile bool {\bfseries flag\+\_\+scu\+\_\+timer}
+\item 
+\mbox{\label{pedestal_8c_afd1f6e74a3d4d317436684e7fa64a8fa}} 
+X\+Scu\+Wdt {\bfseries Wdt\+Scu\+Instance}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Anthony Schluchin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+18th December 2018 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+0 
+\end{DoxyVersion}
+
+
+\subsection{Function Documentation}
+\mbox{\label{pedestal_8c_a929a976b9db373b2e82d86027463c49a}} 
+\index{pedestal.c@{pedestal.c}!init\_pedestals@{init\_pedestals}}
+\index{init\_pedestals@{init\_pedestals}!pedestal.c@{pedestal.c}}
+\subsubsection{init\_pedestals()}
+{\footnotesize\ttfamily int init\+\_\+pedestals (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Calculate the pedestal value for every memory location in the T\+A\+R\+G\+ET C. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em -\/} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}

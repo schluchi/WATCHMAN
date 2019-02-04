@@ -1,0 +1,112 @@
+\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/\+G\+M\+\_\+\+Sub\+Library.c File Reference}
+\label{_g_m___sub_library_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/GM\_SubLibrary.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/GM\_SubLibrary.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}G\+M\+Header.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{_g_m___sub_library_8c_a81c43513c2b987eacf3844a188d3c7d5}} 
+void {\bfseries G\+M\+\_\+\+Cartesian\+To\+Spherical} (\textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} Coord\+Cartesian, \textbf{ G\+Mtype\+\_\+\+Coord\+Spherical} $\ast$Coord\+Spherical)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a58d6894c0973ed1e7cc67fc363032950}} 
+void {\bfseries G\+M\+\_\+\+C\+O\+RD} (\textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} location, \textbf{ G\+Mtype\+\_\+\+Date} $\ast$date, \textbf{ G\+Mtype\+\_\+\+Ellipsoid} Ellip, \textbf{ G\+Mtype\+\_\+\+Data} g0d, \textbf{ G\+Mtype\+\_\+\+Data} g1d, \textbf{ G\+Mtype\+\_\+\+Data} h1d, \textbf{ G\+Mtype\+\_\+\+Coord\+Dipole} $\ast$Coord\+Dipole)
+\item 
+\mbox{\label{_g_m___sub_library_8c_aba182fbcc2ae8460978471b7594aaf87}} 
+int {\bfseries G\+M\+\_\+\+Date\+To\+Year} (\textbf{ G\+Mtype\+\_\+\+Date} $\ast$Calendar\+Date)
+\item 
+\mbox{\label{_g_m___sub_library_8c_ae798bc9a8c401807727fb1357a298ff8}} 
+void {\bfseries G\+M\+\_\+\+Earth\+Cart\+To\+Dipole\+Cart\+CD} (\textbf{ G\+Mtype\+\_\+\+Pole} Pole, \textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} Earth\+Coord, \textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} $\ast$Dipole\+Coords)
+\item 
+\mbox{\label{_g_m___sub_library_8c_aeb56a92137f38228f30e5a543fae7755}} 
+void {\bfseries G\+M\+\_\+\+Geodetic\+To\+Spherical} (\textbf{ G\+Mtype\+\_\+\+Ellipsoid} Ellip, \textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} Coord\+Geodetic, \textbf{ G\+Mtype\+\_\+\+Coord\+Spherical} $\ast$Coord\+Spherical)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a3562a3ba9b56477cd4d5ecdcb784532c}} 
+void {\bfseries G\+M\+\_\+\+Get\+User\+Input} (\textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} $\ast$location, \textbf{ G\+Mtype\+\_\+\+Date} $\ast$date)
+\item 
+\mbox{\label{_g_m___sub_library_8c_ac2fbcd2149675927463c6be7752c134d}} 
+void {\bfseries G\+M\+\_\+\+Pole\+Location} (\textbf{ G\+Mtype\+\_\+\+Model} Model, \textbf{ G\+Mtype\+\_\+\+Pole} $\ast$Pole)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a8567ee98b2672e278743a04696999a96}} 
+void {\bfseries G\+M\+\_\+\+Print\+User\+Data} (\textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} location, \textbf{ G\+Mtype\+\_\+\+Date} date, \textbf{ G\+Mtype\+\_\+\+Coord\+Dipole} Dip\+Location)
+\item 
+\mbox{\label{_g_m___sub_library_8c_ad399d8d31962b7260e9d20677f1b9698}} 
+void {\bfseries G\+M\+\_\+\+Scan\+I\+G\+RF} (\textbf{ G\+Mtype\+\_\+\+Data} $\ast$G0, \textbf{ G\+Mtype\+\_\+\+Data} $\ast$G1, \textbf{ G\+Mtype\+\_\+\+Data} $\ast$H1)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a3b4094e8784a209b98005937b4edb3b5}} 
+void {\bfseries G\+M\+\_\+\+Set\+Ellipsoid} (\textbf{ G\+Mtype\+\_\+\+Ellipsoid} $\ast$Ellip)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a879dc73dc264b8c170b0ed766bc519df}} 
+void {\bfseries G\+M\+\_\+\+Spherical\+To\+Cartesian} (\textbf{ G\+Mtype\+\_\+\+Coord\+Spherical} Coord\+Spherical, \textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} $\ast$Coord\+Cartesian)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a2b8976c38bf6d44678d759ce47087a5e}} 
+void {\bfseries G\+M\+\_\+\+Time\+Adjust\+Coefs} (\textbf{ G\+Mtype\+\_\+\+Date} Date, \textbf{ G\+Mtype\+\_\+\+Data} g0d, \textbf{ G\+Mtype\+\_\+\+Data} g1d, \textbf{ G\+Mtype\+\_\+\+Data} h1d, \textbf{ G\+Mtype\+\_\+\+Model} $\ast$Model)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a15d3c2916dc9954a0229037e0f366df9}} 
+double {\bfseries G\+M\+\_\+\+Dot\+Product} (\textbf{ G\+Mtype\+\_\+\+Data} VectorA, \textbf{ G\+Mtype\+\_\+\+Data} VectorB)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a6e62cc8e47107b587dee850194d991d4}} 
+double {\bfseries G\+M\+\_\+\+Linear\+Interpolation} (double x1, double x2, double y1, double y2, double x)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a6ff38253ecaaad2203404103c7c30cea}} 
+void {\bfseries G\+M\+\_\+\+L\+U\+Decomposition} (\textbf{ G\+Mtype\+\_\+\+Matrix} A, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$L, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$U, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$P)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a61e6a2f04e04a7ae6e6d32987e38fbbc}} 
+void {\bfseries G\+M\+\_\+\+L\+U\+Solve} (\textbf{ G\+Mtype\+\_\+\+Matrix} L, \textbf{ G\+Mtype\+\_\+\+Matrix} U, \textbf{ G\+Mtype\+\_\+\+Matrix} P, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$x, \textbf{ G\+Mtype\+\_\+\+Matrix} b)
+\item 
+\mbox{\label{_g_m___sub_library_8c_ae04ee2ffa850da9c22adaaf344c3bed0}} 
+double {\bfseries G\+M\+\_\+\+Mat\+Det} (\textbf{ G\+Mtype\+\_\+\+Matrix} Matrix)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a8c9fc650496809b50db01f995e34eaff}} 
+void {\bfseries G\+M\+\_\+\+Mat\+Inverse} (\textbf{ G\+Mtype\+\_\+\+Matrix} Matrix, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$Inverted\+Matrix)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a5ca54f057c7addd0e545337f1bf7d821}} 
+void {\bfseries G\+M\+\_\+\+Mat\+Multiply} (\textbf{ G\+Mtype\+\_\+\+Matrix} MatrixA, \textbf{ G\+Mtype\+\_\+\+Matrix} MatrixB, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$MatrixC)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a37adcb80b41c46b08169ca149dce7ee3}} 
+void {\bfseries G\+M\+\_\+\+Mat\+Transpose} (\textbf{ G\+Mtype\+\_\+\+Matrix} Matrix, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$T\+Matrix)
+\item 
+\mbox{\label{_g_m___sub_library_8c_aceba6e2c0e103b7f8d277b387e7234a3}} 
+double {\bfseries G\+M\+\_\+\+Mean} (\textbf{ G\+Mtype\+\_\+\+Data} Data)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a576a9afd0c22847a30eaf1df0b021ae5}} 
+void {\bfseries G\+M\+\_\+\+Median} (\textbf{ G\+Mtype\+\_\+\+Data} Data, double $\ast$upper, double $\ast$lower)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a9d88e0ea3cf8394eacbe1d1c1ffa8061}} 
+void {\bfseries G\+M\+\_\+\+Poly\+Fit} (\textbf{ G\+Mtype\+\_\+\+Data} DataX, \textbf{ G\+Mtype\+\_\+\+Data} DataY, \textbf{ G\+Mtype\+\_\+\+Polynomial} $\ast$Polynomial)
+\item 
+\mbox{\label{_g_m___sub_library_8c_ae572acd489badbde919d29cebdc8a085}} 
+double {\bfseries G\+M\+\_\+\+Pow} (double x, int y)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a5d0b4d5450dad63803d8508def00b6bb}} 
+void {\bfseries G\+M\+\_\+\+Print\+Matrix} (\textbf{ G\+Mtype\+\_\+\+Matrix} X)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a8928b353f45bff0510f2c48e690c0e1f}} 
+double {\bfseries G\+M\+\_\+\+Solve\+Polynomial} (\textbf{ G\+Mtype\+\_\+\+Polynomial} Polynomial, double x)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a9e1ef0c53419ef9d5b42f7e284568fe9}} 
+void {\bfseries G\+M\+\_\+\+Sort} (\textbf{ G\+Mtype\+\_\+\+Data} $\ast$Data)
+\item 
+\mbox{\label{_g_m___sub_library_8c_ab4f9c1bd94e04fdaeff1f8f36c403c40}} 
+double {\bfseries G\+M\+\_\+\+Standard\+Deviation} (\textbf{ G\+Mtype\+\_\+\+Data} Data)
+\item 
+\mbox{\label{_g_m___sub_library_8c_acb1a586833a324081118a244315c7a0e}} 
+void {\bfseries G\+M\+\_\+\+Swap} (double $\ast$x, double $\ast$y)
+\item 
+\mbox{\label{_g_m___sub_library_8c_a4be338552acd0a3f39bb1892f84ebc77}} 
+void {\bfseries G\+M\+\_\+\+Swap\+Rows} (\textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$Matrix, int Row1, int Row2)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+{\texttt{ ftp\+://ftp.\+ngdc.\+noaa.\+gov/geomag/\+Utilities/\+G\+M\+\_\+\+Sub\+Library.\+c}} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16th January 2018 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+0 
+\end{DoxyVersion}

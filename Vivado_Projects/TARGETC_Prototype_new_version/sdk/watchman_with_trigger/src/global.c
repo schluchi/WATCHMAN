@@ -1,8 +1,8 @@
-/*
- * global.c
- *
- *  Created on: 28 nov. 2018
- *      Author: Anthony
+/**
+ * @file 	global.c
+ * @author	Anthony Schluchin
+ * @date	28th November 2018
+ * @version 0.0
  */
 
 #include "global.h"

@@ -1,8 +1,8 @@
-/*
- * get_1000_windows.c
- *
- *  Created on: 21 janv. 2019
- *      Author: antho
+/**
+ * @file 	get_1000_windows.c
+ * @author	Anthony Schluchin
+ * @date	21st January 2019
+ * @version 0.0
  */
 
 
@@ -10,6 +10,7 @@
 
 /* Extern global variables */
 extern int* regptr;
+extern volatile bool flag_axidma_error;
 extern volatile bool flag_axidma_rx_done;
 extern uint16_t pedestal[512][16][32];
 extern char* frame_buf;
@@ -18,13 +19,24 @@ extern volatile bool flag_ttcps_timer;
 extern volatile bool flag_scu_timer;
 extern XScuWdt WdtScuInstance;
 
-
+/****************************************************************************/
+/**
+* @brief	Recover 20 consecutive windows and send them to the computer
+*
+* @param	-
+*
+* @return	XST_SUCCESS or XST_FAILURE (defined in xstatus.h)
+*
+* @note		-
+*
+****************************************************************************/
 int get_20_windows_fct(void){
 	int window_start = 0;
 	int timeout;
 	int window,i,j,index;
 	uint16_t data_tmp;
 
+	/* Create an element for the DMA */
 	data_list* tmp_ptr  = (data_list *)malloc(sizeof(data_list));
 	if(!tmp_ptr){
 		printf("malloc for tmp_ptr failed in function, %s!\r\n", __func__);
@@ -33,10 +45,13 @@ int get_20_windows_fct(void){
 	tmp_ptr->next = NULL;
 	tmp_ptr->previous = NULL;
 
+	/* First window */
 	window_start = 0;
 
+	/* Give the element's address to the DMA */
 	XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
+	/* Initiate transfer and measure */
 	regptr[TC_FSTWINDOW_REG] = window_start;
 	regptr[TC_NBRWINDOW_REG] = 20;
 	ControlRegisterWrite(SMODE_MASK ,ENABLE);
@@ -48,23 +63,35 @@ int get_20_windows_fct(void){
 	for(window =0; window<20; window++){
 		if(window != 0) XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
-		timeout = 200000; // 10sec
+		/* Wait on DMA transfer to be done */
+		timeout = 200000; // Timeout of 10 sec
 		do{
+			/* If needed, update timefile */
 			if(flag_ttcps_timer){
 				update_timefile();
 				flag_ttcps_timer = false;
 			}
 
+			/* If needed, reload watchdog's counter */
 			if(flag_scu_timer){
-				XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+				XScuWdt_RestartWdt(&WdtScuInstance);
 				flag_scu_timer = false;
 			}
+
+			/* The DMA had a problem */
+			if(flag_axidma_error){
+				printf("Error with DMA interrupt: TPG !\r\n");
+				return XST_FAILURE;
+			}
+
 			usleep(50);
 			timeout--;
 		}while(timeout && !flag_axidma_rx_done);
 
+		/* Update the cache with the data written by the DMA */
 		Xil_DCacheInvalidateRange((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
+		/* DMA did not respond */
 		if(timeout <= 0){
 			printf("\r\nwindow = %d\r\n", window);
 			printf("wdo_time: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
@@ -81,15 +108,14 @@ int get_20_windows_fct(void){
 			return XST_FAILURE;
 		}
 		else flag_axidma_rx_done = false;
-		printf("wdo_time: %u\r\n", (uint)tmp_ptr->data.data_struct.wdo_time);
-		printf("PL_spare: %u\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
-		printf("wdo_id: %u\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
 
+		/* Test the returned values */
 		if(tmp_ptr->data.data_struct.wdo_id != window){
 			printf("window id is wrong! window = %d | wdo_id = %d\r\n", window, (uint)tmp_ptr->data.data_struct.wdo_id);
 			return XST_FAILURE;
 		}
 		else{
+			/* If data valid, send them to computer */
 			index = 0;
 			frame_buf[index++] = 0x55;
 			frame_buf[index++] = 0xAA;
@@ -97,7 +123,9 @@ int get_20_windows_fct(void){
 			frame_buf[index++] = (char)(window >> 8);
 			for(i=0; i<16; i++){
 				for(j=0; j<32; j++){
+					/* Pedestal subtraction */
 					data_tmp = (uint16_t)(tmp_ptr->data.data_struct.data[i][j] + VPED_DIGITAL - pedestal[window][i][j]);
+					/* Transfer function correction */
 					if(data_tmp > 2047) data_tmp = 2047;
 					frame_buf[index++] = (char)lookup_table[data_tmp];
 					frame_buf[index++] = (char)(lookup_table[data_tmp] >> 8);
@@ -107,6 +135,7 @@ int get_20_windows_fct(void){
 			frame_buf[index++] = 0xCC;
 			transfer_data(frame_buf, index);
 		}
+		/* Release the DMA */
 		ControlRegisterWrite(PSBUSY_MASK,DISABLE);
 	}
 

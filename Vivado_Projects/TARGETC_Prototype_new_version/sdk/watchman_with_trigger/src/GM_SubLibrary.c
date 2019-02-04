@@ -1,8 +1,8 @@
-/*
- * GM_SubLibrary.c
- *
- *  Created on: 16 janv. 2019
- *      Author: ftp://ftp.ngdc.noaa.gov/geomag/Utilities/GM_SubLibrary.c
+/**
+ * @file 	GM_SubLibrary.c
+ * @author	ftp://ftp.ngdc.noaa.gov/geomag/Utilities/GM_SubLibrary.c
+ * @date	16th January 2018
+ * @version 0.0
  */
 
 #include <stdio.h>

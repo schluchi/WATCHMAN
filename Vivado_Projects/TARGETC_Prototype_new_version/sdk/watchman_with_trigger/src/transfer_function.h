@@ -1,8 +1,8 @@
-/*
- * transfer_function.h
- *
- *  Created on: 16 janv. 2019
- *      Author: antho
+/**
+ * @file 	transfer_function.h
+ * @author	Anthony Schluchin
+ * @date	16th January 2019
+ * @version 0.0
  */
 
 #ifndef SRC_TRANSFER_FUNCTION_H_
@@ -18,7 +18,7 @@
 #include "file_hm.h"
 #include "xscuwdt.h"
 
-
+/*** Function prototypes *********************************************/
 int init_transfer_function(void);
 
 #endif /* SRC_TRANSFER_FUNCTION_H_ */

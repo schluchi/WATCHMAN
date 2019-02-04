@@ -1,9 +1,10 @@
-/*
- * utility.c
- *
- *  Created on: 24 oct. 2018
- *      Author: Anthony
+/**
+ * @file 	utility.c
+ * @author	Anthony Schluchin
+ * @date	24th October 2018
+ * @version 0.0
  */
+
 #include "utility.h"
 
 /****************************************************************************/

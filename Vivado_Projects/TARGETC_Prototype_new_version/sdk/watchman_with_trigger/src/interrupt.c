@@ -1,52 +1,8 @@
-/******************************************************************************
-*
-* Copyright (C) 2010 - 2014 Xilinx, Inc.  All rights reserved.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* Use of the Software is limited solely to applications:
-* (a) running on a Xilinx device, or
-* (b) that interact with a Xilinx device through a bus or interconnect.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-* XILINX  BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-* WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
-* OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
-*
-* Except as contained in this notice, the name of the Xilinx shall not be used
-* in advertising or otherwise to promote the sale, use or other dealings in
-* this Software without prior written authorization from Xilinx.
-*
-******************************************************************************/
-/*
-* platform_zynq.c
-*
-* Zynq platform specific functions.
-*
-* 02/29/2012: UART initialization is removed. Timer initializations are
-* removed. All unnecessary include files and hash defines are removed.
-* 03/01/2013: Timer initialization is added back. Support for SI #692601 is
-* added in the timer callback. The SI #692601 refers to the following issue.
-*
-* The EmacPs has a HW bug on the Rx path for heavy Rx traffic.
-* Under heavy Rx traffic because of the HW bug there are times when the Rx path
-* becomes unresponsive. The workaround for it is to check for the Rx path for
-* traffic (by reading the stats registers regularly). If the stats register
-* does not increment for sometime (proving no Rx traffic), the function resets
-* the Rx data path.
-*
-* </pre>
+/**
+ * @file 	interrupt.c
+ * @author	Anthony Schluchin
+ * @date	24th October 2018
+ * @version 0.0
  */
 
 #include "interrupt.h"
@@ -64,20 +20,16 @@ uint16_t length_dummy_data;
 static XTime tStart_wdt, tEnd_wdt;
 
 /* Extern global variables */
-extern volatile int count_ttcps_timer;
 extern volatile int count_scu_timer;
 extern XAxiDma AxiDmaInstance;
 extern XScuWdt WdtScuInstance;
 extern struct netif *echo_netif;
-extern int *PtrData;
 extern volatile bool flag_ttcps_timer;
 extern volatile bool flag_scu_timer;
 extern volatile bool flag_assertion;
 extern volatile bool flag_while_loop;
 extern volatile bool flag_axidma_error;
 extern volatile bool flag_axidma_rx_done;
-extern volatile bool get_transfer_fct_flag;
-extern volatile bool get_100_windows_flag;
 extern volatile bool stream_flag;
 extern volatile bool empty_flag;
 extern int flag_axidma_rx[4];

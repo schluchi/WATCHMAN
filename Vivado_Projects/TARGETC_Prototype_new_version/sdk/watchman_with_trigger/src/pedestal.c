@@ -1,8 +1,8 @@
-/*
- * pedestal.c
- *
- *  Created on: 18 déc. 2018
- *      Author: Anthony
+/**
+ * @file 	pedestal.c
+ * @author	Anthony Schluchin
+ * @date	18th December 2018
+ * @version 0.0
  */
 
 #include "pedestal.h"
@@ -10,11 +10,23 @@
 /* Extern global variables */
 extern int* regptr;
 extern uint16_t pedestal[512][16][32];
+extern volatile bool flag_axidma_error;
 extern volatile bool flag_axidma_rx_done;
 extern volatile bool flag_ttcps_timer;
 extern volatile bool flag_scu_timer;
 extern XScuWdt WdtScuInstance;
 
+/****************************************************************************/
+/**
+* @brief	Calculate the pedestal value for every memory location in the TARGET C
+*
+* @param	-
+*
+* @return	XST_SUCCESS or XST_FAILURE (defined in xstatus.h)
+*
+* @note		-
+*
+****************************************************************************/
 int init_pedestals(void){
 	uint64_t sqr_val[2][16][32];
 	double rms[2][16][32];
@@ -23,6 +35,7 @@ int init_pedestals(void){
 	int timeout;
 	int i,j,count,pair;
 
+	/* Create an element for the DMA */
 	data_list* tmp_ptr  = (data_list *)malloc(sizeof(data_list));
 	if(!tmp_ptr){
 		printf("malloc for tmp_ptr failed in function, %s!\r\n", __func__);
@@ -31,6 +44,7 @@ int init_pedestals(void){
 	tmp_ptr->next = NULL;
 	tmp_ptr->previous = NULL;
 
+	/* To avoid small offset problem , read window by pair, so the address change every time */
 	for(window_index=0; window_index<512; window_index+=2){
 		for(pair=0; pair<2; pair++){
 			for(i=0; i<16; i++){
@@ -44,8 +58,10 @@ int init_pedestals(void){
 			window = window_index;
 			for(pair=0; pair<2; pair++){		// do the pedestal on pair of window to avoid the small offset
 				window += pair;
+				/* Give the element's address to the DMA */
 				XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
+				/* Initiate transfer and measure */
 				regptr[TC_FSTWINDOW_REG] = window;
 				regptr[TC_NBRWINDOW_REG] = 1;
 				ControlRegisterWrite(SMODE_MASK ,ENABLE);
@@ -54,22 +70,35 @@ int init_pedestals(void){
 				usleep(50);
 				ControlRegisterWrite(WINDOW_MASK,DISABLE); // PL side starts on falling edge
 
+				/* Wait on DMA transfer to be done */
 				timeout = 200000; // 10sec
 				do{
+					/* If needed, update timefile */
 					if(flag_ttcps_timer){
 						update_timefile();
 						flag_ttcps_timer = false;
 					}
 
+					/* If needed, reload watchdog's counter */
 					if(flag_scu_timer){
-						XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+						XScuWdt_RestartWdt(&WdtScuInstance);
 						flag_scu_timer = false;
 					}
+
+					/* The DMA had a problem */
+					if(flag_axidma_error){
+						printf("Error with DMA interrupt: TPG !\r\n");
+						return XST_FAILURE;
+					}
+
 					usleep(50);
 					timeout--;
 				}while(timeout && (!flag_axidma_rx_done));
+
+				/* Update the cache with the data written by the DMA */
 				Xil_DCacheInvalidateRange((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
+				/* DMA did not respond */
 				if(timeout <= 0){
 					if(flag_axidma_rx_done) xil_printf("done \r\n");
 					printf("\r\nwindow = %d | count = %d\r\n", window, count);
@@ -88,11 +117,13 @@ int init_pedestals(void){
 				}
 				else flag_axidma_rx_done = false;
 
+				/* Test the returned values */
 				if(tmp_ptr->data.data_struct.wdo_id != window){
-					printf("window id is wrong! window = %d | wdo_id = %d\r\n", window, (uint)tmp_ptr->data.data_struct.wdo_id);
+					printf("window id is wrong! window = %d | wdo_id = %d | pair = %d | count = %d\r\n", window, (uint)tmp_ptr->data.data_struct.wdo_id, pair, count);
 					return XST_FAILURE;
 				}
 				else{
+					/* If data valid, calculate the average */
 					for(i=0; i<16; i++){
 						for(j=0; j<32; j++) {
 							data[pair][i][j] += tmp_ptr->data.data_struct.data[i][j];
@@ -100,6 +131,7 @@ int init_pedestals(void){
 						}
 					}
 				}
+				/* Release the DMA */
 				ControlRegisterWrite(PSBUSY_MASK,DISABLE);
 			}
 		}
@@ -109,6 +141,7 @@ int init_pedestals(void){
 			window += pair;
 			for(i=0; i<16; i++){
 				for(j=0; j<32; j++){
+					/* Divide the average by 10 to have the pedestal value */
 					pedestal[window][i][j]= data[pair][i][j]/10;
 					sqr_val[pair][i][j] = sqr_val[pair][i][j]/10;
 					rms[pair][i][j] = sqrt(sqr_val[pair][i][j] - (pedestal[window][i][j]*pedestal[window][i][j]));

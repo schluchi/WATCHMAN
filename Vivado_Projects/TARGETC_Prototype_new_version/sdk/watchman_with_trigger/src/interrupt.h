@@ -1,8 +1,8 @@
-/*
- * interrupt.h
- *
- *  Created on: 24 oct. 2018
- *      Author: Anthony
+/**
+ * @file 	interrupt.c
+ * @author	Anthony Schluchin
+ * @date	24th October 2018
+ * @version 0.0
  */
 
 #ifndef SRC_INTERRUPT_H_
@@ -29,6 +29,7 @@
 #include "xtime_l.h"
 #include "file_hm.h"
 
+/*** DEFINES *********************************************************/
 #define INTC_DEVICE_ID		XPAR_SCUGIC_SINGLE_DEVICE_ID
 #define TIMER_DEVICE_ID		XPAR_SCUTIMER_DEVICE_ID
 #define INTC_BASE_ADDR		XPAR_SCUGIC_0_CPU_BASEADDR
@@ -45,6 +46,7 @@
 
 #define RESET_RX_CNTR_LIMIT	400
 
+/*** Function prototypes *********************************************/
 void assert_callback(const char8 *File, s32 Line);
 void timer_scu_callback(XScuTimer * TimerInstance);
 void timer_ttcps_callback(XTtcPs * TimerInstance);
@@ -60,6 +62,7 @@ void cleanup_interrupts();
 #endif
 #endif
 
+/*** Type definition *************************************************/
 typedef struct TmrCntrSetup_st{
 	u32 OutputHz;	/* Output frequency */
 	XInterval Interval;	/* Interval value */

@@ -1,12 +1,13 @@
-/*
- * log_file.c
- *
- *  Created on: 13 nov. 2018
- *      Author: Anthony
+/**
+ * @file 	log_file.c
+ * @author	Anthony Schluchin
+ * @date	13th November 2018
+ * @version 0.0
  */
 
 #include "file_hm.h"
 
+/* Global variables */
 char *Path = "0:/";  //  string pointer to the logical drive number
 static FATFS FS_instance; // File System instance
 static char *log_filename = "log.txt"; // pointer to the log file name
@@ -81,17 +82,20 @@ FRESULT log_event(char *tmp_text, uint length)
 	char text[100];
 	time_cplt time;
 
-	gettime_hm(&time);
+	gettime_hm(&time); // get the time
 	length += 26;
 	if(length < 100){
+		/* format the time in string */
 		sprintf((char *)text, "%02d.%02d.%04d @ %02d:%02d:%02d : %s\r\n",  time.day, time.month, time.year, time.hour, time.minute, time.second, tmp_text);
 		result = f_open(&log_file, log_filename,FA_WRITE);
 		if(result != FR_OK) printf("Write log file failed during f_open, result = %d\r\n", result);
 		else {
+			/* index to end of file */
 			file_index = file_size(&log_file);
 			result = f_lseek(&log_file,file_index);
 			if(result != FR_OK) printf("Write log file failed during f_lseek, result = %d\r\n", result);
 			else{
+				/* write string in file */
 				result = f_write(&log_file, (const void*)text, length, &nbr_byte);
 				if(result != FR_OK) printf("Write log file failed during f_write, result = %d\r\n", result);
 				else{
@@ -140,6 +144,7 @@ FRESULT log_wdtevent(void)
 	result = f_open(&time_file, time_filename,FA_READ);
 	if(result != FR_OK) printf("Write wdt file failed during f_open of time_file, result = %d\r\n", result);
 	else{
+		/* get time from timefile and add delay */
 		length = 21;
 		result = f_read(&time_file, time_str, length, &nbr_byte);
 		time_str[21] = '\0'; // end of line
@@ -153,19 +158,22 @@ FRESULT log_wdtevent(void)
 				result = f_close(&time_file);
 				if(result != FR_OK) printf("Write wdt file failed during f_close of time_file, result = %d\r\n", result);
 				else{
+					/* set the time of the system with the backup time */
 					sprintf((char *)text, "%s : watchdog timer occurs!\r\n", time_str);
 					stringtotime(time_str, &time);
 					settime_hm(&time);
 					addtime(); // compensate caused by the reboot
-
+					 /* log watchdog event */
 					result = f_open(&log_file, log_filename,FA_WRITE);
 					if(result != FR_OK) printf("Write wdt file failed during f_open, result = %d\r\n", result);
 					else {
+						/* index to end of file */
 						file_index = file_size(&log_file);
 						result = f_lseek(&log_file,file_index);
 						if(result != FR_OK) printf("Write wdt file failed during f_lseek, result = %d\r\n", result);
 						else{
 							length = 48;
+							/* write file */
 							result = f_write(&log_file, (const void*)text, length, &nbr_byte);
 							printf("write_wdtfile: %s", text);
 							if(result != FR_OK) printf("Write wdt file failed during f_write, result = %d\r\n", result);
@@ -241,9 +249,11 @@ FRESULT update_timefile(void)
 	result = f_open(&time_file, time_filename,FA_WRITE);
 	if(result != FR_OK) printf("Write time file failed during f_open, result = %d\r\n", result);
 	else {
+		/* index to beginning of file */
 		result = f_lseek(&time_file,file_index);
 		if(result != FR_OK) printf("Write time file failed during f_lseek, result = %d\r\n", result);
 		else{
+			/* write file */
 			result = f_write(&time_file, (const void*)text, length, &nbr_byte);
 			if(result != FR_OK) printf("Write time file failed during f_write, result = %d\r\n", result);
 			else{

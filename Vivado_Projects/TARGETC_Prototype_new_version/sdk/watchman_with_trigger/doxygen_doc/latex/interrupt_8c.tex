@@ -1,0 +1,370 @@
+\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/interrupt.c File Reference}
+\label{interrupt_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/interrupt.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/interrupt.c}}
+{\ttfamily \#include \char`\"{}interrupt.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ assert\+\_\+callback} (const char8 $\ast$File, s32 Line)
+\begin{DoxyCompactList}\small\item\em Callback for assertion. \end{DoxyCompactList}\item 
+void \textbf{ timer\+\_\+scu\+\_\+callback} (X\+Scu\+Timer $\ast$Timer\+Instance)
+\begin{DoxyCompactList}\small\item\em Callback for the timer scu. \end{DoxyCompactList}\item 
+void \textbf{ timer\+\_\+ttcps\+\_\+callback} (X\+Ttc\+Ps $\ast$Timer\+Instance)
+\begin{DoxyCompactList}\small\item\em Callback for the timer tcps. \end{DoxyCompactList}\item 
+void \textbf{ axidma\+\_\+rx\+\_\+callback} (X\+Axi\+Dma $\ast$Axi\+Dma\+Inst)
+\begin{DoxyCompactList}\small\item\em Callback when the dma finish a transfer. \end{DoxyCompactList}\item 
+void \textbf{ wdt\+\_\+scu\+\_\+callback} (X\+Scu\+Wdt $\ast$Wdt\+Instance)
+\begin{DoxyCompactList}\small\item\em Callback for the timer wdt. \end{DoxyCompactList}\item 
+int \textbf{ setup\+\_\+scu\+\_\+timer\+\_\+int} (void)
+\begin{DoxyCompactList}\small\item\em Setup the timer scu interrupt. \end{DoxyCompactList}\item 
+int \textbf{ setup\+\_\+ttcps\+\_\+timer\+\_\+int} (void)
+\begin{DoxyCompactList}\small\item\em Setup the timer tcps interrupt. \end{DoxyCompactList}\item 
+int \textbf{ setup\+\_\+axidma\+\_\+int} (void)
+\begin{DoxyCompactList}\small\item\em Setup the axidma interrupt. \end{DoxyCompactList}\item 
+int \textbf{ setup\+\_\+scu\+\_\+wdt\+\_\+int} (void)
+\begin{DoxyCompactList}\small\item\em Setup the wdt interrupt. \end{DoxyCompactList}\item 
+int \textbf{ devices\+\_\+initialization} ()
+\begin{DoxyCompactList}\small\item\em Initiate and setup all the interrupts. \end{DoxyCompactList}\item 
+int \textbf{ interrupts\+\_\+initialization} (void)
+\begin{DoxyCompactList}\small\item\em Attach all the interrupt to the system and set the priority. \end{DoxyCompactList}\item 
+void \textbf{ enable\+\_\+interrupts} ()
+\begin{DoxyCompactList}\small\item\em Enable the interrupts and start the timers. \end{DoxyCompactList}\item 
+void \textbf{ cleanup\+\_\+interrupts} ()
+\begin{DoxyCompactList}\small\item\em Disable all the interrupts and stop the timers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{interrupt_8c_a10d4b078b1c75c6de297b5a2b22cb8e3}} 
+uint16\+\_\+t {\bfseries length\+\_\+dummy\+\_\+data}
+\item 
+\mbox{\label{interrupt_8c_a6f03c2bee8cf4ef8c4319f1f60561ad1}} 
+volatile int {\bfseries count\+\_\+scu\+\_\+timer}
+\item 
+\mbox{\label{interrupt_8c_a3049748e366fb5472553cdbe9df0bc58}} 
+X\+Axi\+Dma {\bfseries Axi\+Dma\+Instance}
+\item 
+\mbox{\label{interrupt_8c_afd1f6e74a3d4d317436684e7fa64a8fa}} 
+X\+Scu\+Wdt {\bfseries Wdt\+Scu\+Instance}
+\item 
+\mbox{\label{interrupt_8c_acd12279932e5216593ee76d4eebdd996}} 
+struct netif $\ast$ {\bfseries echo\+\_\+netif}
+\item 
+\mbox{\label{interrupt_8c_ae1142987fecfa0c02e7edfb9f539805b}} 
+volatile bool {\bfseries flag\+\_\+ttcps\+\_\+timer}
+\item 
+\mbox{\label{interrupt_8c_a92815e63a8bb041c9594c7229d49cd89}} 
+volatile bool {\bfseries flag\+\_\+scu\+\_\+timer}
+\item 
+\mbox{\label{interrupt_8c_af9ff4df27689ce692fdfe44a8efec098}} 
+volatile bool {\bfseries flag\+\_\+assertion}
+\item 
+\mbox{\label{interrupt_8c_a68bc1b11e54681f4601358507aa9a3ad}} 
+volatile bool {\bfseries flag\+\_\+while\+\_\+loop}
+\item 
+\mbox{\label{interrupt_8c_a226727c48b3bfd0888096614ee551f89}} 
+volatile bool {\bfseries flag\+\_\+axidma\+\_\+error}
+\item 
+\mbox{\label{interrupt_8c_af3d0d90fb2e8215cab44c4a6c6c268fc}} 
+volatile bool {\bfseries flag\+\_\+axidma\+\_\+rx\+\_\+done}
+\item 
+\mbox{\label{interrupt_8c_ac285664a88629c304befd42daafc3f90}} 
+volatile bool {\bfseries stream\+\_\+flag}
+\item 
+\mbox{\label{interrupt_8c_ad53968991c134c5dbfc1d0d83e5decdb}} 
+volatile bool {\bfseries empty\+\_\+flag}
+\item 
+\mbox{\label{interrupt_8c_a7ab3cdc6684119650796bf71c8c37b81}} 
+int {\bfseries flag\+\_\+axidma\+\_\+rx} [4]
+\item 
+\mbox{\label{interrupt_8c_ac3c6e218717075ded198514020bb8013}} 
+\textbf{ data\+\_\+list} $\ast$ {\bfseries last\+\_\+element}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Anthony Schluchin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+24th October 2018 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+0 
+\end{DoxyVersion}
+
+
+\subsection{Function Documentation}
+\mbox{\label{interrupt_8c_a23a03be94ba72e0e76d31f48ec7be68f}} 
+\index{interrupt.c@{interrupt.c}!assert\_callback@{assert\_callback}}
+\index{assert\_callback@{assert\_callback}!interrupt.c@{interrupt.c}}
+\subsubsection{assert\_callback()}
+{\footnotesize\ttfamily void assert\+\_\+callback (\begin{DoxyParamCaption}\item[{const char8 $\ast$}]{File,  }\item[{s32}]{Line }\end{DoxyParamCaption})}
+
+
+
+Callback for assertion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em File} & filename where the assertion is called \\
+\hline
+{\em Line} & line number in the File\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+When this callback is called, the filename and line number are stored in the log file, and then the programm stops 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_ac42f5a05324dbc5e44b6aad6f6438b8e}} 
+\index{interrupt.c@{interrupt.c}!axidma\_rx\_callback@{axidma\_rx\_callback}}
+\index{axidma\_rx\_callback@{axidma\_rx\_callback}!interrupt.c@{interrupt.c}}
+\subsubsection{axidma\_rx\_callback()}
+{\footnotesize\ttfamily void axidma\+\_\+rx\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Axi\+Dma $\ast$}]{Axi\+Dma\+Inst }\end{DoxyParamCaption})}
+
+
+
+Callback when the dma finish a transfer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Axi\+Dma\+Inst} & pointer on the axidma\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_aa3db50992b6d2cd29e63b0c2d0f1596c}} 
+\index{interrupt.c@{interrupt.c}!cleanup\_interrupts@{cleanup\_interrupts}}
+\index{cleanup\_interrupts@{cleanup\_interrupts}!interrupt.c@{interrupt.c}}
+\subsubsection{cleanup\_interrupts()}
+{\footnotesize\ttfamily void cleanup\+\_\+interrupts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable all the interrupts and stop the timers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_a94e31fd7a13e5ce5cd73b37003db422b}} 
+\index{interrupt.c@{interrupt.c}!devices\_initialization@{devices\_initialization}}
+\index{devices\_initialization@{devices\_initialization}!interrupt.c@{interrupt.c}}
+\subsubsection{devices\_initialization()}
+{\footnotesize\ttfamily int devices\+\_\+initialization (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initiate and setup all the interrupts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_a154b837080a092ecbab0735a0254c4b4}} 
+\index{interrupt.c@{interrupt.c}!enable\_interrupts@{enable\_interrupts}}
+\index{enable\_interrupts@{enable\_interrupts}!interrupt.c@{interrupt.c}}
+\subsubsection{enable\_interrupts()}
+{\footnotesize\ttfamily void enable\+\_\+interrupts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable the interrupts and start the timers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_acbe15f5aca74bbc4c10c75772b6f83d2}} 
+\index{interrupt.c@{interrupt.c}!interrupts\_initialization@{interrupts\_initialization}}
+\index{interrupts\_initialization@{interrupts\_initialization}!interrupt.c@{interrupt.c}}
+\subsubsection{interrupts\_initialization()}
+{\footnotesize\ttfamily int interrupts\+\_\+initialization (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Attach all the interrupt to the system and set the priority. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_a68fd84cd1e3ae81bf93d17212974ab9a}} 
+\index{interrupt.c@{interrupt.c}!setup\_axidma\_int@{setup\_axidma\_int}}
+\index{setup\_axidma\_int@{setup\_axidma\_int}!interrupt.c@{interrupt.c}}
+\subsubsection{setup\_axidma\_int()}
+{\footnotesize\ttfamily int setup\+\_\+axidma\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup the axidma interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_a592525108f234b17adc80881d9454166}} 
+\index{interrupt.c@{interrupt.c}!setup\_scu\_timer\_int@{setup\_scu\_timer\_int}}
+\index{setup\_scu\_timer\_int@{setup\_scu\_timer\_int}!interrupt.c@{interrupt.c}}
+\subsubsection{setup\_scu\_timer\_int()}
+{\footnotesize\ttfamily int setup\+\_\+scu\+\_\+timer\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup the timer scu interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_af4e90ff15af4c3dfa9f1f64b8294ec55}} 
+\index{interrupt.c@{interrupt.c}!setup\_scu\_wdt\_int@{setup\_scu\_wdt\_int}}
+\index{setup\_scu\_wdt\_int@{setup\_scu\_wdt\_int}!interrupt.c@{interrupt.c}}
+\subsubsection{setup\_scu\_wdt\_int()}
+{\footnotesize\ttfamily int setup\+\_\+scu\+\_\+wdt\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup the wdt interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_a692f02b0d05726afd233ea337f09ba7c}} 
+\index{interrupt.c@{interrupt.c}!setup\_ttcps\_timer\_int@{setup\_ttcps\_timer\_int}}
+\index{setup\_ttcps\_timer\_int@{setup\_ttcps\_timer\_int}!interrupt.c@{interrupt.c}}
+\subsubsection{setup\_ttcps\_timer\_int()}
+{\footnotesize\ttfamily int setup\+\_\+ttcps\+\_\+timer\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup the timer tcps interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_af39e94c7f4250d6ff6eb2c54aba799d2}} 
+\index{interrupt.c@{interrupt.c}!timer\_scu\_callback@{timer\_scu\_callback}}
+\index{timer\_scu\_callback@{timer\_scu\_callback}!interrupt.c@{interrupt.c}}
+\subsubsection{timer\_scu\_callback()}
+{\footnotesize\ttfamily void timer\+\_\+scu\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Scu\+Timer $\ast$}]{Timer\+Instance }\end{DoxyParamCaption})}
+
+
+
+Callback for the timer scu. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Timer\+Instance} & pointer on the timer\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This callback is called every 250ms 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_a504701eac67361c0b616b1607808bea3}} 
+\index{interrupt.c@{interrupt.c}!timer\_ttcps\_callback@{timer\_ttcps\_callback}}
+\index{timer\_ttcps\_callback@{timer\_ttcps\_callback}!interrupt.c@{interrupt.c}}
+\subsubsection{timer\_ttcps\_callback()}
+{\footnotesize\ttfamily void timer\+\_\+ttcps\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Ttc\+Ps $\ast$}]{Timer\+Instance }\end{DoxyParamCaption})}
+
+
+
+Callback for the timer tcps. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Timer\+Instance} & pointer on the timer\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This callback is called every 1sec 
+\end{DoxyNote}
+\mbox{\label{interrupt_8c_a705bdde8a413627bbe58f5e24e723eb2}} 
+\index{interrupt.c@{interrupt.c}!wdt\_scu\_callback@{wdt\_scu\_callback}}
+\index{wdt\_scu\_callback@{wdt\_scu\_callback}!interrupt.c@{interrupt.c}}
+\subsubsection{wdt\_scu\_callback()}
+{\footnotesize\ttfamily void wdt\+\_\+scu\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Scu\+Wdt $\ast$}]{Wdt\+Instance }\end{DoxyParamCaption})}
+
+
+
+Callback for the timer wdt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Wdt\+Instance} & pointer on the timer\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This callback is called only if the wdt is used has a timer (not the case here), used only the configure the wdt period of 1sec 
+\end{DoxyNote}

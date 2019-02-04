@@ -1,0 +1,174 @@
+\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/time\+\_\+hm.c File Reference}
+\label{time__hm_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/time\_hm.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/time\_hm.c}}
+{\ttfamily \#include \char`\"{}time\+\_\+hm.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ gettime\+\_\+hm} (\textbf{ time\+\_\+cplt} $\ast$t)
+\begin{DoxyCompactList}\small\item\em Get the time (year, month, day, hour,...) depending on the offset. \end{DoxyCompactList}\item 
+void \textbf{ settime\+\_\+hm} (\textbf{ time\+\_\+cplt} $\ast$t)
+\begin{DoxyCompactList}\small\item\em Set the time (year, month, day, hour,...) meaning set the offset. \end{DoxyCompactList}\item 
+bool \textbf{ is\+A\+Leap\+Year} (int year)
+\begin{DoxyCompactList}\small\item\em Return if the year is leap or not. \end{DoxyCompactList}\item 
+void \textbf{ addtime} (void)
+\begin{DoxyCompactList}\small\item\em Add 2.\+5sec to the clock time. \end{DoxyCompactList}\item 
+void \textbf{ stringtotime} (char $\ast$time\+\_\+str, \textbf{ time\+\_\+cplt} $\ast$time)
+\begin{DoxyCompactList}\small\item\em Convert string to time\+\_\+cplt. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ time\+\_\+cplt} {\bfseries offset\+\_\+time}
+\item 
+\mbox{\label{time__hm_8c_a22f0b78da4a8e0ce089319fff73f0259}} 
+uint64\+\_\+t {\bfseries offset\+\_\+counter} = 0
+\item 
+\mbox{\label{time__hm_8c_a87787b8a65842028cd41e7c518b25d30}} 
+int {\bfseries day\+\_\+per\+\_\+month} [13] = \{(int)N\+U\+LL, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31\}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Anthony Schluchin 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+9th November 2018 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+0 
+\end{DoxyVersion}
+
+
+\subsection{Function Documentation}
+\mbox{\label{time__hm_8c_a17ec1ac87ef501b1e19143e0a820b51d}} 
+\index{time\_hm.c@{time\_hm.c}!addtime@{addtime}}
+\index{addtime@{addtime}!time\_hm.c@{time\_hm.c}}
+\subsubsection{addtime()}
+{\footnotesize\ttfamily void addtime (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Add 2.\+5sec to the clock time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Specially used to compensate the delay due to a reboot with the wdt 
+\end{DoxyNote}
+\mbox{\label{time__hm_8c_af2f292a8abbb851c01a5f80843259242}} 
+\index{time\_hm.c@{time\_hm.c}!gettime\_hm@{gettime\_hm}}
+\index{gettime\_hm@{gettime\_hm}!time\_hm.c@{time\_hm.c}}
+\subsubsection{gettime\_hm()}
+{\footnotesize\ttfamily void gettime\+\_\+hm (\begin{DoxyParamCaption}\item[{\textbf{ time\+\_\+cplt} $\ast$}]{t }\end{DoxyParamCaption})}
+
+
+
+Get the time (year, month, day, hour,...) depending on the offset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Pointer to the time\+\_\+cplt structure wich will return the current time.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+None. 
+\end{DoxyNote}
+\mbox{\label{time__hm_8c_a99a092165ba432f4205c2b38221cc3fa}} 
+\index{time\_hm.c@{time\_hm.c}!isALeapYear@{isALeapYear}}
+\index{isALeapYear@{isALeapYear}!time\_hm.c@{time\_hm.c}}
+\subsubsection{isALeapYear()}
+{\footnotesize\ttfamily bool is\+A\+Leap\+Year (\begin{DoxyParamCaption}\item[{int}]{year }\end{DoxyParamCaption})}
+
+
+
+Return if the year is leap or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & the year to be tested\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ True\+: if the year is leap
+\begin{DoxyItemize}
+\item False\+: if the year is not leap
+\end{DoxyItemize}
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+None. 
+\end{DoxyNote}
+\mbox{\label{time__hm_8c_a7cae5e3ee1050b12a5ec070daa05866c}} 
+\index{time\_hm.c@{time\_hm.c}!settime\_hm@{settime\_hm}}
+\index{settime\_hm@{settime\_hm}!time\_hm.c@{time\_hm.c}}
+\subsubsection{settime\_hm()}
+{\footnotesize\ttfamily void settime\+\_\+hm (\begin{DoxyParamCaption}\item[{\textbf{ time\+\_\+cplt} $\ast$}]{t }\end{DoxyParamCaption})}
+
+
+
+Set the time (year, month, day, hour,...) meaning set the offset. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & Pointer to the time\+\_\+cplt structure wich will be written in the global offset value\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None.
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+When this function, we need to save the state of the Global Timer Counter Register (X\+Time\+\_\+\+Get\+Time) 
+\end{DoxyNote}
+\mbox{\label{time__hm_8c_aea8453e6247ec2872c89e25b17284666}} 
+\index{time\_hm.c@{time\_hm.c}!stringtotime@{stringtotime}}
+\index{stringtotime@{stringtotime}!time\_hm.c@{time\_hm.c}}
+\subsubsection{stringtotime()}
+{\footnotesize\ttfamily void stringtotime (\begin{DoxyParamCaption}\item[{char $\ast$}]{time\+\_\+str,  }\item[{\textbf{ time\+\_\+cplt} $\ast$}]{time }\end{DoxyParamCaption})}
+
+
+
+Convert string to time\+\_\+cplt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+str} & the time in string to convert \\
+\hline
+{\em time} & pointer to the time converted\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The string to convert should be like this\+: \char`\"{}dd.\+mm.\+yyyy @ hh\+:mm\+:ss\char`\"{} 
+\end{DoxyNote}
+
+
+\subsection{Variable Documentation}
+\mbox{\label{time__hm_8c_a9c217b96b07635000e6951eab90c316c}} 
+\index{time\_hm.c@{time\_hm.c}!offset\_time@{offset\_time}}
+\index{offset\_time@{offset\_time}!time\_hm.c@{time\_hm.c}}
+\subsubsection{offset\_time}
+{\footnotesize\ttfamily \textbf{ time\+\_\+cplt} offset\+\_\+time}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{    .year = 2000,}
+\DoxyCodeLine{    .month = 1,}
+\DoxyCodeLine{    .day = 1,}
+\DoxyCodeLine{    .hour = 0,}
+\DoxyCodeLine{    .minute = 0,}
+\DoxyCodeLine{    .second = 0,}
+\DoxyCodeLine{    .milisecond = 0}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}

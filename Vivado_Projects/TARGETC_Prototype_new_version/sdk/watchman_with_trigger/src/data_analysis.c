@@ -1,12 +1,13 @@
-/*
- * features_extraction.c
- *
- *  Created on: 28 nov. 2018
- *      Author: Anthony
+/**
+ * @file 	features_extraction.c
+ * @author	Anthony Schluchin
+ * @date	28th November 2018
+ * @version 0.0
  */
 
 #include "data_analysis.h"
 
+/* Extern global variables */
 extern uint16_t pedestal[512][16][32];
 extern uint16_t lookup_table[2048];
 
@@ -35,15 +36,19 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 	bool too_long = false;
 	uint16_t data_tmp;
 
+	// Look for best gain stage (channel)
 	while(!gain_good){
 		gain_good = true;
 		ptr = tmp_first_element;
 		index = 0;
 		for(wdo=0; wdo<nbr_wdo; wdo++){
 			for(sample=0; sample<32; sample++){
+				// Pedestal subtraction
 				data_tmp = (uint16_t)ptr->data.data_struct.data[ch][sample] + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
+				// Transfer function correction
 				if(data_tmp > 2047) data_tmp = 2047;
 				data[index] = lookup_table[data_tmp];
+				// If pulse goes under threshold, take next gain stage
 				if(data[index] < THRESHOLD_PULSE){
 					if(ch > ch_last){
 						ch--;
@@ -51,7 +56,7 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 						sample = 32;
 						wdo = nbr_wdo;
 					}
-					else too_long = true;
+					else too_long = true;	// Amplitude too high with all gain stage -> consider pulse as "too long"
 				}
 				index++;
 			}
@@ -83,7 +88,6 @@ void extract_features(uint16_t* data, int length, features_ext* features){
 	coordinates p1, p2;
 
 	/* Get the minimum amplitude of the pulse */
-	// if it takes too, maybe possible to do it in the function correct data
 	amplitude = vped;
 	for(i=0; i<length; i++){
 		if(data[i] < amplitude){

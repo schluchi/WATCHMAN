@@ -69,7 +69,7 @@ class Watchman_graphic_window():
         t=Thread(target=self.recv_data, args=())
         t.start()
         self.thread_list.append(t)
-        self.master.after(1000,self.plot_int)
+        self.master.after(1000,self.data_processing_int)
     
     ## Method to initialize the windows and create its graphical objects
     # @param self : The object pointer
@@ -145,7 +145,7 @@ class Watchman_graphic_window():
                 count_recv += 1
                 if(count_recv >= 100): # after 100 frames
                     # create a new thread to process a group of 100 frames
-                    t = Thread(target=self.data_int, args=(data, adress))
+                    t = Thread(target=self.data_processing_int, args=(data, adress))
                     t.start()
                     self.thread_list.append(t) # add it to the list
                     del data[:]
@@ -161,7 +161,7 @@ class Watchman_graphic_window():
                 dummy = 0 # dummy execution to catch the exception
             # if no new data received for 0.2sec, but some, less than 100, received before, then process them
             if((cnt_timer >= 2) and (count_recv > 0)):
-                t = Thread(target=self.data_int, args=(data, adress))
+                t = Thread(target=self.data_processing_int, args=(data, adress))
                 t.start()
                 self.thread_list.append(t)
                 del data[:]
@@ -169,7 +169,7 @@ class Watchman_graphic_window():
                 count_recv = 0
         # if the user stop the app, process last received (less than 100)
         if(count_recv > 0):
-            t = Thread(target=self.data_int, args=(data, adress))
+            t = Thread(target=self.data_processing_int, args=(data, adress))
             t.start()
             self.thread_list.append(t)
             del data[:]
@@ -179,7 +179,7 @@ class Watchman_graphic_window():
     ## Method thread to process the data grouped the first thread
     # @param self : The pointer object
     # @param *args : args[0] the data to process / args[1] their corresponding adress
-    def data_int(self, *args):
+    def data_processing_int(self, *args):
         list_data=list(args[0])
         list_adress=list(args[1])
         # process every frame received
@@ -260,7 +260,7 @@ class Watchman_graphic_window():
     ## Method called every second which update the graphics with the new datas
     # and show the channel selected by the user
     # @param self : The object pointer
-    def plot_int(self):
+    def data_processing_int(self):
         if(self.run_flag): # test if the app need to end
             with self.lock_graph:   # acquire the lock to access the graphics object
                 start = time.time()
@@ -294,7 +294,7 @@ class Watchman_graphic_window():
                 else:
                     k += 1
             # build up the next call of this method
-            self.master.after(1000,self.plot_int)
+            self.master.after(1000,self.data_processing_int)
         else:
             print("end of plot int.", file=sys.stderr)
     
