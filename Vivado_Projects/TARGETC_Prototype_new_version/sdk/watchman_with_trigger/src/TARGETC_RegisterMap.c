@@ -7,7 +7,9 @@
 
 #include "TARGETC_RegisterMap.h"
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Array containing registers of AXI-lite */
 extern int* regptr;
 
 /** **********************************************************
@@ -145,7 +147,7 @@ void GetTargetCControl(){
 * @brief	Change a bit in the control register
 *
 * @param	mask: which to change
-* @param	actionID: set with ENABLE and reset with DISABLE
+* @param	actionID: set with ENABLE, reset with DISABLE, initialized with INIT
 *
 * @return	-
 *

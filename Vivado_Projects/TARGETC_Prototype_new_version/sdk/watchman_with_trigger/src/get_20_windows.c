@@ -8,15 +8,25 @@
 
 #include "get_20_windows.h"
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Array containing registers of AXI-lite */
 extern int* regptr;
+/** @brief Flag raised when AXI-DMA has an error */
 extern volatile bool flag_axidma_error;
+/** @brief Flag raised when AXI-DMA has finished an transfer, in OnDemand mode */
 extern volatile bool flag_axidma_rx_done;
+/** @brief Array containing the pedestal correction for every sample */
 extern uint16_t pedestal[512][16][32];
+/** @brief Buffer used to send the data (50 bytes above it reserved for protocol header) */
 extern char* frame_buf;
+/** @brief Lookup table to correct the transfer function */
 extern uint16_t lookup_table[2048];
+/** @brief Flag raised when the Triple Timer Counter overflows */
 extern volatile bool flag_ttcps_timer;
+/** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
+/** @brief Instance of the device watchdog */
 extern XScuWdt WdtScuInstance;
 
 /****************************************************************************/
@@ -121,6 +131,7 @@ int get_20_windows_fct(void){
 			frame_buf[index++] = 0xAA;
 			frame_buf[index++] = (char)window;
 			frame_buf[index++] = (char)(window >> 8);
+			//printf("\r\n window = %d\r\n",window);
 			for(i=0; i<16; i++){
 				for(j=0; j<32; j++){
 					/* Pedestal subtraction */
@@ -129,8 +140,11 @@ int get_20_windows_fct(void){
 					if(data_tmp > 2047) data_tmp = 2047;
 					frame_buf[index++] = (char)lookup_table[data_tmp];
 					frame_buf[index++] = (char)(lookup_table[data_tmp] >> 8);
+					//printf("%d ", lookup_table[data_tmp]);
 				}
+				//printf("\r\n");
 			}
+			//printf("\r\n");
 			frame_buf[index++] = 0x33;
 			frame_buf[index++] = 0xCC;
 			transfer_data(frame_buf, index);

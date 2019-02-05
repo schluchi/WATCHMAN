@@ -1,5 +1,5 @@
-\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/axis\+\_\+peripheral.h File Reference}
-\label{axis__peripheral_8h}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/axis\_peripheral.h@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/axis\_peripheral.h}}
+\hypertarget{axis__peripheral_8h}{}\section{axis\+\_\+peripheral.\+h File Reference}
+\label{axis__peripheral_8h}\index{axis\_peripheral.h@{axis\_peripheral.h}}
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$unistd.\+h$>$}\newline
 {\ttfamily \#include $<$errno.\+h$>$}\newline
@@ -16,20 +16,18 @@
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{axis__peripheral_8h_a7d0187167e381bab6a565d6502961797}} 
-\#define {\bfseries F\+E\+A\+T\+U\+R\+E\+S\+\_\+\+ID}~0
-\item 
-\mbox{\label{axis__peripheral_8h_a359e2a99a817c2e9dcd11ce4ba7485f8}} 
-\#define {\bfseries F\+U\+L\+L\+\_\+\+W\+A\+V\+E\+F\+O\+R\+M\+\_\+\+ID}~1
-\end{DoxyCompactItemize}
+\#define \mbox{\hyperlink{axis__peripheral_8h_a7d0187167e381bab6a565d6502961797}{F\+E\+A\+T\+U\+R\+E\+S\+\_\+\+ID}}~0
+\begin{DoxyCompactList}\small\item\em Data frame contains extracted features (for the receipter) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{axis__peripheral_8h_a359e2a99a817c2e9dcd11ce4ba7485f8}{F\+U\+L\+L\+\_\+\+W\+A\+V\+E\+F\+O\+R\+M\+\_\+\+ID}}~1
+\begin{DoxyCompactList}\small\item\em Data frame contains the full waveform (for the receipter) \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \textbf{ X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm} (U\+I\+N\+T\+P\+TR Buff\+Addr, int Length\+Of\+Bytes)
+void \mbox{\hyperlink{axis__peripheral_8h_aec2c436529dde9db3cac39062e46cce4}{X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm}} (U\+I\+N\+T\+P\+TR Buff\+Addr, int Length\+Of\+Bytes)
 \begin{DoxyCompactList}\small\item\em Pass the address to the D\+MA device with the number of bytes asked. \end{DoxyCompactList}\item 
-void \textbf{ dma\+\_\+received\+\_\+data} (int pmt)
+void \mbox{\hyperlink{axis__peripheral_8h_ac643f94e9731b6cb46c9c2897887a0d4}{dma\+\_\+received\+\_\+data}} (int pmt)
 \begin{DoxyCompactList}\small\item\em Process a complete waveform received by the D\+MA in trigger mode. \end{DoxyCompactList}\item 
-int \textbf{ test\+\_\+\+T\+PG} (void)
+int \mbox{\hyperlink{axis__peripheral_8h_afc766563120c4048da238dee8ac2ea49}{test\+\_\+\+T\+PG}} (void)
 \begin{DoxyCompactList}\small\item\em Test the T\+A\+R\+G\+ET with the Test Pattern Generator. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -45,11 +43,34 @@ Anthony Schluchin
 \end{DoxyVersion}
 
 
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{axis__peripheral_8h_a7d0187167e381bab6a565d6502961797}\label{axis__peripheral_8h_a7d0187167e381bab6a565d6502961797}} 
+\index{axis\_peripheral.h@{axis\_peripheral.h}!FEATURES\_ID@{FEATURES\_ID}}
+\index{FEATURES\_ID@{FEATURES\_ID}!axis\_peripheral.h@{axis\_peripheral.h}}
+\subsubsection{\texorpdfstring{FEATURES\_ID}{FEATURES\_ID}}
+{\footnotesize\ttfamily \#define F\+E\+A\+T\+U\+R\+E\+S\+\_\+\+ID~0}
+
+
+
+Data frame contains extracted features (for the receipter) 
+
+\mbox{\Hypertarget{axis__peripheral_8h_a359e2a99a817c2e9dcd11ce4ba7485f8}\label{axis__peripheral_8h_a359e2a99a817c2e9dcd11ce4ba7485f8}} 
+\index{axis\_peripheral.h@{axis\_peripheral.h}!FULL\_WAVEFORM\_ID@{FULL\_WAVEFORM\_ID}}
+\index{FULL\_WAVEFORM\_ID@{FULL\_WAVEFORM\_ID}!axis\_peripheral.h@{axis\_peripheral.h}}
+\subsubsection{\texorpdfstring{FULL\_WAVEFORM\_ID}{FULL\_WAVEFORM\_ID}}
+{\footnotesize\ttfamily \#define F\+U\+L\+L\+\_\+\+W\+A\+V\+E\+F\+O\+R\+M\+\_\+\+ID~1}
+
+
+
+Data frame contains the full waveform (for the receipter) 
+
+
+
 \subsection{Function Documentation}
-\mbox{\label{axis__peripheral_8h_ac643f94e9731b6cb46c9c2897887a0d4}} 
+\mbox{\Hypertarget{axis__peripheral_8h_ac643f94e9731b6cb46c9c2897887a0d4}\label{axis__peripheral_8h_ac643f94e9731b6cb46c9c2897887a0d4}} 
 \index{axis\_peripheral.h@{axis\_peripheral.h}!dma\_received\_data@{dma\_received\_data}}
 \index{dma\_received\_data@{dma\_received\_data}!axis\_peripheral.h@{axis\_peripheral.h}}
-\subsubsection{dma\_received\_data()}
+\subsubsection{\texorpdfstring{dma\_received\_data()}{dma\_received\_data()}}
 {\footnotesize\ttfamily void dma\+\_\+received\+\_\+data (\begin{DoxyParamCaption}\item[{int}]{pmt }\end{DoxyParamCaption})}
 
 
@@ -67,10 +88,10 @@ Process a complete waveform received by the D\+MA in trigger mode.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{axis__peripheral_8h_afc766563120c4048da238dee8ac2ea49}} 
+\mbox{\Hypertarget{axis__peripheral_8h_afc766563120c4048da238dee8ac2ea49}\label{axis__peripheral_8h_afc766563120c4048da238dee8ac2ea49}} 
 \index{axis\_peripheral.h@{axis\_peripheral.h}!test\_TPG@{test\_TPG}}
 \index{test\_TPG@{test\_TPG}!axis\_peripheral.h@{axis\_peripheral.h}}
-\subsubsection{test\_TPG()}
+\subsubsection{\texorpdfstring{test\_TPG()}{test\_TPG()}}
 {\footnotesize\ttfamily int test\+\_\+\+T\+PG (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
 
@@ -88,10 +109,10 @@ X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{axis__peripheral_8h_aec2c436529dde9db3cac39062e46cce4}} 
+\mbox{\Hypertarget{axis__peripheral_8h_aec2c436529dde9db3cac39062e46cce4}\label{axis__peripheral_8h_aec2c436529dde9db3cac39062e46cce4}} 
 \index{axis\_peripheral.h@{axis\_peripheral.h}!XAxiDma\_SimpleTransfer\_hm@{XAxiDma\_SimpleTransfer\_hm}}
 \index{XAxiDma\_SimpleTransfer\_hm@{XAxiDma\_SimpleTransfer\_hm}!axis\_peripheral.h@{axis\_peripheral.h}}
-\subsubsection{XAxiDma\_SimpleTransfer\_hm()}
+\subsubsection{\texorpdfstring{XAxiDma\_SimpleTransfer\_hm()}{XAxiDma\_SimpleTransfer\_hm()}}
 {\footnotesize\ttfamily void X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm (\begin{DoxyParamCaption}\item[{U\+I\+N\+T\+P\+TR}]{Buff\+Addr,  }\item[{int}]{Length\+Of\+Bytes }\end{DoxyParamCaption})}
 
 

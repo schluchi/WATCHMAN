@@ -1,0 +1,422 @@
+\section{watchman.\+Watchman\+\_\+main\+\_\+window Class Reference}
+\label{classwatchman_1_1_watchman__main__window}\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+
+
+This class create the main window.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \textbf{ \+\_\+\+\_\+init\+\_\+\+\_\+} (self, \textbf{ master})
+\begin{DoxyCompactList}\small\item\em Create a \char`\"{}\+Watchman\+\_\+main\+\_\+window\char`\"{} object wich is a G\+UI to communicate with a zynq through a U\+DP connection. \end{DoxyCompactList}\item 
+def \textbf{ init\+\_\+window} (self)
+\begin{DoxyCompactList}\small\item\em Method to initialize the windows and create its graphical objects. \end{DoxyCompactList}\item 
+def \textbf{ loadfile} (self)
+\begin{DoxyCompactList}\small\item\em Method to recover the register\textquotesingle{}s value in a file. \end{DoxyCompactList}\item 
+def \textbf{ savefile} (self)
+\begin{DoxyCompactList}\small\item\em Method to save the register\textquotesingle{}s value in a file. \end{DoxyCompactList}\item 
+def \textbf{ exit\+\_\+prog} (self)
+\begin{DoxyCompactList}\small\item\em Method callback for the \char`\"{}\+W\+M\+\_\+\+D\+E\+L\+E\+T\+E\+\_\+\+W\+I\+N\+D\+O\+W\char`\"{} event and the E\+X\+IT menu button which quit the application. \end{DoxyCompactList}\item 
+def \textbf{ help\+\_\+callback} (self)
+\begin{DoxyCompactList}\small\item\em Method callback for the H\+E\+LP menu button. \end{DoxyCompactList}\item 
+def \textbf{ is\+\_\+number} (self, s)
+\begin{DoxyCompactList}\small\item\em Method to determine if the string object is a number. \end{DoxyCompactList}\item 
+def \textbf{ entry\+\_\+callback} (self, count, var, $\ast$args)
+\begin{DoxyCompactList}\small\item\em Method callback called when a caracter is written is one of the register entry. \end{DoxyCompactList}\item 
+def \textbf{ write\+\_\+txt} (self, t)
+\begin{DoxyCompactList}\small\item\em Method to write something in the main window\textquotesingle{}s listbox. \end{DoxyCompactList}\item 
+def \textbf{ init\+\_\+\+U\+D\+P\+\_\+cmd} (self)
+\begin{DoxyCompactList}\small\item\em Method to initialize the U\+DP connection for the commands. \end{DoxyCompactList}\item 
+def \textbf{ init\+\_\+\+U\+D\+P\+\_\+data} (self)
+\begin{DoxyCompactList}\small\item\em Method to initialize the U\+DP connection for the data recovering. \end{DoxyCompactList}\item 
+def \textbf{ close\+\_\+\+U\+D\+P\+\_\+data} (self)
+\begin{DoxyCompactList}\small\item\em Method to close the U\+DP connection for the data recovering. \end{DoxyCompactList}\item 
+def \textbf{ send\+\_\+command} (self, \textbf{ cmd})
+\begin{DoxyCompactList}\small\item\em Method to send a command to the zynq. \end{DoxyCompactList}\item 
+def \textbf{ open\+\_\+graph} (self)
+\begin{DoxyCompactList}\small\item\em Method to open the graph window. \end{DoxyCompactList}\item 
+def \textbf{ close\+\_\+graph} (self)
+\begin{DoxyCompactList}\small\item\em Method to close the graph window. \end{DoxyCompactList}\item 
+def \textbf{ thread\+\_\+data\+\_\+int} (self)
+\begin{DoxyCompactList}\small\item\em Method thread to process the data received by U\+DP. \end{DoxyCompactList}\item 
+def \textbf{ thread\+\_\+timer\+\_\+int} (self)
+\begin{DoxyCompactList}\small\item\em Method thread to timeout the thread\+\_\+get\+\_\+20\+\_\+wdo \& thread\+\_\+data. \end{DoxyCompactList}\item 
+def \textbf{ thread\+\_\+cmd\+\_\+int} (self)
+\begin{DoxyCompactList}\small\item\em Method thread to process the command received by U\+DP (running all the time) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a7db5be5bd31dd142b2ccfac4e45e1c02}} 
+\textbf{ master}
+\begin{DoxyCompactList}\small\item\em Parent of every graphical object (object main window) \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_ad8d9b012eef926fac72654d3f5f09cca}} 
+\textbf{ regs}
+\begin{DoxyCompactList}\small\item\em Contain the value to read from or write to the registers in the zynq. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a52d0d7d6fb44d07e9f87b1b631ef1f10}} 
+{\bfseries regs\+\_\+name\+\_\+1\+\_\+64}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a96d18237f0a4a7873fe7e73064322bf8}} 
+{\bfseries regs\+\_\+name\+\_\+65\+\_\+92}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a8e13043a85b58da41d0c25c1870c677b}} 
+{\bfseries regs\+\_\+name\+\_\+93\+\_\+127}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_aa614929875f711d9ba1ec49e94560083}} 
+{\bfseries regs\+\_\+name\+\_\+128}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a32abbe4563a532b7a97cc288ce713612}} 
+\textbf{ flag\+\_\+data}
+\begin{DoxyCompactList}\small\item\em List of flags for every register value which indicates if the value is good or not (0 -\/$>$ good value, 1 -\/$>$ wrong value =$>$ sum of list should be 0) \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a3068fe73ce063fec03c7e9f21408baac}} 
+\textbf{ U\+D\+P\+\_\+\+IP}
+\begin{DoxyCompactList}\small\item\em Contain the zynq\textquotesingle{}s ip. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a41a6510deb1b971886b41b0229a49691}} 
+\textbf{ U\+D\+P\+\_\+\+P\+O\+R\+T\+\_\+\+C\+MD}
+\begin{DoxyCompactList}\small\item\em Contain the port number for U\+DP communication. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a14cf83a45dee5b496b1b2f1455183993}} 
+{\bfseries U\+D\+P\+\_\+\+P\+O\+R\+T\+\_\+data}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a310b7c8167f86e485d54689b8aa1ed12}} 
+\textbf{ cmd}
+\begin{DoxyCompactList}\small\item\em List of all the commands. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a608d68c02b11a3ba990599f3f74966db}} 
+\textbf{ stream\+\_\+flag}
+\begin{DoxyCompactList}\small\item\em Flag which indicates if the streaming is running. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_af052cb05a64993a264845c315adec90f}} 
+\textbf{ destroy\+\_\+flag}
+\begin{DoxyCompactList}\small\item\em Flag which indicates that the user want to close the G\+UI (to avoid problem when accessing graphical object after \char`\"{}\+W\+M\+\_\+\+D\+E\+L\+E\+T\+E\+\_\+\+W\+I\+N\+D\+O\+W\char`\"{} event) \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_ae90b59be8f712831ff2a5a9002254736}} 
+\textbf{ toplevel\+\_\+flag}
+\begin{DoxyCompactList}\small\item\em Flag which indicates if the graphical window is open or not. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a368aa3e2ce00b599672a3d07c79ff2b7}} 
+\textbf{ run\+\_\+flag}
+\begin{DoxyCompactList}\small\item\em Flag which indicates to the main thread if it needs to stop. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a5702507d1b28f4c702ea7ac21fe3838d}} 
+{\bfseries timer\+\_\+thread\+\_\+flag}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_ae25e348d78206fb78fc5770590d2ceb6}} 
+\textbf{ get\+\_\+transfer\+\_\+fct\+\_\+flag}
+\begin{DoxyCompactList}\small\item\em Thread object which process the data received. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_ad5fdd038b4c5784a0215f797e6d4f3d0}} 
+\textbf{ get\+\_\+20\+\_\+windows\+\_\+flag}
+\begin{DoxyCompactList}\small\item\em Thread object which process the data received. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_ad85cee0f1a7151f5432e14c9035dcd08}} 
+\textbf{ thread\+\_\+cmd}
+\begin{DoxyCompactList}\small\item\em Thread object which run constantly and process the data received. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a2915b2132c21f91032c59d8217412142}} 
+\textbf{ sock}
+\begin{DoxyCompactList}\small\item\em Socket object used to established the U\+DP connection with the zynq. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a4507da6084d3549ba483b43572a575fe}} 
+\textbf{ sock\+\_\+data}
+\begin{DoxyCompactList}\small\item\em Socket object used to established the U\+DP connection with the zynq. \end{DoxyCompactList}\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_a69cda14568d01651d907a5e289e3ab99}} 
+{\bfseries thread\+\_\+data}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_ad540b9d5fc5959783f5ee5031dc2514e}} 
+{\bfseries thread\+\_\+timer}
+\item 
+\mbox{\label{classwatchman_1_1_watchman__main__window_aa6a1ea8eeed86393fa27029714047fdd}} 
+\textbf{ window\+\_\+data}
+\begin{DoxyCompactList}\small\item\em Object of class Watchman\+\_\+data (graphical window) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class create the main window. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a4f1913d70284dd2b3d17e17a76d64bd8}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{\_\_init\_\_()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{master }\end{DoxyParamCaption})}
+
+
+
+Create a \char`\"{}\+Watchman\+\_\+main\+\_\+window\char`\"{} object wich is a G\+UI to communicate with a zynq through a U\+DP connection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+{\em master} & \+: The parent of the object \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a7e01631a60bb1132b837329deb96ca73}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!close\_graph@{close\_graph}}
+\index{close\_graph@{close\_graph}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{close\_graph()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+close\+\_\+graph (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to close the graph window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a82bd875a2c1e218633bb245011730233}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!close\_UDP\_data@{close\_UDP\_data}}
+\index{close\_UDP\_data@{close\_UDP\_data}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{close\_UDP\_data()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+close\+\_\+\+U\+D\+P\+\_\+data (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to close the U\+DP connection for the data recovering. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_ad063c9cf9786f9b04da469c373ab9e73}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!entry\_callback@{entry\_callback}}
+\index{entry\_callback@{entry\_callback}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{entry\_callback()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+entry\+\_\+callback (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{count,  }\item[{}]{var,  }\item[{$\ast$}]{args }\end{DoxyParamCaption})}
+
+
+
+Method callback called when a caracter is written is one of the register entry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+{\em count} & \+: Register\textquotesingle{}s number \\
+\hline
+{\em var} & \+: Variable contained by the entry \\
+\hline
+{\em $\ast$args} & \+: Unused \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a71f57c7e1cd7b428c2a0f926ff6db0dd}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!exit\_prog@{exit\_prog}}
+\index{exit\_prog@{exit\_prog}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{exit\_prog()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+exit\+\_\+prog (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method callback for the \char`\"{}\+W\+M\+\_\+\+D\+E\+L\+E\+T\+E\+\_\+\+W\+I\+N\+D\+O\+W\char`\"{} event and the E\+X\+IT menu button which quit the application. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_ae4234a2c7ef7fa102846ee2cc3089181}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!help\_callback@{help\_callback}}
+\index{help\_callback@{help\_callback}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{help\_callback()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+help\+\_\+callback (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method callback for the H\+E\+LP menu button. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a0a178263901747708694c0fd4aa2e3a7}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!init\_UDP\_cmd@{init\_UDP\_cmd}}
+\index{init\_UDP\_cmd@{init\_UDP\_cmd}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{init\_UDP\_cmd()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+init\+\_\+\+U\+D\+P\+\_\+cmd (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to initialize the U\+DP connection for the commands. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a116e7145b9e06726e1c5318fd8719697}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!init\_UDP\_data@{init\_UDP\_data}}
+\index{init\_UDP\_data@{init\_UDP\_data}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{init\_UDP\_data()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+init\+\_\+\+U\+D\+P\+\_\+data (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to initialize the U\+DP connection for the data recovering. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a9b2df908b2feab8ac290197298cc4a7e}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!init\_window@{init\_window}}
+\index{init\_window@{init\_window}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{init\_window()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+init\+\_\+window (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to initialize the windows and create its graphical objects. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_ab13d784cf818f892727af9b2caa1c7fb}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!is\_number@{is\_number}}
+\index{is\_number@{is\_number}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{is\_number()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+is\+\_\+number (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{s }\end{DoxyParamCaption})}
+
+
+
+Method to determine if the string object is a number. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+{\em s} & \+: String object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \+: True or False 
+\end{DoxyReturn}
+\mbox{\label{classwatchman_1_1_watchman__main__window_aabb93204515ee2a01c81d9a2dd846a89}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!loadfile@{loadfile}}
+\index{loadfile@{loadfile}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{loadfile()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+loadfile (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to recover the register\textquotesingle{}s value in a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a99d6e254c6da829ebe7b2798806af3bf}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!open\_graph@{open\_graph}}
+\index{open\_graph@{open\_graph}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{open\_graph()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+open\+\_\+graph (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to open the graph window. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a5f2f0684e828492369f1e11c50192dc3}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!savefile@{savefile}}
+\index{savefile@{savefile}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{savefile()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+savefile (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method to save the register\textquotesingle{}s value in a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a90ee7e25dde8f15c709b9a9c8fd4dbde}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!send\_command@{send\_command}}
+\index{send\_command@{send\_command}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{send\_command()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+send\+\_\+command (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Method to send a command to the zynq. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+{\em cmd} & \+: Command ID to send (a number) \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a05f6463320989b4c77eced835775d8ad}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!thread\_cmd\_int@{thread\_cmd\_int}}
+\index{thread\_cmd\_int@{thread\_cmd\_int}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{thread\_cmd\_int()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+thread\+\_\+cmd\+\_\+int (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method thread to process the command received by U\+DP (running all the time) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a59982ccfdd3e2145e28e9b6200ccf5ce}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!thread\_data\_int@{thread\_data\_int}}
+\index{thread\_data\_int@{thread\_data\_int}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{thread\_data\_int()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+thread\+\_\+data\+\_\+int (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method thread to process the data received by U\+DP. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a084e9e77a70c9f8e6e36fec24a8f590d}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!thread\_timer\_int@{thread\_timer\_int}}
+\index{thread\_timer\_int@{thread\_timer\_int}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{thread\_timer\_int()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+thread\+\_\+timer\+\_\+int (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Method thread to timeout the thread\+\_\+get\+\_\+20\+\_\+wdo \& thread\+\_\+data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+\end{DoxyParams}
+\mbox{\label{classwatchman_1_1_watchman__main__window_a9d3d9649b92b0e4098ba66205b4baf83}} 
+\index{watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}!write\_txt@{write\_txt}}
+\index{write\_txt@{write\_txt}!watchman.Watchman\_main\_window@{watchman.Watchman\_main\_window}}
+\subsubsection{write\_txt()}
+{\footnotesize\ttfamily def watchman.\+Watchman\+\_\+main\+\_\+window.\+write\+\_\+txt (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{t }\end{DoxyParamCaption})}
+
+
+
+Method to write something in the main window\textquotesingle{}s listbox. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & \+: The object pointer \\
+\hline
+{\em t} & \+: The text to write in the listbox \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+watchman.\+py\end{DoxyCompactItemize}

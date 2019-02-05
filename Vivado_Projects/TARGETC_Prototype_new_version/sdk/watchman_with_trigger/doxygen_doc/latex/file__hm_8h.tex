@@ -1,0 +1,152 @@
+\hypertarget{file__hm_8h}{}\section{file\+\_\+hm.\+h File Reference}
+\label{file__hm_8h}\index{file\_hm.h@{file\_hm.h}}
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}ff.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time\+\_\+hm.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+F\+R\+E\+S\+U\+LT \mbox{\hyperlink{file__hm_8h_a8c7f4b773c00032d0040867bd596a6dd}{mount\+\_\+sd\+\_\+card}} (void)
+\begin{DoxyCompactList}\small\item\em Mount the SD card. \end{DoxyCompactList}\item 
+F\+R\+E\+S\+U\+LT \mbox{\hyperlink{file__hm_8h_a955e40f4235eb6de889d032669532d30}{create\+\_\+logfile}} (void)
+\begin{DoxyCompactList}\small\item\em Create the log file to save the log message. \end{DoxyCompactList}\item 
+F\+R\+E\+S\+U\+LT \mbox{\hyperlink{file__hm_8h_a70f08933d6cf8fcf18a129496f55987d}{log\+\_\+event}} (char $\ast$tmp\+\_\+text, uint length)
+\begin{DoxyCompactList}\small\item\em Write a log message in the log file with the date and hour. \end{DoxyCompactList}\item 
+F\+R\+E\+S\+U\+LT \mbox{\hyperlink{file__hm_8h_a4b2284f02d6f046a2384058886f85be4}{log\+\_\+wdtevent}} (void)
+\begin{DoxyCompactList}\small\item\em Write a message in the log file to indicate when the wdt occurs. \end{DoxyCompactList}\item 
+F\+R\+E\+S\+U\+LT \mbox{\hyperlink{file__hm_8h_a1edb634f61d0d00e9027c236a589afdb}{create\+\_\+timefile}} (void)
+\begin{DoxyCompactList}\small\item\em Create the time file to save the time. \end{DoxyCompactList}\item 
+F\+R\+E\+S\+U\+LT \mbox{\hyperlink{file__hm_8h_a8e7ecd6c7e5cc2747ae668d09a24505b}{update\+\_\+timefile}} (void)
+\begin{DoxyCompactList}\small\item\em Write the time in the time file to know when the wdt occurs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{file__hm_8h_a955e40f4235eb6de889d032669532d30}\label{file__hm_8h_a955e40f4235eb6de889d032669532d30}} 
+\index{file\_hm.h@{file\_hm.h}!create\_logfile@{create\_logfile}}
+\index{create\_logfile@{create\_logfile}!file\_hm.h@{file\_hm.h}}
+\subsubsection{\texorpdfstring{create\_logfile()}{create\_logfile()}}
+{\footnotesize\ttfamily F\+R\+E\+S\+U\+LT create\+\_\+logfile (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create the log file to save the log message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+F\+R\+E\+S\+U\+LT\+: see enumeration in ff.\+h and possibility on note\textquotesingle{}s website
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+\href{http://elm-chan.org/fsw/ff/00index_e.html}{\texttt{ http\+://elm-\/chan.\+org/fsw/ff/00index\+\_\+e.\+html}} for informations abourt ff.\+c (Generic F\+AT Filesystem Module) 
+\end{DoxyNote}
+\mbox{\Hypertarget{file__hm_8h_a1edb634f61d0d00e9027c236a589afdb}\label{file__hm_8h_a1edb634f61d0d00e9027c236a589afdb}} 
+\index{file\_hm.h@{file\_hm.h}!create\_timefile@{create\_timefile}}
+\index{create\_timefile@{create\_timefile}!file\_hm.h@{file\_hm.h}}
+\subsubsection{\texorpdfstring{create\_timefile()}{create\_timefile()}}
+{\footnotesize\ttfamily F\+R\+E\+S\+U\+LT create\+\_\+timefile (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create the time file to save the time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+F\+R\+E\+S\+U\+LT\+: see enumeration in ff.\+h and possibility on note\textquotesingle{}s website
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+\href{http://elm-chan.org/fsw/ff/00index_e.html}{\texttt{ http\+://elm-\/chan.\+org/fsw/ff/00index\+\_\+e.\+html}} for informations abourt ff.\+c (Generic F\+AT Filesystem Module) 
+\end{DoxyNote}
+\mbox{\Hypertarget{file__hm_8h_a70f08933d6cf8fcf18a129496f55987d}\label{file__hm_8h_a70f08933d6cf8fcf18a129496f55987d}} 
+\index{file\_hm.h@{file\_hm.h}!log\_event@{log\_event}}
+\index{log\_event@{log\_event}!file\_hm.h@{file\_hm.h}}
+\subsubsection{\texorpdfstring{log\_event()}{log\_event()}}
+{\footnotesize\ttfamily F\+R\+E\+S\+U\+LT log\+\_\+event (\begin{DoxyParamCaption}\item[{char $\ast$}]{tmp\+\_\+text,  }\item[{uint}]{length }\end{DoxyParamCaption})}
+
+
+
+Write a log message in the log file with the date and hour. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tmp\+\_\+text} & text to be written length\+: size of tmp\+\_\+text (in bytes)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+F\+R\+E\+S\+U\+LT\+: see enumeration in ff.\+h and possibility on note\textquotesingle{}s website
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+\href{http://elm-chan.org/fsw/ff/00index_e.html}{\texttt{ http\+://elm-\/chan.\+org/fsw/ff/00index\+\_\+e.\+html}} for informations abourt ff.\+c (Generic F\+AT Filesystem Module) 
+\end{DoxyNote}
+\mbox{\Hypertarget{file__hm_8h_a4b2284f02d6f046a2384058886f85be4}\label{file__hm_8h_a4b2284f02d6f046a2384058886f85be4}} 
+\index{file\_hm.h@{file\_hm.h}!log\_wdtevent@{log\_wdtevent}}
+\index{log\_wdtevent@{log\_wdtevent}!file\_hm.h@{file\_hm.h}}
+\subsubsection{\texorpdfstring{log\_wdtevent()}{log\_wdtevent()}}
+{\footnotesize\ttfamily F\+R\+E\+S\+U\+LT log\+\_\+wdtevent (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Write a message in the log file to indicate when the wdt occurs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+F\+R\+E\+S\+U\+LT\+: see enumeration in ff.\+h and possibility on note\textquotesingle{}s website
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+\href{http://elm-chan.org/fsw/ff/00index_e.html}{\texttt{ http\+://elm-\/chan.\+org/fsw/ff/00index\+\_\+e.\+html}} for informations abourt ff.\+c (Generic F\+AT Filesystem Module) 
+\end{DoxyNote}
+\mbox{\Hypertarget{file__hm_8h_a8c7f4b773c00032d0040867bd596a6dd}\label{file__hm_8h_a8c7f4b773c00032d0040867bd596a6dd}} 
+\index{file\_hm.h@{file\_hm.h}!mount\_sd\_card@{mount\_sd\_card}}
+\index{mount\_sd\_card@{mount\_sd\_card}!file\_hm.h@{file\_hm.h}}
+\subsubsection{\texorpdfstring{mount\_sd\_card()}{mount\_sd\_card()}}
+{\footnotesize\ttfamily F\+R\+E\+S\+U\+LT mount\+\_\+sd\+\_\+card (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Mount the SD card. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+F\+R\+E\+S\+U\+LT\+: see enumeration in ff.\+h and possibility on note\textquotesingle{}s website
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+the instance of the SD card must be static, that is why this function job is only to call another function \href{http://elm-chan.org/fsw/ff/00index_e.html}{\texttt{ http\+://elm-\/chan.\+org/fsw/ff/00index\+\_\+e.\+html}} for informations abourt ff.\+c (Generic F\+AT Filesystem Module) 
+\end{DoxyNote}
+\mbox{\Hypertarget{file__hm_8h_a8e7ecd6c7e5cc2747ae668d09a24505b}\label{file__hm_8h_a8e7ecd6c7e5cc2747ae668d09a24505b}} 
+\index{file\_hm.h@{file\_hm.h}!update\_timefile@{update\_timefile}}
+\index{update\_timefile@{update\_timefile}!file\_hm.h@{file\_hm.h}}
+\subsubsection{\texorpdfstring{update\_timefile()}{update\_timefile()}}
+{\footnotesize\ttfamily F\+R\+E\+S\+U\+LT update\+\_\+timefile (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Write the time in the time file to know when the wdt occurs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+F\+R\+E\+S\+U\+LT\+: see enumeration in ff.\+h and possibility on note\textquotesingle{}s website
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+\href{http://elm-chan.org/fsw/ff/00index_e.html}{\texttt{ http\+://elm-\/chan.\+org/fsw/ff/00index\+\_\+e.\+html}} for informations abourt ff.\+c (Generic F\+AT Filesystem Module) 
+\end{DoxyNote}

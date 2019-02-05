@@ -1,5 +1,5 @@
-\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/main.c File Reference}
-\label{main_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/main.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/main.c}}
+\hypertarget{main_8c}{}\section{main.\+c File Reference}
+\label{main_8c}\index{main.c@{main.c}}
 {\ttfamily \#include $<$stdint.\+h$>$}\newline
 {\ttfamily \#include \char`\"{}lwip/init.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}netif/xadapter.\+h\char`\"{}}\newline
@@ -19,82 +19,62 @@
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{main_8c_a747618975efd65f2d75229ff858b5942}} 
-typedef enum clean\+\_\+state\+\_\+enum {\bfseries clean\+\_\+state\+\_\+en}
-\item 
-\mbox{\label{main_8c_a970b102bbdd60f6404a88223e16800fb}} 
-typedef enum dma\+\_\+stm\+\_\+enum {\bfseries dma\+\_\+stm\+\_\+en}
-\end{DoxyCompactItemize}
+typedef enum \mbox{\hyperlink{main_8c_aeafbc28e24788dc1a79c4f2e7926af20}{clean\+\_\+state\+\_\+enum}} \mbox{\hyperlink{main_8c_a747618975efd65f2d75229ff858b5942}{clean\+\_\+state\+\_\+en}}
+\begin{DoxyCompactList}\small\item\em This is the enumeration of the process to stop when exiting the program. \end{DoxyCompactList}\item 
+typedef enum \mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00}{dma\+\_\+stm\+\_\+enum}} \mbox{\hyperlink{main_8c_a970b102bbdd60f6404a88223e16800fb}{dma\+\_\+stm\+\_\+en}}
+\begin{DoxyCompactList}\small\item\em This is the enumeration of the state machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{main_8c_aeafbc28e24788dc1a79c4f2e7926af20}} 
-enum {\bfseries clean\+\_\+state\+\_\+enum} \{ {\bfseries G\+L\+O\+B\+A\+L\+\_\+\+V\+AR} =0x1, 
-{\bfseries I\+N\+T\+E\+R\+R\+U\+PT} =0x2, 
-{\bfseries U\+DP} =0x4
+enum \mbox{\hyperlink{main_8c_aeafbc28e24788dc1a79c4f2e7926af20}{clean\+\_\+state\+\_\+enum}} \{ \mbox{\hyperlink{main_8c_aeafbc28e24788dc1a79c4f2e7926af20a19ef5f9231c78b149fdf66276f824876}{G\+L\+O\+B\+A\+L\+\_\+\+V\+AR}} =0x1, 
+\mbox{\hyperlink{main_8c_aeafbc28e24788dc1a79c4f2e7926af20ad5f5c57f205afd4f9df70a8c4e194b45}{I\+N\+T\+E\+R\+R\+U\+PT}} =0x2, 
+\mbox{\hyperlink{main_8c_aeafbc28e24788dc1a79c4f2e7926af20adb542475cf9d0636e4225e216cee9ae6}{U\+DP}} =0x4
  \}
-\item 
-\mbox{\label{main_8c_a14177b2d0dd6999990312dbaeed1de00}} 
-enum {\bfseries dma\+\_\+stm\+\_\+enum} \{ {\bfseries I\+D\+LE}, 
-{\bfseries S\+T\+R\+E\+AM}, 
-{\bfseries R\+E\+C\+O\+V\+E\+R\+\_\+\+D\+A\+TA}, 
-{\bfseries G\+E\+T\+\_\+20\+\_\+\+W\+I\+N\+D\+O\+WS}
+\begin{DoxyCompactList}\small\item\em This is the enumeration of the process to stop when exiting the program. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00}{dma\+\_\+stm\+\_\+enum}} \{ \mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00afd6a0e4343048b10646dd2976cc5ad18}{I\+D\+LE}}, 
+\mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00a5fbbb70faa90e614c7cd5a487e85ced5}{S\+T\+R\+E\+AM}}, 
+\mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00a781c37f88acb6940690bdbf86088c882}{G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+CT}}, 
+\mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00ab941c92396b6c11ea21baa063b7e5954}{G\+E\+T\+\_\+20\+\_\+\+W\+I\+N\+D\+O\+WS}}
  \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em This is the enumeration of the state machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{main_8c_aa08c47b0de738675fd0573b3888e6804}} 
-void {\bfseries end\+\_\+main} (clean\+\_\+state\+\_\+en state)
+void \mbox{\hyperlink{main_8c_aa08c47b0de738675fd0573b3888e6804}{end\+\_\+main}} (\mbox{\hyperlink{main_8c_a747618975efd65f2d75229ff858b5942}{clean\+\_\+state\+\_\+en}} state)
 \item 
-\mbox{\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
-int {\bfseries main} ()
+int \mbox{\hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
 \end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{main_8c_acd12279932e5216593ee76d4eebdd996}} 
-struct netif $\ast$ {\bfseries echo\+\_\+netif}
-\item 
-\mbox{\label{main_8c_a4d1709746b2e7d35d9bef7ee11f2c790}} 
-volatile bool {\bfseries run\+\_\+flag}
-\item 
-\mbox{\label{main_8c_ac285664a88629c304befd42daafc3f90}} 
-volatile bool {\bfseries stream\+\_\+flag}
-\item 
-\mbox{\label{main_8c_ae1142987fecfa0c02e7edfb9f539805b}} 
-volatile bool {\bfseries flag\+\_\+ttcps\+\_\+timer}
-\item 
-\mbox{\label{main_8c_a92815e63a8bb041c9594c7229d49cd89}} 
-volatile bool {\bfseries flag\+\_\+scu\+\_\+timer}
-\item 
-\mbox{\label{main_8c_afd1f6e74a3d4d317436684e7fa64a8fa}} 
-X\+Scu\+Wdt {\bfseries Wdt\+Scu\+Instance}
-\item 
-\mbox{\label{main_8c_af9ff4df27689ce692fdfe44a8efec098}} 
-volatile bool {\bfseries flag\+\_\+assertion}
-\item 
-\mbox{\label{main_8c_a68bc1b11e54681f4601358507aa9a3ad}} 
-volatile bool {\bfseries flag\+\_\+while\+\_\+loop}
-\item 
-\mbox{\label{main_8c_a7ab3cdc6684119650796bf71c8c37b81}} 
-int {\bfseries flag\+\_\+axidma\+\_\+rx} [4]
-\item 
-\mbox{\label{main_8c_a39d2cad95814eb9635cca5310d914893}} 
-int $\ast$ {\bfseries regptr}
-\item 
-\mbox{\label{main_8c_af98df565a37a3db3fcafb5e66e062316}} 
-volatile bool {\bfseries get\+\_\+transfer\+\_\+fct\+\_\+flag}
-\item 
-\mbox{\label{main_8c_ac3a118de77182fc96c16057fb7f75ec1}} 
-volatile bool {\bfseries get\+\_\+20\+\_\+windows\+\_\+flag}
-\item 
-\mbox{\label{main_8c_ad53968991c134c5dbfc1d0d83e5decdb}} 
-volatile bool {\bfseries empty\+\_\+flag}
-\item 
-\mbox{\label{main_8c_a94f01ed55f54f902dc738539df30427e}} 
-\textbf{ data\+\_\+list} $\ast$ {\bfseries first\+\_\+element}
-\end{DoxyCompactItemize}
+struct netif $\ast$ \mbox{\hyperlink{main_8c_acd12279932e5216593ee76d4eebdd996}{echo\+\_\+netif}}
+\begin{DoxyCompactList}\small\item\em Pointer on the network interface. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_a4d1709746b2e7d35d9bef7ee11f2c790}{run\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag reset when the user send the command \char`\"{}stop u\+C\char`\"{}. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_ac285664a88629c304befd42daafc3f90}{stream\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the user send the command \char`\"{}start streaming\char`\"{}. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_ae1142987fecfa0c02e7edfb9f539805b}{flag\+\_\+ttcps\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the Triple Timer Counter overflows. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_a92815e63a8bb041c9594c7229d49cd89}{flag\+\_\+scu\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the S\+CU timer overflows. \end{DoxyCompactList}\item 
+X\+Scu\+Wdt \mbox{\hyperlink{main_8c_afd1f6e74a3d4d317436684e7fa64a8fa}{Wdt\+Scu\+Instance}}
+\begin{DoxyCompactList}\small\item\em Instance of the device watchdog. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_af9ff4df27689ce692fdfe44a8efec098}{flag\+\_\+assertion}}
+\begin{DoxyCompactList}\small\item\em Flag raised when an assertion has occured. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_a68bc1b11e54681f4601358507aa9a3ad}{flag\+\_\+while\+\_\+loop}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the program has entered the while loop. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_a7ab3cdc6684119650796bf71c8c37b81}{flag\+\_\+axidma\+\_\+rx}} \mbox{[}4\mbox{]}
+\begin{DoxyCompactList}\small\item\em Array of flag, one for each P\+MT. \end{DoxyCompactList}\item 
+int $\ast$ \mbox{\hyperlink{main_8c_a39d2cad95814eb9635cca5310d914893}{regptr}}
+\begin{DoxyCompactList}\small\item\em Array containing registers of A\+X\+I-\/lite. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_af98df565a37a3db3fcafb5e66e062316}{get\+\_\+transfer\+\_\+fct\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the user send the command \char`\"{}get transfer function\char`\"{}. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_ac3a118de77182fc96c16057fb7f75ec1}{get\+\_\+20\+\_\+windows\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the user send the command \char`\"{}get 20 windows\char`\"{}. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{main_8c_ad53968991c134c5dbfc1d0d83e5decdb}{empty\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag true when the list is empty (first\+\_\+element = last\+\_\+element) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{data__analysis_8h_a9db432fc1185a85fe322653c4d3f54d5}{data\+\_\+list}} $\ast$ \mbox{\hyperlink{main_8c_a94f01ed55f54f902dc738539df30427e}{first\+\_\+element}}
+\begin{DoxyCompactList}\small\item\em Pointer on the first element of the list used in trigger mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -107,3 +87,239 @@ Anthony Schluchin
 \begin{DoxyVersion}{Version}
 0.\+0 
 \end{DoxyVersion}
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{main_8c_a747618975efd65f2d75229ff858b5942}\label{main_8c_a747618975efd65f2d75229ff858b5942}} 
+\index{main.c@{main.c}!clean\_state\_en@{clean\_state\_en}}
+\index{clean\_state\_en@{clean\_state\_en}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{clean\_state\_en}{clean\_state\_en}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{main_8c_aeafbc28e24788dc1a79c4f2e7926af20}{clean\+\_\+state\+\_\+enum}}  \mbox{\hyperlink{main_8c_a747618975efd65f2d75229ff858b5942}{clean\+\_\+state\+\_\+en}}}
+
+
+
+This is the enumeration of the process to stop when exiting the program. 
+
+\mbox{\Hypertarget{main_8c_a970b102bbdd60f6404a88223e16800fb}\label{main_8c_a970b102bbdd60f6404a88223e16800fb}} 
+\index{main.c@{main.c}!dma\_stm\_en@{dma\_stm\_en}}
+\index{dma\_stm\_en@{dma\_stm\_en}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{dma\_stm\_en}{dma\_stm\_en}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00}{dma\+\_\+stm\+\_\+enum}}  \mbox{\hyperlink{main_8c_a970b102bbdd60f6404a88223e16800fb}{dma\+\_\+stm\+\_\+en}}}
+
+
+
+This is the enumeration of the state machine. 
+
+
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{main_8c_aeafbc28e24788dc1a79c4f2e7926af20}\label{main_8c_aeafbc28e24788dc1a79c4f2e7926af20}} 
+\index{main.c@{main.c}!clean\_state\_enum@{clean\_state\_enum}}
+\index{clean\_state\_enum@{clean\_state\_enum}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{clean\_state\_enum}{clean\_state\_enum}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{main_8c_aeafbc28e24788dc1a79c4f2e7926af20}{clean\+\_\+state\+\_\+enum}}}
+
+
+
+This is the enumeration of the process to stop when exiting the program. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GLOBAL\_VAR@{GLOBAL\_VAR}!main.c@{main.c}}\index{main.c@{main.c}!GLOBAL\_VAR@{GLOBAL\_VAR}}}\mbox{\Hypertarget{main_8c_aeafbc28e24788dc1a79c4f2e7926af20a19ef5f9231c78b149fdf66276f824876}\label{main_8c_aeafbc28e24788dc1a79c4f2e7926af20a19ef5f9231c78b149fdf66276f824876}} 
+G\+L\+O\+B\+A\+L\+\_\+\+V\+AR&Free the global variable reserved in function init\+\_\+global\+\_\+var \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INTERRUPT@{INTERRUPT}!main.c@{main.c}}\index{main.c@{main.c}!INTERRUPT@{INTERRUPT}}}\mbox{\Hypertarget{main_8c_aeafbc28e24788dc1a79c4f2e7926af20ad5f5c57f205afd4f9df70a8c4e194b45}\label{main_8c_aeafbc28e24788dc1a79c4f2e7926af20ad5f5c57f205afd4f9df70a8c4e194b45}} 
+I\+N\+T\+E\+R\+R\+U\+PT&Stop the interrupt \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UDP@{UDP}!main.c@{main.c}}\index{main.c@{main.c}!UDP@{UDP}}}\mbox{\Hypertarget{main_8c_aeafbc28e24788dc1a79c4f2e7926af20adb542475cf9d0636e4225e216cee9ae6}\label{main_8c_aeafbc28e24788dc1a79c4f2e7926af20adb542475cf9d0636e4225e216cee9ae6}} 
+U\+DP&Close both of the U\+DP communications \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{main_8c_a14177b2d0dd6999990312dbaeed1de00}\label{main_8c_a14177b2d0dd6999990312dbaeed1de00}} 
+\index{main.c@{main.c}!dma\_stm\_enum@{dma\_stm\_enum}}
+\index{dma\_stm\_enum@{dma\_stm\_enum}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{dma\_stm\_enum}{dma\_stm\_enum}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{main_8c_a14177b2d0dd6999990312dbaeed1de00}{dma\+\_\+stm\+\_\+enum}}}
+
+
+
+This is the enumeration of the state machine. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IDLE@{IDLE}!main.c@{main.c}}\index{main.c@{main.c}!IDLE@{IDLE}}}\mbox{\Hypertarget{main_8c_a14177b2d0dd6999990312dbaeed1de00afd6a0e4343048b10646dd2976cc5ad18}\label{main_8c_a14177b2d0dd6999990312dbaeed1de00afd6a0e4343048b10646dd2976cc5ad18}} 
+I\+D\+LE&No data to send, waiting on a command \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STREAM@{STREAM}!main.c@{main.c}}\index{main.c@{main.c}!STREAM@{STREAM}}}\mbox{\Hypertarget{main_8c_a14177b2d0dd6999990312dbaeed1de00a5fbbb70faa90e614c7cd5a487e85ced5}\label{main_8c_a14177b2d0dd6999990312dbaeed1de00a5fbbb70faa90e614c7cd5a487e85ced5}} 
+S\+T\+R\+E\+AM&System in mode streaming \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GET\_TRANSFER\_FCT@{GET\_TRANSFER\_FCT}!main.c@{main.c}}\index{main.c@{main.c}!GET\_TRANSFER\_FCT@{GET\_TRANSFER\_FCT}}}\mbox{\Hypertarget{main_8c_a14177b2d0dd6999990312dbaeed1de00a781c37f88acb6940690bdbf86088c882}\label{main_8c_a14177b2d0dd6999990312dbaeed1de00a781c37f88acb6940690bdbf86088c882}} 
+G\+E\+T\+\_\+\+T\+R\+A\+N\+S\+F\+E\+R\+\_\+\+F\+CT&System sending the data for the transfer function in response to the corresponding command \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GET\_20\_WINDOWS@{GET\_20\_WINDOWS}!main.c@{main.c}}\index{main.c@{main.c}!GET\_20\_WINDOWS@{GET\_20\_WINDOWS}}}\mbox{\Hypertarget{main_8c_a14177b2d0dd6999990312dbaeed1de00ab941c92396b6c11ea21baa063b7e5954}\label{main_8c_a14177b2d0dd6999990312dbaeed1de00ab941c92396b6c11ea21baa063b7e5954}} 
+G\+E\+T\+\_\+20\+\_\+\+W\+I\+N\+D\+O\+WS&System sending the data 20 consecutive windows in response to the corresponding command \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_aa08c47b0de738675fd0573b3888e6804}\label{main_8c_aa08c47b0de738675fd0573b3888e6804}} 
+\index{main.c@{main.c}!end\_main@{end\_main}}
+\index{end\_main@{end\_main}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{end\_main()}{end\_main()}}
+{\footnotesize\ttfamily void end\+\_\+main (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{main_8c_a747618975efd65f2d75229ff858b5942}{clean\+\_\+state\+\_\+en}}}]{state }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{main_8c_acd12279932e5216593ee76d4eebdd996}\label{main_8c_acd12279932e5216593ee76d4eebdd996}} 
+\index{main.c@{main.c}!echo\_netif@{echo\_netif}}
+\index{echo\_netif@{echo\_netif}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{echo\_netif}{echo\_netif}}
+{\footnotesize\ttfamily struct netif$\ast$ echo\+\_\+netif}
+
+
+
+Pointer on the network interface. 
+
+\mbox{\Hypertarget{main_8c_ad53968991c134c5dbfc1d0d83e5decdb}\label{main_8c_ad53968991c134c5dbfc1d0d83e5decdb}} 
+\index{main.c@{main.c}!empty\_flag@{empty\_flag}}
+\index{empty\_flag@{empty\_flag}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{empty\_flag}{empty\_flag}}
+{\footnotesize\ttfamily volatile bool empty\+\_\+flag}
+
+
+
+Flag true when the list is empty (first\+\_\+element = last\+\_\+element) 
+
+\mbox{\Hypertarget{main_8c_a94f01ed55f54f902dc738539df30427e}\label{main_8c_a94f01ed55f54f902dc738539df30427e}} 
+\index{main.c@{main.c}!first\_element@{first\_element}}
+\index{first\_element@{first\_element}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{first\_element}{first\_element}}
+{\footnotesize\ttfamily \mbox{\hyperlink{data__analysis_8h_a9db432fc1185a85fe322653c4d3f54d5}{data\+\_\+list}}$\ast$ first\+\_\+element}
+
+
+
+Pointer on the first element of the list used in trigger mode. 
+
+\mbox{\Hypertarget{main_8c_af9ff4df27689ce692fdfe44a8efec098}\label{main_8c_af9ff4df27689ce692fdfe44a8efec098}} 
+\index{main.c@{main.c}!flag\_assertion@{flag\_assertion}}
+\index{flag\_assertion@{flag\_assertion}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{flag\_assertion}{flag\_assertion}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+assertion}
+
+
+
+Flag raised when an assertion has occured. 
+
+\mbox{\Hypertarget{main_8c_a7ab3cdc6684119650796bf71c8c37b81}\label{main_8c_a7ab3cdc6684119650796bf71c8c37b81}} 
+\index{main.c@{main.c}!flag\_axidma\_rx@{flag\_axidma\_rx}}
+\index{flag\_axidma\_rx@{flag\_axidma\_rx}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{flag\_axidma\_rx}{flag\_axidma\_rx}}
+{\footnotesize\ttfamily int flag\+\_\+axidma\+\_\+rx\mbox{[}4\mbox{]}}
+
+
+
+Array of flag, one for each P\+MT. 
+
+\mbox{\Hypertarget{main_8c_a92815e63a8bb041c9594c7229d49cd89}\label{main_8c_a92815e63a8bb041c9594c7229d49cd89}} 
+\index{main.c@{main.c}!flag\_scu\_timer@{flag\_scu\_timer}}
+\index{flag\_scu\_timer@{flag\_scu\_timer}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{flag\_scu\_timer}{flag\_scu\_timer}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+scu\+\_\+timer}
+
+
+
+Flag raised when the S\+CU timer overflows. 
+
+\mbox{\Hypertarget{main_8c_ae1142987fecfa0c02e7edfb9f539805b}\label{main_8c_ae1142987fecfa0c02e7edfb9f539805b}} 
+\index{main.c@{main.c}!flag\_ttcps\_timer@{flag\_ttcps\_timer}}
+\index{flag\_ttcps\_timer@{flag\_ttcps\_timer}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{flag\_ttcps\_timer}{flag\_ttcps\_timer}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+ttcps\+\_\+timer}
+
+
+
+Flag raised when the Triple Timer Counter overflows. 
+
+\mbox{\Hypertarget{main_8c_a68bc1b11e54681f4601358507aa9a3ad}\label{main_8c_a68bc1b11e54681f4601358507aa9a3ad}} 
+\index{main.c@{main.c}!flag\_while\_loop@{flag\_while\_loop}}
+\index{flag\_while\_loop@{flag\_while\_loop}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{flag\_while\_loop}{flag\_while\_loop}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+while\+\_\+loop}
+
+
+
+Flag raised when the program has entered the while loop. 
+
+\mbox{\Hypertarget{main_8c_ac3a118de77182fc96c16057fb7f75ec1}\label{main_8c_ac3a118de77182fc96c16057fb7f75ec1}} 
+\index{main.c@{main.c}!get\_20\_windows\_flag@{get\_20\_windows\_flag}}
+\index{get\_20\_windows\_flag@{get\_20\_windows\_flag}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{get\_20\_windows\_flag}{get\_20\_windows\_flag}}
+{\footnotesize\ttfamily volatile bool get\+\_\+20\+\_\+windows\+\_\+flag}
+
+
+
+Flag raised when the user send the command \char`\"{}get 20 windows\char`\"{}. 
+
+\mbox{\Hypertarget{main_8c_af98df565a37a3db3fcafb5e66e062316}\label{main_8c_af98df565a37a3db3fcafb5e66e062316}} 
+\index{main.c@{main.c}!get\_transfer\_fct\_flag@{get\_transfer\_fct\_flag}}
+\index{get\_transfer\_fct\_flag@{get\_transfer\_fct\_flag}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{get\_transfer\_fct\_flag}{get\_transfer\_fct\_flag}}
+{\footnotesize\ttfamily volatile bool get\+\_\+transfer\+\_\+fct\+\_\+flag}
+
+
+
+Flag raised when the user send the command \char`\"{}get transfer function\char`\"{}. 
+
+\mbox{\Hypertarget{main_8c_a39d2cad95814eb9635cca5310d914893}\label{main_8c_a39d2cad95814eb9635cca5310d914893}} 
+\index{main.c@{main.c}!regptr@{regptr}}
+\index{regptr@{regptr}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{regptr}{regptr}}
+{\footnotesize\ttfamily int$\ast$ regptr}
+
+
+
+Array containing registers of A\+X\+I-\/lite. 
+
+\mbox{\Hypertarget{main_8c_a4d1709746b2e7d35d9bef7ee11f2c790}\label{main_8c_a4d1709746b2e7d35d9bef7ee11f2c790}} 
+\index{main.c@{main.c}!run\_flag@{run\_flag}}
+\index{run\_flag@{run\_flag}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{run\_flag}{run\_flag}}
+{\footnotesize\ttfamily volatile bool run\+\_\+flag}
+
+
+
+Flag reset when the user send the command \char`\"{}stop u\+C\char`\"{}. 
+
+\mbox{\Hypertarget{main_8c_ac285664a88629c304befd42daafc3f90}\label{main_8c_ac285664a88629c304befd42daafc3f90}} 
+\index{main.c@{main.c}!stream\_flag@{stream\_flag}}
+\index{stream\_flag@{stream\_flag}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{stream\_flag}{stream\_flag}}
+{\footnotesize\ttfamily volatile bool stream\+\_\+flag}
+
+
+
+Flag raised when the user send the command \char`\"{}start streaming\char`\"{}. 
+
+\mbox{\Hypertarget{main_8c_afd1f6e74a3d4d317436684e7fa64a8fa}\label{main_8c_afd1f6e74a3d4d317436684e7fa64a8fa}} 
+\index{main.c@{main.c}!WdtScuInstance@{WdtScuInstance}}
+\index{WdtScuInstance@{WdtScuInstance}!main.c@{main.c}}
+\subsubsection{\texorpdfstring{WdtScuInstance}{WdtScuInstance}}
+{\footnotesize\ttfamily X\+Scu\+Wdt Wdt\+Scu\+Instance}
+
+
+
+Instance of the device watchdog. 
+

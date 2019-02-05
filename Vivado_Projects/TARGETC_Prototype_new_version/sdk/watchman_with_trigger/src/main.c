@@ -23,28 +23,61 @@
 #include "get_transfer_fct.h"
 #include "transfer_function.h"
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Pointer on the network interface */
 extern struct netif *echo_netif;
+/** @brief Flag reset when the user send the command "stop uC" */
 extern volatile bool run_flag;
+/** @brief Flag raised when the user send the command "start streaming" */
 extern volatile bool stream_flag;
+/** @brief Flag raised when the Triple Timer Counter overflows */
 extern volatile bool flag_ttcps_timer;
+/** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
+/** @brief Instance of the device watchdog */
 extern XScuWdt WdtScuInstance;
+/** @brief Flag raised when an assertion has occured */
 extern volatile bool flag_assertion;
+/** @brief Flag raised when the program has entered the while loop */
 extern volatile bool flag_while_loop;
+/** @brief Array of flag, one for each PMT */
 extern int flag_axidma_rx[4];
+/** @brief Array containing registers of AXI-lite */
 extern int* regptr;
+/** @brief Flag raised when the user send the command "get transfer function" */
 extern volatile bool get_transfer_fct_flag;
+/** @brief Flag raised when the user send the command "get 20 windows" */
 extern volatile bool get_20_windows_flag;
+/** @brief Flag true when the list is empty (first_element = last_element) */
 extern volatile bool empty_flag;
+/** @brief Pointer on the first element of the list used in trigger mode */
 extern data_list* first_element;
 
-/* Global variables */
+/*********************** Global variables ****************/
+/*********************************************************/
+/** @brief Network interface */
 static struct netif server_netif;
 
 /*** Type definition *************************************************/
-typedef enum clean_state_enum {GLOBAL_VAR=0x1,INTERRUPT=0x2,UDP=0x4} clean_state_en;
-typedef enum dma_stm_enum{IDLE, STREAM, RECOVER_DATA, GET_20_WINDOWS} dma_stm_en;
+/*********************************************************************/
+/**
+ * @brief This is the enumeration of the process to stop when exiting the program
+ */
+typedef enum clean_state_enum {
+	GLOBAL_VAR=0x1,	/**< Free the global variable reserved in function init_global_var */
+	INTERRUPT=0x2,	/**< Stop the interrupt */
+	UDP=0x4,		/**< Close both of the UDP communications */
+} clean_state_en;
+/**
+ * @brief This is the enumeration of the state machine
+ */
+typedef enum dma_stm_enum{
+	IDLE, 				/**< No data to send, waiting on a command */
+	STREAM,				/**< System in mode streaming */
+	GET_TRANSFER_FCT, 	/**< System sending the data for the transfer function in response to the corresponding command */
+	GET_20_WINDOWS,		/**< System sending the data 20 consecutive windows in response to the corresponding command */
+} dma_stm_en;
 
 /*** Function prototypes *********************************************/
 void end_main(clean_state_en state);
@@ -249,7 +282,7 @@ int main()
 				}
 				if(get_transfer_fct_flag && (!stream_flag) && empty_flag){
 					ControlRegisterWrite(CPUMODE_MASK,DISABLE); // mode with NBRWINDOS and FSTWINDOW
-					state_main = RECOVER_DATA;
+					state_main = GET_TRANSFER_FCT;
 				}
 				if(get_20_windows_flag && (!stream_flag) && empty_flag){
 					ControlRegisterWrite(CPUMODE_MASK,DISABLE); // mode with NBRWINDOS and FSTWINDOW
@@ -270,7 +303,7 @@ int main()
 					}
 				}
 				break;
-			case RECOVER_DATA:
+			case GET_TRANSFER_FCT:
 				if(send_data_transfer_fct() == XST_SUCCESS) printf("Recover data pass!\r\n");
 				else{
 					printf("Recover data failed!\n\r");

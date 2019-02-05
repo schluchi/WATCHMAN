@@ -16,6 +16,7 @@
 #include "file_hm.h"
 #include "xscuwdt.h"
 
+/*** Function prototypes *********************************************/
 int init_pedestals(void);
 
 

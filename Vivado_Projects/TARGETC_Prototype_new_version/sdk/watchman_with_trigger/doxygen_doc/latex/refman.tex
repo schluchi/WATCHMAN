@@ -104,6 +104,24 @@
   \newunicodechar{²}{${}^{2}$}% Superscript two
   \newunicodechar{³}{${}^{3}$}% Superscript three
 
+% Hyperlinks (required, but should be loaded last)
+\ifpdf
+  \usepackage[pdftex,pagebackref=true]{hyperref}
+\else
+  \ifxetex
+    \usepackage[pagebackref=true]{hyperref}
+  \else
+    \usepackage[ps2pdf,pagebackref=true]{hyperref}
+  \fi
+\fi
+
+\hypersetup{%
+  colorlinks=true,%
+  linkcolor=blue,%
+  citecolor=blue,%
+  unicode%
+}
+
 % Custom commands
 \newcommand{\clearemptydoublepage}{%
   \newpage{\pagestyle{empty}\cleardoublepage}%
@@ -120,6 +138,10 @@
 \begin{document}
 
 % Titlepage & ToC
+\hypersetup{pageanchor=false,
+             bookmarksnumbered=true,
+             pdfencoding=unicode
+            }
 \pagenumbering{alph}
 \begin{titlepage}
 \vspace*{7cm}
@@ -134,6 +156,7 @@
 \tableofcontents
 \clearemptydoublepage
 \pagenumbering{arabic}
+\hypersetup{pageanchor=true}
 
 %--- Begin generated contents ---
 \chapter{Data Structure Index}
@@ -163,9 +186,20 @@
 \chapter{File Documentation}
 \input{axis__peripheral_8c}
 \input{axis__peripheral_8h}
+\input{data__analysis_8c}
+\input{data__analysis_8h}
+\input{data__test_8c}
+\input{data__test_8h}
+\input{file__hm_8c}
+\input{file__hm_8h}
+\input{get__20__windows_8c}
+\input{get__20__windows_8h}
+\input{get__transfer__fct_8c}
+\input{get__transfer__fct_8h}
 \input{global_8c}
 \input{global_8h}
 \input{_g_m___sub_library_8c}
+\input{_g_m_header_8h}
 \input{iic___d_a_c___l_t_c2657_8c}
 \input{iic___d_a_c___l_t_c2657_8h}
 \input{interrupt_8c}
@@ -173,6 +207,9 @@
 \input{main_8c}
 \input{pedestal_8c}
 \input{pedestal_8h}
+\input{platform__config_8h}
+\input{platform__mb_8c}
+\input{platform__ppc_8c}
 \input{sfp_8c}
 \input{si5324_8c}
 \input{_t_a_r_g_e_t_c___register_map_8c}
@@ -182,6 +219,7 @@
 \input{transfer__function_8c}
 \input{transfer__function_8h}
 \input{udp__peripheral_8c}
+\input{udp__peripheral_8h}
 \input{utility_8c}
 \input{utility_8h}
 %--- End generated contents ---

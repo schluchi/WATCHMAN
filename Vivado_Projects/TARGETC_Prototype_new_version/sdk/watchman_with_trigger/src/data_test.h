@@ -14,11 +14,6 @@
 #include "lwip/udp.h"
 #include "xil_printf.h"
 
-/*** DEFINES *********************************************************/
-#define CHANNEL 16
-#define WINDOW 4
-#define SAMPLE 32
-#define FRAME WINDOW*SAMPLE
 
 /*** Function prototypes *********************************************/
 uint16_t made_frame(char stream[], uint16_t length);

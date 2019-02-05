@@ -1,16 +1,85 @@
-\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/interrupt.h File Reference}
-\label{interrupt_8h}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/interrupt.h@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/interrupt.h}}
+\hypertarget{interrupt_8h}{}\section{interrupt.\+h File Reference}
+\label{interrupt_8h}\index{interrupt.h@{interrupt.h}}
+{\ttfamily \#include \char`\"{}xparameters.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xparameters\+\_\+ps.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xil\+\_\+cache.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xscugic.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lwip/tcp.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xil\+\_\+printf.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}platform\+\_\+config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}netif/xadapter.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xscutimer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xttcps.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xaxidma.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xscuwdt.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}udp\+\_\+peripheral.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}axis\+\_\+peripheral.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}xtime\+\_\+l.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}file\+\_\+hm.\+h\char`\"{}}\newline
 \subsection*{Data Structures}
 \begin{DoxyCompactItemize}
 \item 
-struct \textbf{ Tmr\+Cntr\+Setup\+\_\+st}
-\end{DoxyCompactItemize}
+struct \mbox{\hyperlink{struct_tmr_cntr_setup__st}{Tmr\+Cntr\+Setup\+\_\+st}}
+\begin{DoxyCompactList}\small\item\em Structure containing all the settings to set up the Triple Timer Counter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{interrupt_8h_a90bc74590962865fc1ab7ee1be0f4b64}{I\+N\+T\+C\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}}~X\+P\+A\+R\+\_\+\+S\+C\+U\+G\+I\+C\+\_\+\+S\+I\+N\+G\+L\+E\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID
+\begin{DoxyCompactList}\small\item\em Number of device G\+IC (from xparameters.\+h) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_a0554c32b855b8053c816dd03099d0e6b}{T\+I\+M\+E\+R\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}}~X\+P\+A\+R\+\_\+\+S\+C\+U\+T\+I\+M\+E\+R\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID
+\begin{DoxyCompactList}\small\item\em Base address for device S\+CU timer (from xparameters.\+h) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_ab05985441571e3b2c42988ab788c2d36}{I\+N\+T\+C\+\_\+\+B\+A\+S\+E\+\_\+\+A\+D\+DR}}~X\+P\+A\+R\+\_\+\+S\+C\+U\+G\+I\+C\+\_\+0\+\_\+\+C\+P\+U\+\_\+\+B\+A\+S\+E\+A\+D\+DR
+\begin{DoxyCompactList}\small\item\em Base address for device G\+IC (from xparameters.\+h) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_ae24453ced67a2a84fbe882a55bde176f}{I\+N\+T\+C\+\_\+\+D\+I\+S\+T\+\_\+\+B\+A\+S\+E\+\_\+\+A\+D\+DR}}~X\+P\+A\+R\+\_\+\+S\+C\+U\+G\+I\+C\+\_\+0\+\_\+\+D\+I\+S\+T\+\_\+\+B\+A\+S\+E\+A\+D\+DR
+\begin{DoxyCompactList}\small\item\em Base address for device G\+IC (from xparameters.\+h) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_a6dca599668552cc7abe171e43b7358cb}{T\+I\+M\+E\+R\+\_\+\+I\+R\+P\+T\+\_\+\+I\+N\+TR}}~X\+P\+A\+R\+\_\+\+S\+C\+U\+T\+I\+M\+E\+R\+\_\+\+I\+N\+TR
+\begin{DoxyCompactList}\small\item\em ID of S\+CU timer interrupt. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_ae06c3584afaeb7cf39650e4a88924e97}{T\+T\+C\+\_\+\+T\+I\+C\+K\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}}~X\+P\+A\+R\+\_\+\+X\+T\+T\+C\+P\+S\+\_\+0\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID
+\begin{DoxyCompactList}\small\item\em Number of device T\+TC (from xparameters.\+h) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_a05c43fdf9be555c084addaace65a7a6d}{T\+T\+C\+\_\+\+T\+I\+C\+K\+\_\+\+I\+N\+T\+R\+\_\+\+ID}}~X\+P\+A\+R\+\_\+\+X\+T\+T\+C\+P\+S\+\_\+0\+\_\+\+I\+N\+TR
+\begin{DoxyCompactList}\small\item\em ID of T\+TC interrupt. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_aefabb7903baf9b117523f3441ee0e09d}{T\+T\+C\+P\+S\+\_\+\+T\+I\+M\+E\+R\+\_\+\+F\+R\+E\+Q\+\_\+\+HZ}}~1
+\begin{DoxyCompactList}\small\item\em Frequence for T\+TC. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_a1b753a7e71e20732a35273b0aa6eb184}{W\+D\+T\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}}~X\+P\+A\+R\+\_\+\+S\+C\+U\+W\+D\+T\+\_\+0\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID
+\begin{DoxyCompactList}\small\item\em Base address for device wacthdog (from xparameters.\+h) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_af8723e55617efaa90104ea5b8109a5ce}{W\+D\+T\+\_\+\+I\+R\+P\+T\+\_\+\+I\+N\+TR}}~X\+P\+A\+R\+\_\+\+S\+C\+U\+W\+D\+T\+\_\+\+I\+N\+TR
+\begin{DoxyCompactList}\small\item\em ID of watchdog interrupt. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_a5d0b56de3e0bb5a8e26adcf6c9780eab}{W\+D\+T\+\_\+\+L\+O\+A\+D\+\_\+\+V\+A\+L\+UE}}~0x27\+F\+F\+F\+F\+FE
+\begin{DoxyCompactList}\small\item\em Value to load in watchdog\textquotesingle{}s counter (= 2sec $\vert$ 0x13\+F\+F\+F\+F\+FF = 1sec) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{interrupt_8h_a00d73797e47fc5e3e6714f4f49a81491}{R\+E\+S\+E\+T\+\_\+\+R\+X\+\_\+\+C\+N\+T\+R\+\_\+\+L\+I\+M\+IT}}~400
+\begin{DoxyCompactList}\small\item\em Value for reset counter of lw\+IP connection. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{interrupt_8h_a93acdc4c82d9680ff8067b9a57d9035a}} 
-typedef struct \textbf{ Tmr\+Cntr\+Setup\+\_\+st} {\bfseries Tmr\+Cntr\+Setup}
-\end{DoxyCompactItemize}
+typedef struct \mbox{\hyperlink{struct_tmr_cntr_setup__st}{Tmr\+Cntr\+Setup\+\_\+st}} \mbox{\hyperlink{interrupt_8h_a93acdc4c82d9680ff8067b9a57d9035a}{Tmr\+Cntr\+Setup}}
+\begin{DoxyCompactList}\small\item\em Structure containing all the settings to set up the Triple Timer Counter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{interrupt_8h_a23a03be94ba72e0e76d31f48ec7be68f}{assert\+\_\+callback}} (const char8 $\ast$File, s32 Line)
+\begin{DoxyCompactList}\small\item\em Callback for assertion. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interrupt_8h_af39e94c7f4250d6ff6eb2c54aba799d2}{timer\+\_\+scu\+\_\+callback}} (X\+Scu\+Timer $\ast$Timer\+Instance)
+\begin{DoxyCompactList}\small\item\em Callback for the timer scu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interrupt_8h_a504701eac67361c0b616b1607808bea3}{timer\+\_\+ttcps\+\_\+callback}} (X\+Ttc\+Ps $\ast$Timer\+Instance)
+\begin{DoxyCompactList}\small\item\em Callback for the timer tcps. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interrupt_8h_a1957657af80c822dc8be891be89be686}{axidma\+\_\+rx\+\_\+callback}} (X\+Axi\+Dma $\ast$\mbox{\hyperlink{interrupt_8c_a3049748e366fb5472553cdbe9df0bc58}{Axi\+Dma\+Instance}})
+\begin{DoxyCompactList}\small\item\em Callback when the dma finish a transfer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interrupt_8h_a705bdde8a413627bbe58f5e24e723eb2}{wdt\+\_\+scu\+\_\+callback}} (X\+Scu\+Wdt $\ast$Wdt\+Instance)
+\begin{DoxyCompactList}\small\item\em Callback for the timer wdt. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{interrupt_8h_a592525108f234b17adc80881d9454166}{setup\+\_\+scu\+\_\+timer\+\_\+int}} (void)
+\begin{DoxyCompactList}\small\item\em Setup the timer scu interrupt. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{interrupt_8h_a692f02b0d05726afd233ea337f09ba7c}{setup\+\_\+ttcps\+\_\+timer\+\_\+int}} (void)
+\begin{DoxyCompactList}\small\item\em Setup the timer tcps interrupt. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{interrupt_8h_a68fd84cd1e3ae81bf93d17212974ab9a}{setup\+\_\+axidma\+\_\+int}} (void)
+\begin{DoxyCompactList}\small\item\em Setup the axidma interrupt. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{interrupt_8h_acbe15f5aca74bbc4c10c75772b6f83d2}{interrupts\+\_\+initialization}} (void)
+\begin{DoxyCompactList}\small\item\em Attach all the interrupt to the system and set the priority. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interrupt_8h_a154b837080a092ecbab0735a0254c4b4}{enable\+\_\+interrupts}} ()
+\begin{DoxyCompactList}\small\item\em Enable the interrupts and start the timers. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{interrupt_8h_a94e31fd7a13e5ce5cd73b37003db422b}{devices\+\_\+initialization}} ()
+\begin{DoxyCompactList}\small\item\em Initiate and setup all the interrupts. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{interrupt_8h_aa3db50992b6d2cd29e63b0c2d0f1596c}{cleanup\+\_\+interrupts}} ()
+\begin{DoxyCompactList}\small\item\em Disable all the interrupts and stop the timers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -23,3 +92,396 @@ Anthony Schluchin
 \begin{DoxyVersion}{Version}
 0.\+0 
 \end{DoxyVersion}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{interrupt_8h_ab05985441571e3b2c42988ab788c2d36}\label{interrupt_8h_ab05985441571e3b2c42988ab788c2d36}} 
+\index{interrupt.h@{interrupt.h}!INTC\_BASE\_ADDR@{INTC\_BASE\_ADDR}}
+\index{INTC\_BASE\_ADDR@{INTC\_BASE\_ADDR}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{INTC\_BASE\_ADDR}{INTC\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define I\+N\+T\+C\+\_\+\+B\+A\+S\+E\+\_\+\+A\+D\+DR~X\+P\+A\+R\+\_\+\+S\+C\+U\+G\+I\+C\+\_\+0\+\_\+\+C\+P\+U\+\_\+\+B\+A\+S\+E\+A\+D\+DR}
+
+
+
+Base address for device G\+IC (from xparameters.\+h) 
+
+\mbox{\Hypertarget{interrupt_8h_a90bc74590962865fc1ab7ee1be0f4b64}\label{interrupt_8h_a90bc74590962865fc1ab7ee1be0f4b64}} 
+\index{interrupt.h@{interrupt.h}!INTC\_DEVICE\_ID@{INTC\_DEVICE\_ID}}
+\index{INTC\_DEVICE\_ID@{INTC\_DEVICE\_ID}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{INTC\_DEVICE\_ID}{INTC\_DEVICE\_ID}}
+{\footnotesize\ttfamily \#define I\+N\+T\+C\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID~X\+P\+A\+R\+\_\+\+S\+C\+U\+G\+I\+C\+\_\+\+S\+I\+N\+G\+L\+E\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}
+
+
+
+Number of device G\+IC (from xparameters.\+h) 
+
+\mbox{\Hypertarget{interrupt_8h_ae24453ced67a2a84fbe882a55bde176f}\label{interrupt_8h_ae24453ced67a2a84fbe882a55bde176f}} 
+\index{interrupt.h@{interrupt.h}!INTC\_DIST\_BASE\_ADDR@{INTC\_DIST\_BASE\_ADDR}}
+\index{INTC\_DIST\_BASE\_ADDR@{INTC\_DIST\_BASE\_ADDR}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{INTC\_DIST\_BASE\_ADDR}{INTC\_DIST\_BASE\_ADDR}}
+{\footnotesize\ttfamily \#define I\+N\+T\+C\+\_\+\+D\+I\+S\+T\+\_\+\+B\+A\+S\+E\+\_\+\+A\+D\+DR~X\+P\+A\+R\+\_\+\+S\+C\+U\+G\+I\+C\+\_\+0\+\_\+\+D\+I\+S\+T\+\_\+\+B\+A\+S\+E\+A\+D\+DR}
+
+
+
+Base address for device G\+IC (from xparameters.\+h) 
+
+\mbox{\Hypertarget{interrupt_8h_a00d73797e47fc5e3e6714f4f49a81491}\label{interrupt_8h_a00d73797e47fc5e3e6714f4f49a81491}} 
+\index{interrupt.h@{interrupt.h}!RESET\_RX\_CNTR\_LIMIT@{RESET\_RX\_CNTR\_LIMIT}}
+\index{RESET\_RX\_CNTR\_LIMIT@{RESET\_RX\_CNTR\_LIMIT}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{RESET\_RX\_CNTR\_LIMIT}{RESET\_RX\_CNTR\_LIMIT}}
+{\footnotesize\ttfamily \#define R\+E\+S\+E\+T\+\_\+\+R\+X\+\_\+\+C\+N\+T\+R\+\_\+\+L\+I\+M\+IT~400}
+
+
+
+Value for reset counter of lw\+IP connection. 
+
+\mbox{\Hypertarget{interrupt_8h_a0554c32b855b8053c816dd03099d0e6b}\label{interrupt_8h_a0554c32b855b8053c816dd03099d0e6b}} 
+\index{interrupt.h@{interrupt.h}!TIMER\_DEVICE\_ID@{TIMER\_DEVICE\_ID}}
+\index{TIMER\_DEVICE\_ID@{TIMER\_DEVICE\_ID}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{TIMER\_DEVICE\_ID}{TIMER\_DEVICE\_ID}}
+{\footnotesize\ttfamily \#define T\+I\+M\+E\+R\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID~X\+P\+A\+R\+\_\+\+S\+C\+U\+T\+I\+M\+E\+R\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}
+
+
+
+Base address for device S\+CU timer (from xparameters.\+h) 
+
+\mbox{\Hypertarget{interrupt_8h_a6dca599668552cc7abe171e43b7358cb}\label{interrupt_8h_a6dca599668552cc7abe171e43b7358cb}} 
+\index{interrupt.h@{interrupt.h}!TIMER\_IRPT\_INTR@{TIMER\_IRPT\_INTR}}
+\index{TIMER\_IRPT\_INTR@{TIMER\_IRPT\_INTR}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{TIMER\_IRPT\_INTR}{TIMER\_IRPT\_INTR}}
+{\footnotesize\ttfamily \#define T\+I\+M\+E\+R\+\_\+\+I\+R\+P\+T\+\_\+\+I\+N\+TR~X\+P\+A\+R\+\_\+\+S\+C\+U\+T\+I\+M\+E\+R\+\_\+\+I\+N\+TR}
+
+
+
+ID of S\+CU timer interrupt. 
+
+\mbox{\Hypertarget{interrupt_8h_ae06c3584afaeb7cf39650e4a88924e97}\label{interrupt_8h_ae06c3584afaeb7cf39650e4a88924e97}} 
+\index{interrupt.h@{interrupt.h}!TTC\_TICK\_DEVICE\_ID@{TTC\_TICK\_DEVICE\_ID}}
+\index{TTC\_TICK\_DEVICE\_ID@{TTC\_TICK\_DEVICE\_ID}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{TTC\_TICK\_DEVICE\_ID}{TTC\_TICK\_DEVICE\_ID}}
+{\footnotesize\ttfamily \#define T\+T\+C\+\_\+\+T\+I\+C\+K\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID~X\+P\+A\+R\+\_\+\+X\+T\+T\+C\+P\+S\+\_\+0\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}
+
+
+
+Number of device T\+TC (from xparameters.\+h) 
+
+\mbox{\Hypertarget{interrupt_8h_a05c43fdf9be555c084addaace65a7a6d}\label{interrupt_8h_a05c43fdf9be555c084addaace65a7a6d}} 
+\index{interrupt.h@{interrupt.h}!TTC\_TICK\_INTR\_ID@{TTC\_TICK\_INTR\_ID}}
+\index{TTC\_TICK\_INTR\_ID@{TTC\_TICK\_INTR\_ID}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{TTC\_TICK\_INTR\_ID}{TTC\_TICK\_INTR\_ID}}
+{\footnotesize\ttfamily \#define T\+T\+C\+\_\+\+T\+I\+C\+K\+\_\+\+I\+N\+T\+R\+\_\+\+ID~X\+P\+A\+R\+\_\+\+X\+T\+T\+C\+P\+S\+\_\+0\+\_\+\+I\+N\+TR}
+
+
+
+ID of T\+TC interrupt. 
+
+\mbox{\Hypertarget{interrupt_8h_aefabb7903baf9b117523f3441ee0e09d}\label{interrupt_8h_aefabb7903baf9b117523f3441ee0e09d}} 
+\index{interrupt.h@{interrupt.h}!TTCPS\_TIMER\_FREQ\_HZ@{TTCPS\_TIMER\_FREQ\_HZ}}
+\index{TTCPS\_TIMER\_FREQ\_HZ@{TTCPS\_TIMER\_FREQ\_HZ}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{TTCPS\_TIMER\_FREQ\_HZ}{TTCPS\_TIMER\_FREQ\_HZ}}
+{\footnotesize\ttfamily \#define T\+T\+C\+P\+S\+\_\+\+T\+I\+M\+E\+R\+\_\+\+F\+R\+E\+Q\+\_\+\+HZ~1}
+
+
+
+Frequence for T\+TC. 
+
+\mbox{\Hypertarget{interrupt_8h_a1b753a7e71e20732a35273b0aa6eb184}\label{interrupt_8h_a1b753a7e71e20732a35273b0aa6eb184}} 
+\index{interrupt.h@{interrupt.h}!WDT\_DEVICE\_ID@{WDT\_DEVICE\_ID}}
+\index{WDT\_DEVICE\_ID@{WDT\_DEVICE\_ID}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{WDT\_DEVICE\_ID}{WDT\_DEVICE\_ID}}
+{\footnotesize\ttfamily \#define W\+D\+T\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID~X\+P\+A\+R\+\_\+\+S\+C\+U\+W\+D\+T\+\_\+0\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+ID}
+
+
+
+Base address for device wacthdog (from xparameters.\+h) 
+
+\mbox{\Hypertarget{interrupt_8h_af8723e55617efaa90104ea5b8109a5ce}\label{interrupt_8h_af8723e55617efaa90104ea5b8109a5ce}} 
+\index{interrupt.h@{interrupt.h}!WDT\_IRPT\_INTR@{WDT\_IRPT\_INTR}}
+\index{WDT\_IRPT\_INTR@{WDT\_IRPT\_INTR}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{WDT\_IRPT\_INTR}{WDT\_IRPT\_INTR}}
+{\footnotesize\ttfamily \#define W\+D\+T\+\_\+\+I\+R\+P\+T\+\_\+\+I\+N\+TR~X\+P\+A\+R\+\_\+\+S\+C\+U\+W\+D\+T\+\_\+\+I\+N\+TR}
+
+
+
+ID of watchdog interrupt. 
+
+\mbox{\Hypertarget{interrupt_8h_a5d0b56de3e0bb5a8e26adcf6c9780eab}\label{interrupt_8h_a5d0b56de3e0bb5a8e26adcf6c9780eab}} 
+\index{interrupt.h@{interrupt.h}!WDT\_LOAD\_VALUE@{WDT\_LOAD\_VALUE}}
+\index{WDT\_LOAD\_VALUE@{WDT\_LOAD\_VALUE}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{WDT\_LOAD\_VALUE}{WDT\_LOAD\_VALUE}}
+{\footnotesize\ttfamily \#define W\+D\+T\+\_\+\+L\+O\+A\+D\+\_\+\+V\+A\+L\+UE~0x27\+F\+F\+F\+F\+FE}
+
+
+
+Value to load in watchdog\textquotesingle{}s counter (= 2sec $\vert$ 0x13\+F\+F\+F\+F\+FF = 1sec) 
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{interrupt_8h_a93acdc4c82d9680ff8067b9a57d9035a}\label{interrupt_8h_a93acdc4c82d9680ff8067b9a57d9035a}} 
+\index{interrupt.h@{interrupt.h}!TmrCntrSetup@{TmrCntrSetup}}
+\index{TmrCntrSetup@{TmrCntrSetup}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{TmrCntrSetup}{TmrCntrSetup}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_tmr_cntr_setup__st}{Tmr\+Cntr\+Setup\+\_\+st}}  \mbox{\hyperlink{interrupt_8h_a93acdc4c82d9680ff8067b9a57d9035a}{Tmr\+Cntr\+Setup}}}
+
+
+
+Structure containing all the settings to set up the Triple Timer Counter. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{interrupt_8h_a23a03be94ba72e0e76d31f48ec7be68f}\label{interrupt_8h_a23a03be94ba72e0e76d31f48ec7be68f}} 
+\index{interrupt.h@{interrupt.h}!assert\_callback@{assert\_callback}}
+\index{assert\_callback@{assert\_callback}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{assert\_callback()}{assert\_callback()}}
+{\footnotesize\ttfamily void assert\+\_\+callback (\begin{DoxyParamCaption}\item[{const char8 $\ast$}]{File,  }\item[{s32}]{Line }\end{DoxyParamCaption})}
+
+
+
+Callback for assertion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em File} & filename where the assertion is called \\
+\hline
+{\em Line} & line number in the File\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+When this callback is called, the filename and line number are stored in the log file, and then the programm stops 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a1957657af80c822dc8be891be89be686}\label{interrupt_8h_a1957657af80c822dc8be891be89be686}} 
+\index{interrupt.h@{interrupt.h}!axidma\_rx\_callback@{axidma\_rx\_callback}}
+\index{axidma\_rx\_callback@{axidma\_rx\_callback}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{axidma\_rx\_callback()}{axidma\_rx\_callback()}}
+{\footnotesize\ttfamily void axidma\+\_\+rx\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Axi\+Dma $\ast$}]{Axi\+Dma\+Inst }\end{DoxyParamCaption})}
+
+
+
+Callback when the dma finish a transfer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Axi\+Dma\+Inst} & pointer on the axidma\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_aa3db50992b6d2cd29e63b0c2d0f1596c}\label{interrupt_8h_aa3db50992b6d2cd29e63b0c2d0f1596c}} 
+\index{interrupt.h@{interrupt.h}!cleanup\_interrupts@{cleanup\_interrupts}}
+\index{cleanup\_interrupts@{cleanup\_interrupts}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{cleanup\_interrupts()}{cleanup\_interrupts()}}
+{\footnotesize\ttfamily void cleanup\+\_\+interrupts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Disable all the interrupts and stop the timers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a94e31fd7a13e5ce5cd73b37003db422b}\label{interrupt_8h_a94e31fd7a13e5ce5cd73b37003db422b}} 
+\index{interrupt.h@{interrupt.h}!devices\_initialization@{devices\_initialization}}
+\index{devices\_initialization@{devices\_initialization}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{devices\_initialization()}{devices\_initialization()}}
+{\footnotesize\ttfamily int devices\+\_\+initialization (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initiate and setup all the interrupts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a154b837080a092ecbab0735a0254c4b4}\label{interrupt_8h_a154b837080a092ecbab0735a0254c4b4}} 
+\index{interrupt.h@{interrupt.h}!enable\_interrupts@{enable\_interrupts}}
+\index{enable\_interrupts@{enable\_interrupts}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{enable\_interrupts()}{enable\_interrupts()}}
+{\footnotesize\ttfamily void enable\+\_\+interrupts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Enable the interrupts and start the timers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_acbe15f5aca74bbc4c10c75772b6f83d2}\label{interrupt_8h_acbe15f5aca74bbc4c10c75772b6f83d2}} 
+\index{interrupt.h@{interrupt.h}!interrupts\_initialization@{interrupts\_initialization}}
+\index{interrupts\_initialization@{interrupts\_initialization}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{interrupts\_initialization()}{interrupts\_initialization()}}
+{\footnotesize\ttfamily int interrupts\+\_\+initialization (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Attach all the interrupt to the system and set the priority. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a68fd84cd1e3ae81bf93d17212974ab9a}\label{interrupt_8h_a68fd84cd1e3ae81bf93d17212974ab9a}} 
+\index{interrupt.h@{interrupt.h}!setup\_axidma\_int@{setup\_axidma\_int}}
+\index{setup\_axidma\_int@{setup\_axidma\_int}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{setup\_axidma\_int()}{setup\_axidma\_int()}}
+{\footnotesize\ttfamily int setup\+\_\+axidma\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup the axidma interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a592525108f234b17adc80881d9454166}\label{interrupt_8h_a592525108f234b17adc80881d9454166}} 
+\index{interrupt.h@{interrupt.h}!setup\_scu\_timer\_int@{setup\_scu\_timer\_int}}
+\index{setup\_scu\_timer\_int@{setup\_scu\_timer\_int}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{setup\_scu\_timer\_int()}{setup\_scu\_timer\_int()}}
+{\footnotesize\ttfamily int setup\+\_\+scu\+\_\+timer\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup the timer scu interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a692f02b0d05726afd233ea337f09ba7c}\label{interrupt_8h_a692f02b0d05726afd233ea337f09ba7c}} 
+\index{interrupt.h@{interrupt.h}!setup\_ttcps\_timer\_int@{setup\_ttcps\_timer\_int}}
+\index{setup\_ttcps\_timer\_int@{setup\_ttcps\_timer\_int}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{setup\_ttcps\_timer\_int()}{setup\_ttcps\_timer\_int()}}
+{\footnotesize\ttfamily int setup\+\_\+ttcps\+\_\+timer\+\_\+int (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Setup the timer tcps interrupt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in xstatus.\+h)
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+-\/ 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_af39e94c7f4250d6ff6eb2c54aba799d2}\label{interrupt_8h_af39e94c7f4250d6ff6eb2c54aba799d2}} 
+\index{interrupt.h@{interrupt.h}!timer\_scu\_callback@{timer\_scu\_callback}}
+\index{timer\_scu\_callback@{timer\_scu\_callback}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{timer\_scu\_callback()}{timer\_scu\_callback()}}
+{\footnotesize\ttfamily void timer\+\_\+scu\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Scu\+Timer $\ast$}]{Timer\+Instance }\end{DoxyParamCaption})}
+
+
+
+Callback for the timer scu. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Timer\+Instance} & pointer on the timer\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This callback is called every 250ms 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a504701eac67361c0b616b1607808bea3}\label{interrupt_8h_a504701eac67361c0b616b1607808bea3}} 
+\index{interrupt.h@{interrupt.h}!timer\_ttcps\_callback@{timer\_ttcps\_callback}}
+\index{timer\_ttcps\_callback@{timer\_ttcps\_callback}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{timer\_ttcps\_callback()}{timer\_ttcps\_callback()}}
+{\footnotesize\ttfamily void timer\+\_\+ttcps\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Ttc\+Ps $\ast$}]{Timer\+Instance }\end{DoxyParamCaption})}
+
+
+
+Callback for the timer tcps. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Timer\+Instance} & pointer on the timer\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This callback is called every 1sec 
+\end{DoxyNote}
+\mbox{\Hypertarget{interrupt_8h_a705bdde8a413627bbe58f5e24e723eb2}\label{interrupt_8h_a705bdde8a413627bbe58f5e24e723eb2}} 
+\index{interrupt.h@{interrupt.h}!wdt\_scu\_callback@{wdt\_scu\_callback}}
+\index{wdt\_scu\_callback@{wdt\_scu\_callback}!interrupt.h@{interrupt.h}}
+\subsubsection{\texorpdfstring{wdt\_scu\_callback()}{wdt\_scu\_callback()}}
+{\footnotesize\ttfamily void wdt\+\_\+scu\+\_\+callback (\begin{DoxyParamCaption}\item[{X\+Scu\+Wdt $\ast$}]{Wdt\+Instance }\end{DoxyParamCaption})}
+
+
+
+Callback for the timer wdt. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Wdt\+Instance} & pointer on the timer\textquotesingle{}s instance\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This callback is called only if the wdt is used has a timer (not the case here), used only the configure the wdt period of 1sec 
+\end{DoxyNote}

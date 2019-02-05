@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['test_5ftpg',['test_TPG',['../axis__peripheral_8c.html#afc766563120c4048da238dee8ac2ea49',1,'test_TPG(void):&#160;axis_peripheral.c'],['../axis__peripheral_8h.html#afc766563120c4048da238dee8ac2ea49',1,'test_TPG(void):&#160;axis_peripheral.c']]],
-  ['timer_5fscu_5fcallback',['timer_scu_callback',['../interrupt_8c.html#af39e94c7f4250d6ff6eb2c54aba799d2',1,'interrupt.c']]],
-  ['timer_5fttcps_5fcallback',['timer_ttcps_callback',['../interrupt_8c.html#a504701eac67361c0b616b1607808bea3',1,'interrupt.c']]],
-  ['transfer_5fcmd',['transfer_cmd',['../udp__peripheral_8c.html#a4adcaacf2585294540f0c7bcad70d11f',1,'udp_peripheral.c']]],
-  ['transfer_5fdata',['transfer_data',['../udp__peripheral_8c.html#afc63b6b60c2621e2e57dc85d49adf824',1,'udp_peripheral.c']]]
+  ['print_5fip',['print_ip',['../udp__peripheral_8c.html#acf75bb5ef6105dd155ddc36f84a71606',1,'print_ip(char *msg, ip_addr_t *ip):&#160;udp_peripheral.c'],['../udp__peripheral_8h.html#acf75bb5ef6105dd155ddc36f84a71606',1,'print_ip(char *msg, ip_addr_t *ip):&#160;udp_peripheral.c']]],
+  ['print_5fip_5fsettings',['print_ip_settings',['../udp__peripheral_8c.html#a267907eb6db3b11649fd717d308572fb',1,'print_ip_settings(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw):&#160;udp_peripheral.c'],['../udp__peripheral_8h.html#a267907eb6db3b11649fd717d308572fb',1,'print_ip_settings(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw):&#160;udp_peripheral.c']]]
 ];

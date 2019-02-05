@@ -1,25 +1,65 @@
-\section{data\+\_\+axi\+\_\+st Struct Reference}
+\hypertarget{structdata__axi__st}{}\section{data\+\_\+axi\+\_\+st Struct Reference}
 \label{structdata__axi__st}\index{data\_axi\_st@{data\_axi\_st}}
+
+
+Structure of an element of the list which represent a window.  
+
+
+
+
+{\ttfamily \#include $<$data\+\_\+analysis.\+h$>$}
+
 \subsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{structdata__axi__st_ad0e9cadeb03763deb31888ada41218ab}} 
-uint64\+\_\+t {\bfseries wdo\+\_\+time}
+uint64\+\_\+t \mbox{\hyperlink{structdata__axi__st_ad0e9cadeb03763deb31888ada41218ab}{wdo\+\_\+time}}
 \item 
-\mbox{\label{structdata__axi__st_a4f3f069aeefb33818c1360ddeaec0a41}} 
-uint64\+\_\+t {\bfseries P\+L\+\_\+spare}
+uint64\+\_\+t \mbox{\hyperlink{structdata__axi__st_a4f3f069aeefb33818c1360ddeaec0a41}{P\+L\+\_\+spare}}
 \item 
-\mbox{\label{structdata__axi__st_ab576d88e99031be3391d56e1d8c6b1e7}} 
-uint32\+\_\+t {\bfseries info}
+uint32\+\_\+t \mbox{\hyperlink{structdata__axi__st_ab576d88e99031be3391d56e1d8c6b1e7}{info}}
 \item 
-\mbox{\label{structdata__axi__st_ae7e8b9ad7f59c14e9f28823e9f34495b}} 
-uint32\+\_\+t {\bfseries wdo\+\_\+id}
+uint32\+\_\+t \mbox{\hyperlink{structdata__axi__st_ae7e8b9ad7f59c14e9f28823e9f34495b}{wdo\+\_\+id}}
 \item 
-\mbox{\label{structdata__axi__st_a757fd0618a65f09037a72fb5a5f01088}} 
-uint32\+\_\+t {\bfseries data} [16][32]
+uint32\+\_\+t \mbox{\hyperlink{structdata__axi__st_a757fd0618a65f09037a72fb5a5f01088}{data}} \mbox{[}16\mbox{]}\mbox{[}32\mbox{]}
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+Structure of an element of the list which represent a window. 
+
+\subsection{Field Documentation}
+\mbox{\Hypertarget{structdata__axi__st_a757fd0618a65f09037a72fb5a5f01088}\label{structdata__axi__st_a757fd0618a65f09037a72fb5a5f01088}} 
+\index{data\_axi\_st@{data\_axi\_st}!data@{data}}
+\index{data@{data}!data\_axi\_st@{data\_axi\_st}}
+\subsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily uint32\+\_\+t data\mbox{[}16\mbox{]}\mbox{[}32\mbox{]}}
+
+Voltage measured by every sample \mbox{\Hypertarget{structdata__axi__st_ab576d88e99031be3391d56e1d8c6b1e7}\label{structdata__axi__st_ab576d88e99031be3391d56e1d8c6b1e7}} 
+\index{data\_axi\_st@{data\_axi\_st}!info@{info}}
+\index{info@{info}!data\_axi\_st@{data\_axi\_st}}
+\subsubsection{\texorpdfstring{info}{info}}
+{\footnotesize\ttfamily uint32\+\_\+t info}
+
+Information about the window, bits 0-\/3 T\+R\+IG bits $\vert$ bits 4-\/7 L\+A\+ST bits $\vert$ bits 8-\/11 T\+O\+O\+\_\+\+L\+O\+NG bits (use the defines to access correctly these bits) \mbox{\Hypertarget{structdata__axi__st_a4f3f069aeefb33818c1360ddeaec0a41}\label{structdata__axi__st_a4f3f069aeefb33818c1360ddeaec0a41}} 
+\index{data\_axi\_st@{data\_axi\_st}!PL\_spare@{PL\_spare}}
+\index{PL\_spare@{PL\_spare}!data\_axi\_st@{data\_axi\_st}}
+\subsubsection{\texorpdfstring{PL\_spare}{PL\_spare}}
+{\footnotesize\ttfamily uint64\+\_\+t P\+L\+\_\+spare}
+
+Spare bits for the development used to return the command send to the round buffer \mbox{\Hypertarget{structdata__axi__st_ae7e8b9ad7f59c14e9f28823e9f34495b}\label{structdata__axi__st_ae7e8b9ad7f59c14e9f28823e9f34495b}} 
+\index{data\_axi\_st@{data\_axi\_st}!wdo\_id@{wdo\_id}}
+\index{wdo\_id@{wdo\_id}!data\_axi\_st@{data\_axi\_st}}
+\subsubsection{\texorpdfstring{wdo\_id}{wdo\_id}}
+{\footnotesize\ttfamily uint32\+\_\+t wdo\+\_\+id}
+
+ID of the window (0 to 511) \mbox{\Hypertarget{structdata__axi__st_ad0e9cadeb03763deb31888ada41218ab}\label{structdata__axi__st_ad0e9cadeb03763deb31888ada41218ab}} 
+\index{data\_axi\_st@{data\_axi\_st}!wdo\_time@{wdo\_time}}
+\index{wdo\_time@{wdo\_time}!data\_axi\_st@{data\_axi\_st}}
+\subsubsection{\texorpdfstring{wdo\_time}{wdo\_time}}
+{\footnotesize\ttfamily uint64\+\_\+t wdo\+\_\+time}
+
+Timestampe of the window 
+
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/data\+\_\+analysis.\+h\end{DoxyCompactItemize}
+\mbox{\hyperlink{data__analysis_8h}{data\+\_\+analysis.\+h}}\end{DoxyCompactItemize}

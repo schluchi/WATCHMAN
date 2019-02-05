@@ -7,13 +7,21 @@
 
 #include "pedestal.h"
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Array containing registers of AXI-lite */
 extern int* regptr;
+/** @brief Array containing the pedestal correction for every sample */
 extern uint16_t pedestal[512][16][32];
+/** @brief Flag raised when AXI-DMA has an error */
 extern volatile bool flag_axidma_error;
+/** @brief Flag raised when AXI-DMA has finished an transfer, in OnDemand mode */
 extern volatile bool flag_axidma_rx_done;
+/** @brief Flag raised when the Triple Timer Counter overflows */
 extern volatile bool flag_ttcps_timer;
+/** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
+/** @brief Instance of the device watchdog */
 extern XScuWdt WdtScuInstance;
 
 /****************************************************************************/
@@ -145,6 +153,7 @@ int init_pedestals(void){
 					pedestal[window][i][j]= data[pair][i][j]/10;
 					sqr_val[pair][i][j] = sqr_val[pair][i][j]/10;
 					rms[pair][i][j] = sqrt(sqr_val[pair][i][j] - (pedestal[window][i][j]*pedestal[window][i][j]));
+					//printf("%d, ",pedestal[window][i][j]);
 				}
 			}
 //			if(window == 0){

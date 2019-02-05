@@ -12,15 +12,19 @@
 #include "xtime_l.h"
 
 /*** Type definition *************************************************/
+/*********************************************************************/
+/**
+ * @brief Structure of the timestamp.
+ */
 // Structure to get or set the time
 typedef struct time_cplt_st{
-	int year;
-	int month;
-	int day;
-	int hour;
-	int minute;
-	int second;
-	int milisecond;
+	int year;		/**< Contain the year */
+	int month;		/**< Contain the month */
+	int day;		/**< Contain the day of the month */
+	int hour;		/**< Contain the hour (in 24h hour mode) */
+	int minute;		/**< Contain the minutes */
+	int second;		/**< Contain the second */
+	int milisecond;	/**< Contain the millisecond */
 } time_cplt;
 
 /*** Function prototypes *********************************************/

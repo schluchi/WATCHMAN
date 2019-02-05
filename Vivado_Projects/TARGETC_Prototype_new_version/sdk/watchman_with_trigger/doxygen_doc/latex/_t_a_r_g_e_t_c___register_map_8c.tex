@@ -1,27 +1,26 @@
-\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Register\+Map.c File Reference}
-\label{_t_a_r_g_e_t_c___register_map_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/TARGETC\_RegisterMap.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/TARGETC\_RegisterMap.c}}
+\hypertarget{_t_a_r_g_e_t_c___register_map_8c}{}\section{T\+A\+R\+G\+E\+T\+C\+\_\+\+Register\+Map.\+c File Reference}
+\label{_t_a_r_g_e_t_c___register_map_8c}\index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
 {\ttfamily \#include \char`\"{}T\+A\+R\+G\+E\+T\+C\+\_\+\+Register\+Map.\+h\char`\"{}}\newline
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \textbf{ Set\+Target\+C\+Registers} (void)
+void \mbox{\hyperlink{_t_a_r_g_e_t_c___register_map_8c_a75c207718aac25b039f539a717bedf1c}{Set\+Target\+C\+Registers}} (void)
 \begin{DoxyCompactList}\small\item\em Set the TargetC Registers to default value using A\+XI Lite control. \end{DoxyCompactList}\item 
-void \textbf{ Get\+Target\+C\+Status} ()
+void \mbox{\hyperlink{_t_a_r_g_e_t_c___register_map_8c_a0d2306afc10a029a7860a9397c4a168d}{Get\+Target\+C\+Status}} ()
 \begin{DoxyCompactList}\small\item\em In V\+E\+R\+B\+O\+SE mode, print the status bit. \end{DoxyCompactList}\item 
-void \textbf{ Get\+Target\+C\+Control} ()
+void \mbox{\hyperlink{_t_a_r_g_e_t_c___register_map_8c_a94d4774c370e66c8f467fb25ba84ac0e}{Get\+Target\+C\+Control}} ()
 \begin{DoxyCompactList}\small\item\em In V\+E\+R\+B\+O\+SE mode, print the control bit. \end{DoxyCompactList}\item 
-void \textbf{ Control\+Register\+Write} (int mask, int action\+ID)
+void \mbox{\hyperlink{_t_a_r_g_e_t_c___register_map_8c_ab78e8b74db0db6f7923e5e5b4d07cb9a}{Control\+Register\+Write}} (int mask, int action\+ID)
 \begin{DoxyCompactList}\small\item\em Change a bit in the control register. \end{DoxyCompactList}\item 
-void \textbf{ Write\+Register} (int reg\+ID, int reg\+Data)
+void \mbox{\hyperlink{_t_a_r_g_e_t_c___register_map_8c_a0171687cfd99ad3e2d9b00bdacd88d36}{Write\+Register}} (int reg\+ID, int reg\+Data)
 \begin{DoxyCompactList}\small\item\em Change the value of a T\+A\+R\+G\+ET register. \end{DoxyCompactList}\item 
-void \textbf{ Write\+Read\+Back\+Register} (int reg\+ID, int reg\+Data)
+void \mbox{\hyperlink{_t_a_r_g_e_t_c___register_map_8c_adae92300a2b891ea8cc718bf2904ca74}{Write\+Read\+Back\+Register}} (int reg\+ID, int reg\+Data)
 \begin{DoxyCompactList}\small\item\em Change the value of a T\+A\+R\+G\+ET register and reads it back. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{_t_a_r_g_e_t_c___register_map_8c_a39d2cad95814eb9635cca5310d914893}} 
-int $\ast$ {\bfseries regptr}
-\end{DoxyCompactItemize}
+int $\ast$ \mbox{\hyperlink{_t_a_r_g_e_t_c___register_map_8c_a39d2cad95814eb9635cca5310d914893}{regptr}}
+\begin{DoxyCompactList}\small\item\em Array containing registers of A\+X\+I-\/lite. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -37,10 +36,10 @@ Jonathan Hendriks
 
 
 \subsection{Function Documentation}
-\mbox{\label{_t_a_r_g_e_t_c___register_map_8c_ab78e8b74db0db6f7923e5e5b4d07cb9a}} 
+\mbox{\Hypertarget{_t_a_r_g_e_t_c___register_map_8c_ab78e8b74db0db6f7923e5e5b4d07cb9a}\label{_t_a_r_g_e_t_c___register_map_8c_ab78e8b74db0db6f7923e5e5b4d07cb9a}} 
 \index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}!ControlRegisterWrite@{ControlRegisterWrite}}
 \index{ControlRegisterWrite@{ControlRegisterWrite}!TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
-\subsubsection{ControlRegisterWrite()}
+\subsubsection{\texorpdfstring{ControlRegisterWrite()}{ControlRegisterWrite()}}
 {\footnotesize\ttfamily void Control\+Register\+Write (\begin{DoxyParamCaption}\item[{int}]{mask,  }\item[{int}]{action\+ID }\end{DoxyParamCaption})}
 
 
@@ -51,7 +50,7 @@ Change a bit in the control register.
 \begin{DoxyParams}{Parameters}
 {\em mask} & which to change \\
 \hline
-{\em action\+ID} & set with E\+N\+A\+B\+LE and reset with D\+I\+S\+A\+B\+LE\\
+{\em action\+ID} & set with E\+N\+A\+B\+LE, reset with D\+I\+S\+A\+B\+LE, initialized with I\+N\+IT\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -60,10 +59,10 @@ Change a bit in the control register.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{_t_a_r_g_e_t_c___register_map_8c_a94d4774c370e66c8f467fb25ba84ac0e}} 
+\mbox{\Hypertarget{_t_a_r_g_e_t_c___register_map_8c_a94d4774c370e66c8f467fb25ba84ac0e}\label{_t_a_r_g_e_t_c___register_map_8c_a94d4774c370e66c8f467fb25ba84ac0e}} 
 \index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}!GetTargetCControl@{GetTargetCControl}}
 \index{GetTargetCControl@{GetTargetCControl}!TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
-\subsubsection{GetTargetCControl()}
+\subsubsection{\texorpdfstring{GetTargetCControl()}{GetTargetCControl()}}
 {\footnotesize\ttfamily void Get\+Target\+C\+Control (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
@@ -81,10 +80,10 @@ In V\+E\+R\+B\+O\+SE mode, print the control bit.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{_t_a_r_g_e_t_c___register_map_8c_a0d2306afc10a029a7860a9397c4a168d}} 
+\mbox{\Hypertarget{_t_a_r_g_e_t_c___register_map_8c_a0d2306afc10a029a7860a9397c4a168d}\label{_t_a_r_g_e_t_c___register_map_8c_a0d2306afc10a029a7860a9397c4a168d}} 
 \index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}!GetTargetCStatus@{GetTargetCStatus}}
 \index{GetTargetCStatus@{GetTargetCStatus}!TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
-\subsubsection{GetTargetCStatus()}
+\subsubsection{\texorpdfstring{GetTargetCStatus()}{GetTargetCStatus()}}
 {\footnotesize\ttfamily void Get\+Target\+C\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
@@ -102,10 +101,10 @@ In V\+E\+R\+B\+O\+SE mode, print the status bit.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{_t_a_r_g_e_t_c___register_map_8c_a75c207718aac25b039f539a717bedf1c}} 
+\mbox{\Hypertarget{_t_a_r_g_e_t_c___register_map_8c_a75c207718aac25b039f539a717bedf1c}\label{_t_a_r_g_e_t_c___register_map_8c_a75c207718aac25b039f539a717bedf1c}} 
 \index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}!SetTargetCRegisters@{SetTargetCRegisters}}
 \index{SetTargetCRegisters@{SetTargetCRegisters}!TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
-\subsubsection{SetTargetCRegisters()}
+\subsubsection{\texorpdfstring{SetTargetCRegisters()}{SetTargetCRegisters()}}
 {\footnotesize\ttfamily void Set\+Target\+C\+Registers (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
 
@@ -126,10 +125,10 @@ status
 -\/ \begin{DoxyVerb}\end{DoxyVerb}
  
 \end{DoxyNote}
-\mbox{\label{_t_a_r_g_e_t_c___register_map_8c_adae92300a2b891ea8cc718bf2904ca74}} 
+\mbox{\Hypertarget{_t_a_r_g_e_t_c___register_map_8c_adae92300a2b891ea8cc718bf2904ca74}\label{_t_a_r_g_e_t_c___register_map_8c_adae92300a2b891ea8cc718bf2904ca74}} 
 \index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}!WriteReadBackRegister@{WriteReadBackRegister}}
 \index{WriteReadBackRegister@{WriteReadBackRegister}!TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
-\subsubsection{WriteReadBackRegister()}
+\subsubsection{\texorpdfstring{WriteReadBackRegister()}{WriteReadBackRegister()}}
 {\footnotesize\ttfamily void Write\+Read\+Back\+Register (\begin{DoxyParamCaption}\item[{int}]{reg\+ID,  }\item[{int}]{reg\+Data }\end{DoxyParamCaption})}
 
 
@@ -149,10 +148,10 @@ Change the value of a T\+A\+R\+G\+ET register and reads it back.
 \begin{DoxyNote}{Note}
 Result is printed 
 \end{DoxyNote}
-\mbox{\label{_t_a_r_g_e_t_c___register_map_8c_a0171687cfd99ad3e2d9b00bdacd88d36}} 
+\mbox{\Hypertarget{_t_a_r_g_e_t_c___register_map_8c_a0171687cfd99ad3e2d9b00bdacd88d36}\label{_t_a_r_g_e_t_c___register_map_8c_a0171687cfd99ad3e2d9b00bdacd88d36}} 
 \index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}!WriteRegister@{WriteRegister}}
 \index{WriteRegister@{WriteRegister}!TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
-\subsubsection{WriteRegister()}
+\subsubsection{\texorpdfstring{WriteRegister()}{WriteRegister()}}
 {\footnotesize\ttfamily void Write\+Register (\begin{DoxyParamCaption}\item[{int}]{reg\+ID,  }\item[{int}]{reg\+Data }\end{DoxyParamCaption})}
 
 
@@ -172,3 +171,16 @@ Change the value of a T\+A\+R\+G\+ET register.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{_t_a_r_g_e_t_c___register_map_8c_a39d2cad95814eb9635cca5310d914893}\label{_t_a_r_g_e_t_c___register_map_8c_a39d2cad95814eb9635cca5310d914893}} 
+\index{TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}!regptr@{regptr}}
+\index{regptr@{regptr}!TARGETC\_RegisterMap.c@{TARGETC\_RegisterMap.c}}
+\subsubsection{\texorpdfstring{regptr}{regptr}}
+{\footnotesize\ttfamily int$\ast$ regptr}
+
+
+
+Array containing registers of A\+X\+I-\/lite. 
+

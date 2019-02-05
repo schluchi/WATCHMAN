@@ -7,16 +7,27 @@
 
 #include "axis_peripheral.h"
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Pointer on the first element of the list used in trigger mode */
 extern data_list* first_element;
+/** @brief Pointer on the last element of the list used in trigger mode */
 extern data_list* last_element;
+/** @brief Buffer used to send the data (50 bytes above it reserved for protocol header) */
 extern char* frame_buf;
+/** @brief Array containing registers of AXI-lite */
 extern int* regptr;
+/** @brief Flag raised when AXI-DMA has an error */
 extern volatile bool flag_axidma_error;
+/** @brief Flag raised when AXI-DMA has finished an transfer, in OnDemand mode */
 extern volatile bool flag_axidma_rx_done;
+/** @brief Flag true when the list is empty (first_element = last_element) */
 extern volatile bool empty_flag;
+/** @brief Flag raised when the Triple Timer Counter overflows */
 extern volatile bool flag_ttcps_timer;
+/** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
+/** @brief Instance of the device watchdog */
 extern XScuWdt WdtScuInstance;
 
 /****************************************************************************/

@@ -1,71 +1,58 @@
-\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/udp\+\_\+peripheral.c File Reference}
-\label{udp__peripheral_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/udp\_peripheral.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/udp\_peripheral.c}}
+\hypertarget{udp__peripheral_8c}{}\section{udp\+\_\+peripheral.\+c File Reference}
+\label{udp__peripheral_8c}\index{udp\_peripheral.c@{udp\_peripheral.c}}
 {\ttfamily \#include \char`\"{}udp\+\_\+peripheral.\+h\char`\"{}}\newline
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-err\+\_\+t \textbf{ transfer\+\_\+data} (char $\ast$frame, uint16\+\_\+t length)
+err\+\_\+t \mbox{\hyperlink{udp__peripheral_8c_afc63b6b60c2621e2e57dc85d49adf824}{transfer\+\_\+data}} (char $\ast$frame, uint16\+\_\+t length)
 \begin{DoxyCompactList}\small\item\em Send a frame trought U\+DP. \end{DoxyCompactList}\item 
-err\+\_\+t \textbf{ transfer\+\_\+cmd} (char $\ast$frame, uint16\+\_\+t length)
+err\+\_\+t \mbox{\hyperlink{udp__peripheral_8c_a4adcaacf2585294540f0c7bcad70d11f}{transfer\+\_\+cmd}} (char $\ast$frame, uint16\+\_\+t length)
 \begin{DoxyCompactList}\small\item\em Send a frame trought U\+DP. \end{DoxyCompactList}\item 
-void \textbf{ udp\+\_\+cmd\+\_\+recv} (void $\ast$arg, struct udp\+\_\+pcb $\ast$pcb, struct pbuf $\ast$p, const ip\+\_\+addr\+\_\+t $\ast$addr, u16\+\_\+t port)
+void \mbox{\hyperlink{udp__peripheral_8c_a02046b4aed2b022cd328eacfcf3b048d}{udp\+\_\+cmd\+\_\+recv}} (void $\ast$arg, struct udp\+\_\+pcb $\ast$pcb, struct pbuf $\ast$p, const ip\+\_\+addr\+\_\+t $\ast$addr, u16\+\_\+t port)
 \begin{DoxyCompactList}\small\item\em callback when a command is received \end{DoxyCompactList}\item 
-int \textbf{ command\+\_\+parser} (struct pbuf $\ast$p, char $\ast$return\+\_\+buf)
+int \mbox{\hyperlink{udp__peripheral_8c_a4f92cb22c72184c5a93a83fb85490c24}{command\+\_\+parser}} (struct pbuf $\ast$p, char $\ast$return\+\_\+buf)
 \begin{DoxyCompactList}\small\item\em Process the data received and report a command. \end{DoxyCompactList}\item 
-int \textbf{ setup\+\_\+udp\+\_\+settings} (ip\+\_\+addr\+\_\+t pc\+\_\+ipaddr)
+int \mbox{\hyperlink{udp__peripheral_8c_add95cc1d5556c34f8c40639de2b37057}{setup\+\_\+udp\+\_\+settings}} (ip\+\_\+addr\+\_\+t pc\+\_\+ipaddr)
 \begin{DoxyCompactList}\small\item\em Setup all the settings for the U\+DP communication (data and command) \end{DoxyCompactList}\item 
-int \textbf{ setup\+\_\+pcb\+\_\+data} (ip\+\_\+addr\+\_\+t pc\+\_\+ipaddr, uint16\+\_\+t port)
+int \mbox{\hyperlink{udp__peripheral_8c_a4107e96522a377bc24430731773ee4d9}{setup\+\_\+pcb\+\_\+data}} (ip\+\_\+addr\+\_\+t pc\+\_\+ipaddr, uint16\+\_\+t port)
 \begin{DoxyCompactList}\small\item\em Setup the U\+DP Protocol Control Block for the data frame. \end{DoxyCompactList}\item 
-int \textbf{ setup\+\_\+pcb\+\_\+cmd} (ip\+\_\+addr\+\_\+t pc\+\_\+ipaddr, uint16\+\_\+t port)
+int \mbox{\hyperlink{udp__peripheral_8c_accb1397832cf5c4f1b960e425b00db17}{setup\+\_\+pcb\+\_\+cmd}} (ip\+\_\+addr\+\_\+t pc\+\_\+ipaddr, uint16\+\_\+t port)
 \begin{DoxyCompactList}\small\item\em Setup the U\+DP Protocol Control Block for the command frame. \end{DoxyCompactList}\item 
-void \textbf{ cleanup\+\_\+udp} (void)
+void \mbox{\hyperlink{udp__peripheral_8c_ad88f9f0378dd06c17528eb9f203c2467}{cleanup\+\_\+udp}} (void)
 \begin{DoxyCompactList}\small\item\em Disable and clean the U\+DP P\+CB for the data and the command. \end{DoxyCompactList}\item 
-void \textbf{ print\+\_\+ip} (char $\ast$msg, ip\+\_\+addr\+\_\+t $\ast$ip)
+void \mbox{\hyperlink{udp__peripheral_8c_acf75bb5ef6105dd155ddc36f84a71606}{print\+\_\+ip}} (char $\ast$msg, ip\+\_\+addr\+\_\+t $\ast$ip)
 \begin{DoxyCompactList}\small\item\em Function to print an IP address with a message (used in debug mostly) \end{DoxyCompactList}\item 
-void \textbf{ print\+\_\+ip\+\_\+settings} (ip\+\_\+addr\+\_\+t $\ast$ip, ip\+\_\+addr\+\_\+t $\ast$mask, ip\+\_\+addr\+\_\+t $\ast$gw)
+void \mbox{\hyperlink{udp__peripheral_8c_a267907eb6db3b11649fd717d308572fb}{print\+\_\+ip\+\_\+settings}} (ip\+\_\+addr\+\_\+t $\ast$ip, ip\+\_\+addr\+\_\+t $\ast$mask, ip\+\_\+addr\+\_\+t $\ast$gw)
 \begin{DoxyCompactList}\small\item\em Function to print all the settings of an Internet connection (used in debug mostly) \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{udp__peripheral_8c_ad82e4dd5f2bdcc51b68d9ecf90b6fe86}} 
-struct udp\+\_\+pcb $\ast$ {\bfseries pcb\+\_\+data}
-\item 
-\mbox{\label{udp__peripheral_8c_aa3d0cb57350fe30a5927092475c0faa2}} 
-struct udp\+\_\+pcb $\ast$ {\bfseries pcb\+\_\+cmd}
-\item 
-\mbox{\label{udp__peripheral_8c_a1fe64ecef353657c532741807aa947ca}} 
-struct pbuf $\ast$ {\bfseries buf\+\_\+data}
-\item 
-\mbox{\label{udp__peripheral_8c_ae28b199c6f079cd3546d2263812f69e3}} 
-struct pbuf $\ast$ {\bfseries buf\+\_\+cmd}
-\item 
-\mbox{\label{udp__peripheral_8c_a3d99f75279bc0e1ed6ae24ad1f92b3fb}} 
-volatile int {\bfseries count\+\_\+ttcps\+\_\+timer}
-\item 
-\mbox{\label{udp__peripheral_8c_a6f03c2bee8cf4ef8c4319f1f60561ad1}} 
-volatile int {\bfseries count\+\_\+scu\+\_\+timer}
-\item 
-\mbox{\label{udp__peripheral_8c_a5655744cbf3859b8d3279d4a3a22ce90}} 
-int {\bfseries nbre\+\_\+of\+\_\+bytes}
-\item 
-\mbox{\label{udp__peripheral_8c_a4d1709746b2e7d35d9bef7ee11f2c790}} 
-volatile bool {\bfseries run\+\_\+flag}
-\item 
-\mbox{\label{udp__peripheral_8c_ac285664a88629c304befd42daafc3f90}} 
-volatile bool {\bfseries stream\+\_\+flag}
-\item 
-\mbox{\label{udp__peripheral_8c_af98df565a37a3db3fcafb5e66e062316}} 
-volatile bool {\bfseries get\+\_\+transfer\+\_\+fct\+\_\+flag}
-\item 
-\mbox{\label{udp__peripheral_8c_ac3a118de77182fc96c16057fb7f75ec1}} 
-volatile bool {\bfseries get\+\_\+20\+\_\+windows\+\_\+flag}
-\item 
-\mbox{\label{udp__peripheral_8c_a39d2cad95814eb9635cca5310d914893}} 
-int $\ast$ {\bfseries regptr}
-\item 
-\mbox{\label{udp__peripheral_8c_a1a1226656ce6fe65b369f5516caeb17a}} 
-char $\ast$ {\bfseries frame\+\_\+buf\+\_\+cmd}
-\end{DoxyCompactItemize}
+struct udp\+\_\+pcb $\ast$ \mbox{\hyperlink{udp__peripheral_8c_ad82e4dd5f2bdcc51b68d9ecf90b6fe86}{pcb\+\_\+data}}
+\begin{DoxyCompactList}\small\item\em U\+DP Protocol Control Block for data communication. \end{DoxyCompactList}\item 
+struct udp\+\_\+pcb $\ast$ \mbox{\hyperlink{udp__peripheral_8c_aa3d0cb57350fe30a5927092475c0faa2}{pcb\+\_\+cmd}}
+\begin{DoxyCompactList}\small\item\em U\+DP Protocol Control Block for command communication. \end{DoxyCompactList}\item 
+struct pbuf $\ast$ \mbox{\hyperlink{udp__peripheral_8c_a1fe64ecef353657c532741807aa947ca}{buf\+\_\+data}}
+\begin{DoxyCompactList}\small\item\em Buffer structure used to send data packet. \end{DoxyCompactList}\item 
+struct pbuf $\ast$ \mbox{\hyperlink{udp__peripheral_8c_ae28b199c6f079cd3546d2263812f69e3}{buf\+\_\+cmd}}
+\begin{DoxyCompactList}\small\item\em Buffer structure used to send command packet. \end{DoxyCompactList}\item 
+volatile int \mbox{\hyperlink{udp__peripheral_8c_a3d99f75279bc0e1ed6ae24ad1f92b3fb}{count\+\_\+ttcps\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Counter of the T\+TC. \end{DoxyCompactList}\item 
+volatile int \mbox{\hyperlink{udp__peripheral_8c_a6f03c2bee8cf4ef8c4319f1f60561ad1}{count\+\_\+scu\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Instance of A\+X\+I-\/\+D\+MA. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{udp__peripheral_8c_a5655744cbf3859b8d3279d4a3a22ce90}{nbre\+\_\+of\+\_\+bytes}}
+\begin{DoxyCompactList}\small\item\em Number of bytes sent during streaming (trigger mode) \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{udp__peripheral_8c_a4d1709746b2e7d35d9bef7ee11f2c790}{run\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag reset when the user send the command \char`\"{}stop u\+C\char`\"{}. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{udp__peripheral_8c_ac285664a88629c304befd42daafc3f90}{stream\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the user send the command \char`\"{}start streaming\char`\"{}. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{udp__peripheral_8c_af98df565a37a3db3fcafb5e66e062316}{get\+\_\+transfer\+\_\+fct\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the user send the command \char`\"{}get transfer function\char`\"{}. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{udp__peripheral_8c_ac3a118de77182fc96c16057fb7f75ec1}{get\+\_\+20\+\_\+windows\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the user send the command \char`\"{}get 20 windows\char`\"{}. \end{DoxyCompactList}\item 
+int $\ast$ \mbox{\hyperlink{udp__peripheral_8c_a39d2cad95814eb9635cca5310d914893}{regptr}}
+\begin{DoxyCompactList}\small\item\em Array containing registers of A\+X\+I-\/lite. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{udp__peripheral_8c_a1a1226656ce6fe65b369f5516caeb17a}{frame\+\_\+buf\+\_\+cmd}}
+\begin{DoxyCompactList}\small\item\em Buffer used to send the command (50 bytes above it reserved for protocol header) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -81,10 +68,10 @@ Anthony Schluchin
 
 
 \subsection{Function Documentation}
-\mbox{\label{udp__peripheral_8c_ad88f9f0378dd06c17528eb9f203c2467}} 
+\mbox{\Hypertarget{udp__peripheral_8c_ad88f9f0378dd06c17528eb9f203c2467}\label{udp__peripheral_8c_ad88f9f0378dd06c17528eb9f203c2467}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!cleanup\_udp@{cleanup\_udp}}
 \index{cleanup\_udp@{cleanup\_udp}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{cleanup\_udp()}
+\subsubsection{\texorpdfstring{cleanup\_udp()}{cleanup\_udp()}}
 {\footnotesize\ttfamily void cleanup\+\_\+udp (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
 
@@ -102,10 +89,10 @@ None
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_a4f92cb22c72184c5a93a83fb85490c24}} 
+\mbox{\Hypertarget{udp__peripheral_8c_a4f92cb22c72184c5a93a83fb85490c24}\label{udp__peripheral_8c_a4f92cb22c72184c5a93a83fb85490c24}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!command\_parser@{command\_parser}}
 \index{command\_parser@{command\_parser}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{command\_parser()}
+\subsubsection{\texorpdfstring{command\_parser()}{command\_parser()}}
 {\footnotesize\ttfamily int command\+\_\+parser (\begin{DoxyParamCaption}\item[{struct pbuf $\ast$}]{p,  }\item[{char $\ast$}]{return\+\_\+buf }\end{DoxyParamCaption})}
 
 
@@ -125,10 +112,10 @@ Process the data received and report a command.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_acf75bb5ef6105dd155ddc36f84a71606}} 
+\mbox{\Hypertarget{udp__peripheral_8c_acf75bb5ef6105dd155ddc36f84a71606}\label{udp__peripheral_8c_acf75bb5ef6105dd155ddc36f84a71606}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!print\_ip@{print\_ip}}
 \index{print\_ip@{print\_ip}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{print\_ip()}
+\subsubsection{\texorpdfstring{print\_ip()}{print\_ip()}}
 {\footnotesize\ttfamily void print\+\_\+ip (\begin{DoxyParamCaption}\item[{char $\ast$}]{msg,  }\item[{ip\+\_\+addr\+\_\+t $\ast$}]{ip }\end{DoxyParamCaption})}
 
 
@@ -148,10 +135,10 @@ None
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_a267907eb6db3b11649fd717d308572fb}} 
+\mbox{\Hypertarget{udp__peripheral_8c_a267907eb6db3b11649fd717d308572fb}\label{udp__peripheral_8c_a267907eb6db3b11649fd717d308572fb}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!print\_ip\_settings@{print\_ip\_settings}}
 \index{print\_ip\_settings@{print\_ip\_settings}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{print\_ip\_settings()}
+\subsubsection{\texorpdfstring{print\_ip\_settings()}{print\_ip\_settings()}}
 {\footnotesize\ttfamily void print\+\_\+ip\+\_\+settings (\begin{DoxyParamCaption}\item[{ip\+\_\+addr\+\_\+t $\ast$}]{ip,  }\item[{ip\+\_\+addr\+\_\+t $\ast$}]{mask,  }\item[{ip\+\_\+addr\+\_\+t $\ast$}]{gw }\end{DoxyParamCaption})}
 
 
@@ -173,10 +160,10 @@ None
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_accb1397832cf5c4f1b960e425b00db17}} 
+\mbox{\Hypertarget{udp__peripheral_8c_accb1397832cf5c4f1b960e425b00db17}\label{udp__peripheral_8c_accb1397832cf5c4f1b960e425b00db17}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!setup\_pcb\_cmd@{setup\_pcb\_cmd}}
 \index{setup\_pcb\_cmd@{setup\_pcb\_cmd}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{setup\_pcb\_cmd()}
+\subsubsection{\texorpdfstring{setup\_pcb\_cmd()}{setup\_pcb\_cmd()}}
 {\footnotesize\ttfamily int setup\+\_\+pcb\+\_\+cmd (\begin{DoxyParamCaption}\item[{ip\+\_\+addr\+\_\+t}]{pc\+\_\+ipaddr,  }\item[{uint16\+\_\+t}]{port }\end{DoxyParamCaption})}
 
 
@@ -196,10 +183,10 @@ Setup the U\+DP Protocol Control Block for the command frame.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_a4107e96522a377bc24430731773ee4d9}} 
+\mbox{\Hypertarget{udp__peripheral_8c_a4107e96522a377bc24430731773ee4d9}\label{udp__peripheral_8c_a4107e96522a377bc24430731773ee4d9}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!setup\_pcb\_data@{setup\_pcb\_data}}
 \index{setup\_pcb\_data@{setup\_pcb\_data}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{setup\_pcb\_data()}
+\subsubsection{\texorpdfstring{setup\_pcb\_data()}{setup\_pcb\_data()}}
 {\footnotesize\ttfamily int setup\+\_\+pcb\+\_\+data (\begin{DoxyParamCaption}\item[{ip\+\_\+addr\+\_\+t}]{pc\+\_\+ipaddr,  }\item[{uint16\+\_\+t}]{port }\end{DoxyParamCaption})}
 
 
@@ -219,10 +206,10 @@ Setup the U\+DP Protocol Control Block for the data frame.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_add95cc1d5556c34f8c40639de2b37057}} 
+\mbox{\Hypertarget{udp__peripheral_8c_add95cc1d5556c34f8c40639de2b37057}\label{udp__peripheral_8c_add95cc1d5556c34f8c40639de2b37057}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!setup\_udp\_settings@{setup\_udp\_settings}}
 \index{setup\_udp\_settings@{setup\_udp\_settings}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{setup\_udp\_settings()}
+\subsubsection{\texorpdfstring{setup\_udp\_settings()}{setup\_udp\_settings()}}
 {\footnotesize\ttfamily int setup\+\_\+udp\+\_\+settings (\begin{DoxyParamCaption}\item[{ip\+\_\+addr\+\_\+t}]{pc\+\_\+ipaddr }\end{DoxyParamCaption})}
 
 
@@ -240,10 +227,10 @@ Setup all the settings for the U\+DP communication (data and command)
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_a4adcaacf2585294540f0c7bcad70d11f}} 
+\mbox{\Hypertarget{udp__peripheral_8c_a4adcaacf2585294540f0c7bcad70d11f}\label{udp__peripheral_8c_a4adcaacf2585294540f0c7bcad70d11f}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!transfer\_cmd@{transfer\_cmd}}
 \index{transfer\_cmd@{transfer\_cmd}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{transfer\_cmd()}
+\subsubsection{\texorpdfstring{transfer\_cmd()}{transfer\_cmd()}}
 {\footnotesize\ttfamily err\+\_\+t transfer\+\_\+cmd (\begin{DoxyParamCaption}\item[{char $\ast$}]{frame,  }\item[{uint16\+\_\+t}]{length }\end{DoxyParamCaption})}
 
 
@@ -261,12 +248,12 @@ Send a frame trought U\+DP.
 type err\+\_\+enum\+\_\+t\+: enumaration from err.\+h file
 \end{DoxyReturn}
 \begin{DoxyNote}{Note}
-frame must take in consideration the header ex\+: for a buffer of size 6 char$\ast$ test\+\_\+array = (char $\ast$)malloc(6 + B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+ZE); and then transfer\+\_\+data(\&test\+\_\+array[\+B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+Z\+E], 6) 
+frame must take in consideration the header ex\+: for a buffer of size 6 char$\ast$ test\+\_\+array = (char $\ast$)malloc(6 + B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+ZE); and then transfer\+\_\+data(\&test\+\_\+array\mbox{[}\+B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+Z\+E\mbox{]}, 6) 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_afc63b6b60c2621e2e57dc85d49adf824}} 
+\mbox{\Hypertarget{udp__peripheral_8c_afc63b6b60c2621e2e57dc85d49adf824}\label{udp__peripheral_8c_afc63b6b60c2621e2e57dc85d49adf824}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!transfer\_data@{transfer\_data}}
 \index{transfer\_data@{transfer\_data}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{transfer\_data()}
+\subsubsection{\texorpdfstring{transfer\_data()}{transfer\_data()}}
 {\footnotesize\ttfamily err\+\_\+t transfer\+\_\+data (\begin{DoxyParamCaption}\item[{char $\ast$}]{frame,  }\item[{uint16\+\_\+t}]{length }\end{DoxyParamCaption})}
 
 
@@ -284,12 +271,12 @@ Send a frame trought U\+DP.
 type err\+\_\+enum\+\_\+t\+: enumaration from err.\+h file
 \end{DoxyReturn}
 \begin{DoxyNote}{Note}
-frame must take in consideration the header ex\+: for a buffer of size 6 char$\ast$ test\+\_\+array = (char $\ast$)malloc(6 + B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+ZE); and then transfer\+\_\+data(\&test\+\_\+array[\+B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+Z\+E], 6) 
+frame must take in consideration the header ex\+: for a buffer of size 6 char$\ast$ test\+\_\+array = (char $\ast$)malloc(6 + B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+ZE); and then transfer\+\_\+data(\&test\+\_\+array\mbox{[}\+B\+U\+F\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+S\+I\+Z\+E\mbox{]}, 6) 
 \end{DoxyNote}
-\mbox{\label{udp__peripheral_8c_a02046b4aed2b022cd328eacfcf3b048d}} 
+\mbox{\Hypertarget{udp__peripheral_8c_a02046b4aed2b022cd328eacfcf3b048d}\label{udp__peripheral_8c_a02046b4aed2b022cd328eacfcf3b048d}} 
 \index{udp\_peripheral.c@{udp\_peripheral.c}!udp\_cmd\_recv@{udp\_cmd\_recv}}
 \index{udp\_cmd\_recv@{udp\_cmd\_recv}!udp\_peripheral.c@{udp\_peripheral.c}}
-\subsubsection{udp\_cmd\_recv()}
+\subsubsection{\texorpdfstring{udp\_cmd\_recv()}{udp\_cmd\_recv()}}
 {\footnotesize\ttfamily void udp\+\_\+cmd\+\_\+recv (\begin{DoxyParamCaption}\item[{void $\ast$}]{arg,  }\item[{struct udp\+\_\+pcb $\ast$}]{pcb,  }\item[{struct pbuf $\ast$}]{p,  }\item[{const ip\+\_\+addr\+\_\+t $\ast$}]{addr,  }\item[{u16\+\_\+t}]{port }\end{DoxyParamCaption})}
 
 
@@ -315,3 +302,136 @@ None
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{udp__peripheral_8c_ae28b199c6f079cd3546d2263812f69e3}\label{udp__peripheral_8c_ae28b199c6f079cd3546d2263812f69e3}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!buf\_cmd@{buf\_cmd}}
+\index{buf\_cmd@{buf\_cmd}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{buf\_cmd}{buf\_cmd}}
+{\footnotesize\ttfamily struct pbuf$\ast$ buf\+\_\+cmd}
+
+
+
+Buffer structure used to send command packet. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_a1fe64ecef353657c532741807aa947ca}\label{udp__peripheral_8c_a1fe64ecef353657c532741807aa947ca}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!buf\_data@{buf\_data}}
+\index{buf\_data@{buf\_data}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{buf\_data}{buf\_data}}
+{\footnotesize\ttfamily struct pbuf$\ast$ buf\+\_\+data}
+
+
+
+Buffer structure used to send data packet. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_a6f03c2bee8cf4ef8c4319f1f60561ad1}\label{udp__peripheral_8c_a6f03c2bee8cf4ef8c4319f1f60561ad1}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!count\_scu\_timer@{count\_scu\_timer}}
+\index{count\_scu\_timer@{count\_scu\_timer}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{count\_scu\_timer}{count\_scu\_timer}}
+{\footnotesize\ttfamily volatile int count\+\_\+scu\+\_\+timer}
+
+
+
+Instance of A\+X\+I-\/\+D\+MA. 
+
+Instance of A\+X\+I-\/\+D\+MA. \mbox{\Hypertarget{udp__peripheral_8c_a3d99f75279bc0e1ed6ae24ad1f92b3fb}\label{udp__peripheral_8c_a3d99f75279bc0e1ed6ae24ad1f92b3fb}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!count\_ttcps\_timer@{count\_ttcps\_timer}}
+\index{count\_ttcps\_timer@{count\_ttcps\_timer}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{count\_ttcps\_timer}{count\_ttcps\_timer}}
+{\footnotesize\ttfamily volatile int count\+\_\+ttcps\+\_\+timer}
+
+
+
+Counter of the T\+TC. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_a1a1226656ce6fe65b369f5516caeb17a}\label{udp__peripheral_8c_a1a1226656ce6fe65b369f5516caeb17a}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!frame\_buf\_cmd@{frame\_buf\_cmd}}
+\index{frame\_buf\_cmd@{frame\_buf\_cmd}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{frame\_buf\_cmd}{frame\_buf\_cmd}}
+{\footnotesize\ttfamily char$\ast$ frame\+\_\+buf\+\_\+cmd}
+
+
+
+Buffer used to send the command (50 bytes above it reserved for protocol header) 
+
+\mbox{\Hypertarget{udp__peripheral_8c_ac3a118de77182fc96c16057fb7f75ec1}\label{udp__peripheral_8c_ac3a118de77182fc96c16057fb7f75ec1}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!get\_20\_windows\_flag@{get\_20\_windows\_flag}}
+\index{get\_20\_windows\_flag@{get\_20\_windows\_flag}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{get\_20\_windows\_flag}{get\_20\_windows\_flag}}
+{\footnotesize\ttfamily volatile bool get\+\_\+20\+\_\+windows\+\_\+flag}
+
+
+
+Flag raised when the user send the command \char`\"{}get 20 windows\char`\"{}. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_af98df565a37a3db3fcafb5e66e062316}\label{udp__peripheral_8c_af98df565a37a3db3fcafb5e66e062316}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!get\_transfer\_fct\_flag@{get\_transfer\_fct\_flag}}
+\index{get\_transfer\_fct\_flag@{get\_transfer\_fct\_flag}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{get\_transfer\_fct\_flag}{get\_transfer\_fct\_flag}}
+{\footnotesize\ttfamily volatile bool get\+\_\+transfer\+\_\+fct\+\_\+flag}
+
+
+
+Flag raised when the user send the command \char`\"{}get transfer function\char`\"{}. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_a5655744cbf3859b8d3279d4a3a22ce90}\label{udp__peripheral_8c_a5655744cbf3859b8d3279d4a3a22ce90}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!nbre\_of\_bytes@{nbre\_of\_bytes}}
+\index{nbre\_of\_bytes@{nbre\_of\_bytes}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{nbre\_of\_bytes}{nbre\_of\_bytes}}
+{\footnotesize\ttfamily int nbre\+\_\+of\+\_\+bytes}
+
+
+
+Number of bytes sent during streaming (trigger mode) 
+
+\mbox{\Hypertarget{udp__peripheral_8c_aa3d0cb57350fe30a5927092475c0faa2}\label{udp__peripheral_8c_aa3d0cb57350fe30a5927092475c0faa2}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!pcb\_cmd@{pcb\_cmd}}
+\index{pcb\_cmd@{pcb\_cmd}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{pcb\_cmd}{pcb\_cmd}}
+{\footnotesize\ttfamily struct udp\+\_\+pcb$\ast$ pcb\+\_\+cmd}
+
+
+
+U\+DP Protocol Control Block for command communication. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_ad82e4dd5f2bdcc51b68d9ecf90b6fe86}\label{udp__peripheral_8c_ad82e4dd5f2bdcc51b68d9ecf90b6fe86}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!pcb\_data@{pcb\_data}}
+\index{pcb\_data@{pcb\_data}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{pcb\_data}{pcb\_data}}
+{\footnotesize\ttfamily struct udp\+\_\+pcb$\ast$ pcb\+\_\+data}
+
+
+
+U\+DP Protocol Control Block for data communication. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_a39d2cad95814eb9635cca5310d914893}\label{udp__peripheral_8c_a39d2cad95814eb9635cca5310d914893}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!regptr@{regptr}}
+\index{regptr@{regptr}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{regptr}{regptr}}
+{\footnotesize\ttfamily int$\ast$ regptr}
+
+
+
+Array containing registers of A\+X\+I-\/lite. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_a4d1709746b2e7d35d9bef7ee11f2c790}\label{udp__peripheral_8c_a4d1709746b2e7d35d9bef7ee11f2c790}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!run\_flag@{run\_flag}}
+\index{run\_flag@{run\_flag}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{run\_flag}{run\_flag}}
+{\footnotesize\ttfamily volatile bool run\+\_\+flag}
+
+
+
+Flag reset when the user send the command \char`\"{}stop u\+C\char`\"{}. 
+
+\mbox{\Hypertarget{udp__peripheral_8c_ac285664a88629c304befd42daafc3f90}\label{udp__peripheral_8c_ac285664a88629c304befd42daafc3f90}} 
+\index{udp\_peripheral.c@{udp\_peripheral.c}!stream\_flag@{stream\_flag}}
+\index{stream\_flag@{stream\_flag}!udp\_peripheral.c@{udp\_peripheral.c}}
+\subsubsection{\texorpdfstring{stream\_flag}{stream\_flag}}
+{\footnotesize\ttfamily volatile bool stream\+\_\+flag}
+
+
+
+Flag raised when the user send the command \char`\"{}start streaming\char`\"{}. 
+

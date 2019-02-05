@@ -24,7 +24,10 @@
 #include "xscuwdt.h"
 
 /*** DEFINES *********************************************************/
+/*********************************************************************/
+/** @brief Data frame contains extracted features (for the receipter) */
 #define FEATURES_ID			0
+/** @brief Data frame contains the full waveform (for the receipter) */
 #define FULL_WAVEFORM_ID	1
 
 /*** Function prototypes *********************************************/

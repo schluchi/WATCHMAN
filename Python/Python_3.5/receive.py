@@ -34,17 +34,17 @@ class Watchman_graphic_window():
         ## Contain the port number for UDP communication
         self.UDP_PORT = 8
         ## Contain the number of hit for every channel, list ploted in hitmap graphic
-        self.hit_per_ch = [9,3,7,7,1,2,6,8,4,5,6,6,2,1,0,4]#[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        self.hit_per_ch = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # for image [9,3,7,7,1,2,6,8,4,5,6,6,2,1,0,4]
         ## Contain the 5 different amplitudes repartition for every channel, list plot in amplitude graphic
         self.amplitude = []
         for i in range(16):
             self.amplitude.append([0, 0, 0, 0, 0])
-        self.amplitude[0]=[0,1,4,2,0]
+        # for image self.amplitude[0]=[0,1,4,2,0]
         ## Contain the 5 different times repartition for every channel, list plot in time graphic
         self.time = []
         for i in range(16):
             self.time.append([0, 0, 0, 0, 0])
-        self.time[0]=[1,0,4,2,2]
+        # for image self.time[0]=[1,0,4,2,2]
         ## Contain every channel, used for the list box and to update the graphic's title
         self.combolist = ["CH0", "CH1", "CH2", "CH3", "CH4", "CH5", "CH6", "CH7", "CH8", "CH9", "CH10", "CH11", "CH12", "CH13", "CH14", "CH15"]
         ## Contain which channel is currently choosed by the user

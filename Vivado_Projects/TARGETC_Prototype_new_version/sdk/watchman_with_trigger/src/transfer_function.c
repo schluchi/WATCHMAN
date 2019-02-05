@@ -7,14 +7,23 @@
 
 #include "transfer_function.h"
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Array containing registers of AXI-lite */
 extern int* regptr;
+/** @brief Flag raised when AXI-DMA has an error */
 extern volatile bool flag_axidma_error;
+/** @brief Flag raised when AXI-DMA has finished an transfer, in OnDemand mode */
 extern volatile bool flag_axidma_rx_done;
+/** @brief Array containing the pedestal correction for every sample */
 extern uint16_t pedestal[512][16][32];
+/** @brief Lookup table to correct the transfer function */
 extern uint16_t lookup_table[2048];
+/** @brief Flag raised when the Triple Timer Counter overflows */
 extern volatile bool flag_ttcps_timer;
+/** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
+/** @brief Instance of the device watchdog */
 extern XScuWdt WdtScuInstance;
 
 /****************************************************************************/
@@ -150,7 +159,7 @@ int init_transfer_function(void){
 	for(int i=range_min; i<range_max; i++) DataX.element[i-range_min] = data_tmp[i];
 	DataX.size = range_max-range_min;
 	DataY.size = range_max-range_min;
-//	for(int i=range_min; i<range_max; i++) DataY.element[i-range_min] = i*0.25;
+	for(int i=range_min; i<range_max; i++) DataY.element[i-range_min] = i*0.25;
 //	printf("DataX:\r\n[");
 //	for(int i=0; i<(DataX.size-1); i++) printf("%.17g, ", DataX.element[i]);
 //	printf("%.17g]\r\n", DataX.element[DataX.size-1]);

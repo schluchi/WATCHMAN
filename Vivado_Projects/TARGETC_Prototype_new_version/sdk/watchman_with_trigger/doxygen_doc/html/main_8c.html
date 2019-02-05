@@ -5,10 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Watchman_software: C:/Users/antho/Documents/WATCHMAN/Vivado_Projects/TARGETC_Prototype_new_version/sdk/watchman_with_trigger/src/main.c File Reference</title>
+<title>Watchman_software: main.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -45,6 +53,23 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('main_8c.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -59,11 +84,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_d522931ffa1371640980b621734a4381.html">Users</a></li><li class="navelem"><a class="el" href="dir_130199d2b8ce7e2642e9ef46625b7a60.html">antho</a></li><li class="navelem"><a class="el" href="dir_e5fc5b830c6b271e0b45985dedc76094.html">Documents</a></li><li class="navelem"><a class="el" href="dir_1d6bb3e9c083bd4aa6ffe6ed169af95a.html">WATCHMAN</a></li><li class="navelem"><a class="el" href="dir_cf2bd2651ddcf8030056c8f5ee28e2c9.html">Vivado_Projects</a></li><li class="navelem"><a class="el" href="dir_48d0825bc163ddc6c8596ab55413aaba.html">TARGETC_Prototype_new_version</a></li><li class="navelem"><a class="el" href="dir_39f6cd86ef896770d3a883315aee6a47.html">sdk</a></li><li class="navelem"><a class="el" href="dir_33f215e5b3734833e11e372a0825b42a.html">watchman_with_trigger</a></li><li class="navelem"><a class="el" href="dir_0b5fc29d33f6fd0520623c3b4919cbdf.html">src</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#typedef-members">Typedefs</a> &#124;
@@ -77,107 +97,456 @@ $(function() {
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &quot;lwip/init.h&quot;</code><br />
 <code>#include &quot;netif/xadapter.h&quot;</code><br />
-<code>#include &quot;platform_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="platform__config_8h_source.html">platform_config.h</a>&quot;</code><br />
 <code>#include &quot;xparameters.h&quot;</code><br />
-<code>#include &quot;udp_peripheral.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="udp__peripheral_8h_source.html">udp_peripheral.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="axis__peripheral_8h_source.html">axis_peripheral.h</a>&quot;</code><br />
-<code>#include &quot;file_hm.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="file__hm_8h_source.html">file_hm.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="iic___d_a_c___l_t_c2657_8h_source.html">iic_DAC_LTC2657.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="pedestal_8h_source.html">pedestal.h</a>&quot;</code><br />
 <code>#include &quot;xtime_l.h&quot;</code><br />
 <code>#include &quot;xscuwdt.h&quot;</code><br />
-<code>#include &quot;get_20_windows.h&quot;</code><br />
-<code>#include &quot;get_transfer_fct.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="get__20__windows_8h_source.html">get_20_windows.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="get__transfer__fct_8h_source.html">get_transfer_fct.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="transfer__function_8h_source.html">transfer_function.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a747618975efd65f2d75229ff858b5942"><td class="memItemLeft" align="right" valign="top"><a id="a747618975efd65f2d75229ff858b5942"></a>
-typedef enum clean_state_enum&#160;</td><td class="memItemRight" valign="bottom"><b>clean_state_en</b></td></tr>
+<tr class="memitem:a747618975efd65f2d75229ff858b5942"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20">clean_state_enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a747618975efd65f2d75229ff858b5942">clean_state_en</a></td></tr>
+<tr class="memdesc:a747618975efd65f2d75229ff858b5942"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the enumeration of the process to stop when exiting the program.  <a href="#a747618975efd65f2d75229ff858b5942">More...</a><br /></td></tr>
 <tr class="separator:a747618975efd65f2d75229ff858b5942"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a970b102bbdd60f6404a88223e16800fb"><td class="memItemLeft" align="right" valign="top"><a id="a970b102bbdd60f6404a88223e16800fb"></a>
-typedef enum dma_stm_enum&#160;</td><td class="memItemRight" valign="bottom"><b>dma_stm_en</b></td></tr>
+<tr class="memitem:a970b102bbdd60f6404a88223e16800fb"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00">dma_stm_enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a970b102bbdd60f6404a88223e16800fb">dma_stm_en</a></td></tr>
+<tr class="memdesc:a970b102bbdd60f6404a88223e16800fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the enumeration of the state machine.  <a href="#a970b102bbdd60f6404a88223e16800fb">More...</a><br /></td></tr>
 <tr class="separator:a970b102bbdd60f6404a88223e16800fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:aeafbc28e24788dc1a79c4f2e7926af20"><td class="memItemLeft" align="right" valign="top"><a id="aeafbc28e24788dc1a79c4f2e7926af20"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>clean_state_enum</b> { <b>GLOBAL_VAR</b> =0x1, 
-<b>INTERRUPT</b> =0x2, 
-<b>UDP</b> =0x4
+<tr class="memitem:aeafbc28e24788dc1a79c4f2e7926af20"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20">clean_state_enum</a> { <a class="el" href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20a19ef5f9231c78b149fdf66276f824876">GLOBAL_VAR</a> =0x1, 
+<a class="el" href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20ad5f5c57f205afd4f9df70a8c4e194b45">INTERRUPT</a> =0x2, 
+<a class="el" href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20adb542475cf9d0636e4225e216cee9ae6">UDP</a> =0x4
  }</td></tr>
+<tr class="memdesc:aeafbc28e24788dc1a79c4f2e7926af20"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the enumeration of the process to stop when exiting the program.  <a href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20">More...</a><br /></td></tr>
 <tr class="separator:aeafbc28e24788dc1a79c4f2e7926af20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14177b2d0dd6999990312dbaeed1de00"><td class="memItemLeft" align="right" valign="top"><a id="a14177b2d0dd6999990312dbaeed1de00"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>dma_stm_enum</b> { <b>IDLE</b>, 
-<b>STREAM</b>, 
-<b>RECOVER_DATA</b>, 
-<b>GET_20_WINDOWS</b>
+<tr class="memitem:a14177b2d0dd6999990312dbaeed1de00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00">dma_stm_enum</a> { <a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00afd6a0e4343048b10646dd2976cc5ad18">IDLE</a>, 
+<a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00a5fbbb70faa90e614c7cd5a487e85ced5">STREAM</a>, 
+<a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00a781c37f88acb6940690bdbf86088c882">GET_TRANSFER_FCT</a>, 
+<a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00ab941c92396b6c11ea21baa063b7e5954">GET_20_WINDOWS</a>
  }</td></tr>
+<tr class="memdesc:a14177b2d0dd6999990312dbaeed1de00"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the enumeration of the state machine.  <a href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00">More...</a><br /></td></tr>
 <tr class="separator:a14177b2d0dd6999990312dbaeed1de00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa08c47b0de738675fd0573b3888e6804"><td class="memItemLeft" align="right" valign="top"><a id="aa08c47b0de738675fd0573b3888e6804"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>end_main</b> (clean_state_en state)</td></tr>
+<tr class="memitem:aa08c47b0de738675fd0573b3888e6804"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa08c47b0de738675fd0573b3888e6804">end_main</a> (<a class="el" href="main_8c.html#a747618975efd65f2d75229ff858b5942">clean_state_en</a> state)</td></tr>
 <tr class="separator:aa08c47b0de738675fd0573b3888e6804"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top"><a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> ()</td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:acd12279932e5216593ee76d4eebdd996"><td class="memItemLeft" align="right" valign="top"><a id="acd12279932e5216593ee76d4eebdd996"></a>
-struct netif *&#160;</td><td class="memItemRight" valign="bottom"><b>echo_netif</b></td></tr>
+<tr class="memitem:acd12279932e5216593ee76d4eebdd996"><td class="memItemLeft" align="right" valign="top">struct netif *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#acd12279932e5216593ee76d4eebdd996">echo_netif</a></td></tr>
+<tr class="memdesc:acd12279932e5216593ee76d4eebdd996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer on the network interface.  <a href="#acd12279932e5216593ee76d4eebdd996">More...</a><br /></td></tr>
 <tr class="separator:acd12279932e5216593ee76d4eebdd996"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d1709746b2e7d35d9bef7ee11f2c790"><td class="memItemLeft" align="right" valign="top"><a id="a4d1709746b2e7d35d9bef7ee11f2c790"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>run_flag</b></td></tr>
+<tr class="memitem:a4d1709746b2e7d35d9bef7ee11f2c790"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a4d1709746b2e7d35d9bef7ee11f2c790">run_flag</a></td></tr>
+<tr class="memdesc:a4d1709746b2e7d35d9bef7ee11f2c790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag reset when the user send the command "stop uC".  <a href="#a4d1709746b2e7d35d9bef7ee11f2c790">More...</a><br /></td></tr>
 <tr class="separator:a4d1709746b2e7d35d9bef7ee11f2c790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac285664a88629c304befd42daafc3f90"><td class="memItemLeft" align="right" valign="top"><a id="ac285664a88629c304befd42daafc3f90"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>stream_flag</b></td></tr>
+<tr class="memitem:ac285664a88629c304befd42daafc3f90"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ac285664a88629c304befd42daafc3f90">stream_flag</a></td></tr>
+<tr class="memdesc:ac285664a88629c304befd42daafc3f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the user send the command "start streaming".  <a href="#ac285664a88629c304befd42daafc3f90">More...</a><br /></td></tr>
 <tr class="separator:ac285664a88629c304befd42daafc3f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1142987fecfa0c02e7edfb9f539805b"><td class="memItemLeft" align="right" valign="top"><a id="ae1142987fecfa0c02e7edfb9f539805b"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>flag_ttcps_timer</b></td></tr>
+<tr class="memitem:ae1142987fecfa0c02e7edfb9f539805b"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae1142987fecfa0c02e7edfb9f539805b">flag_ttcps_timer</a></td></tr>
+<tr class="memdesc:ae1142987fecfa0c02e7edfb9f539805b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the Triple Timer Counter overflows.  <a href="#ae1142987fecfa0c02e7edfb9f539805b">More...</a><br /></td></tr>
 <tr class="separator:ae1142987fecfa0c02e7edfb9f539805b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92815e63a8bb041c9594c7229d49cd89"><td class="memItemLeft" align="right" valign="top"><a id="a92815e63a8bb041c9594c7229d49cd89"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>flag_scu_timer</b></td></tr>
+<tr class="memitem:a92815e63a8bb041c9594c7229d49cd89"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a92815e63a8bb041c9594c7229d49cd89">flag_scu_timer</a></td></tr>
+<tr class="memdesc:a92815e63a8bb041c9594c7229d49cd89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the SCU timer overflows.  <a href="#a92815e63a8bb041c9594c7229d49cd89">More...</a><br /></td></tr>
 <tr class="separator:a92815e63a8bb041c9594c7229d49cd89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd1f6e74a3d4d317436684e7fa64a8fa"><td class="memItemLeft" align="right" valign="top"><a id="afd1f6e74a3d4d317436684e7fa64a8fa"></a>
-XScuWdt&#160;</td><td class="memItemRight" valign="bottom"><b>WdtScuInstance</b></td></tr>
+<tr class="memitem:afd1f6e74a3d4d317436684e7fa64a8fa"><td class="memItemLeft" align="right" valign="top">XScuWdt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#afd1f6e74a3d4d317436684e7fa64a8fa">WdtScuInstance</a></td></tr>
+<tr class="memdesc:afd1f6e74a3d4d317436684e7fa64a8fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance of the device watchdog.  <a href="#afd1f6e74a3d4d317436684e7fa64a8fa">More...</a><br /></td></tr>
 <tr class="separator:afd1f6e74a3d4d317436684e7fa64a8fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9ff4df27689ce692fdfe44a8efec098"><td class="memItemLeft" align="right" valign="top"><a id="af9ff4df27689ce692fdfe44a8efec098"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>flag_assertion</b></td></tr>
+<tr class="memitem:af9ff4df27689ce692fdfe44a8efec098"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#af9ff4df27689ce692fdfe44a8efec098">flag_assertion</a></td></tr>
+<tr class="memdesc:af9ff4df27689ce692fdfe44a8efec098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when an assertion has occured.  <a href="#af9ff4df27689ce692fdfe44a8efec098">More...</a><br /></td></tr>
 <tr class="separator:af9ff4df27689ce692fdfe44a8efec098"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68bc1b11e54681f4601358507aa9a3ad"><td class="memItemLeft" align="right" valign="top"><a id="a68bc1b11e54681f4601358507aa9a3ad"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>flag_while_loop</b></td></tr>
+<tr class="memitem:a68bc1b11e54681f4601358507aa9a3ad"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a68bc1b11e54681f4601358507aa9a3ad">flag_while_loop</a></td></tr>
+<tr class="memdesc:a68bc1b11e54681f4601358507aa9a3ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the program has entered the while loop.  <a href="#a68bc1b11e54681f4601358507aa9a3ad">More...</a><br /></td></tr>
 <tr class="separator:a68bc1b11e54681f4601358507aa9a3ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ab3cdc6684119650796bf71c8c37b81"><td class="memItemLeft" align="right" valign="top"><a id="a7ab3cdc6684119650796bf71c8c37b81"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>flag_axidma_rx</b> [4]</td></tr>
+<tr class="memitem:a7ab3cdc6684119650796bf71c8c37b81"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a7ab3cdc6684119650796bf71c8c37b81">flag_axidma_rx</a> [4]</td></tr>
+<tr class="memdesc:a7ab3cdc6684119650796bf71c8c37b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of flag, one for each PMT.  <a href="#a7ab3cdc6684119650796bf71c8c37b81">More...</a><br /></td></tr>
 <tr class="separator:a7ab3cdc6684119650796bf71c8c37b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39d2cad95814eb9635cca5310d914893"><td class="memItemLeft" align="right" valign="top"><a id="a39d2cad95814eb9635cca5310d914893"></a>
-int *&#160;</td><td class="memItemRight" valign="bottom"><b>regptr</b></td></tr>
+<tr class="memitem:a39d2cad95814eb9635cca5310d914893"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a39d2cad95814eb9635cca5310d914893">regptr</a></td></tr>
+<tr class="memdesc:a39d2cad95814eb9635cca5310d914893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array containing registers of AXI-lite.  <a href="#a39d2cad95814eb9635cca5310d914893">More...</a><br /></td></tr>
 <tr class="separator:a39d2cad95814eb9635cca5310d914893"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af98df565a37a3db3fcafb5e66e062316"><td class="memItemLeft" align="right" valign="top"><a id="af98df565a37a3db3fcafb5e66e062316"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_transfer_fct_flag</b></td></tr>
+<tr class="memitem:af98df565a37a3db3fcafb5e66e062316"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#af98df565a37a3db3fcafb5e66e062316">get_transfer_fct_flag</a></td></tr>
+<tr class="memdesc:af98df565a37a3db3fcafb5e66e062316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the user send the command "get transfer function".  <a href="#af98df565a37a3db3fcafb5e66e062316">More...</a><br /></td></tr>
 <tr class="separator:af98df565a37a3db3fcafb5e66e062316"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3a118de77182fc96c16057fb7f75ec1"><td class="memItemLeft" align="right" valign="top"><a id="ac3a118de77182fc96c16057fb7f75ec1"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>get_20_windows_flag</b></td></tr>
+<tr class="memitem:ac3a118de77182fc96c16057fb7f75ec1"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ac3a118de77182fc96c16057fb7f75ec1">get_20_windows_flag</a></td></tr>
+<tr class="memdesc:ac3a118de77182fc96c16057fb7f75ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the user send the command "get 20 windows".  <a href="#ac3a118de77182fc96c16057fb7f75ec1">More...</a><br /></td></tr>
 <tr class="separator:ac3a118de77182fc96c16057fb7f75ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad53968991c134c5dbfc1d0d83e5decdb"><td class="memItemLeft" align="right" valign="top"><a id="ad53968991c134c5dbfc1d0d83e5decdb"></a>
-volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty_flag</b></td></tr>
+<tr class="memitem:ad53968991c134c5dbfc1d0d83e5decdb"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ad53968991c134c5dbfc1d0d83e5decdb">empty_flag</a></td></tr>
+<tr class="memdesc:ad53968991c134c5dbfc1d0d83e5decdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag true when the list is empty (first_element = last_element)  <a href="#ad53968991c134c5dbfc1d0d83e5decdb">More...</a><br /></td></tr>
 <tr class="separator:ad53968991c134c5dbfc1d0d83e5decdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94f01ed55f54f902dc738539df30427e"><td class="memItemLeft" align="right" valign="top"><a id="a94f01ed55f54f902dc738539df30427e"></a>
-<a class="el" href="structdata__list__st.html">data_list</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>first_element</b></td></tr>
+<tr class="memitem:a94f01ed55f54f902dc738539df30427e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="data__analysis_8h.html#a9db432fc1185a85fe322653c4d3f54d5">data_list</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a94f01ed55f54f902dc738539df30427e">first_element</a></td></tr>
+<tr class="memdesc:a94f01ed55f54f902dc738539df30427e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer on the first element of the list used in trigger mode.  <a href="#a94f01ed55f54f902dc738539df30427e">More...</a><br /></td></tr>
 <tr class="separator:a94f01ed55f54f902dc738539df30427e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Anthony Schluchin </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>16th November 2018 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.0 </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a747618975efd65f2d75229ff858b5942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a747618975efd65f2d75229ff858b5942">&#9670;&nbsp;</a></span>clean_state_en</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20">clean_state_enum</a>  <a class="el" href="main_8c.html#a747618975efd65f2d75229ff858b5942">clean_state_en</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This is the enumeration of the process to stop when exiting the program. </p>
+
+</div>
+</div>
+<a id="a970b102bbdd60f6404a88223e16800fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a970b102bbdd60f6404a88223e16800fb">&#9670;&nbsp;</a></span>dma_stm_en</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00">dma_stm_enum</a>  <a class="el" href="main_8c.html#a970b102bbdd60f6404a88223e16800fb">dma_stm_en</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This is the enumeration of the state machine. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="aeafbc28e24788dc1a79c4f2e7926af20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeafbc28e24788dc1a79c4f2e7926af20">&#9670;&nbsp;</a></span>clean_state_enum</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="main_8c.html#aeafbc28e24788dc1a79c4f2e7926af20">clean_state_enum</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This is the enumeration of the process to stop when exiting the program. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aeafbc28e24788dc1a79c4f2e7926af20a19ef5f9231c78b149fdf66276f824876"></a>GLOBAL_VAR&#160;</td><td class="fielddoc"><p>Free the global variable reserved in function init_global_var </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aeafbc28e24788dc1a79c4f2e7926af20ad5f5c57f205afd4f9df70a8c4e194b45"></a>INTERRUPT&#160;</td><td class="fielddoc"><p>Stop the interrupt </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aeafbc28e24788dc1a79c4f2e7926af20adb542475cf9d0636e4225e216cee9ae6"></a>UDP&#160;</td><td class="fielddoc"><p>Close both of the UDP communications </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a14177b2d0dd6999990312dbaeed1de00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14177b2d0dd6999990312dbaeed1de00">&#9670;&nbsp;</a></span>dma_stm_enum</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="main_8c.html#a14177b2d0dd6999990312dbaeed1de00">dma_stm_enum</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This is the enumeration of the state machine. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a14177b2d0dd6999990312dbaeed1de00afd6a0e4343048b10646dd2976cc5ad18"></a>IDLE&#160;</td><td class="fielddoc"><p>No data to send, waiting on a command </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a14177b2d0dd6999990312dbaeed1de00a5fbbb70faa90e614c7cd5a487e85ced5"></a>STREAM&#160;</td><td class="fielddoc"><p>System in mode streaming </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a14177b2d0dd6999990312dbaeed1de00a781c37f88acb6940690bdbf86088c882"></a>GET_TRANSFER_FCT&#160;</td><td class="fielddoc"><p>System sending the data for the transfer function in response to the corresponding command </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a14177b2d0dd6999990312dbaeed1de00ab941c92396b6c11ea21baa063b7e5954"></a>GET_20_WINDOWS&#160;</td><td class="fielddoc"><p>System sending the data 20 consecutive windows in response to the corresponding command </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="aa08c47b0de738675fd0573b3888e6804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa08c47b0de738675fd0573b3888e6804">&#9670;&nbsp;</a></span>end_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void end_main </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="main_8c.html#a747618975efd65f2d75229ff858b5942">clean_state_en</a>&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="acd12279932e5216593ee76d4eebdd996"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd12279932e5216593ee76d4eebdd996">&#9670;&nbsp;</a></span>echo_netif</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct netif* echo_netif</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pointer on the network interface. </p>
+
+</div>
+</div>
+<a id="ad53968991c134c5dbfc1d0d83e5decdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad53968991c134c5dbfc1d0d83e5decdb">&#9670;&nbsp;</a></span>empty_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool empty_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag true when the list is empty (first_element = last_element) </p>
+
+</div>
+</div>
+<a id="a94f01ed55f54f902dc738539df30427e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94f01ed55f54f902dc738539df30427e">&#9670;&nbsp;</a></span>first_element</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="data__analysis_8h.html#a9db432fc1185a85fe322653c4d3f54d5">data_list</a>* first_element</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pointer on the first element of the list used in trigger mode. </p>
+
+</div>
+</div>
+<a id="af9ff4df27689ce692fdfe44a8efec098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9ff4df27689ce692fdfe44a8efec098">&#9670;&nbsp;</a></span>flag_assertion</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool flag_assertion</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when an assertion has occured. </p>
+
+</div>
+</div>
+<a id="a7ab3cdc6684119650796bf71c8c37b81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ab3cdc6684119650796bf71c8c37b81">&#9670;&nbsp;</a></span>flag_axidma_rx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int flag_axidma_rx[4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Array of flag, one for each PMT. </p>
+
+</div>
+</div>
+<a id="a92815e63a8bb041c9594c7229d49cd89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92815e63a8bb041c9594c7229d49cd89">&#9670;&nbsp;</a></span>flag_scu_timer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool flag_scu_timer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the SCU timer overflows. </p>
+
+</div>
+</div>
+<a id="ae1142987fecfa0c02e7edfb9f539805b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1142987fecfa0c02e7edfb9f539805b">&#9670;&nbsp;</a></span>flag_ttcps_timer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool flag_ttcps_timer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the Triple Timer Counter overflows. </p>
+
+</div>
+</div>
+<a id="a68bc1b11e54681f4601358507aa9a3ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68bc1b11e54681f4601358507aa9a3ad">&#9670;&nbsp;</a></span>flag_while_loop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool flag_while_loop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the program has entered the while loop. </p>
+
+</div>
+</div>
+<a id="ac3a118de77182fc96c16057fb7f75ec1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3a118de77182fc96c16057fb7f75ec1">&#9670;&nbsp;</a></span>get_20_windows_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool get_20_windows_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the user send the command "get 20 windows". </p>
+
+</div>
+</div>
+<a id="af98df565a37a3db3fcafb5e66e062316"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af98df565a37a3db3fcafb5e66e062316">&#9670;&nbsp;</a></span>get_transfer_fct_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool get_transfer_fct_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the user send the command "get transfer function". </p>
+
+</div>
+</div>
+<a id="a39d2cad95814eb9635cca5310d914893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39d2cad95814eb9635cca5310d914893">&#9670;&nbsp;</a></span>regptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int* regptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Array containing registers of AXI-lite. </p>
+
+</div>
+</div>
+<a id="a4d1709746b2e7d35d9bef7ee11f2c790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d1709746b2e7d35d9bef7ee11f2c790">&#9670;&nbsp;</a></span>run_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool run_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag reset when the user send the command "stop uC". </p>
+
+</div>
+</div>
+<a id="ac285664a88629c304befd42daafc3f90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac285664a88629c304befd42daafc3f90">&#9670;&nbsp;</a></span>stream_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool stream_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the user send the command "start streaming". </p>
+
+</div>
+</div>
+<a id="afd1f6e74a3d4d317436684e7fa64a8fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd1f6e74a3d4d317436684e7fa64a8fa">&#9670;&nbsp;</a></span>WdtScuInstance</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">XScuWdt WdtScuInstance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Instance of the device watchdog. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.15
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="main_8c.html">main.c</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>
+  </ul>
+</div>
 </body>
 </html>

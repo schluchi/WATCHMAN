@@ -7,8 +7,11 @@
 
 #include "data_analysis.h"
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Array containing the pedestal correction for every sample */
 extern uint16_t pedestal[512][16][32];
+/** @brief Lookup table to correct the transfer function */
 extern uint16_t lookup_table[2048];
 
 /****************************************************************************/

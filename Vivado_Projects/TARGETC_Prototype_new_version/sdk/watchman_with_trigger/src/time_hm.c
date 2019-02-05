@@ -7,7 +7,9 @@
 
 #include "time_hm.h"
 
-// Variable which contain the offset which can be changed with settime_hm
+/*********************** Global variables ****************/
+/*********************************************************/
+/** @brief Variable which contain the offset time. It can be changed with settime_hmr*/
 time_cplt offset_time = {
 	.year = 2000,
 	.month = 1,
@@ -18,9 +20,9 @@ time_cplt offset_time = {
 	.milisecond = 0
 	};
 
-// Variable which contain the value of the XTime_GetTime when the time was set
+/** @brief Variable which contain the offset of the General Timer when the time was set */
 uint64_t offset_counter = 0;
-// "Constant" wich contain the number of day for every month (ex: january = day_per_mont[1])
+/** @bried "Constant" wich contain the number of day for every month (ex: january = day_per_mont[1]) */
 int day_per_month[13] = {(int)NULL, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 /****************************************************************************/

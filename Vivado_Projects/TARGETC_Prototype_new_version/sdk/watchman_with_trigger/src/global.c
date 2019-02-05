@@ -7,33 +7,59 @@
 
 #include "global.h"
 
-/* Global variables */
+/*********************** Global variables ****************/
+/*********************************************************/
+/** @brief Pointer on the network interface */
 struct netif *echo_netif;
+/** @brief Counter of the TTC */
 volatile int count_ttcps_timer;
+/** @brief Counter of the SCU timer*/
 volatile int count_scu_timer;
+/** @brief Flag reset when the user send the command "stop uC" */
 volatile bool run_flag;
+/** @brief Flag raised when the user send the command "start streaming" */
 volatile bool stream_flag;
+/** @brief Flag raised when the user send the command "get transfer function" */
 volatile bool get_transfer_fct_flag;
+/** @brief Flag raised when the user send the command "get 20 windows" */
 volatile bool get_20_windows_flag;
+/** @brief Flag true when the list is empty (first_element = last_element) */
 volatile bool empty_flag;
+/** @brief Flag raised when the Triple Timer Counter overflows */
 volatile bool flag_ttcps_timer;
+/** @brief Flag raised when the SCU timer overflows*/
 volatile bool flag_scu_timer;
+/** @brief Instance of AXI-DMA */
 XAxiDma AxiDmaInstance;
+/** @brief Instance of the device watchdog */
 XScuWdt WdtScuInstance;
+/** @brief Flag raised when AXI-DMA has an error */
 volatile bool flag_axidma_error;
+/** @brief Flag raised when AXI-DMA has finished an transfer, in OnDemand mode */
 volatile bool flag_axidma_rx_done;
+/** @brief Array of flag, one for each PMT */
 int flag_axidma_rx[4];
+/** @brief Number of bytes sent during streaming (trigger mode) */
 int nbre_of_bytes;
+/** @brief Pointer on the first element of the list used in trigger mode */
 data_list* first_element;
+/** @brief Pointer on the last element of the list used in trigger mode */
 data_list* last_element;
+/** @brief Flag raised when an assertion has occured */
 volatile bool flag_assertion;
+/** @brief Flag raised when the program has entered the while loop */
 volatile bool flag_while_loop;
 char* frame_buf_tmp;
+/** @brief Buffer used to send the data (50 bytes above it reserved for protocol header) */
 char* frame_buf;
 char* frame_buf_cmd_tmp;
+/** @brief Buffer used to send the command (50 bytes above it reserved for protocol header) */
 char* frame_buf_cmd;
+/** @brief Array containing registers of AXI-lite */
 int* regptr;
+/** @brief Array containing the pedestal correction for every sample */
 uint16_t pedestal[512][16][32];
+/** @brief Lookup table to correct the transfer function */
 uint16_t lookup_table[2048];
 
 /****************************************************************************/
@@ -86,7 +112,7 @@ int init_global_var(void){
 	}
 	frame_buf_cmd = &frame_buf_cmd_tmp[BUF_HEADER_SIZE];
 	regptr = (int *)XPAR_TARGETC_IP_PROTOTYPE_0_BASEADDR ; //XPAR_TARGETC_INTERFACE_IP_0_BASEADDR;
-	for(i = TC_VDLYTUNE_REG; i<= TC_WL_DIV_REG; i++) regptr[i] = 0;
+	for(i = TC_VDLYTUNE_REG; i<= LAST_REGISTER_ADDR; i++) regptr[i] = 0;
 	return XST_SUCCESS;
 }
 

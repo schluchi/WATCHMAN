@@ -8,8 +8,10 @@
 #include "iic_DAC_LTC2657.h"
 
 
-/* Global variables */
-XIic I2cInstance;		  /* The instance of the IIC device */
+/*********************** Global variables ****************/
+/*********************************************************/
+/** @brief Instance of the I2C device */
+XIic I2cInstance;
 
 /****************************************************************************/
 /**

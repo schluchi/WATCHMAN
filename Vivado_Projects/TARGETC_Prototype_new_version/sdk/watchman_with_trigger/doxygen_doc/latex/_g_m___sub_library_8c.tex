@@ -1,5 +1,5 @@
-\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/\+G\+M\+\_\+\+Sub\+Library.c File Reference}
-\label{_g_m___sub_library_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/GM\_SubLibrary.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/GM\_SubLibrary.c}}
+\hypertarget{_g_m___sub_library_8c}{}\section{G\+M\+\_\+\+Sub\+Library.\+c File Reference}
+\label{_g_m___sub_library_8c}\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}}
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$string.\+h$>$}\newline
 {\ttfamily \#include $<$math.\+h$>$}\newline
@@ -8,101 +8,71 @@
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{_g_m___sub_library_8c_a81c43513c2b987eacf3844a188d3c7d5}} 
-void {\bfseries G\+M\+\_\+\+Cartesian\+To\+Spherical} (\textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} Coord\+Cartesian, \textbf{ G\+Mtype\+\_\+\+Coord\+Spherical} $\ast$Coord\+Spherical)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a81c43513c2b987eacf3844a188d3c7d5}{G\+M\+\_\+\+Cartesian\+To\+Spherical}} (\mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}} Coord\+Cartesian, \mbox{\hyperlink{struct_g_mtype___coord_spherical}{G\+Mtype\+\_\+\+Coord\+Spherical}} $\ast$Coord\+Spherical)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a58d6894c0973ed1e7cc67fc363032950}} 
-void {\bfseries G\+M\+\_\+\+C\+O\+RD} (\textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} location, \textbf{ G\+Mtype\+\_\+\+Date} $\ast$date, \textbf{ G\+Mtype\+\_\+\+Ellipsoid} Ellip, \textbf{ G\+Mtype\+\_\+\+Data} g0d, \textbf{ G\+Mtype\+\_\+\+Data} g1d, \textbf{ G\+Mtype\+\_\+\+Data} h1d, \textbf{ G\+Mtype\+\_\+\+Coord\+Dipole} $\ast$Coord\+Dipole)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a58d6894c0973ed1e7cc67fc363032950}{G\+M\+\_\+\+C\+O\+RD}} (\mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}} location, \mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} $\ast$date, \mbox{\hyperlink{struct_g_mtype___ellipsoid}{G\+Mtype\+\_\+\+Ellipsoid}} Ellip, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} g0d, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} g1d, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} h1d, \mbox{\hyperlink{struct_g_mtype___coord_dipole}{G\+Mtype\+\_\+\+Coord\+Dipole}} $\ast$Coord\+Dipole)
 \item 
-\mbox{\label{_g_m___sub_library_8c_aba182fbcc2ae8460978471b7594aaf87}} 
-int {\bfseries G\+M\+\_\+\+Date\+To\+Year} (\textbf{ G\+Mtype\+\_\+\+Date} $\ast$Calendar\+Date)
+int \mbox{\hyperlink{_g_m___sub_library_8c_aba182fbcc2ae8460978471b7594aaf87}{G\+M\+\_\+\+Date\+To\+Year}} (\mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} $\ast$Calendar\+Date)
 \item 
-\mbox{\label{_g_m___sub_library_8c_ae798bc9a8c401807727fb1357a298ff8}} 
-void {\bfseries G\+M\+\_\+\+Earth\+Cart\+To\+Dipole\+Cart\+CD} (\textbf{ G\+Mtype\+\_\+\+Pole} Pole, \textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} Earth\+Coord, \textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} $\ast$Dipole\+Coords)
+void \mbox{\hyperlink{_g_m___sub_library_8c_ae798bc9a8c401807727fb1357a298ff8}{G\+M\+\_\+\+Earth\+Cart\+To\+Dipole\+Cart\+CD}} (\mbox{\hyperlink{struct_g_mtype___pole}{G\+Mtype\+\_\+\+Pole}} Pole, \mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}} Earth\+Coord, \mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}} $\ast$Dipole\+Coords)
 \item 
-\mbox{\label{_g_m___sub_library_8c_aeb56a92137f38228f30e5a543fae7755}} 
-void {\bfseries G\+M\+\_\+\+Geodetic\+To\+Spherical} (\textbf{ G\+Mtype\+\_\+\+Ellipsoid} Ellip, \textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} Coord\+Geodetic, \textbf{ G\+Mtype\+\_\+\+Coord\+Spherical} $\ast$Coord\+Spherical)
+void \mbox{\hyperlink{_g_m___sub_library_8c_aeb56a92137f38228f30e5a543fae7755}{G\+M\+\_\+\+Geodetic\+To\+Spherical}} (\mbox{\hyperlink{struct_g_mtype___ellipsoid}{G\+Mtype\+\_\+\+Ellipsoid}} Ellip, \mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}} Coord\+Geodetic, \mbox{\hyperlink{struct_g_mtype___coord_spherical}{G\+Mtype\+\_\+\+Coord\+Spherical}} $\ast$Coord\+Spherical)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a3562a3ba9b56477cd4d5ecdcb784532c}} 
-void {\bfseries G\+M\+\_\+\+Get\+User\+Input} (\textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} $\ast$location, \textbf{ G\+Mtype\+\_\+\+Date} $\ast$date)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a3562a3ba9b56477cd4d5ecdcb784532c}{G\+M\+\_\+\+Get\+User\+Input}} (\mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}} $\ast$location, \mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} $\ast$date)
 \item 
-\mbox{\label{_g_m___sub_library_8c_ac2fbcd2149675927463c6be7752c134d}} 
-void {\bfseries G\+M\+\_\+\+Pole\+Location} (\textbf{ G\+Mtype\+\_\+\+Model} Model, \textbf{ G\+Mtype\+\_\+\+Pole} $\ast$Pole)
+void \mbox{\hyperlink{_g_m___sub_library_8c_ac2fbcd2149675927463c6be7752c134d}{G\+M\+\_\+\+Pole\+Location}} (\mbox{\hyperlink{struct_g_mtype___model}{G\+Mtype\+\_\+\+Model}} Model, \mbox{\hyperlink{struct_g_mtype___pole}{G\+Mtype\+\_\+\+Pole}} $\ast$Pole)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a8567ee98b2672e278743a04696999a96}} 
-void {\bfseries G\+M\+\_\+\+Print\+User\+Data} (\textbf{ G\+Mtype\+\_\+\+Coord\+Geodetic} location, \textbf{ G\+Mtype\+\_\+\+Date} date, \textbf{ G\+Mtype\+\_\+\+Coord\+Dipole} Dip\+Location)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a8567ee98b2672e278743a04696999a96}{G\+M\+\_\+\+Print\+User\+Data}} (\mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}} location, \mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} date, \mbox{\hyperlink{struct_g_mtype___coord_dipole}{G\+Mtype\+\_\+\+Coord\+Dipole}} Dip\+Location)
 \item 
-\mbox{\label{_g_m___sub_library_8c_ad399d8d31962b7260e9d20677f1b9698}} 
-void {\bfseries G\+M\+\_\+\+Scan\+I\+G\+RF} (\textbf{ G\+Mtype\+\_\+\+Data} $\ast$G0, \textbf{ G\+Mtype\+\_\+\+Data} $\ast$G1, \textbf{ G\+Mtype\+\_\+\+Data} $\ast$H1)
+void \mbox{\hyperlink{_g_m___sub_library_8c_ad399d8d31962b7260e9d20677f1b9698}{G\+M\+\_\+\+Scan\+I\+G\+RF}} (\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$G0, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$G1, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$H1)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a3b4094e8784a209b98005937b4edb3b5}} 
-void {\bfseries G\+M\+\_\+\+Set\+Ellipsoid} (\textbf{ G\+Mtype\+\_\+\+Ellipsoid} $\ast$Ellip)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a3b4094e8784a209b98005937b4edb3b5}{G\+M\+\_\+\+Set\+Ellipsoid}} (\mbox{\hyperlink{struct_g_mtype___ellipsoid}{G\+Mtype\+\_\+\+Ellipsoid}} $\ast$Ellip)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a879dc73dc264b8c170b0ed766bc519df}} 
-void {\bfseries G\+M\+\_\+\+Spherical\+To\+Cartesian} (\textbf{ G\+Mtype\+\_\+\+Coord\+Spherical} Coord\+Spherical, \textbf{ G\+Mtype\+\_\+\+Coord\+Cartesian} $\ast$Coord\+Cartesian)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a879dc73dc264b8c170b0ed766bc519df}{G\+M\+\_\+\+Spherical\+To\+Cartesian}} (\mbox{\hyperlink{struct_g_mtype___coord_spherical}{G\+Mtype\+\_\+\+Coord\+Spherical}} Coord\+Spherical, \mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}} $\ast$Coord\+Cartesian)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a2b8976c38bf6d44678d759ce47087a5e}} 
-void {\bfseries G\+M\+\_\+\+Time\+Adjust\+Coefs} (\textbf{ G\+Mtype\+\_\+\+Date} Date, \textbf{ G\+Mtype\+\_\+\+Data} g0d, \textbf{ G\+Mtype\+\_\+\+Data} g1d, \textbf{ G\+Mtype\+\_\+\+Data} h1d, \textbf{ G\+Mtype\+\_\+\+Model} $\ast$Model)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a2b8976c38bf6d44678d759ce47087a5e}{G\+M\+\_\+\+Time\+Adjust\+Coefs}} (\mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} Date, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} g0d, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} g1d, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} h1d, \mbox{\hyperlink{struct_g_mtype___model}{G\+Mtype\+\_\+\+Model}} $\ast$Model)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a15d3c2916dc9954a0229037e0f366df9}} 
-double {\bfseries G\+M\+\_\+\+Dot\+Product} (\textbf{ G\+Mtype\+\_\+\+Data} VectorA, \textbf{ G\+Mtype\+\_\+\+Data} VectorB)
+double \mbox{\hyperlink{_g_m___sub_library_8c_a15d3c2916dc9954a0229037e0f366df9}{G\+M\+\_\+\+Dot\+Product}} (\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} VectorA, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} VectorB)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a6e62cc8e47107b587dee850194d991d4}} 
-double {\bfseries G\+M\+\_\+\+Linear\+Interpolation} (double x1, double x2, double y1, double y2, double x)
+double \mbox{\hyperlink{_g_m___sub_library_8c_a6e62cc8e47107b587dee850194d991d4}{G\+M\+\_\+\+Linear\+Interpolation}} (double x1, double x2, double y1, double y2, double x)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a6ff38253ecaaad2203404103c7c30cea}} 
-void {\bfseries G\+M\+\_\+\+L\+U\+Decomposition} (\textbf{ G\+Mtype\+\_\+\+Matrix} A, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$L, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$U, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$P)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a6ff38253ecaaad2203404103c7c30cea}{G\+M\+\_\+\+L\+U\+Decomposition}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} A, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$L, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$U, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$P)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a61e6a2f04e04a7ae6e6d32987e38fbbc}} 
-void {\bfseries G\+M\+\_\+\+L\+U\+Solve} (\textbf{ G\+Mtype\+\_\+\+Matrix} L, \textbf{ G\+Mtype\+\_\+\+Matrix} U, \textbf{ G\+Mtype\+\_\+\+Matrix} P, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$x, \textbf{ G\+Mtype\+\_\+\+Matrix} b)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a61e6a2f04e04a7ae6e6d32987e38fbbc}{G\+M\+\_\+\+L\+U\+Solve}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} L, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} U, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} P, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$x, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} b)
 \item 
-\mbox{\label{_g_m___sub_library_8c_ae04ee2ffa850da9c22adaaf344c3bed0}} 
-double {\bfseries G\+M\+\_\+\+Mat\+Det} (\textbf{ G\+Mtype\+\_\+\+Matrix} Matrix)
+double \mbox{\hyperlink{_g_m___sub_library_8c_ae04ee2ffa850da9c22adaaf344c3bed0}{G\+M\+\_\+\+Mat\+Det}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} Matrix)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a8c9fc650496809b50db01f995e34eaff}} 
-void {\bfseries G\+M\+\_\+\+Mat\+Inverse} (\textbf{ G\+Mtype\+\_\+\+Matrix} Matrix, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$Inverted\+Matrix)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a8c9fc650496809b50db01f995e34eaff}{G\+M\+\_\+\+Mat\+Inverse}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} Matrix, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$Inverted\+Matrix)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a5ca54f057c7addd0e545337f1bf7d821}} 
-void {\bfseries G\+M\+\_\+\+Mat\+Multiply} (\textbf{ G\+Mtype\+\_\+\+Matrix} MatrixA, \textbf{ G\+Mtype\+\_\+\+Matrix} MatrixB, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$MatrixC)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a5ca54f057c7addd0e545337f1bf7d821}{G\+M\+\_\+\+Mat\+Multiply}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} MatrixA, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} MatrixB, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$MatrixC)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a37adcb80b41c46b08169ca149dce7ee3}} 
-void {\bfseries G\+M\+\_\+\+Mat\+Transpose} (\textbf{ G\+Mtype\+\_\+\+Matrix} Matrix, \textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$T\+Matrix)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a37adcb80b41c46b08169ca149dce7ee3}{G\+M\+\_\+\+Mat\+Transpose}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} Matrix, \mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$T\+Matrix)
 \item 
-\mbox{\label{_g_m___sub_library_8c_aceba6e2c0e103b7f8d277b387e7234a3}} 
-double {\bfseries G\+M\+\_\+\+Mean} (\textbf{ G\+Mtype\+\_\+\+Data} Data)
+double \mbox{\hyperlink{_g_m___sub_library_8c_aceba6e2c0e103b7f8d277b387e7234a3}{G\+M\+\_\+\+Mean}} (\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} Data)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a576a9afd0c22847a30eaf1df0b021ae5}} 
-void {\bfseries G\+M\+\_\+\+Median} (\textbf{ G\+Mtype\+\_\+\+Data} Data, double $\ast$upper, double $\ast$lower)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a576a9afd0c22847a30eaf1df0b021ae5}{G\+M\+\_\+\+Median}} (\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} Data, double $\ast$upper, double $\ast$lower)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a9d88e0ea3cf8394eacbe1d1c1ffa8061}} 
-void {\bfseries G\+M\+\_\+\+Poly\+Fit} (\textbf{ G\+Mtype\+\_\+\+Data} DataX, \textbf{ G\+Mtype\+\_\+\+Data} DataY, \textbf{ G\+Mtype\+\_\+\+Polynomial} $\ast$Polynomial)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a9d88e0ea3cf8394eacbe1d1c1ffa8061}{G\+M\+\_\+\+Poly\+Fit}} (\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} DataX, \mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} DataY, \mbox{\hyperlink{struct_g_mtype___polynomial}{G\+Mtype\+\_\+\+Polynomial}} $\ast$Polynomial)
 \item 
-\mbox{\label{_g_m___sub_library_8c_ae572acd489badbde919d29cebdc8a085}} 
-double {\bfseries G\+M\+\_\+\+Pow} (double x, int y)
+double \mbox{\hyperlink{_g_m___sub_library_8c_ae572acd489badbde919d29cebdc8a085}{G\+M\+\_\+\+Pow}} (double x, int y)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a5d0b4d5450dad63803d8508def00b6bb}} 
-void {\bfseries G\+M\+\_\+\+Print\+Matrix} (\textbf{ G\+Mtype\+\_\+\+Matrix} X)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a5d0b4d5450dad63803d8508def00b6bb}{G\+M\+\_\+\+Print\+Matrix}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} X)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a8928b353f45bff0510f2c48e690c0e1f}} 
-double {\bfseries G\+M\+\_\+\+Solve\+Polynomial} (\textbf{ G\+Mtype\+\_\+\+Polynomial} Polynomial, double x)
+double \mbox{\hyperlink{_g_m___sub_library_8c_a8928b353f45bff0510f2c48e690c0e1f}{G\+M\+\_\+\+Solve\+Polynomial}} (\mbox{\hyperlink{struct_g_mtype___polynomial}{G\+Mtype\+\_\+\+Polynomial}} Polynomial, double x)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a9e1ef0c53419ef9d5b42f7e284568fe9}} 
-void {\bfseries G\+M\+\_\+\+Sort} (\textbf{ G\+Mtype\+\_\+\+Data} $\ast$Data)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a9e1ef0c53419ef9d5b42f7e284568fe9}{G\+M\+\_\+\+Sort}} (\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$Data)
 \item 
-\mbox{\label{_g_m___sub_library_8c_ab4f9c1bd94e04fdaeff1f8f36c403c40}} 
-double {\bfseries G\+M\+\_\+\+Standard\+Deviation} (\textbf{ G\+Mtype\+\_\+\+Data} Data)
+double \mbox{\hyperlink{_g_m___sub_library_8c_ab4f9c1bd94e04fdaeff1f8f36c403c40}{G\+M\+\_\+\+Standard\+Deviation}} (\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} Data)
 \item 
-\mbox{\label{_g_m___sub_library_8c_acb1a586833a324081118a244315c7a0e}} 
-void {\bfseries G\+M\+\_\+\+Swap} (double $\ast$x, double $\ast$y)
+void \mbox{\hyperlink{_g_m___sub_library_8c_acb1a586833a324081118a244315c7a0e}{G\+M\+\_\+\+Swap}} (double $\ast$x, double $\ast$y)
 \item 
-\mbox{\label{_g_m___sub_library_8c_a4be338552acd0a3f39bb1892f84ebc77}} 
-void {\bfseries G\+M\+\_\+\+Swap\+Rows} (\textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$Matrix, int Row1, int Row2)
+void \mbox{\hyperlink{_g_m___sub_library_8c_a4be338552acd0a3f39bb1892f84ebc77}{G\+M\+\_\+\+Swap\+Rows}} (\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$Matrix, int Row1, int Row2)
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 \begin{DoxyAuthor}{Author}
-{\texttt{ ftp\+://ftp.\+ngdc.\+noaa.\+gov/geomag/\+Utilities/\+G\+M\+\_\+\+Sub\+Library.\+c}} 
+\href{ftp://ftp.ngdc.noaa.gov/geomag/Utilities/GM_SubLibrary.c}{\texttt{ ftp\+://ftp.\+ngdc.\+noaa.\+gov/geomag/\+Utilities/\+G\+M\+\_\+\+Sub\+Library.\+c}} 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
 16th January 2018 
@@ -110,3 +80,186 @@ void {\bfseries G\+M\+\_\+\+Swap\+Rows} (\textbf{ G\+Mtype\+\_\+\+Matrix} $\ast$
 \begin{DoxyVersion}{Version}
 0.\+0 
 \end{DoxyVersion}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_g_m___sub_library_8c_a81c43513c2b987eacf3844a188d3c7d5}\label{_g_m___sub_library_8c_a81c43513c2b987eacf3844a188d3c7d5}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_CartesianToSpherical@{GM\_CartesianToSpherical}}
+\index{GM\_CartesianToSpherical@{GM\_CartesianToSpherical}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_CartesianToSpherical()}{GM\_CartesianToSpherical()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Cartesian\+To\+Spherical (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}}}]{Coord\+Cartesian,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_spherical}{G\+Mtype\+\_\+\+Coord\+Spherical}} $\ast$}]{Coord\+Spherical }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a58d6894c0973ed1e7cc67fc363032950}\label{_g_m___sub_library_8c_a58d6894c0973ed1e7cc67fc363032950}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_CORD@{GM\_CORD}}
+\index{GM\_CORD@{GM\_CORD}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_CORD()}{GM\_CORD()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+C\+O\+RD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}}}]{location,  }\item[{\mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} $\ast$}]{date,  }\item[{\mbox{\hyperlink{struct_g_mtype___ellipsoid}{G\+Mtype\+\_\+\+Ellipsoid}}}]{Ellip,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{g0d,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{g1d,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{h1d,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_dipole}{G\+Mtype\+\_\+\+Coord\+Dipole}} $\ast$}]{Coord\+Dipole }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_aba182fbcc2ae8460978471b7594aaf87}\label{_g_m___sub_library_8c_aba182fbcc2ae8460978471b7594aaf87}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_DateToYear@{GM\_DateToYear}}
+\index{GM\_DateToYear@{GM\_DateToYear}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_DateToYear()}{GM\_DateToYear()}}
+{\footnotesize\ttfamily int G\+M\+\_\+\+Date\+To\+Year (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} $\ast$}]{Calendar\+Date }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a15d3c2916dc9954a0229037e0f366df9}\label{_g_m___sub_library_8c_a15d3c2916dc9954a0229037e0f366df9}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_DotProduct@{GM\_DotProduct}}
+\index{GM\_DotProduct@{GM\_DotProduct}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_DotProduct()}{GM\_DotProduct()}}
+{\footnotesize\ttfamily double G\+M\+\_\+\+Dot\+Product (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{VectorA,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{VectorB }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_ae798bc9a8c401807727fb1357a298ff8}\label{_g_m___sub_library_8c_ae798bc9a8c401807727fb1357a298ff8}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_EarthCartToDipoleCartCD@{GM\_EarthCartToDipoleCartCD}}
+\index{GM\_EarthCartToDipoleCartCD@{GM\_EarthCartToDipoleCartCD}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_EarthCartToDipoleCartCD()}{GM\_EarthCartToDipoleCartCD()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Earth\+Cart\+To\+Dipole\+Cart\+CD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___pole}{G\+Mtype\+\_\+\+Pole}}}]{Pole,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}}}]{Earth\+Coord,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}} $\ast$}]{Dipole\+Coords }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_aeb56a92137f38228f30e5a543fae7755}\label{_g_m___sub_library_8c_aeb56a92137f38228f30e5a543fae7755}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_GeodeticToSpherical@{GM\_GeodeticToSpherical}}
+\index{GM\_GeodeticToSpherical@{GM\_GeodeticToSpherical}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_GeodeticToSpherical()}{GM\_GeodeticToSpherical()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Geodetic\+To\+Spherical (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___ellipsoid}{G\+Mtype\+\_\+\+Ellipsoid}}}]{Ellip,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}}}]{Coord\+Geodetic,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_spherical}{G\+Mtype\+\_\+\+Coord\+Spherical}} $\ast$}]{Coord\+Spherical }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a3562a3ba9b56477cd4d5ecdcb784532c}\label{_g_m___sub_library_8c_a3562a3ba9b56477cd4d5ecdcb784532c}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_GetUserInput@{GM\_GetUserInput}}
+\index{GM\_GetUserInput@{GM\_GetUserInput}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_GetUserInput()}{GM\_GetUserInput()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Get\+User\+Input (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}} $\ast$}]{location,  }\item[{\mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}} $\ast$}]{date }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a6e62cc8e47107b587dee850194d991d4}\label{_g_m___sub_library_8c_a6e62cc8e47107b587dee850194d991d4}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_LinearInterpolation@{GM\_LinearInterpolation}}
+\index{GM\_LinearInterpolation@{GM\_LinearInterpolation}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_LinearInterpolation()}{GM\_LinearInterpolation()}}
+{\footnotesize\ttfamily double G\+M\+\_\+\+Linear\+Interpolation (\begin{DoxyParamCaption}\item[{double}]{x1,  }\item[{double}]{x2,  }\item[{double}]{y1,  }\item[{double}]{y2,  }\item[{double}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a6ff38253ecaaad2203404103c7c30cea}\label{_g_m___sub_library_8c_a6ff38253ecaaad2203404103c7c30cea}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_LUDecomposition@{GM\_LUDecomposition}}
+\index{GM\_LUDecomposition@{GM\_LUDecomposition}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_LUDecomposition()}{GM\_LUDecomposition()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+L\+U\+Decomposition (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{A,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{L,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{U,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{P }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a61e6a2f04e04a7ae6e6d32987e38fbbc}\label{_g_m___sub_library_8c_a61e6a2f04e04a7ae6e6d32987e38fbbc}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_LUSolve@{GM\_LUSolve}}
+\index{GM\_LUSolve@{GM\_LUSolve}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_LUSolve()}{GM\_LUSolve()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+L\+U\+Solve (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{L,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{U,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{P,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{x,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_ae04ee2ffa850da9c22adaaf344c3bed0}\label{_g_m___sub_library_8c_ae04ee2ffa850da9c22adaaf344c3bed0}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_MatDet@{GM\_MatDet}}
+\index{GM\_MatDet@{GM\_MatDet}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_MatDet()}{GM\_MatDet()}}
+{\footnotesize\ttfamily double G\+M\+\_\+\+Mat\+Det (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{Matrix }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a8c9fc650496809b50db01f995e34eaff}\label{_g_m___sub_library_8c_a8c9fc650496809b50db01f995e34eaff}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_MatInverse@{GM\_MatInverse}}
+\index{GM\_MatInverse@{GM\_MatInverse}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_MatInverse()}{GM\_MatInverse()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Mat\+Inverse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{Matrix,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{Inverted\+Matrix }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a5ca54f057c7addd0e545337f1bf7d821}\label{_g_m___sub_library_8c_a5ca54f057c7addd0e545337f1bf7d821}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_MatMultiply@{GM\_MatMultiply}}
+\index{GM\_MatMultiply@{GM\_MatMultiply}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_MatMultiply()}{GM\_MatMultiply()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Mat\+Multiply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{MatrixA,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{MatrixB,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{MatrixC }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a37adcb80b41c46b08169ca149dce7ee3}\label{_g_m___sub_library_8c_a37adcb80b41c46b08169ca149dce7ee3}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_MatTranspose@{GM\_MatTranspose}}
+\index{GM\_MatTranspose@{GM\_MatTranspose}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_MatTranspose()}{GM\_MatTranspose()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Mat\+Transpose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{Matrix,  }\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{T\+Matrix }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_aceba6e2c0e103b7f8d277b387e7234a3}\label{_g_m___sub_library_8c_aceba6e2c0e103b7f8d277b387e7234a3}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_Mean@{GM\_Mean}}
+\index{GM\_Mean@{GM\_Mean}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_Mean()}{GM\_Mean()}}
+{\footnotesize\ttfamily double G\+M\+\_\+\+Mean (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{Data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a576a9afd0c22847a30eaf1df0b021ae5}\label{_g_m___sub_library_8c_a576a9afd0c22847a30eaf1df0b021ae5}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_Median@{GM\_Median}}
+\index{GM\_Median@{GM\_Median}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_Median()}{GM\_Median()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Median (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{Data,  }\item[{double $\ast$}]{upper,  }\item[{double $\ast$}]{lower }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_ac2fbcd2149675927463c6be7752c134d}\label{_g_m___sub_library_8c_ac2fbcd2149675927463c6be7752c134d}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_PoleLocation@{GM\_PoleLocation}}
+\index{GM\_PoleLocation@{GM\_PoleLocation}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_PoleLocation()}{GM\_PoleLocation()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Pole\+Location (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___model}{G\+Mtype\+\_\+\+Model}}}]{Model,  }\item[{\mbox{\hyperlink{struct_g_mtype___pole}{G\+Mtype\+\_\+\+Pole}} $\ast$}]{Pole }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a9d88e0ea3cf8394eacbe1d1c1ffa8061}\label{_g_m___sub_library_8c_a9d88e0ea3cf8394eacbe1d1c1ffa8061}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_PolyFit@{GM\_PolyFit}}
+\index{GM\_PolyFit@{GM\_PolyFit}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_PolyFit()}{GM\_PolyFit()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Poly\+Fit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{DataX,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{DataY,  }\item[{\mbox{\hyperlink{struct_g_mtype___polynomial}{G\+Mtype\+\_\+\+Polynomial}} $\ast$}]{Polynomial }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_ae572acd489badbde919d29cebdc8a085}\label{_g_m___sub_library_8c_ae572acd489badbde919d29cebdc8a085}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_Pow@{GM\_Pow}}
+\index{GM\_Pow@{GM\_Pow}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_Pow()}{GM\_Pow()}}
+{\footnotesize\ttfamily double G\+M\+\_\+\+Pow (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a5d0b4d5450dad63803d8508def00b6bb}\label{_g_m___sub_library_8c_a5d0b4d5450dad63803d8508def00b6bb}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_PrintMatrix@{GM\_PrintMatrix}}
+\index{GM\_PrintMatrix@{GM\_PrintMatrix}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_PrintMatrix()}{GM\_PrintMatrix()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Print\+Matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}}}]{X }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a8567ee98b2672e278743a04696999a96}\label{_g_m___sub_library_8c_a8567ee98b2672e278743a04696999a96}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_PrintUserData@{GM\_PrintUserData}}
+\index{GM\_PrintUserData@{GM\_PrintUserData}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_PrintUserData()}{GM\_PrintUserData()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Print\+User\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___coord_geodetic}{G\+Mtype\+\_\+\+Coord\+Geodetic}}}]{location,  }\item[{\mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}}}]{date,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_dipole}{G\+Mtype\+\_\+\+Coord\+Dipole}}}]{Dip\+Location }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_ad399d8d31962b7260e9d20677f1b9698}\label{_g_m___sub_library_8c_ad399d8d31962b7260e9d20677f1b9698}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_ScanIGRF@{GM\_ScanIGRF}}
+\index{GM\_ScanIGRF@{GM\_ScanIGRF}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_ScanIGRF()}{GM\_ScanIGRF()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Scan\+I\+G\+RF (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$}]{G0,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$}]{G1,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$}]{H1 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a3b4094e8784a209b98005937b4edb3b5}\label{_g_m___sub_library_8c_a3b4094e8784a209b98005937b4edb3b5}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_SetEllipsoid@{GM\_SetEllipsoid}}
+\index{GM\_SetEllipsoid@{GM\_SetEllipsoid}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_SetEllipsoid()}{GM\_SetEllipsoid()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Set\+Ellipsoid (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___ellipsoid}{G\+Mtype\+\_\+\+Ellipsoid}} $\ast$}]{Ellip }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a8928b353f45bff0510f2c48e690c0e1f}\label{_g_m___sub_library_8c_a8928b353f45bff0510f2c48e690c0e1f}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_SolvePolynomial@{GM\_SolvePolynomial}}
+\index{GM\_SolvePolynomial@{GM\_SolvePolynomial}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_SolvePolynomial()}{GM\_SolvePolynomial()}}
+{\footnotesize\ttfamily double G\+M\+\_\+\+Solve\+Polynomial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___polynomial}{G\+Mtype\+\_\+\+Polynomial}}}]{Polynomial,  }\item[{double}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a9e1ef0c53419ef9d5b42f7e284568fe9}\label{_g_m___sub_library_8c_a9e1ef0c53419ef9d5b42f7e284568fe9}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_Sort@{GM\_Sort}}
+\index{GM\_Sort@{GM\_Sort}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_Sort()}{GM\_Sort()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Sort (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}} $\ast$}]{Data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a879dc73dc264b8c170b0ed766bc519df}\label{_g_m___sub_library_8c_a879dc73dc264b8c170b0ed766bc519df}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_SphericalToCartesian@{GM\_SphericalToCartesian}}
+\index{GM\_SphericalToCartesian@{GM\_SphericalToCartesian}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_SphericalToCartesian()}{GM\_SphericalToCartesian()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Spherical\+To\+Cartesian (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___coord_spherical}{G\+Mtype\+\_\+\+Coord\+Spherical}}}]{Coord\+Spherical,  }\item[{\mbox{\hyperlink{struct_g_mtype___coord_cartesian}{G\+Mtype\+\_\+\+Coord\+Cartesian}} $\ast$}]{Coord\+Cartesian }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_ab4f9c1bd94e04fdaeff1f8f36c403c40}\label{_g_m___sub_library_8c_ab4f9c1bd94e04fdaeff1f8f36c403c40}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_StandardDeviation@{GM\_StandardDeviation}}
+\index{GM\_StandardDeviation@{GM\_StandardDeviation}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_StandardDeviation()}{GM\_StandardDeviation()}}
+{\footnotesize\ttfamily double G\+M\+\_\+\+Standard\+Deviation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{Data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_acb1a586833a324081118a244315c7a0e}\label{_g_m___sub_library_8c_acb1a586833a324081118a244315c7a0e}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_Swap@{GM\_Swap}}
+\index{GM\_Swap@{GM\_Swap}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_Swap()}{GM\_Swap()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Swap (\begin{DoxyParamCaption}\item[{double $\ast$}]{x,  }\item[{double $\ast$}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a4be338552acd0a3f39bb1892f84ebc77}\label{_g_m___sub_library_8c_a4be338552acd0a3f39bb1892f84ebc77}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_SwapRows@{GM\_SwapRows}}
+\index{GM\_SwapRows@{GM\_SwapRows}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_SwapRows()}{GM\_SwapRows()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Swap\+Rows (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___matrix}{G\+Mtype\+\_\+\+Matrix}} $\ast$}]{Matrix,  }\item[{int}]{Row1,  }\item[{int}]{Row2 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_g_m___sub_library_8c_a2b8976c38bf6d44678d759ce47087a5e}\label{_g_m___sub_library_8c_a2b8976c38bf6d44678d759ce47087a5e}} 
+\index{GM\_SubLibrary.c@{GM\_SubLibrary.c}!GM\_TimeAdjustCoefs@{GM\_TimeAdjustCoefs}}
+\index{GM\_TimeAdjustCoefs@{GM\_TimeAdjustCoefs}!GM\_SubLibrary.c@{GM\_SubLibrary.c}}
+\subsubsection{\texorpdfstring{GM\_TimeAdjustCoefs()}{GM\_TimeAdjustCoefs()}}
+{\footnotesize\ttfamily void G\+M\+\_\+\+Time\+Adjust\+Coefs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_g_mtype___date}{G\+Mtype\+\_\+\+Date}}}]{Date,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{g0d,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{g1d,  }\item[{\mbox{\hyperlink{struct_g_mtype___data}{G\+Mtype\+\_\+\+Data}}}]{h1d,  }\item[{\mbox{\hyperlink{struct_g_mtype___model}{G\+Mtype\+\_\+\+Model}} $\ast$}]{Model }\end{DoxyParamCaption})}
+

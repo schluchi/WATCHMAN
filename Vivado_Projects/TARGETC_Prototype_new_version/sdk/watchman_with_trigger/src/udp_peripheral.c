@@ -7,21 +7,36 @@
 
 #include "udp_peripheral.h"
 
-/* Global variables */
+/*********************** Global variables ****************/
+/*********************************************************/
+/** @brief UDP Protocol Control Block for data communication */
 struct udp_pcb *pcb_data;
+/** @brief UDP Protocol Control Block for command communication */
 struct udp_pcb *pcb_cmd;
+/** @brief Buffer structure used to send data packet */
 struct pbuf *buf_data;
+/** @brief Buffer structure used to send command packet */
 struct pbuf *buf_cmd;
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Counter of the TTC */
 extern volatile int count_ttcps_timer;
+/** @brief Instance of AXI-DMA */
 extern volatile int count_scu_timer;
+/** @brief Number of bytes sent during streaming (trigger mode) */
 extern int nbre_of_bytes;
+/** @brief Flag reset when the user send the command "stop uC" */
 extern volatile bool run_flag;
+/** @brief Flag raised when the user send the command "start streaming" */
 extern volatile bool stream_flag;
+/** @brief Flag raised when the user send the command "get transfer function" */
 extern volatile bool get_transfer_fct_flag;
+/** @brief Flag raised when the user send the command "get 20 windows" */
 extern volatile bool get_20_windows_flag;
+/** @brief Array containing registers of AXI-lite */
 extern int* regptr;
+/** @brief Buffer used to send the command (50 bytes above it reserved for protocol header) */
 extern char* frame_buf_cmd;
 
 /****************************************************************************/

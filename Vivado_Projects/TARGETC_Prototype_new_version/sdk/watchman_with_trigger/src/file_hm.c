@@ -7,13 +7,20 @@
 
 #include "file_hm.h"
 
-/* Global variables */
-char *Path = "0:/";  //  string pointer to the logical drive number
-static FATFS FS_instance; // File System instance
-static char *log_filename = "log.txt"; // pointer to the log file name
-static FIL log_file;	// File instance
-static char *time_filename = "time.txt"; // pointer to the time file name
-static FIL time_file;	// File instance
+/*********************** Global variables ****************/
+/*********************************************************/
+/** @brief String pointer to the logical drive numer */
+char *Path = "0:/";
+/** @brief Instance of the file system */
+static FATFS FS_instance;
+/** @brief String pointer to the log file name */
+static char *log_filename = "log.txt";
+/** @brief Instance of the log file */
+static FIL log_file;
+/** @brief String pointer to the time file name */
+static char *time_filename = "time.txt";
+/** @brief Instance of the time file */
+static FIL time_file;
 
 /****************************************************************************/
 /**

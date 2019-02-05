@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['cleanup_5fglobal_5fvar',['cleanup_global_var',['../global_8c.html#a2b5e09e25e12dc2a87ce17d3f3a17188',1,'cleanup_global_var(void):&#160;global.c'],['../global_8h.html#a2b5e09e25e12dc2a87ce17d3f3a17188',1,'cleanup_global_var(void):&#160;global.c']]],
-  ['cleanup_5finterrupts',['cleanup_interrupts',['../interrupt_8c.html#aa3db50992b6d2cd29e63b0c2d0f1596c',1,'interrupt.c']]],
-  ['cleanup_5fudp',['cleanup_udp',['../udp__peripheral_8c.html#ad88f9f0378dd06c17528eb9f203c2467',1,'udp_peripheral.c']]],
-  ['command_5fparser',['command_parser',['../udp__peripheral_8c.html#a4f92cb22c72184c5a93a83fb85490c24',1,'udp_peripheral.c']]],
-  ['controlregisterwrite',['ControlRegisterWrite',['../_t_a_r_g_e_t_c___register_map_8c.html#ab78e8b74db0db6f7923e5e5b4d07cb9a',1,'ControlRegisterWrite(int mask, int actionID):&#160;TARGETC_RegisterMap.c'],['../_t_a_r_g_e_t_c___register_map_8h.html#ab78e8b74db0db6f7923e5e5b4d07cb9a',1,'ControlRegisterWrite(int mask, int actionID):&#160;TARGETC_RegisterMap.c']]],
-  ['coordinates_5fst',['coordinates_st',['../structcoordinates__st.html',1,'']]]
+  ['b',['b',['../struct_g_mtype___ellipsoid.html#a1510a66dacf9cf3586de5fc89ae2a073',1,'GMtype_Ellipsoid']]],
+  ['buf_5fcmd',['buf_cmd',['../udp__peripheral_8c.html#ae28b199c6f079cd3546d2263812f69e3',1,'udp_peripheral.c']]],
+  ['buf_5fdata',['buf_data',['../udp__peripheral_8c.html#a1fe64ecef353657c532741807aa947ca',1,'udp_peripheral.c']]],
+  ['buf_5fheader_5fsize',['BUF_HEADER_SIZE',['../udp__peripheral_8h.html#ac9b4b04b53d05a8c4a62305b5cdcac3a',1,'udp_peripheral.h']]],
+  ['busy_5fmask',['BUSY_MASK',['../_t_a_r_g_e_t_c___register_map_8h.html#a1756efebd567c063f8a5c230e47d53d9',1,'TARGETC_RegisterMap.h']]]
 ];

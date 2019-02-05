@@ -11,28 +11,48 @@
 static int ResetRxCntr = 0;
 #endif
 
-/* Global variables */
+/*********************** Global variables ****************/
+/*********************************************************/
+/** @brief Instance of SCU timer */
 static XScuTimer TimerScuInstance;
+/** @brief Instance of Triple Timer Counter (TTC) */
 static XTtcPs TimerTtcPsInstance;
+/** @brief Instance of General Interrupt Controlor */
 static XScuGic Intc;
+/** @brief Default settings for the TTC */
 static TmrCntrSetup SettingsTable = {10, 0, 0, 0};
-uint16_t length_dummy_data;
+/** @brief Variable used to mesure the time (development) */
 static XTime tStart_wdt, tEnd_wdt;
 
-/* Extern global variables */
+/**************** Extern global variables ****************/
+/*********************************************************/
+/** @brief Counter of the SCU timer*/
 extern volatile int count_scu_timer;
+/** @brief Instance of AXI-DMA */
 extern XAxiDma AxiDmaInstance;
+/** @brief Instance of the device watchdog */
 extern XScuWdt WdtScuInstance;
+/** @brief Pointer on the network interface */
 extern struct netif *echo_netif;
+/** @brief Flag raised when the Triple Timer Counter overflows */
 extern volatile bool flag_ttcps_timer;
+/** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
+/** @brief Flag raised when an assertion has occured */
 extern volatile bool flag_assertion;
+/** @brief Flag raised when the program has entered the while loop */
 extern volatile bool flag_while_loop;
+/** @brief Flag raised when AXI-DMA has an error */
 extern volatile bool flag_axidma_error;
+/** @brief Flag raised when AXI-DMA has finished an transfer, in OnDemand mode */
 extern volatile bool flag_axidma_rx_done;
+/** @brief Flag raised when the user send the command "start streaming" */
 extern volatile bool stream_flag;
+/** @brief Flag true when the list is empty (first_element = last_element) */
 extern volatile bool empty_flag;
+/** @brief Array of flag, one for each PMT */
 extern int flag_axidma_rx[4];
+/** @brief Pointer on the last element of the list used in trigger mode */
 extern data_list* last_element;
 
 /****************************************************************************/
@@ -140,15 +160,19 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	int pmt;
 	data_list* tmp_ptr;
 	uint32_t info, mask;
+	static uint64_t count;
 
 	/* Read pending interrupts */
 	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
-
-	/* Acknowledge pending interrupts */
-	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
-
+	if(flag_while_loop){
+		printf("IrqStatus = 0x%x\r\n", IrqStatus);
+		uint32_t reg = XAxiDma_ReadReg(AxiDmaInst->RegBase + (XAXIDMA_RX_OFFSET * XAXIDMA_DEVICE_TO_DMA), XAXIDMA_BUFFLEN_OFFSET);
+		printf("reg = 0x%x\r\n",reg);
+	}
 	/* If no interrupt is asserted, we do not do anything */
 	if (!(IrqStatus & XAXIDMA_IRQ_ALL_MASK)) {
+		/* Acknowledge pending interrupts */
+		XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
 		return;
 	}
 
@@ -159,6 +183,8 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 	 */
 	if ((IrqStatus & XAXIDMA_IRQ_ERROR_MASK)) {
 		flag_axidma_error = true;
+		/* Acknowledge pending interrupts */
+		XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
 		return;
 	}
 
@@ -169,16 +195,21 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 			// Invalid the cache to update the value change in memory by the PL
 			Xil_DCacheInvalidateRange((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 
+			count++;
 			for(pmt=0; pmt<4; pmt++){
 				info = last_element->data.data_struct.info;
 				mask = 0x1 << (LAST_SHIFT+pmt);
-				if((info && mask) != 0) flag_axidma_rx[pmt]++;
+				//xil_printf("avant last for pmt = %d at count = %d and info = %x with mask = %x\r\n",pmt,count,info,mask);
+				if((info & mask) != 0){
+					flag_axidma_rx[pmt]++;
+					xil_printf("last for pmt = %d at count = %d and info = %x with mask = %x\r\n",pmt,count,info,mask);
+				}
 			}
 
 			tmp_ptr = last_element;
 			last_element = (data_list *)malloc(sizeof(data_list));
 			if(!last_element){
-				xil_printf("malloc for last_element failed in function, %s!\r\n", __func__);
+				xil_printf("malloc for last_element failed in function, %s! count = %d\r\n", __func__, count);
 			}
 			last_element->next = NULL;
 			last_element->previous = tmp_ptr;
@@ -190,6 +221,8 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 			flag_axidma_rx_done = true;
 		}
 	}
+	/* Acknowledge pending interrupts */
+	XAxiDma_IntrAckIrq(AxiDmaInst, IrqStatus, XAXIDMA_DEVICE_TO_DMA);
 }
 
 /****************************************************************************/
@@ -374,10 +407,10 @@ int setup_axidma_int(void)
 	}
 
 	Status = XAxiDma_HasSg(&AxiDmaInstance);
-	if (Status != XST_SUCCESS){
+	if (Status){
 		xil_printf("In %s: AxiDMA configured as SG mode...\r\n",
 		__func__);
-		return Status;
+		return XST_FAILURE;
 	}
 
 	// Reset DMA

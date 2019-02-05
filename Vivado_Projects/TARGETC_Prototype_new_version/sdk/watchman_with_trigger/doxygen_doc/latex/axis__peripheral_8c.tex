@@ -1,48 +1,38 @@
-\section{C\+:/\+Users/antho/\+Documents/\+W\+A\+T\+C\+H\+M\+A\+N/\+Vivado\+\_\+\+Projects/\+T\+A\+R\+G\+E\+T\+C\+\_\+\+Prototype\+\_\+new\+\_\+version/sdk/watchman\+\_\+with\+\_\+trigger/src/axis\+\_\+peripheral.c File Reference}
-\label{axis__peripheral_8c}\index{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/axis\_peripheral.c@{C:/Users/antho/Documents/WATCHMAN/Vivado\_Projects/TARGETC\_Prototype\_new\_version/sdk/watchman\_with\_trigger/src/axis\_peripheral.c}}
+\hypertarget{axis__peripheral_8c}{}\section{axis\+\_\+peripheral.\+c File Reference}
+\label{axis__peripheral_8c}\index{axis\_peripheral.c@{axis\_peripheral.c}}
 {\ttfamily \#include \char`\"{}axis\+\_\+peripheral.\+h\char`\"{}}\newline
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \textbf{ X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm} (U\+I\+N\+T\+P\+TR Buff\+Addr, int Length\+Of\+Bytes)
+void \mbox{\hyperlink{axis__peripheral_8c_aec2c436529dde9db3cac39062e46cce4}{X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm}} (U\+I\+N\+T\+P\+TR Buff\+Addr, int Length\+Of\+Bytes)
 \begin{DoxyCompactList}\small\item\em Pass the address to the D\+MA device with the number of bytes asked. \end{DoxyCompactList}\item 
-void \textbf{ dma\+\_\+received\+\_\+data} (int pmt)
+void \mbox{\hyperlink{axis__peripheral_8c_ac643f94e9731b6cb46c9c2897887a0d4}{dma\+\_\+received\+\_\+data}} (int pmt)
 \begin{DoxyCompactList}\small\item\em Process a complete waveform received by the D\+MA in trigger mode. \end{DoxyCompactList}\item 
-int \textbf{ test\+\_\+\+T\+PG} (void)
+int \mbox{\hyperlink{axis__peripheral_8c_afc766563120c4048da238dee8ac2ea49}{test\+\_\+\+T\+PG}} (void)
 \begin{DoxyCompactList}\small\item\em Test the T\+A\+R\+G\+ET with the Test Pattern Generator. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\label{axis__peripheral_8c_a94f01ed55f54f902dc738539df30427e}} 
-\textbf{ data\+\_\+list} $\ast$ {\bfseries first\+\_\+element}
-\item 
-\mbox{\label{axis__peripheral_8c_ac3c6e218717075ded198514020bb8013}} 
-\textbf{ data\+\_\+list} $\ast$ {\bfseries last\+\_\+element}
-\item 
-\mbox{\label{axis__peripheral_8c_a215c2ec2d3302a5ec51fabb70017e4f9}} 
-char $\ast$ {\bfseries frame\+\_\+buf}
-\item 
-\mbox{\label{axis__peripheral_8c_a39d2cad95814eb9635cca5310d914893}} 
-int $\ast$ {\bfseries regptr}
-\item 
-\mbox{\label{axis__peripheral_8c_a226727c48b3bfd0888096614ee551f89}} 
-volatile bool {\bfseries flag\+\_\+axidma\+\_\+error}
-\item 
-\mbox{\label{axis__peripheral_8c_af3d0d90fb2e8215cab44c4a6c6c268fc}} 
-volatile bool {\bfseries flag\+\_\+axidma\+\_\+rx\+\_\+done}
-\item 
-\mbox{\label{axis__peripheral_8c_ad53968991c134c5dbfc1d0d83e5decdb}} 
-volatile bool {\bfseries empty\+\_\+flag}
-\item 
-\mbox{\label{axis__peripheral_8c_ae1142987fecfa0c02e7edfb9f539805b}} 
-volatile bool {\bfseries flag\+\_\+ttcps\+\_\+timer}
-\item 
-\mbox{\label{axis__peripheral_8c_a92815e63a8bb041c9594c7229d49cd89}} 
-volatile bool {\bfseries flag\+\_\+scu\+\_\+timer}
-\item 
-\mbox{\label{axis__peripheral_8c_afd1f6e74a3d4d317436684e7fa64a8fa}} 
-X\+Scu\+Wdt {\bfseries Wdt\+Scu\+Instance}
-\end{DoxyCompactItemize}
+\mbox{\hyperlink{data__analysis_8h_a9db432fc1185a85fe322653c4d3f54d5}{data\+\_\+list}} $\ast$ \mbox{\hyperlink{axis__peripheral_8c_a94f01ed55f54f902dc738539df30427e}{first\+\_\+element}}
+\begin{DoxyCompactList}\small\item\em Pointer on the first element of the list used in trigger mode. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{data__analysis_8h_a9db432fc1185a85fe322653c4d3f54d5}{data\+\_\+list}} $\ast$ \mbox{\hyperlink{axis__peripheral_8c_ac3c6e218717075ded198514020bb8013}{last\+\_\+element}}
+\begin{DoxyCompactList}\small\item\em Pointer on the last element of the list used in trigger mode. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{axis__peripheral_8c_a215c2ec2d3302a5ec51fabb70017e4f9}{frame\+\_\+buf}}
+\begin{DoxyCompactList}\small\item\em Buffer used to send the data (50 bytes above it reserved for protocol header) \end{DoxyCompactList}\item 
+int $\ast$ \mbox{\hyperlink{axis__peripheral_8c_a39d2cad95814eb9635cca5310d914893}{regptr}}
+\begin{DoxyCompactList}\small\item\em Array containing registers of A\+X\+I-\/lite. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{axis__peripheral_8c_a226727c48b3bfd0888096614ee551f89}{flag\+\_\+axidma\+\_\+error}}
+\begin{DoxyCompactList}\small\item\em Flag raised when A\+X\+I-\/\+D\+MA has an error. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{axis__peripheral_8c_af3d0d90fb2e8215cab44c4a6c6c268fc}{flag\+\_\+axidma\+\_\+rx\+\_\+done}}
+\begin{DoxyCompactList}\small\item\em Flag raised when A\+X\+I-\/\+D\+MA has finished an transfer, in On\+Demand mode. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{axis__peripheral_8c_ad53968991c134c5dbfc1d0d83e5decdb}{empty\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag true when the list is empty (first\+\_\+element = last\+\_\+element) \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{axis__peripheral_8c_ae1142987fecfa0c02e7edfb9f539805b}{flag\+\_\+ttcps\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the Triple Timer Counter overflows. \end{DoxyCompactList}\item 
+volatile bool \mbox{\hyperlink{axis__peripheral_8c_a92815e63a8bb041c9594c7229d49cd89}{flag\+\_\+scu\+\_\+timer}}
+\begin{DoxyCompactList}\small\item\em Flag raised when the S\+CU timer overflows. \end{DoxyCompactList}\item 
+X\+Scu\+Wdt \mbox{\hyperlink{axis__peripheral_8c_afd1f6e74a3d4d317436684e7fa64a8fa}{Wdt\+Scu\+Instance}}
+\begin{DoxyCompactList}\small\item\em Instance of the device watchdog. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -58,10 +48,10 @@ Anthony Schluchin
 
 
 \subsection{Function Documentation}
-\mbox{\label{axis__peripheral_8c_ac643f94e9731b6cb46c9c2897887a0d4}} 
+\mbox{\Hypertarget{axis__peripheral_8c_ac643f94e9731b6cb46c9c2897887a0d4}\label{axis__peripheral_8c_ac643f94e9731b6cb46c9c2897887a0d4}} 
 \index{axis\_peripheral.c@{axis\_peripheral.c}!dma\_received\_data@{dma\_received\_data}}
 \index{dma\_received\_data@{dma\_received\_data}!axis\_peripheral.c@{axis\_peripheral.c}}
-\subsubsection{dma\_received\_data()}
+\subsubsection{\texorpdfstring{dma\_received\_data()}{dma\_received\_data()}}
 {\footnotesize\ttfamily void dma\+\_\+received\+\_\+data (\begin{DoxyParamCaption}\item[{int}]{pmt }\end{DoxyParamCaption})}
 
 
@@ -79,10 +69,10 @@ Process a complete waveform received by the D\+MA in trigger mode.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{axis__peripheral_8c_afc766563120c4048da238dee8ac2ea49}} 
+\mbox{\Hypertarget{axis__peripheral_8c_afc766563120c4048da238dee8ac2ea49}\label{axis__peripheral_8c_afc766563120c4048da238dee8ac2ea49}} 
 \index{axis\_peripheral.c@{axis\_peripheral.c}!test\_TPG@{test\_TPG}}
 \index{test\_TPG@{test\_TPG}!axis\_peripheral.c@{axis\_peripheral.c}}
-\subsubsection{test\_TPG()}
+\subsubsection{\texorpdfstring{test\_TPG()}{test\_TPG()}}
 {\footnotesize\ttfamily int test\+\_\+\+T\+PG (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
 
@@ -100,10 +90,10 @@ X\+S\+T\+\_\+\+S\+U\+C\+C\+E\+SS or X\+S\+T\+\_\+\+F\+A\+I\+L\+U\+RE (defined in
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
-\mbox{\label{axis__peripheral_8c_aec2c436529dde9db3cac39062e46cce4}} 
+\mbox{\Hypertarget{axis__peripheral_8c_aec2c436529dde9db3cac39062e46cce4}\label{axis__peripheral_8c_aec2c436529dde9db3cac39062e46cce4}} 
 \index{axis\_peripheral.c@{axis\_peripheral.c}!XAxiDma\_SimpleTransfer\_hm@{XAxiDma\_SimpleTransfer\_hm}}
 \index{XAxiDma\_SimpleTransfer\_hm@{XAxiDma\_SimpleTransfer\_hm}!axis\_peripheral.c@{axis\_peripheral.c}}
-\subsubsection{XAxiDma\_SimpleTransfer\_hm()}
+\subsubsection{\texorpdfstring{XAxiDma\_SimpleTransfer\_hm()}{XAxiDma\_SimpleTransfer\_hm()}}
 {\footnotesize\ttfamily void X\+Axi\+Dma\+\_\+\+Simple\+Transfer\+\_\+hm (\begin{DoxyParamCaption}\item[{U\+I\+N\+T\+P\+TR}]{Buff\+Addr,  }\item[{int}]{Length\+Of\+Bytes }\end{DoxyParamCaption})}
 
 
@@ -123,3 +113,106 @@ Pass the address to the D\+MA device with the number of bytes asked.
 \begin{DoxyNote}{Note}
 -\/ 
 \end{DoxyNote}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{axis__peripheral_8c_ad53968991c134c5dbfc1d0d83e5decdb}\label{axis__peripheral_8c_ad53968991c134c5dbfc1d0d83e5decdb}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!empty\_flag@{empty\_flag}}
+\index{empty\_flag@{empty\_flag}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{empty\_flag}{empty\_flag}}
+{\footnotesize\ttfamily volatile bool empty\+\_\+flag}
+
+
+
+Flag true when the list is empty (first\+\_\+element = last\+\_\+element) 
+
+\mbox{\Hypertarget{axis__peripheral_8c_a94f01ed55f54f902dc738539df30427e}\label{axis__peripheral_8c_a94f01ed55f54f902dc738539df30427e}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!first\_element@{first\_element}}
+\index{first\_element@{first\_element}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{first\_element}{first\_element}}
+{\footnotesize\ttfamily \mbox{\hyperlink{data__analysis_8h_a9db432fc1185a85fe322653c4d3f54d5}{data\+\_\+list}}$\ast$ first\+\_\+element}
+
+
+
+Pointer on the first element of the list used in trigger mode. 
+
+\mbox{\Hypertarget{axis__peripheral_8c_a226727c48b3bfd0888096614ee551f89}\label{axis__peripheral_8c_a226727c48b3bfd0888096614ee551f89}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!flag\_axidma\_error@{flag\_axidma\_error}}
+\index{flag\_axidma\_error@{flag\_axidma\_error}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{flag\_axidma\_error}{flag\_axidma\_error}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+axidma\+\_\+error}
+
+
+
+Flag raised when A\+X\+I-\/\+D\+MA has an error. 
+
+\mbox{\Hypertarget{axis__peripheral_8c_af3d0d90fb2e8215cab44c4a6c6c268fc}\label{axis__peripheral_8c_af3d0d90fb2e8215cab44c4a6c6c268fc}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!flag\_axidma\_rx\_done@{flag\_axidma\_rx\_done}}
+\index{flag\_axidma\_rx\_done@{flag\_axidma\_rx\_done}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{flag\_axidma\_rx\_done}{flag\_axidma\_rx\_done}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+axidma\+\_\+rx\+\_\+done}
+
+
+
+Flag raised when A\+X\+I-\/\+D\+MA has finished an transfer, in On\+Demand mode. 
+
+\mbox{\Hypertarget{axis__peripheral_8c_a92815e63a8bb041c9594c7229d49cd89}\label{axis__peripheral_8c_a92815e63a8bb041c9594c7229d49cd89}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!flag\_scu\_timer@{flag\_scu\_timer}}
+\index{flag\_scu\_timer@{flag\_scu\_timer}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{flag\_scu\_timer}{flag\_scu\_timer}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+scu\+\_\+timer}
+
+
+
+Flag raised when the S\+CU timer overflows. 
+
+\mbox{\Hypertarget{axis__peripheral_8c_ae1142987fecfa0c02e7edfb9f539805b}\label{axis__peripheral_8c_ae1142987fecfa0c02e7edfb9f539805b}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!flag\_ttcps\_timer@{flag\_ttcps\_timer}}
+\index{flag\_ttcps\_timer@{flag\_ttcps\_timer}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{flag\_ttcps\_timer}{flag\_ttcps\_timer}}
+{\footnotesize\ttfamily volatile bool flag\+\_\+ttcps\+\_\+timer}
+
+
+
+Flag raised when the Triple Timer Counter overflows. 
+
+\mbox{\Hypertarget{axis__peripheral_8c_a215c2ec2d3302a5ec51fabb70017e4f9}\label{axis__peripheral_8c_a215c2ec2d3302a5ec51fabb70017e4f9}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!frame\_buf@{frame\_buf}}
+\index{frame\_buf@{frame\_buf}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{frame\_buf}{frame\_buf}}
+{\footnotesize\ttfamily char$\ast$ frame\+\_\+buf}
+
+
+
+Buffer used to send the data (50 bytes above it reserved for protocol header) 
+
+\mbox{\Hypertarget{axis__peripheral_8c_ac3c6e218717075ded198514020bb8013}\label{axis__peripheral_8c_ac3c6e218717075ded198514020bb8013}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!last\_element@{last\_element}}
+\index{last\_element@{last\_element}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{last\_element}{last\_element}}
+{\footnotesize\ttfamily \mbox{\hyperlink{data__analysis_8h_a9db432fc1185a85fe322653c4d3f54d5}{data\+\_\+list}}$\ast$ last\+\_\+element}
+
+
+
+Pointer on the last element of the list used in trigger mode. 
+
+\mbox{\Hypertarget{axis__peripheral_8c_a39d2cad95814eb9635cca5310d914893}\label{axis__peripheral_8c_a39d2cad95814eb9635cca5310d914893}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!regptr@{regptr}}
+\index{regptr@{regptr}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{regptr}{regptr}}
+{\footnotesize\ttfamily int$\ast$ regptr}
+
+
+
+Array containing registers of A\+X\+I-\/lite. 
+
+\mbox{\Hypertarget{axis__peripheral_8c_afd1f6e74a3d4d317436684e7fa64a8fa}\label{axis__peripheral_8c_afd1f6e74a3d4d317436684e7fa64a8fa}} 
+\index{axis\_peripheral.c@{axis\_peripheral.c}!WdtScuInstance@{WdtScuInstance}}
+\index{WdtScuInstance@{WdtScuInstance}!axis\_peripheral.c@{axis\_peripheral.c}}
+\subsubsection{\texorpdfstring{WdtScuInstance}{WdtScuInstance}}
+{\footnotesize\ttfamily X\+Scu\+Wdt Wdt\+Scu\+Instance}
+
+
+
+Instance of the device watchdog. 
+
