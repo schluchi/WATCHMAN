@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Jan 27 19:59:11 2019" VIVADOVERSION="2018.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Feb  5 08:05:42 2019" VIVADOVERSION="2018.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z010" NAME="base_zynq" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -305,12 +305,7 @@
         <CONNECTION INSTANCE="TARGETC_IP_Prototype_0" PORT="TrigA"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" LEFT="0" NAME="HCMPA" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_0_dout">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="xlconstant_0" PORT="dout"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="0" NAME="HCMPB" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_0_dout">
+    <PORT DIR="O" LEFT="0" NAME="HCMPD" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_0_dout">
       <CONNECTIONS>
         <CONNECTION INSTANCE="xlconstant_0" PORT="dout"/>
       </CONNECTIONS>
@@ -320,7 +315,12 @@
         <CONNECTION INSTANCE="xlconstant_0" PORT="dout"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" LEFT="0" NAME="HCMPD" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_0_dout">
+    <PORT DIR="O" LEFT="0" NAME="HCMPB" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_0_dout">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="xlconstant_0" PORT="dout"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="0" NAME="HCMPA" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_0_dout">
       <CONNECTIONS>
         <CONNECTION INSTANCE="xlconstant_0" PORT="dout"/>
       </CONNECTIONS>
@@ -5459,6 +5459,7 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="s_axi_lite_aclk"/>
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axi_s2mm_aclk"/>
             <CONNECTION INSTANCE="axistream_0" PORT="M_AXIS_ACLK"/>
+            <CONNECTION INSTANCE="FifoManagerV4_0" PORT="CLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ACLK"/>
@@ -5467,7 +5468,6 @@
             <CONNECTION INSTANCE="axi_interconnect_0" PORT="S00_ACLK"/>
             <CONNECTION INSTANCE="axi_interconnect_0" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M02_ACLK"/>
-            <CONNECTION INSTANCE="FifoManagerV4_0" PORT="CLK"/>
             <CONNECTION INSTANCE="TARGETC_IP_Prototype_0" PORT="RefCLK_i1"/>
             <CONNECTION INSTANCE="TARGETC_IP_Prototype_0" PORT="RefCLK_i2"/>
             <CONNECTION INSTANCE="TARGETC_IP_Prototype_0" PORT="tc_axi_aclk"/>
@@ -6902,10 +6902,10 @@
       <PORTS>
         <PORT DIR="O" LEFT="0" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconstant_0_dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="HCMPD"/>
-            <CONNECTION INSTANCE="External_Ports" PORT="HCMPC"/>
-            <CONNECTION INSTANCE="External_Ports" PORT="HCMPB"/>
             <CONNECTION INSTANCE="External_Ports" PORT="HCMPA"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="HCMPB"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="HCMPC"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="HCMPD"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

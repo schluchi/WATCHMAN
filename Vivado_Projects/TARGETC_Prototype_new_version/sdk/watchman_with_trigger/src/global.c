@@ -29,6 +29,8 @@ volatile bool empty_flag;
 volatile bool flag_ttcps_timer;
 /** @brief Flag raised when the SCU timer overflows*/
 volatile bool flag_scu_timer;
+/** @brief Flag raised to avoid the function reload watchdog in timer callback */
+volatile bool flag_dont_relaod_wdt;
 /** @brief Instance of AXI-DMA */
 XAxiDma AxiDmaInstance;
 /** @brief Instance of the device watchdog */
@@ -45,13 +47,13 @@ int nbre_of_bytes;
 data_list* first_element;
 /** @brief Pointer on the last element of the list used in trigger mode */
 data_list* last_element;
-/** @brief Flag raised when an assertion has occured */
-volatile bool flag_assertion;
 /** @brief Flag raised when the program has entered the while loop */
 volatile bool flag_while_loop;
+/** @brief Temporary buffer used to create the real buffer data (protocol header problem) */
 char* frame_buf_tmp;
 /** @brief Buffer used to send the data (50 bytes above it reserved for protocol header) */
 char* frame_buf;
+/** @brief Temporary buffer used to create the real buffer command (protocol header problem) */
 char* frame_buf_cmd_tmp;
 /** @brief Buffer used to send the command (50 bytes above it reserved for protocol header) */
 char* frame_buf_cmd;
@@ -86,6 +88,7 @@ int init_global_var(void){
 	nbre_of_bytes = 0;
 	flag_ttcps_timer = false;
 	flag_scu_timer = false;
+	flag_dont_relaod_wdt = false;
 	first_element = (data_list *)malloc(sizeof(data_list));
 	if(!first_element){
 		xil_printf("malloc for first_element failed in function, %s!\r\n", __func__);
@@ -94,7 +97,6 @@ int init_global_var(void){
 	first_element->previous = NULL;
 	first_element->next = NULL;
 	last_element = first_element;
-	flag_assertion = false;
 	flag_while_loop = false;
 	flag_axidma_error = false;
 	flag_axidma_rx_done = false;

@@ -1,8 +1,8 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
--- Date        : Sun Jan 27 20:02:13 2019
--- Host        : LAPTOP-5FF9V25L running 64-bit major release  (build 9200)
+-- Date        : Tue Feb  5 08:08:10 2019
+-- Host        : LAPTOP-E03JN4BL running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
 --               C:/Users/antho/Documents/WATCHMAN/Vivado_Projects/TARGETC_Prototype_new_version/hw/bd/base_zynq/ip/base_zynq_TARGETC_IP_Prototype_0_1/base_zynq_TARGETC_IP_Prototype_0_1_stub.vhdl
 -- Design      : base_zynq_TARGETC_IP_Prototype_0_1

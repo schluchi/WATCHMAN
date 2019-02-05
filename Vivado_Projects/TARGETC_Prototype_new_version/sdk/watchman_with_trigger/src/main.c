@@ -35,6 +35,10 @@ extern volatile bool stream_flag;
 extern volatile bool flag_ttcps_timer;
 /** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
+/** @brief Flag raised to avoid the function reload watchdog in timer callback */
+extern volatile bool flag_dont_relaod_wdt;
+/** @brief Flag raised when AXI-DMA has an error */
+extern volatile bool flag_axidma_error;
 /** @brief Instance of the device watchdog */
 extern XScuWdt WdtScuInstance;
 /** @brief Flag raised when an assertion has occured */
@@ -67,7 +71,7 @@ static struct netif server_netif;
 typedef enum clean_state_enum {
 	GLOBAL_VAR=0x1,	/**< Free the global variable reserved in function init_global_var */
 	INTERRUPT=0x2,	/**< Stop the interrupt */
-	UDP=0x4,		/**< Close both of the UDP communications */
+	UDP=0x3,		/**< Close both of the UDP communications */
 } clean_state_en;
 /**
  * @brief This is the enumeration of the state machine
@@ -80,7 +84,7 @@ typedef enum dma_stm_enum{
 } dma_stm_en;
 
 /*** Function prototypes *********************************************/
-void end_main(clean_state_en state);
+void end_main(clean_state_en state, char* error_txt);
 
 int main()
 {
@@ -97,7 +101,7 @@ int main()
 	/* Initialize the global variables */
 	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR, "Global variables initialization failed!");
 		return -1;
 	}
 
@@ -108,21 +112,21 @@ int main()
 	FRESULT result = mount_sd_card();
 	if (result == FR_OK) xil_printf("Mounting SD card pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR, "Mounting SD card failed!");
 		return -1;
 	}
 
 	/* Initialize the devices timer, axidma, ... */
 	if(devices_initialization() == XST_SUCCESS) xil_printf("Devices initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR | INTERRUPT);
+		end_main(GLOBAL_VAR, "Devices initialization failed!");
 		return -1;
 	}
 
 	/* Initialize the interrupts */
 	if(interrupts_initialization() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR | INTERRUPT);
+		end_main(GLOBAL_VAR | INTERRUPT, "Interrupts initialization failed!");
 		return -1;
 	}
 
@@ -135,32 +139,27 @@ int main()
 	/* Initialize the DAC (Vped, Comparator value) */
 	if(DAC_LTC2657_initialize() == XST_SUCCESS) xil_printf("DAC initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR | INTERRUPT, "DAC initialization failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED,VPED_ANALOG) != XST_SUCCESS){
-		xil_printf("DAC: setting vped voltage failed!\r\n");
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting Vped voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_0,THRESHOLD_CMP) != XST_SUCCESS){
-		xil_printf("DAC: setting group 0 voltage failed!\r\n");
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 0 voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_1,THRESHOLD_CMP) != XST_SUCCESS){
-		xil_printf("DAC: setting group 1 voltage failed!\r\n");
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 1 voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_2,THRESHOLD_CMP) != XST_SUCCESS){
-		xil_printf("DAC: setting group 2 voltage failed!\r\n");
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_3,THRESHOLD_CMP) != XST_SUCCESS){
-		xil_printf("DAC: setting group 3 voltage failed!\r\n");
-		end_main(GLOBAL_VAR);
+		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 3 voltage failed!");
 		return -1;
 	}
 
@@ -170,8 +169,7 @@ int main()
 	gw.addr = 0;
 	netmask.addr = 0;
 	if (!xemac_add(echo_netif, &ipaddr, &netmask, &gw, mac_ethernet_address, PLATFORM_EMAC_BASEADDR)) {
-		printf("Error adding N/W interface\n\r");
-		end_main(GLOBAL_VAR | INTERRUPT);
+		end_main(GLOBAL_VAR | INTERRUPT, "Error adding N/W interface");
 		return -1;
 	}
 
@@ -194,8 +192,7 @@ int main()
 
 	/* Set the UDP connections and callback for data and commands */
 	if(setup_udp_settings(pc_ipaddr) < 0){
-		printf("Error setting up the UDP interface\n\r");
-		end_main(GLOBAL_VAR | INTERRUPT | UDP);
+		end_main(GLOBAL_VAR | INTERRUPT | UDP, "Error setting up the UDP interface");
 		return -1;
 	}
 	else xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
@@ -219,24 +216,21 @@ int main()
 	/* Test pattern */
 	if(test_TPG() == XST_SUCCESS) printf("TestPattern Generator pass!\r\n");
 	else{
-		printf("TestPattern Generator failed!\n\r");
-		end_main(GLOBAL_VAR | INTERRUPT | UDP);
+		end_main(GLOBAL_VAR | INTERRUPT | UDP, "TestPattern Generator failed!");
 		return -1;
 	}
 
 	/* Initialize pedestal */
 	if(init_pedestals() == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
 	else{
-		printf("Pedestal initialization failed!\n\r");
-		end_main(GLOBAL_VAR | INTERRUPT | UDP);
+		end_main(GLOBAL_VAR | INTERRUPT | UDP, "Pedestal initialization failed!");
 		return -1;
 	}
 
 	/* Initialize transfer function coefficients */
 	if(init_transfer_function() == XST_SUCCESS) printf("Transfer function initialization pass!\r\n");
 	else{
-		printf("Transfer function initialization failed!\n\r");
-		end_main(GLOBAL_VAR | INTERRUPT | UDP);
+		end_main(GLOBAL_VAR | INTERRUPT | UDP, "Transfer function initialization failed!");
 		return -1;
 	}
 
@@ -248,10 +242,6 @@ int main()
 	 * 				TO DO !!!!!!!!
 	 * 	Reactivate wdt, but problem with recover data because of changing dac value (sleep(1) in fct)
 	 * 	and be carefull with oher way to send data
-	 * 	in infinity loop, when fct return error, after calling fct end_main, log problem and inifity loop to reboot with wdt (like assertion)
-	 * 	before infinity loop, do the same, but raise a flag to counterreact the flag_while_loop test in the timer flag
-	 * 	and dont do that with function called before the device_init function
-	 * 	treat flag axidma error
 	 * 	update time file and reload wdt needs to be done during interrupt if during send 20 windows and during send transfer fct
 	 * 	-> normaly done in every fct
 	 */
@@ -259,20 +249,22 @@ int main()
 	//**************************************************************************
 	printf("Start while loop\r\n");
 	while (run_flag){
-		if(flag_assertion){
-			break;
-		}
-
+		/* If needed, update timefile */
 		if(flag_ttcps_timer){
 			update_timefile();
 			flag_ttcps_timer = false;
 		}
 
+		/* If needed, reload watchdog's counter */
 		if(flag_scu_timer){
-			XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+			XScuWdt_RestartWdt(&WdtScuInstance);
 			flag_scu_timer = false;
 		}
 
+		if(flag_axidma_error){
+			end_main(GLOBAL_VAR | INTERRUPT | UDP, "AXI-DMA failed!");
+			return -1;
+		}
 		switch(state_main){
 			case IDLE:
 				if(stream_flag && (!get_transfer_fct_flag) && (!get_20_windows_flag)){
@@ -306,8 +298,7 @@ int main()
 			case GET_TRANSFER_FCT:
 				if(send_data_transfer_fct() == XST_SUCCESS) printf("Recover data pass!\r\n");
 				else{
-					printf("Recover data failed!\n\r");
-					end_main(GLOBAL_VAR | INTERRUPT | UDP);
+					end_main(GLOBAL_VAR | INTERRUPT | UDP, "Recover data failed!");
 					return -1;
 				}
 				get_transfer_fct_flag = false;
@@ -316,8 +307,7 @@ int main()
 			case GET_20_WINDOWS:
 				if(get_20_windows_fct() == XST_SUCCESS) printf("Get a 20 windows pass!\r\n");
 				else{
-					printf("Get a 20 windows failed!\n\r");
-					end_main(GLOBAL_VAR | INTERRUPT | UDP);
+					end_main(GLOBAL_VAR | INTERRUPT | UDP, "Get a 20 windows failed!");
 					return -1;
 				}
 				get_20_windows_flag = false;
@@ -331,17 +321,32 @@ int main()
 	}
 
 	/* Close and clear everything */
-	end_main(GLOBAL_VAR | INTERRUPT | UDP);
+	cleanup_interrupts();
+	cleanup_udp();
+	cleanup_global_var();
+	printf("-------END-------\r\n");
 
 	return 0;
 }
 
 
-void end_main(clean_state_en state){
+void end_main(clean_state_en state, char* error_txt){
+	char text[100];
 
-	if(state & INTERRUPT) cleanup_interrupts();
-	if(state & UDP) cleanup_udp();
-	if(state & GLOBAL_VAR) cleanup_global_var();
+	sprintf((char *)text, "In main: %s", error_txt);
+	if(state & GLOBAL_VAR){
+		cleanup_global_var();
+		if(state & INTERRUPT){
+			cleanup_interrupts();
+			if(state & UDP) cleanup_udp();
+			log_event(text, strlen(text));
+		}
+	}
+
+	xil_printf("%s : strlen = %d\r\n", text, strlen(text));
 	printf("-------END-------\r\n");
+	flag_dont_relaod_wdt = true;
+	/* Infinity loop to trigger the watchdog */
+	while(1);
 }
 

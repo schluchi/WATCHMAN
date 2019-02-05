@@ -86,7 +86,7 @@ FRESULT log_event(char *tmp_text, uint length)
 	static int file_index = 0;
 	FRESULT result;
 	uint nbr_byte = 0;
-	char text[100];
+	char text[200];
 	time_cplt time;
 
 	gettime_hm(&time); // get the time
