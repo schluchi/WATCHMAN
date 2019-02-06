@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]C:\Users\antho\Documents\WATCHMAN\Vivado_Projects\TARGETC_Prototype_new_version\sdk\boot_FSBL\Debug\boot_FSBL.elf
+	C:\Users\antho\Documents\WATCHMAN\Vivado_Projects\TARGETC_Prototype_new_version\hw\images\base_zynq_wrapper.bit
+	C:\Users\antho\Documents\WATCHMAN\Vivado_Projects\TARGETC_Prototype_new_version\sdk\watchman_with_trigger\Debug\watchman_with_trigger.elf
+}

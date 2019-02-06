@@ -23,6 +23,8 @@ volatile bool stream_flag;
 volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 volatile bool get_20_windows_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system */
+volatile bool create_bug_flag;
 /** @brief Flag true when the list is empty (first_element = last_element) */
 volatile bool empty_flag;
 /** @brief Flag raised when the Triple Timer Counter overflows */
@@ -84,6 +86,7 @@ int init_global_var(void){
 	stream_flag = false;
 	get_transfer_fct_flag = false;
 	get_20_windows_flag = false;
+	create_bug_flag = false;
 	empty_flag = true;
 	nbre_of_bytes = 0;
 	flag_ttcps_timer = false;

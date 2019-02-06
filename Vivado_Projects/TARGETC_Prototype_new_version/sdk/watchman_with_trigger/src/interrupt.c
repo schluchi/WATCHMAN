@@ -164,11 +164,11 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 
 	/* Read pending interrupts */
 	IrqStatus = XAxiDma_IntrGetIrq(AxiDmaInst, XAXIDMA_DEVICE_TO_DMA);
-	if(flag_while_loop){
-		printf("IrqStatus = 0x%x\r\n", IrqStatus);
-		uint32_t reg = XAxiDma_ReadReg(AxiDmaInst->RegBase + (XAXIDMA_RX_OFFSET * XAXIDMA_DEVICE_TO_DMA), XAXIDMA_BUFFLEN_OFFSET);
-		printf("reg = 0x%x\r\n",reg);
-	}
+//	if(flag_while_loop){
+//		printf("IrqStatus = 0x%x\r\n", IrqStatus);
+//		uint32_t reg = XAxiDma_ReadReg(AxiDmaInst->RegBase + (XAXIDMA_RX_OFFSET * XAXIDMA_DEVICE_TO_DMA), XAXIDMA_BUFFLEN_OFFSET);
+//		printf("reg = 0x%x\r\n",reg);
+//	}
 	/* If no interrupt is asserted, we do not do anything */
 	if (!(IrqStatus & XAXIDMA_IRQ_ALL_MASK)) {
 		/* Acknowledge pending interrupts */
@@ -484,10 +484,8 @@ int setup_scu_wdt_int(void){
 		xil_printf("%s: Watch dog has expired\r\n", __func__);
 		log_wdtevent();//if(write_wdtfile() != FR_OK)
 	}
-	else{
-		xil_printf("%s: Watch dog has not expired\r\n", __func__);
-		create_logfile();
-	}
+	else xil_printf("%s: Watch dog has not expired\r\n", __func__);
+
 	create_timefile();
 
 	return Status;
@@ -675,19 +673,19 @@ void enable_interrupts()
 
 	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
 
-//	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
-//	XScuWdt_SetControlReg(&WdtScuInstance, Reg | XSCUWDT_CONTROL_IT_ENABLE_MASK);
-//	/*
-//	 * In Watchdog mode, we must start to see the event after the reboot
-//	 * Useless in Time mode
-//	 */
-//	XScuWdt_Start(&WdtScuInstance);
-//	/*
-//	 * Load the watchdog counter register.
-//	 * When the counter is loaded, the count-down start
-//	 */
-//	XScuWdt_LoadWdt(&WdtScuInstance, WDT_LOAD_VALUE);
-//	XTime_GetTime(&tStart_wdt);
+	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
+	XScuWdt_SetControlReg(&WdtScuInstance, Reg | XSCUWDT_CONTROL_IT_ENABLE_MASK);
+	/*
+	 * In Watchdog mode, we must start to see the event after the reboot
+	 * Useless in Time mode
+	 */
+	XScuWdt_Start(&WdtScuInstance);
+	/*
+	 * Load the watchdog counter register.
+	 * When the counter is loaded, the count-down start
+	 */
+	XScuWdt_LoadWdt(&WdtScuInstance, WDT_LOAD_VALUE);
+	XTime_GetTime(&tStart_wdt);
 
 	/* Catch assertion */
 	Xil_AssertSetCallback((Xil_AssertCallback) assert_callback);
@@ -699,14 +697,14 @@ void enable_interrupts()
 /**
 * @brief	Disable all the interrupts and stop the timers
 *
-* @param	None
+* @param	wdt_too: indicates if the watchdog also needs to be disabled (trues -> disable wdt)
 *
 * @return	None
 *
 * @note		-
 *
 ****************************************************************************/
-void cleanup_interrupts()
+void cleanup_interrupts(bool wdt_too)
 {
 	uint32_t Reg;
 	XScuTimer_DisableInterrupt(&TimerScuInstance);
@@ -714,10 +712,12 @@ void cleanup_interrupts()
 	XTtcPs_DisableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
 	XTtcPs_Stop(&TimerTtcPsInstance);
 	XAxiDma_IntrDisable(&AxiDmaInstance, XAXIDMA_IRQ_ALL_MASK, XAXIDMA_DMA_TO_DEVICE);
-	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
-	XScuWdt_SetControlReg(&WdtScuInstance, Reg & ~(XSCUWDT_CONTROL_IT_ENABLE_MASK));
-	XScuWdt_Stop(&WdtScuInstance);
-	XScuWdt_SetTimerMode(&WdtScuInstance); // Timer mode: to stop the watchdog
+	if(wdt_too){
+		Reg = XScuWdt_GetControlReg(&WdtScuInstance);
+		XScuWdt_SetControlReg(&WdtScuInstance, Reg & ~(XSCUWDT_CONTROL_IT_ENABLE_MASK));
+		XScuWdt_Stop(&WdtScuInstance);
+		XScuWdt_SetTimerMode(&WdtScuInstance); // Timer mode: to stop the watchdog
+	}
 	Xil_ICacheDisable();
 	Xil_DCacheDisable();
 	return;

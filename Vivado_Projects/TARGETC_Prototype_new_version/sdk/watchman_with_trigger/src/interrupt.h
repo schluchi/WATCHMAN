@@ -66,7 +66,7 @@ int setup_axidma_int(void);
 int interrupts_initialization(void);
 void enable_interrupts();
 int devices_initialization();
-void cleanup_interrupts();
+void cleanup_interrupts(bool wdt_too);
 
 /*** Type definition *************************************************/
 /*********************************************************************/

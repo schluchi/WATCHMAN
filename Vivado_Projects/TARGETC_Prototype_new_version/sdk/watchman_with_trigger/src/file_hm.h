@@ -15,6 +15,7 @@
 
 #include "ff.h"
 #include "time_hm.h"
+#include "xil_printf.h"
 
 /*** Function prototypes *********************************************/
 FRESULT mount_sd_card(void);

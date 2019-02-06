@@ -77,6 +77,7 @@ src/main.o src/main.o: ../src/main.c \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xiic_l.h \
  ../src/pedestal.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_types.h \
+ ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h \
  ../src/get_20_windows.h ../src/get_transfer_fct.h \
  ../src/transfer_function.h ../src/GMHeader.h
 
@@ -241,6 +242,8 @@ src/main.o src/main.o: ../src/main.c \
 ../src/pedestal.h:
 
 ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_types.h:
+
+../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h:
 
 ../src/get_20_windows.h:
 

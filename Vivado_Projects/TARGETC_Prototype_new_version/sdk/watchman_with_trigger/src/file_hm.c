@@ -59,11 +59,16 @@ FRESULT mount_sd_card(void)
 FRESULT create_logfile(void)
 {
 	FRESULT result;
-	result = f_open(&log_file, log_filename, FA_CREATE_ALWAYS | FA_WRITE | FA_READ);
-	if(result != FR_OK) printf("Create log file failed during f_open, result = %d\r\n", result);
+	result = f_open(&log_file, log_filename, FA_CREATE_NEW | FA_WRITE | FA_READ);
+	if(result == FR_EXIST){
+		f_open(&log_file, log_filename, FA_OPEN_EXISTING | FA_WRITE | FA_READ);
+		xil_printf("Open existing file\r\n");
+	}
+	if(result == FR_OK) xil_printf("Open and created file\r\n");
+	if(result != FR_OK) xil_printf("Create log file failed during f_open, result = %d\r\n", result);
 	else {
 		result = f_close(&log_file);
-		if(result != FR_OK) printf("Create log file failed during f_close, result = %d\r\n", result);
+		if(result != FR_OK) xil_printf("Create log file failed during f_close, result = %d\r\n", result);
 	}
 	return result;
 }
@@ -113,6 +118,7 @@ FRESULT log_event(char *tmp_text, uint length)
 					else{
 						result = f_close(&log_file);
 						if(result != FR_OK) printf("Write log file failed during f_close, result = %d\r\n", result);
+						else xil_printf("%s\r\n", text);
 					}
 					//file_index += nbr_byte;
 				}
@@ -182,7 +188,6 @@ FRESULT log_wdtevent(void)
 							length = 48;
 							/* write file */
 							result = f_write(&log_file, (const void*)text, length, &nbr_byte);
-							printf("write_wdtfile: %s", text);
 							if(result != FR_OK) printf("Write wdt file failed during f_write, result = %d\r\n", result);
 							else{
 								if(nbr_byte < length){

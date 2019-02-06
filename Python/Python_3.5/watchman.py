@@ -46,7 +46,7 @@ class Watchman_main_window():
         self.UDP_PORT_CMD = 7
         self.UDP_PORT_data = 8
         ## List of all the commands
-        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'get_transfer_fct', 'get_20_windows']
+        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'get_transfer_fct', 'get_20_windows', 'create_bug']
         ## Flag which indicates if the streaming is running
         self.stream_flag = False
         ## Flag which indicates that the user want to close the GUI (to avoid problem when accessing graphical object after "WM_DELETE_WINDOW" event)
@@ -119,6 +119,8 @@ class Watchman_main_window():
         self.__btn_transfer_fct.grid(column=8, row=13, rowspan=2, padx=5, sticky=W+E)
         self.__btn_20_windows = Button(self.master,text="Get 20\nwindows", command=partial(self.send_command, 7))
         self.__btn_20_windows.grid(column=8, row=16, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_bug = Button(self.master,text="Create bug", command=partial(self.send_command, 8))
+        self.__btn_bug.grid(column=8, row=18, rowspan=2, padx=5, sticky=W+E)
         self.__btn_graph = Button(self.master,text="Open graph\nStore data", command=self.open_graph)
         self.__btn_graph.grid(column=8, row=29, rowspan=2, padx=5, sticky=W+E)
         # Listbox to show data transfert

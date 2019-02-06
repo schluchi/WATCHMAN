@@ -34,6 +34,8 @@ extern volatile bool stream_flag;
 extern volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 extern volatile bool get_20_windows_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system */
+extern volatile bool create_bug_flag;
 /** @brief Array containing registers of AXI-lite */
 extern int* regptr;
 /** @brief Buffer used to send the command (50 bytes above it reserved for protocol header) */
@@ -255,7 +257,14 @@ int command_parser(struct pbuf *p, char* return_buf){
 				}
 				else return -1;
 				break;
-
+			case 8:	// create bug
+				if(start + 4 == end){
+					xil_printf("Command create_bug received\r\n");
+					create_bug_flag = true;
+					return 6;
+				}
+				else return -1;
+				break;
 			default:
 				return -1;
 

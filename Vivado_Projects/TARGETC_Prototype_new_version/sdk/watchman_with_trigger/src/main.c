@@ -18,6 +18,7 @@
 #include "pedestal.h"
 #include "xtime_l.h"
 #include "xscuwdt.h"
+#include "xil_io.h"
 
 #include "get_20_windows.h"
 #include "get_transfer_fct.h"
@@ -53,6 +54,8 @@ extern int* regptr;
 extern volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 extern volatile bool get_20_windows_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system */
+extern volatile bool create_bug_flag;
 /** @brief Flag true when the list is empty (first_element = last_element) */
 extern volatile bool empty_flag;
 /** @brief Pointer on the first element of the list used in trigger mode */
@@ -70,8 +73,9 @@ static struct netif server_netif;
  */
 typedef enum clean_state_enum {
 	GLOBAL_VAR=0x1,	/**< Free the global variable reserved in function init_global_var */
-	INTERRUPT=0x2,	/**< Stop the interrupt */
-	UDP=0x3,		/**< Close both of the UDP communications */
+	LOG_FILE=0x2,	/**< From this step, problem can be logged */
+	INTERRUPT=0x4,	/**< Stop the interrupt */
+	UDP=0x8,		/**< Close both of the UDP communications */
 } clean_state_en;
 /**
  * @brief This is the enumeration of the state machine
@@ -108,25 +112,31 @@ int main()
 	/* Initialize "echo_netif" to avoid warnings with function "xemac_add" */
 	echo_netif = &server_netif;
 
-	// Mount SD Card and create log file
+	/* Mount SD Card and create log file */
 	FRESULT result = mount_sd_card();
 	if (result == FR_OK) xil_printf("Mounting SD card pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR, "Mounting SD card failed!");
 		return -1;
 	}
+	/* Create log file */
+	if(create_logfile() == FR_OK) xil_printf("Log file creation pass!\r\n");
+	else{
+		end_main(GLOBAL_VAR, "Log file creation failed!");
+		return -1;
+	}
 
 	/* Initialize the devices timer, axidma, ... */
 	if(devices_initialization() == XST_SUCCESS) xil_printf("Devices initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR, "Devices initialization failed!");
+		end_main(GLOBAL_VAR | LOG_FILE, "Devices initialization failed!");
 		return -1;
 	}
 
 	/* Initialize the interrupts */
 	if(interrupts_initialization() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR | INTERRUPT, "Interrupts initialization failed!");
+		end_main(GLOBAL_VAR | LOG_FILE, "Interrupts initialization failed!");
 		return -1;
 	}
 
@@ -139,27 +149,27 @@ int main()
 	/* Initialize the DAC (Vped, Comparator value) */
 	if(DAC_LTC2657_initialize() == XST_SUCCESS) xil_printf("DAC initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR | INTERRUPT, "DAC initialization failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC initialization failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_VPED,VPED_ANALOG) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting Vped voltage failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting Vped voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_0,THRESHOLD_CMP) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 0 voltage failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 0 voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_1,THRESHOLD_CMP) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 1 voltage failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 1 voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_2,THRESHOLD_CMP) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
 		return -1;
 	}
 	if(DAC_LTC2657_SetChannelVoltage(DAC_GRP_3,THRESHOLD_CMP) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | INTERRUPT, "DAC: setting group threshold PMT 3 voltage failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 3 voltage failed!");
 		return -1;
 	}
 
@@ -169,7 +179,7 @@ int main()
 	gw.addr = 0;
 	netmask.addr = 0;
 	if (!xemac_add(echo_netif, &ipaddr, &netmask, &gw, mac_ethernet_address, PLATFORM_EMAC_BASEADDR)) {
-		end_main(GLOBAL_VAR | INTERRUPT, "Error adding N/W interface");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "Error adding N/W interface");
 		return -1;
 	}
 
@@ -192,7 +202,7 @@ int main()
 
 	/* Set the UDP connections and callback for data and commands */
 	if(setup_udp_settings(pc_ipaddr) < 0){
-		end_main(GLOBAL_VAR | INTERRUPT | UDP, "Error setting up the UDP interface");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "Error setting up the UDP interface");
 		return -1;
 	}
 	else xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
@@ -216,21 +226,21 @@ int main()
 	/* Test pattern */
 	if(test_TPG() == XST_SUCCESS) printf("TestPattern Generator pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR | INTERRUPT | UDP, "TestPattern Generator failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "TestPattern Generator failed!");
 		return -1;
 	}
 
 	/* Initialize pedestal */
 	if(init_pedestals() == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR | INTERRUPT | UDP, "Pedestal initialization failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Pedestal initialization failed!");
 		return -1;
 	}
 
 	/* Initialize transfer function coefficients */
 	if(init_transfer_function() == XST_SUCCESS) printf("Transfer function initialization pass!\r\n");
 	else{
-		end_main(GLOBAL_VAR | INTERRUPT | UDP, "Transfer function initialization failed!");
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Transfer function initialization failed!");
 		return -1;
 	}
 
@@ -249,6 +259,10 @@ int main()
 	//**************************************************************************
 	printf("Start while loop\r\n");
 	while (run_flag){
+		if(create_bug_flag){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Bug ask from user (simulation of function return error!");
+			return -1;
+		}
 		/* If needed, update timefile */
 		if(flag_ttcps_timer){
 			update_timefile();
@@ -262,7 +276,7 @@ int main()
 		}
 
 		if(flag_axidma_error){
-			end_main(GLOBAL_VAR | INTERRUPT | UDP, "AXI-DMA failed!");
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "AXI-DMA failed!");
 			return -1;
 		}
 		switch(state_main){
@@ -298,7 +312,7 @@ int main()
 			case GET_TRANSFER_FCT:
 				if(send_data_transfer_fct() == XST_SUCCESS) printf("Recover data pass!\r\n");
 				else{
-					end_main(GLOBAL_VAR | INTERRUPT | UDP, "Recover data failed!");
+					end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Recover data failed!");
 					return -1;
 				}
 				get_transfer_fct_flag = false;
@@ -307,7 +321,7 @@ int main()
 			case GET_20_WINDOWS:
 				if(get_20_windows_fct() == XST_SUCCESS) printf("Get a 20 windows pass!\r\n");
 				else{
-					end_main(GLOBAL_VAR | INTERRUPT | UDP, "Get a 20 windows failed!");
+					end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Get a 20 windows failed!");
 					return -1;
 				}
 				get_20_windows_flag = false;
@@ -321,7 +335,7 @@ int main()
 	}
 
 	/* Close and clear everything */
-	cleanup_interrupts();
+	cleanup_interrupts(true);
 	cleanup_udp();
 	cleanup_global_var();
 	printf("-------END-------\r\n");
@@ -334,16 +348,14 @@ void end_main(clean_state_en state, char* error_txt){
 	char text[100];
 
 	sprintf((char *)text, "In main: %s", error_txt);
-	if(state & GLOBAL_VAR){
-		cleanup_global_var();
-		if(state & INTERRUPT){
-			cleanup_interrupts();
-			if(state & UDP) cleanup_udp();
-			log_event(text, strlen(text));
-		}
+	if(state & GLOBAL_VAR) cleanup_global_var();
+	if(state & INTERRUPT) cleanup_interrupts(false);
+	if(state & UDP) cleanup_udp();
+	if(state & LOG_FILE){
+		log_event(text, strlen(text));
 	}
+	else xil_printf("%s\r\n", text);
 
-	xil_printf("%s : strlen = %d\r\n", text, strlen(text));
 	printf("-------END-------\r\n");
 	flag_dont_relaod_wdt = true;
 	/* Infinity loop to trigger the watchdog */

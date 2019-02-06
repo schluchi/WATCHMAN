@@ -114,7 +114,7 @@ int get_20_windows_fct(void){
 				}
 				printf("\r\n");
 			}
-			printf("Timeout on window %d: get 1000 windows failed!\r\n", window);
+			printf("Timeout on window %d: get 20 windows failed!\r\n", window);
 			return XST_FAILURE;
 		}
 		else flag_axidma_rx_done = false;
