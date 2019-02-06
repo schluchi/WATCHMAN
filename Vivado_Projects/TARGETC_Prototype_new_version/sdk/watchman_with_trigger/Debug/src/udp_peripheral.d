@@ -67,6 +67,7 @@ src/udp_peripheral.o src/udp_peripheral.o: ../src/udp_peripheral.c \
  ../src/axis_peripheral.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
  ../src/data_analysis.h ../src/TARGETC_RegisterMap.h ../src/global.h \
+ ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h \
  ../src/utility.h ../src/file_hm.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/integer.h \
@@ -211,6 +212,8 @@ src/udp_peripheral.o src/udp_peripheral.o: ../src/udp_peripheral.c \
 ../src/TARGETC_RegisterMap.h:
 
 ../src/global.h:
+
+../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h:
 
 ../src/utility.h:
 

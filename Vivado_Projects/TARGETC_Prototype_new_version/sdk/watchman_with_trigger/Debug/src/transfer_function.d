@@ -68,6 +68,7 @@ src/transfer_function.o src/transfer_function.o: \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/lwip/udp.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/lwip/prot/udp.h \
  ../src/time_hm.h ../src/TARGETC_RegisterMap.h ../src/global.h \
+ ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h \
  ../src/utility.h ../src/file_hm.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/integer.h \
@@ -219,6 +220,8 @@ src/transfer_function.o src/transfer_function.o: \
 ../src/TARGETC_RegisterMap.h:
 
 ../src/global.h:
+
+../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h:
 
 ../src/utility.h:
 

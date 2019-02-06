@@ -69,6 +69,7 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/ff.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
+ ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h \
  ../src/utility.h
 
 ../src/interrupt.h:
@@ -218,5 +219,7 @@ src/interrupt.o src/interrupt.o: ../src/interrupt.c ../src/interrupt.h \
 ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/integer.h:
 
 ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/ffconf.h:
+
+../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h:
 
 ../src/utility.h:

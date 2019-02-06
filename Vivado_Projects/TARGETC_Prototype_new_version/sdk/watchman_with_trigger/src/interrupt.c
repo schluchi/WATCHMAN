@@ -38,8 +38,6 @@ extern struct netif *echo_netif;
 extern volatile bool flag_ttcps_timer;
 /** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
-/** @brief Flag raised to avoid the function reload watchdog in timer callback */
-extern volatile bool flag_dont_relaod_wdt;
 /** @brief Flag raised when the program has entered the while loop */
 extern volatile bool flag_while_loop;
 /** @brief Flag raised when AXI-DMA has an error */
@@ -74,7 +72,9 @@ void assert_callback(const char8 *File, s32 Line)
 	sprintf((char *)text, "Assert in file %s @ line %d", File, (int)Line);
 	log_event(text, strlen(text));
 	xil_printf("%s : strlen = %d\r\n", text, strlen(text));
-	flag_dont_relaod_wdt = true; // stop the app
+	sleep(1); // to see the xil_printf
+	// SYSTEM RESET
+	system_reset_hm();
 	//Xil_AssertWait = 0; // avoid the infinity loop
 }
 
@@ -116,7 +116,7 @@ void timer_scu_callback(XScuTimer * TimerInstance)
 
 	// Need to call this function every 250ms, but not before the network is set
 	if(flag_while_loop) xemacif_input(echo_netif);
-	if((!flag_while_loop) && (!flag_dont_relaod_wdt)) XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
+	if(!flag_while_loop) XScuWdt_RestartWdt(&WdtScuInstance);	// Reload the counter for the wdt
 
 	// Clear timer's interrupt
 	XScuTimer_ClearInterruptStatus(TimerInstance);
@@ -454,6 +454,7 @@ int setup_axidma_int(void)
 int setup_scu_wdt_int(void){
 	int Status = XST_SUCCESS;
 	XScuWdt_Config *ConfigPtr;
+	uint32_t reg;
 
 	ConfigPtr = XScuWdt_LookupConfig(WDT_DEVICE_ID);
 	if (ConfigPtr == NULL){
@@ -483,6 +484,10 @@ int setup_scu_wdt_int(void){
 	if(XScuWdt_IsWdtExpired(&WdtScuInstance)){
 		xil_printf("%s: Watch dog has expired\r\n", __func__);
 		log_wdtevent();//if(write_wdtfile() != FR_OK)
+		/* Clear flag "has expired" */
+		reg = XScuWdt_ReadReg(WdtScuInstance.Config.BaseAddr, XSCUWDT_RST_STS_OFFSET);
+		reg = reg | XSCUWDT_RST_STS_RESET_FLAG_MASK;
+		XScuWdt_WriteReg(WdtScuInstance.Config.BaseAddr, XSCUWDT_RST_STS_OFFSET, reg);
 	}
 	else xil_printf("%s: Watch dog has not expired\r\n", __func__);
 

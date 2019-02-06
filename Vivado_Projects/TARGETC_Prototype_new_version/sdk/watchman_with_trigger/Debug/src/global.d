@@ -70,7 +70,8 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/integer.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/ffconf.h \
  ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xstatus.h \
- ../src/data_analysis.h
+ ../src/data_analysis.h \
+ ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h
 
 ../src/global.h:
 
@@ -221,3 +222,5 @@ src/global.o src/global.o: ../src/global.c ../src/global.h \
 ../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xstatus.h:
 
 ../src/data_analysis.h:
+
+../../watchman_with_trigger_bsp/ps7_cortexa9_0/include/xil_io.h:

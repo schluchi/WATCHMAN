@@ -23,16 +23,18 @@ volatile bool stream_flag;
 volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 volatile bool get_20_windows_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system */
-volatile bool create_bug_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
+volatile bool simul_err_watchdog_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a function problem */
+volatile bool simul_err_function_prob_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
+volatile bool simul_err_assertion_flag;
 /** @brief Flag true when the list is empty (first_element = last_element) */
 volatile bool empty_flag;
 /** @brief Flag raised when the Triple Timer Counter overflows */
 volatile bool flag_ttcps_timer;
 /** @brief Flag raised when the SCU timer overflows*/
 volatile bool flag_scu_timer;
-/** @brief Flag raised to avoid the function reload watchdog in timer callback */
-volatile bool flag_dont_relaod_wdt;
 /** @brief Instance of AXI-DMA */
 XAxiDma AxiDmaInstance;
 /** @brief Instance of the device watchdog */
@@ -86,12 +88,13 @@ int init_global_var(void){
 	stream_flag = false;
 	get_transfer_fct_flag = false;
 	get_20_windows_flag = false;
-	create_bug_flag = false;
+	simul_err_watchdog_flag = false;
+	simul_err_function_prob_flag = false;
+	simul_err_assertion_flag = false;
 	empty_flag = true;
 	nbre_of_bytes = 0;
 	flag_ttcps_timer = false;
 	flag_scu_timer = false;
-	flag_dont_relaod_wdt = false;
 	first_element = (data_list *)malloc(sizeof(data_list));
 	if(!first_element){
 		xil_printf("malloc for first_element failed in function, %s!\r\n", __func__);
@@ -141,3 +144,26 @@ void cleanup_global_var(void){
 	free(frame_buf_tmp);
 }
 
+/****************************************************************************/
+/**
+* @brief	Function that resets the system (reboot only if program on SD card or in flash)
+*
+* @param	None
+*
+* @return	None
+*
+* @note		-
+*
+****************************************************************************/
+void system_reset_hm(void){
+	uint32_t reg;
+
+	/* Read if registers are locked */
+	reg = Xil_In32(SLCR_BASE_ADDRESS+SLCR_LOCKSTA) & LOCKSTA_MASK;
+	/* If yes, unlock them */
+	if(reg == 1) Xil_Out32(SLCR_BASE_ADDRESS+SLCR_UNLOCK_OFFSET, 0xDF0D);
+	/* Reset the system */
+	reg = Xil_In32(SLCR_BASE_ADDRESS+PSS_RST_CTRL);
+	reg = reg | SOFT_RST_MASK;
+	Xil_Out32(SLCR_BASE_ADDRESS+PSS_RST_CTRL, reg);
+}

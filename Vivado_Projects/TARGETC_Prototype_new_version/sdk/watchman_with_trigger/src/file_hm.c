@@ -61,10 +61,10 @@ FRESULT create_logfile(void)
 	FRESULT result;
 	result = f_open(&log_file, log_filename, FA_CREATE_NEW | FA_WRITE | FA_READ);
 	if(result == FR_EXIST){
-		f_open(&log_file, log_filename, FA_OPEN_EXISTING | FA_WRITE | FA_READ);
+		result = f_open(&log_file, log_filename, FA_OPEN_EXISTING | FA_WRITE | FA_READ);
 		xil_printf("Open existing file\r\n");
 	}
-	if(result == FR_OK) xil_printf("Open and created file\r\n");
+	else xil_printf("Open and created file\r\n");
 	if(result != FR_OK) xil_printf("Create log file failed during f_open, result = %d\r\n", result);
 	else {
 		result = f_close(&log_file);
@@ -91,12 +91,12 @@ FRESULT log_event(char *tmp_text, uint length)
 	static int file_index = 0;
 	FRESULT result;
 	uint nbr_byte = 0;
-	char text[200];
+	char text[300];
 	time_cplt time;
 
 	gettime_hm(&time); // get the time
 	length += 26;
-	if(length < 100){
+	if(length < 250){
 		/* format the time in string */
 		sprintf((char *)text, "%02d.%02d.%04d @ %02d:%02d:%02d : %s\r\n",  time.day, time.month, time.year, time.hour, time.minute, time.second, tmp_text);
 		result = f_open(&log_file, log_filename,FA_WRITE);

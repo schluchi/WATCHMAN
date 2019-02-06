@@ -18,7 +18,6 @@
 #include "pedestal.h"
 #include "xtime_l.h"
 #include "xscuwdt.h"
-#include "xil_io.h"
 
 #include "get_20_windows.h"
 #include "get_transfer_fct.h"
@@ -36,8 +35,6 @@ extern volatile bool stream_flag;
 extern volatile bool flag_ttcps_timer;
 /** @brief Flag raised when the SCU timer overflows*/
 extern volatile bool flag_scu_timer;
-/** @brief Flag raised to avoid the function reload watchdog in timer callback */
-extern volatile bool flag_dont_relaod_wdt;
 /** @brief Flag raised when AXI-DMA has an error */
 extern volatile bool flag_axidma_error;
 /** @brief Instance of the device watchdog */
@@ -54,8 +51,12 @@ extern int* regptr;
 extern volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 extern volatile bool get_20_windows_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
+extern volatile bool simul_err_watchdog_flag;
 /** @brief Flag raised when the user want to test the autonomous side of the system */
-extern volatile bool create_bug_flag;
+extern volatile bool simul_err_function_prob_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
+extern volatile bool simul_err_assertion_flag;
 /** @brief Flag true when the list is empty (first_element = last_element) */
 extern volatile bool empty_flag;
 /** @brief Pointer on the first element of the list used in trigger mode */
@@ -87,6 +88,7 @@ typedef enum dma_stm_enum{
 	GET_20_WINDOWS,		/**< System sending the data 20 consecutive windows in response to the corresponding command */
 } dma_stm_en;
 
+
 /*** Function prototypes *********************************************/
 void end_main(clean_state_en state, char* error_txt);
 
@@ -100,7 +102,7 @@ int main()
 	/* the mac address of the board. this should be unique per board */
 	unsigned char mac_ethernet_address[] = { 0x00, 0x0a, 0x35, 0x00, 0x01, 0x02 };
 
-	printf("\n\r\n\r------START------\r\n");
+	xil_printf("\n\r\n\r------START------\r\n");
 
 	/* Initialize the global variables */
 	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
@@ -259,10 +261,21 @@ int main()
 	//**************************************************************************
 	printf("Start while loop\r\n");
 	while (run_flag){
-		if(create_bug_flag){
-			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Bug ask from user (simulation of function return error!");
+		/* Simulate a infinity loop to trigger the watchdog  */
+		if(simul_err_watchdog_flag){
+			while(1);
+		}
+
+		/* Simulate a function which has a problem */
+		if(simul_err_function_prob_flag){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Error function problem ask from user (simulation of function return error!)");
 			return -1;
 		}
+
+		/* Simulate a assertion */
+//		if(simul_err_assertion_flag){
+//		}
+
 		/* If needed, update timefile */
 		if(flag_ttcps_timer){
 			update_timefile();
@@ -345,6 +358,7 @@ int main()
 
 
 void end_main(clean_state_en state, char* error_txt){
+	xil_printf("state = %x\r\n",state);
 	char text[100];
 
 	sprintf((char *)text, "In main: %s", error_txt);
@@ -356,9 +370,9 @@ void end_main(clean_state_en state, char* error_txt){
 	}
 	else xil_printf("%s\r\n", text);
 
-	printf("-------END-------\r\n");
-	flag_dont_relaod_wdt = true;
-	/* Infinity loop to trigger the watchdog */
-	while(1);
+	xil_printf("-------END-------\r\n");
+	sleep(1); // to see the xil_printf
+	// SYSTEM RESET
+	system_reset_hm();
 }
 
