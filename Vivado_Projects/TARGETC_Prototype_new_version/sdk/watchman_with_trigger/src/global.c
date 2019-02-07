@@ -23,12 +23,6 @@ volatile bool stream_flag;
 volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 volatile bool get_20_windows_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
-volatile bool simul_err_watchdog_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system with a function problem */
-volatile bool simul_err_function_prob_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
-volatile bool simul_err_assertion_flag;
 /** @brief Flag true when the list is empty (first_element = last_element) */
 volatile bool empty_flag;
 /** @brief Flag raised when the Triple Timer Counter overflows */
@@ -68,6 +62,16 @@ uint16_t pedestal[512][16][32];
 /** @brief Lookup table to correct the transfer function */
 uint16_t lookup_table[2048];
 
+//******** To test the error detection********************/
+/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
+volatile bool simul_err_watchdog_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a function problem */
+volatile bool simul_err_function_prob_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a exception */
+volatile bool simul_err_exception_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
+volatile bool simul_err_assertion_flag;
+
 /****************************************************************************/
 /**
 * @brief	Initiate all the global variables declared in global.h file
@@ -90,6 +94,7 @@ int init_global_var(void){
 	get_20_windows_flag = false;
 	simul_err_watchdog_flag = false;
 	simul_err_function_prob_flag = false;
+	simul_err_exception_flag = false;
 	simul_err_assertion_flag = false;
 	empty_flag = true;
 	nbre_of_bytes = 0;

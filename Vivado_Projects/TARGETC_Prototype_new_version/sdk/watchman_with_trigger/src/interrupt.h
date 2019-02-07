@@ -56,6 +56,7 @@
 
 /*** Function prototypes *********************************************/
 void assert_callback(const char8 *File, s32 Line);
+void exception_callback(void *data);
 void timer_scu_callback(XScuTimer * TimerInstance);
 void timer_ttcps_callback(XTtcPs * TimerInstance);
 void axidma_rx_callback(XAxiDma* AxiDmaInstance);

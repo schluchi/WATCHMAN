@@ -34,16 +34,20 @@ extern volatile bool stream_flag;
 extern volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 extern volatile bool get_20_windows_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
-extern volatile bool simul_err_watchdog_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system */
-extern volatile bool simul_err_function_prob_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
-extern volatile bool simul_err_assertion_flag;
 /** @brief Array containing registers of AXI-lite */
 extern int* regptr;
 /** @brief Buffer used to send the command (50 bytes above it reserved for protocol header) */
 extern char* frame_buf_cmd;
+
+//******** To test the error detection********************/
+/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
+extern volatile bool simul_err_watchdog_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system */
+extern volatile bool simul_err_function_prob_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a exception */
+extern volatile bool simul_err_exception_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
+extern volatile bool simul_err_assertion_flag;
 
 /****************************************************************************/
 /**
@@ -277,7 +281,15 @@ int command_parser(struct pbuf *p, char* return_buf){
 				}
 				else return -1;
 				break;
-			case 10:	// error assertion asked
+			case 10:	// error exception asked
+				if(start + 4 == end){
+					xil_printf("Command err_exception received\r\n");
+					simul_err_exception_flag = true;
+					return 6;
+				}
+				else return -1;
+				break;
+			case 11:	// error assertion asked
 				if(start + 4 == end){
 					xil_printf("Command err_assertion received\r\n");
 					simul_err_assertion_flag = true;

@@ -51,16 +51,24 @@ extern int* regptr;
 extern volatile bool get_transfer_fct_flag;
 /** @brief Flag raised when the user send the command "get 20 windows" */
 extern volatile bool get_20_windows_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
-extern volatile bool simul_err_watchdog_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system */
-extern volatile bool simul_err_function_prob_flag;
-/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
-extern volatile bool simul_err_assertion_flag;
 /** @brief Flag true when the list is empty (first_element = last_element) */
 extern volatile bool empty_flag;
 /** @brief Pointer on the first element of the list used in trigger mode */
 extern data_list* first_element;
+
+//******** To test the error detection********************/
+/** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */
+extern volatile bool simul_err_watchdog_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system */
+extern volatile bool simul_err_function_prob_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a exception */
+extern volatile bool simul_err_exception_flag;
+/** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
+extern volatile bool simul_err_assertion_flag;
+/** @brief UDP Protocol Control Block for command communication */
+extern struct udp_pcb *pcb_cmd;
+/** @brief Buffer structure used to send command packet */
+extern struct pbuf *buf_cmd;
 
 /*********************** Global variables ****************/
 /*********************************************************/
@@ -247,18 +255,6 @@ int main()
 	}
 
 	flag_while_loop = true;
-	//**************************************************************************
-	//**************************************************************************
-
-	/*
-	 * 				TO DO !!!!!!!!
-	 * 	Reactivate wdt, but problem with recover data because of changing dac value (sleep(1) in fct)
-	 * 	and be carefull with oher way to send data
-	 * 	update time file and reload wdt needs to be done during interrupt if during send 20 windows and during send transfer fct
-	 * 	-> normaly done in every fct
-	 */
-	//**************************************************************************
-	//**************************************************************************
 	printf("Start while loop\r\n");
 	while (run_flag){
 		/* Simulate a infinity loop to trigger the watchdog  */
@@ -272,9 +268,17 @@ int main()
 			return -1;
 		}
 
+		/* Simulate a exception */
+		if(simul_err_exception_flag){
+			char* ptr = (char *)pcb_cmd;
+			for(int g=0; g<sizeof(struct udp_pcb); g++) ptr[g] = 0;
+			udp_send(pcb_cmd, buf_cmd);
+		}
+
 		/* Simulate a assertion */
-//		if(simul_err_assertion_flag){
-//		}
+		if(simul_err_assertion_flag){
+			Xil_Assert(__FILE__, 93);
+		}
 
 		/* If needed, update timefile */
 		if(flag_ttcps_timer){

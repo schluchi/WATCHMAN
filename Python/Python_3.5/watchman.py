@@ -46,7 +46,7 @@ class Watchman_main_window():
         self.UDP_PORT_CMD = 7
         self.UDP_PORT_data = 8
         ## List of all the commands
-        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'get_transfer_fct', 'get_20_windows', 'err_watchdog', 'err_function_prob', 'err_assertion']
+        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'start_stop_stream', 'stop_uC', 'settime', 'get_transfer_fct', 'get_20_windows', 'err_watchdog', 'err_function_prob', 'err_exception', 'err_assertion']
         ## Flag which indicates if the streaming is running
         self.stream_flag = False
         ## Flag which indicates that the user want to close the GUI (to avoid problem when accessing graphical object after "WM_DELETE_WINDOW" event)
@@ -123,8 +123,10 @@ class Watchman_main_window():
         self.__btn_err_watchdog.grid(column=8, row=18, rowspan=2, padx=5, sticky=W+E)
         self.__btn_err_func_prob = Button(self.master,text="Err. function problem", command=partial(self.send_command, 9))
         self.__btn_err_func_prob.grid(column=8, row=20, rowspan=2, padx=5, sticky=W+E)
-        self.__btn_err_assertion = Button(self.master,text="Err. assertion", command=partial(self.send_command, 10))
-        self.__btn_err_assertion.grid(column=8, row=22, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_err_exception = Button(self.master,text="Err. exception", command=partial(self.send_command, 10))
+        self.__btn_err_exception.grid(column=8, row=22, rowspan=2, padx=5, sticky=W+E)
+        self.__btn_err_assertion = Button(self.master,text="Err. assertion", command=partial(self.send_command, 11))
+        self.__btn_err_assertion.grid(column=8, row=24, rowspan=2, padx=5, sticky=W+E)
         self.__btn_graph = Button(self.master,text="Open graph\nStore data", command=self.open_graph)
         self.__btn_graph.grid(column=8, row=29, rowspan=2, padx=5, sticky=W+E)
         # Listbox to show data transfert

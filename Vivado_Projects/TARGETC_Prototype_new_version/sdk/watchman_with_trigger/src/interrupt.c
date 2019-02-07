@@ -63,13 +63,37 @@ extern data_list* last_element;
 * @return	None
 *
 * @note		When this callback is called, the filename and line number are
-* 			stored in the log file, and then the programm stops
+* 			stored in the log file, and then the programm restarts
 *
 ****************************************************************************/
 void assert_callback(const char8 *File, s32 Line)
 {
 	char text[100];
 	sprintf((char *)text, "Assert in file %s @ line %d", File, (int)Line);
+	log_event(text, strlen(text));
+	xil_printf("%s : strlen = %d\r\n", text, strlen(text));
+	sleep(1); // to see the xil_printf
+	// SYSTEM RESET
+	system_reset_hm();
+	//Xil_AssertWait = 0; // avoid the infinity loop
+}
+
+/****************************************************************************/
+/**
+* @brief	Callback for all exception
+*
+* @param	data: ID of exception (see xil_exception.h)
+*
+* @return	None
+*
+* @note		When this callback is called, the exception's ID is
+* 			stored in the log file, and then the programm restarts
+*
+****************************************************************************/
+void exception_callback(void *data)
+{
+	char text[100];
+	sprintf((char *)text, "Exception ID = %d", data);
 	log_event(text, strlen(text));
 	xil_printf("%s : strlen = %d\r\n", text, strlen(text));
 	sleep(1); // to see the xil_printf
@@ -694,6 +718,11 @@ void enable_interrupts()
 
 	/* Catch assertion */
 	Xil_AssertSetCallback((Xil_AssertCallback) assert_callback);
+
+	/* Catch exception */
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_UNDEFINED_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_UNDEFINED_INT);
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_PREFETCH_ABORT_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_PREFETCH_ABORT_INT);
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_DATA_ABORT_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_DATA_ABORT_INT);
 
 	return;
 }
