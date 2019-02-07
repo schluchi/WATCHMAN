@@ -69,7 +69,7 @@ class Watchman_graphic_window():
         t=Thread(target=self.recv_data, args=())
         t.start()
         self.thread_list.append(t)
-        self.master.after(1000,self.data_processing_int)
+        self.master.after(1000,self.data_plotting_int)
     
     ## Method to initialize the windows and create its graphical objects
     # @param self : The object pointer
@@ -162,6 +162,9 @@ class Watchman_graphic_window():
             # if no new data received for 0.2sec, but some, less than 100, received before, then process them
             if((cnt_timer >= 2) and (count_recv > 0)):
                 t = Thread(target=self.data_processing_int, args=(data, adress))
+                print("count_recv = "+str(count_recv))
+                print(data)
+                print(adress)
                 t.start()
                 self.thread_list.append(t)
                 del data[:]
@@ -185,30 +188,30 @@ class Watchman_graphic_window():
         # process every frame received
         for r in range(0, len(list_data)):
             data = list_data[r]
-            """for q in range(0, len(data)):
-                print(str(q) + ") " + hex(data[q]))"""
+            for q in range(0, len(data)):
+                print(str(q) + ") " + hex(data[q]))
             adress = list_adress[r]
             if(adress[0] == self.UDP_IP): # test the emitter's ip
                 if((len(data) >= 2) and (data[0] == int("0x55", 0)) and (data[1] == int("0xAA", 0))): # look for the start code
                     length = data[2] + (data[3] << 8) # length of the frame contained in the frame
-                    #print("length = "+str(length))
+                    print("length = "+str(length))
                     if((length >= 15) and (length <= len(data))):
                         if((data[length-2] == int("0x33", 0)) and (data[length-1] == int("0xCC", 0))): # look for the end code
                             flag = True # flag if frame is uncorrupted
                             index = 4 # index to parse the data array
                             channel = data[index] & int("0x0F", 0) # channel
-                            #print("channel = "+str(channel))
+                            print("channel = "+str(channel))
                             nbr_wdo = (data[index] >> 4) & int("0x07", 0)
-                            #print("nbr_wdo = "+str(nbr_wdo))
+                            print("nbr_wdo = "+str(nbr_wdo))
                             frame_id = (data[index] >> 7) & 1
-                            #print("frame_id = "+str(frame_id))
+                            print("frame_id = "+str(frame_id))
                             index += 1
                             wdo_time = 0
                             for s in range(0, 8):
                                 wdo_time = wdo_time + (data[index+s] << 8*s)
-                            #print("wdo_time = "+hex(wdo_time))
+                            print("wdo_time = "+hex(wdo_time))
                             wdo_time = wdo_time/4 # counter's frequency is 250MHz -> now wdo_time is in ns
-                            #print("wdo_time = "+str(wdo_time))
+                            print("wdo_time = "+str(wdo_time))
                             index += 8 
                             # update the data to be plot in the graphics
                             # separate them in the different columns
@@ -216,12 +219,12 @@ class Watchman_graphic_window():
                                 self.hit_per_ch[channel] += 1 
                                 if(frame_id == 0): # frame contains time and amplitude
                                     amp = data[index] + (data[index+1] << 8) # amplitude
-                                    #print("amp = "+str(amp))
+                                    print("amp = "+str(amp))
                                     index += 2
                                     self.amplitude[channel][amp//205] += 1 #2^10 / 5 = 204.8 -> 205
                                     time_bin = (data[index] + (data[index+1] << 8) + (data[index+2] << 16) + (data[index+3] << 24))
                                     time = struct.unpack('!f',struct.pack('!i',time_bin))[0]
-                                    #print("time = "+str(time))
+                                    print("time = "+str(time))
                                     index += 4
                                     if(time < 32):
                                         self.time[channel][0] += 1 
@@ -240,7 +243,7 @@ class Watchman_graphic_window():
 
                             if(flag): # report if the frame was corrupted of not
                                 self.__file.write(data)
-                                #print("writing file")
+                                print("writing file")
                                 self.count += 1
                             else:
                                 self.lostcnt += 1
@@ -260,7 +263,7 @@ class Watchman_graphic_window():
     ## Method called every second which update the graphics with the new datas
     # and show the channel selected by the user
     # @param self : The object pointer
-    def data_processing_int(self):
+    def data_plotting_int(self):
         if(self.run_flag): # test if the app need to end
             with self.lock_graph:   # acquire the lock to access the graphics object
                 start = time.time()
@@ -294,7 +297,7 @@ class Watchman_graphic_window():
                 else:
                     k += 1
             # build up the next call of this method
-            self.master.after(1000,self.data_processing_int)
+            self.master.after(1000,self.data_plotting_int)
         else:
             print("end of plot int.", file=sys.stderr)
     
