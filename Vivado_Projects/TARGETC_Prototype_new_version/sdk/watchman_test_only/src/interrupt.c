@@ -53,6 +53,8 @@ extern int flag_axidma_rx[4];
 /** @brief Pointer on the last element of the list used in trigger mode */
 extern data_list* last_element;
 
+extern data_list* element_test;
+
 /****************************************************************************/
 /**
 * @brief	Callback for assertion
@@ -223,7 +225,7 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 			for(pmt=0; pmt<4; pmt++){
 				info = last_element->data.data_struct.info;
 				mask = 0x1 << (LAST_SHIFT+pmt);
-				printf("avant last for pmt = %d | LAST_SHIFT+pmt = %d at count = %d and info = %x with mask = %x\r\n",pmt,LAST_SHIFT+pmt,count,info,mask);
+				printf("avant last for pmt = %d | LAST_SHIFT+pmt = %d at count = %d and info = 0x%x = %d with mask = 0x%x = %d\r\n",pmt,LAST_SHIFT+pmt,count,info,info,mask,mask);
 				if((info & mask) != 0){
 					flag_axidma_rx[pmt]++;
 					printf("last for pmt = %d at count = %d and info = %x with mask = %x\r\n",pmt,count,info,mask);
@@ -241,8 +243,10 @@ void axidma_rx_callback(XAxiDma* AxiDmaInst){
 			for(int i=0; i< 6; i++) last_element->data.data_array[i] = 0;
 			tmp_ptr->next = last_element;
 			empty_flag = false;
-			XAxiDma_SimpleTransfer_hm((UINTPTR)last_element->data.data_array, SIZE_DATA_ARRAY_BYT);
+			XAxiDma_SimpleTransfer_hm((UINTPTR)element_test->data.data_array, SIZE_DATA_ARRAY_BYT);
 			ControlRegisterWrite(PSBUSY_MASK,DISABLE);
+			stream_flag = false;
+			empty_flag = true;
 		}
 		else{
 			flag_axidma_rx_done = true;
@@ -703,29 +707,29 @@ void enable_interrupts()
 	XTtcPs_EnableInterrupts(&TimerTtcPsInstance, XTTCPS_IXR_INTERVAL_MASK);
 	XTtcPs_Start(&TimerTtcPsInstance);
 
-	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
-
-	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
-	XScuWdt_SetControlReg(&WdtScuInstance, Reg | XSCUWDT_CONTROL_IT_ENABLE_MASK);
-	/*
-	 * In Watchdog mode, we must start to see the event after the reboot
-	 * Useless in Time mode
-	 */
-	XScuWdt_Start(&WdtScuInstance);
-	/*
-	 * Load the watchdog counter register.
-	 * When the counter is loaded, the count-down start
-	 */
-	XScuWdt_LoadWdt(&WdtScuInstance, WDT_LOAD_VALUE);
-	XTime_GetTime(&tStart_wdt);
-
-	/* Catch assertion */
-	Xil_AssertSetCallback((Xil_AssertCallback) assert_callback);
-
-	/* Catch exception */
-	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_UNDEFINED_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_UNDEFINED_INT);
-	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_PREFETCH_ABORT_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_PREFETCH_ABORT_INT);
-	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_DATA_ABORT_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_DATA_ABORT_INT);
+//	XAxiDma_IntrEnable(&AxiDmaInstance, XAXIDMA_IRQ_IOC_MASK, XAXIDMA_DEVICE_TO_DMA);
+//
+//	Reg = XScuWdt_GetControlReg(&WdtScuInstance);
+//	XScuWdt_SetControlReg(&WdtScuInstance, Reg | XSCUWDT_CONTROL_IT_ENABLE_MASK);
+//	/*
+//	 * In Watchdog mode, we must start to see the event after the reboot
+//	 * Useless in Time mode
+//	 */
+//	XScuWdt_Start(&WdtScuInstance);
+//	/*
+//	 * Load the watchdog counter register.
+//	 * When the counter is loaded, the count-down start
+//	 */
+//	XScuWdt_LoadWdt(&WdtScuInstance, WDT_LOAD_VALUE);
+//	XTime_GetTime(&tStart_wdt);
+//
+//	/* Catch assertion */
+//	Xil_AssertSetCallback((Xil_AssertCallback) assert_callback);
+//
+//	/* Catch exception */
+//	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_UNDEFINED_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_UNDEFINED_INT);
+//	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_PREFETCH_ABORT_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_PREFETCH_ABORT_INT);
+//	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_DATA_ABORT_INT, (Xil_ExceptionHandler)exception_callback, (void *) XIL_EXCEPTION_ID_DATA_ABORT_INT);
 
 	return;
 }

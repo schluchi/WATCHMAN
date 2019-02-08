@@ -95,7 +95,7 @@ class Watchman_graphic_window():
         self.__subplot_hit.set_title('Hitmap') # set the graphic's title
         # create amplitude graphic
         self.__subplot_amp = self.__figure.add_subplot(221)
-        cat_graph_ampl = ('[0;205[', '[205;410[', '[410;615[', '[615;820[', '[820;1024]')
+        cat_graph_ampl = ('[0;410[', '[410;820[', '[820;1230[', '[1230;1640[', '[1640;2047]')
         y_pos_graph_ampl = np.arange(len(cat_graph_ampl))
         self.__graph_amp = self.__subplot_amp.bar(y_pos_graph_ampl, self.amplitude[0], align='center', alpha=0.5)
         self.__subplot_amp.set_xticks(y_pos_graph_ampl)
@@ -221,7 +221,7 @@ class Watchman_graphic_window():
                                     amp = data[index] + (data[index+1] << 8) # amplitude
                                     print("amp = "+str(amp))
                                     index += 2
-                                    self.amplitude[channel][amp//205] += 1 #2^10 / 5 = 204.8 -> 205
+                                    self.amplitude[channel][amp//410] += 1 #2^11 / 5 = 409.6 -> 410
                                     time_bin = (data[index] + (data[index+1] << 8) + (data[index+2] << 16) + (data[index+3] << 24))
                                     time = struct.unpack('!f',struct.pack('!i',time_bin))[0]
                                     print("time = "+str(time))

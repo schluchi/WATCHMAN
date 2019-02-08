@@ -282,7 +282,7 @@ int main()
 
 		/* Simulate a assertion */
 		if(simul_err_assertion_flag){
-			Xil_Assert(__FILE__, 93);
+			Xil_Assert(__FILE__, __LINE__);
 		}
 
 		/* If needed, update timefile */
