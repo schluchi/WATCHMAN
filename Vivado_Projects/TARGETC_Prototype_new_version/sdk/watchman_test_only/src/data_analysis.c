@@ -42,16 +42,15 @@ int correct_data(uint16_t* data, int pmt, char nbr_wdo, uint32_t* info, data_lis
 	// Look for best gain stage (channel)
 	while(!gain_good){
 		gain_good = true;
-		ptr = (data_list *)tmp_first_element;
+		ptr = tmp_first_element;
 		index = 0;
 		for(wdo=0; wdo<nbr_wdo; wdo++){
 			for(sample=0; sample<32; sample++){
 				// Pedestal subtraction
-				data_tmp = (uint16_t)ptr->data.data_struct.data[ch][sample];// + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
+				data_tmp = (uint16_t)ptr->data.data_struct.data[ch][sample] + VPED_DIGITAL - pedestal[ptr->data.data_struct.wdo_id][ch][sample];
 				// Transfer function correction
-//				if(data_tmp > 2047) data_tmp = 2047;
-//				data[index] = lookup_table[data_tmp];
-				data[index] = data_tmp;
+				if(data_tmp > 2047) data_tmp = 2047;
+				data[index] = lookup_table[data_tmp];
 				// If pulse goes under threshold, take next gain stage
 				if(data[index] < THRESHOLD_PULSE){
 					if(ch > ch_last){

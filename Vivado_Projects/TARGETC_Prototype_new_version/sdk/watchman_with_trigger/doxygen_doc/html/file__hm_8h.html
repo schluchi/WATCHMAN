@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Watchman_software: file_hm.h File Reference</title>
+<title>Software_doxygen_documentation: C:/Users/antho/Documents/WATCHMAN/Vivado_Projects/TARGETC_Prototype_new_version/sdk/watchman_with_trigger/src/file_hm.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -29,7 +29,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Watchman_software
+   <div id="projectname">Software_doxygen_documentation
    </div>
   </td>
  </tr>
@@ -97,6 +97,7 @@ $(document).ready(function(){initNavTree('file__hm_8h.html','');});
 <code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &quot;ff.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="time__hm_8h_source.html">time_hm.h</a>&quot;</code><br />
+<code>#include &quot;xil_printf.h&quot;</code><br />
 </div>
 <p><a href="file__hm_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -106,16 +107,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:a8c7f4b773c00032d0040867bd596a6dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mount the SD card.  <a href="#a8c7f4b773c00032d0040867bd596a6dd">More...</a><br /></td></tr>
 <tr class="separator:a8c7f4b773c00032d0040867bd596a6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a955e40f4235eb6de889d032669532d30"><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__hm_8h.html#a955e40f4235eb6de889d032669532d30">create_logfile</a> (void)</td></tr>
-<tr class="memdesc:a955e40f4235eb6de889d032669532d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the log file to save the log message.  <a href="#a955e40f4235eb6de889d032669532d30">More...</a><br /></td></tr>
+<tr class="memdesc:a955e40f4235eb6de889d032669532d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the log file to save the log message. If file already exists, doesn't create a new one, but continues the existing one.  <a href="#a955e40f4235eb6de889d032669532d30">More...</a><br /></td></tr>
 <tr class="separator:a955e40f4235eb6de889d032669532d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70f08933d6cf8fcf18a129496f55987d"><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__hm_8h.html#a70f08933d6cf8fcf18a129496f55987d">log_event</a> (char *tmp_text, uint length)</td></tr>
 <tr class="memdesc:a70f08933d6cf8fcf18a129496f55987d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a log message in the log file with the date and hour.  <a href="#a70f08933d6cf8fcf18a129496f55987d">More...</a><br /></td></tr>
 <tr class="separator:a70f08933d6cf8fcf18a129496f55987d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b2284f02d6f046a2384058886f85be4"><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__hm_8h.html#a4b2284f02d6f046a2384058886f85be4">log_wdtevent</a> (void)</td></tr>
-<tr class="memdesc:a4b2284f02d6f046a2384058886f85be4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a message in the log file to indicate when the wdt occurs.  <a href="#a4b2284f02d6f046a2384058886f85be4">More...</a><br /></td></tr>
-<tr class="separator:a4b2284f02d6f046a2384058886f85be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1edb634f61d0d00e9027c236a589afdb"><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__hm_8h.html#a1edb634f61d0d00e9027c236a589afdb">create_timefile</a> (void)</td></tr>
-<tr class="memdesc:a1edb634f61d0d00e9027c236a589afdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the time file to save the time.  <a href="#a1edb634f61d0d00e9027c236a589afdb">More...</a><br /></td></tr>
+<tr class="memdesc:a1edb634f61d0d00e9027c236a589afdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the time file to save the time. If file already exists, doesn't create a new one, but continues the existing one.  <a href="#a1edb634f61d0d00e9027c236a589afdb">More...</a><br /></td></tr>
 <tr class="separator:a1edb634f61d0d00e9027c236a589afdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e7ecd6c7e5cc2747ae668d09a24505b"><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__hm_8h.html#a8e7ecd6c7e5cc2747ae668d09a24505b">update_timefile</a> (void)</td></tr>
 <tr class="memdesc:a8e7ecd6c7e5cc2747ae668d09a24505b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the time in the time file to know when the wdt occurs.  <a href="#a8e7ecd6c7e5cc2747ae668d09a24505b">More...</a><br /></td></tr>
@@ -138,7 +136,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create the log file to save the log message. </p>
+<p>Create the log file to save the log message. If file already exists, doesn't create a new one, but continues the existing one. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">None</td><td></td></tr>
@@ -166,7 +164,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Create the time file to save the time. </p>
+<p>Create the time file to save the time. If file already exists, doesn't create a new one, but continues the existing one. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">None</td><td></td></tr>
@@ -208,34 +206,6 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tmp_text</td><td>text to be written length: size of tmp_text (in bytes)</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>FRESULT: see enumeration in ff.h and possibility on note's website</dd></dl>
-<dl class="section note"><dt>Note</dt><dd><a href="http://elm-chan.org/fsw/ff/00index_e.html">http://elm-chan.org/fsw/ff/00index_e.html</a> for informations abourt ff.c (Generic FAT Filesystem Module) </dd></dl>
-
-</div>
-</div>
-<a id="a4b2284f02d6f046a2384058886f85be4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b2284f02d6f046a2384058886f85be4">&#9670;&nbsp;</a></span>log_wdtevent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FRESULT log_wdtevent </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Write a message in the log file to indicate when the wdt occurs. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -305,7 +275,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="file__hm_8h.html">file_hm.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="file__hm_8h.html">file_hm.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>

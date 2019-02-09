@@ -72,8 +72,6 @@ volatile bool simul_err_exception_flag;
 /** @brief Flag raised when the user want to test the autonomous side of the system with a assertion */
 volatile bool simul_err_assertion_flag;
 
-data_list* element_test;
-
 /****************************************************************************/
 /**
 * @brief	Initiate all the global variables declared in global.h file
@@ -109,15 +107,6 @@ int init_global_var(void){
 	}
 	first_element->previous = NULL;
 	first_element->next = NULL;
-
-	element_test = (data_list *)malloc(sizeof(data_list));
-	if(!element_test){
-		xil_printf("malloc for element_test failed in function, %s!\r\n", __func__);
-		return XST_FAILURE;
-	}
-	element_test->previous = NULL;
-	element_test->next = NULL;
-
 	last_element = first_element;
 	flag_while_loop = false;
 	flag_axidma_error = false;

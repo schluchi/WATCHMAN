@@ -23,7 +23,7 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "Watchman_software", "index.html", [
+  [ "Software_doxygen_documentation", "index.html", [
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -50,8 +50,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_g_m___sub_library_8c.html",
-"get__20__windows_8c.html#a92815e63a8bb041c9594c7229d49cd89",
-"struct_g_mtype___model.html#a4247e3e863cf569494a289df72e4178c"
+"get__20__windows_8c.html#a9cd595582843e993d6f235d13e0882f5",
+"struct_g_mtype___data.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

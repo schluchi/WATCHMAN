@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Watchman_software: udp_peripheral.c File Reference</title>
+<title>Software_doxygen_documentation: C:/Users/antho/Documents/WATCHMAN/Vivado_Projects/TARGETC_Prototype_new_version/sdk/watchman_with_trigger/src/udp_peripheral.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -29,7 +29,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Watchman_software
+   <div id="projectname">Software_doxygen_documentation
    </div>
   </td>
  </tr>
@@ -168,6 +168,18 @@ Variables</h2></td></tr>
 <tr class="memitem:a1a1226656ce6fe65b369f5516caeb17a"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="udp__peripheral_8c.html#a1a1226656ce6fe65b369f5516caeb17a">frame_buf_cmd</a></td></tr>
 <tr class="memdesc:a1a1226656ce6fe65b369f5516caeb17a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer used to send the command (50 bytes above it reserved for protocol header)  <a href="#a1a1226656ce6fe65b369f5516caeb17a">More...</a><br /></td></tr>
 <tr class="separator:a1a1226656ce6fe65b369f5516caeb17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d359113bc8b0902b31d44305ec10d07"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="udp__peripheral_8c.html#a0d359113bc8b0902b31d44305ec10d07">simul_err_watchdog_flag</a></td></tr>
+<tr class="memdesc:a0d359113bc8b0902b31d44305ec10d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the user want to test the autonomous side of the system with a watchdog.  <a href="#a0d359113bc8b0902b31d44305ec10d07">More...</a><br /></td></tr>
+<tr class="separator:a0d359113bc8b0902b31d44305ec10d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb859c7e98b2aae4e90a807a53a91add"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="udp__peripheral_8c.html#adb859c7e98b2aae4e90a807a53a91add">simul_err_function_prob_flag</a></td></tr>
+<tr class="memdesc:adb859c7e98b2aae4e90a807a53a91add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the user want to test the autonomous side of the system.  <a href="#adb859c7e98b2aae4e90a807a53a91add">More...</a><br /></td></tr>
+<tr class="separator:adb859c7e98b2aae4e90a807a53a91add"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a425b0a64734859b3d86bab73b85f7e54"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="udp__peripheral_8c.html#a425b0a64734859b3d86bab73b85f7e54">simul_err_exception_flag</a></td></tr>
+<tr class="memdesc:a425b0a64734859b3d86bab73b85f7e54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the user want to test the autonomous side of the system with a exception.  <a href="#a425b0a64734859b3d86bab73b85f7e54">More...</a><br /></td></tr>
+<tr class="separator:a425b0a64734859b3d86bab73b85f7e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a919bd3e4774822906784c56e27553942"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="udp__peripheral_8c.html#a919bd3e4774822906784c56e27553942">simul_err_assertion_flag</a></td></tr>
+<tr class="memdesc:a919bd3e4774822906784c56e27553942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag raised when the user want to test the autonomous side of the system with a assertion.  <a href="#a919bd3e4774822906784c56e27553942">More...</a><br /></td></tr>
+<tr class="separator:a919bd3e4774822906784c56e27553942"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Anthony Schluchin </dd></dl>
@@ -764,6 +776,71 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a919bd3e4774822906784c56e27553942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a919bd3e4774822906784c56e27553942">&#9670;&nbsp;</a></span>simul_err_assertion_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool simul_err_assertion_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the user want to test the autonomous side of the system with a assertion. </p>
+
+</div>
+</div>
+<a id="a425b0a64734859b3d86bab73b85f7e54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a425b0a64734859b3d86bab73b85f7e54">&#9670;&nbsp;</a></span>simul_err_exception_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool simul_err_exception_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the user want to test the autonomous side of the system with a exception. </p>
+
+</div>
+</div>
+<a id="adb859c7e98b2aae4e90a807a53a91add"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb859c7e98b2aae4e90a807a53a91add">&#9670;&nbsp;</a></span>simul_err_function_prob_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool simul_err_function_prob_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the user want to test the autonomous side of the system. </p>
+<p>Flag raised when the user want to test the autonomous side of the system. </p>
+
+</div>
+</div>
+<a id="a0d359113bc8b0902b31d44305ec10d07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d359113bc8b0902b31d44305ec10d07">&#9670;&nbsp;</a></span>simul_err_watchdog_flag</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool simul_err_watchdog_flag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flag raised when the user want to test the autonomous side of the system with a watchdog. </p>
+
+</div>
+</div>
 <a id="ac285664a88629c304befd42daafc3f90"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac285664a88629c304befd42daafc3f90">&#9670;&nbsp;</a></span>stream_flag</h2>
 
@@ -785,7 +862,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="udp__peripheral_8c.html">udp_peripheral.c</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="udp__peripheral_8c.html">udp_peripheral.c</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>

@@ -68,9 +68,6 @@ extern struct udp_pcb *pcb_cmd;
 /** @brief Buffer structure used to send command packet */
 extern struct pbuf *buf_cmd;
 
-extern data_list* element_test;
-extern data_list* last_element;
-
 /*********************** Global variables ****************/
 /*********************************************************/
 /** @brief Network interface */
@@ -103,7 +100,6 @@ void end_main(clean_state_en state, char* error_txt);
 
 int main()
 {
-	bool printf_flag = false;
 	//static XTime tStart, tEnd;
 	ip_addr_t ipaddr, netmask, gw, pc_ipaddr;
 	int pmt;
@@ -115,7 +111,7 @@ int main()
 	xil_printf("\n\r\n\r------START------\r\n");
 
 	/* Initialize the global variables */
-	if(init_global_var() == XST_SUCCESS) {if(printf_flag) xil_printf("Global variables initialization pass!\r\n");}
+	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR, "Global variables initialization failed!");
 		return -1;
@@ -126,34 +122,34 @@ int main()
 
 	/* Mount SD Card and create log file */
 	FRESULT result = mount_sd_card();
-	if (result == FR_OK) {if(printf_flag) xil_printf("Mounting SD card pass!\r\n");}
+	if (result == FR_OK) xil_printf("Mounting SD card pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR, "Mounting SD card failed!");
 		return -1;
 	}
 	/* Create log file */
-	if(create_logfile() == FR_OK) {if(printf_flag) xil_printf("Log file creation pass!\r\n");}
+	if(create_logfile() == FR_OK) xil_printf("Log file creation pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR, "Log file creation failed!");
 		return -1;
 	}
 
 	/* Create time file */
-	if(create_timefile() == FR_OK) {if(printf_flag) xil_printf("Time file creation pass!\r\n");}
+	if(create_timefile() == FR_OK) xil_printf("Time file creation pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR, "Time file creation failed!");
 		return -1;
 	}
 
 	/* Initialize the devices timer, axidma, ... */
-	if(devices_initialization() == XST_SUCCESS) {if(printf_flag) xil_printf("Devices initialization pass!\r\n");}
+	if(devices_initialization() == XST_SUCCESS) xil_printf("Devices initialization pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR | LOG_FILE, "Devices initialization failed!");
 		return -1;
 	}
 
 	/* Initialize the interrupts */
-	if(interrupts_initialization() == XST_SUCCESS) {if(printf_flag) xil_printf("Interrupts initialization pass!\r\n");}
+	if(interrupts_initialization() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR | LOG_FILE, "Interrupts initialization failed!");
 		return -1;
@@ -166,7 +162,7 @@ int main()
 	enable_interrupts();
 
 	/* Initialize the DAC (Vped, Comparator value) */
-	if(DAC_LTC2657_initialize() == XST_SUCCESS) {if(printf_flag) xil_printf("DAC initialization pass!\r\n");}
+	if(DAC_LTC2657_initialize() == XST_SUCCESS) xil_printf("DAC initialization pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC initialization failed!");
 		return -1;
@@ -217,146 +213,53 @@ int main()
 
 	/* Set the PC address */
 	IP4_ADDR(&pc_ipaddr, 192, 168, 1, 11);
-	{if(printf_flag) print_ip("\r\nPC IP: ", &pc_ipaddr);}
+	print_ip("PC IP: ", &pc_ipaddr);
 
 	/* Set the UDP connections and callback for data and commands */
 	if(setup_udp_settings(pc_ipaddr) < 0){
 		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "Error setting up the UDP interface");
 		return -1;
 	}
-	else {if(printf_flag) xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);}
+	else xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
 
-//	// Initialise control register
-//	ControlRegisterWrite((int)NULL,INIT);
-//	// software reset PL side
-//	ControlRegisterWrite(SWRESET_MASK,DISABLE);
-//	// Reset TargetC's registers
-//	ControlRegisterWrite(REGCLR_MASK,DISABLE);
-//	usleep(100000);
-//	ControlRegisterWrite(SWRESET_MASK,ENABLE);
-//	// Waiting on PL's clocks to be ready
-//	while((regptr[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
-//		sleep(1); //sleep 100ms
-//	}
-//	if(printf_flag) printf("PL's clock ready\r\n");
-//	// Initialize TargetC's registers
-//	SetTargetCRegisters();
-//
-//	/* Test pattern */
-//	if(test_TPG() == XST_SUCCESS) {if(printf_flag) printf("TestPattern Generator pass!\r\n");}
-//	else{
-//		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "TestPattern Generator failed!");
-//		return -1;
-//	}
-//
-//	/* Initialize pedestal */
-//	if(init_pedestals() == XST_SUCCESS) {if(printf_flag) printf("Pedestal initialization pass!\r\n");}
-//	else{
-//		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Pedestal initialization failed!");
-//		return -1;
-//	}
-//
-//	/* Initialize transfer function coefficients */
-//	if(init_transfer_function() == XST_SUCCESS) {if(printf_flag) printf("Transfer function initialization pass!\r\n");}
-//	else{
-//		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Transfer function initialization failed!");
-//		return -1;
-//	}
+	// Initialise control register
+	ControlRegisterWrite((int)NULL,INIT);
+	// software reset PL side
+	ControlRegisterWrite(SWRESET_MASK,DISABLE);
+	// Reset TargetC's registers
+	ControlRegisterWrite(REGCLR_MASK,DISABLE);
+	usleep(100000);
+	ControlRegisterWrite(SWRESET_MASK,ENABLE);
+	// Waiting on PL's clocks to be ready
+	while((regptr[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
+		sleep(1); //sleep 100ms
+	}
+	printf("PL's clock ready\r\n");
+	// Initialize TargetC's registers
+	SetTargetCRegisters();
+
+	/* Test pattern */
+	if(test_TPG() == XST_SUCCESS) printf("TestPattern Generator pass!\r\n");
+	else{
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "TestPattern Generator failed!");
+		return -1;
+	}
+
+	/* Initialize pedestal */
+	if(init_pedestals() == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
+	else{
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Pedestal initialization failed!");
+		return -1;
+	}
+
+	/* Initialize transfer function coefficients */
+	if(init_transfer_function() == XST_SUCCESS) printf("Transfer function initialization pass!\r\n");
+	else{
+		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Transfer function initialization failed!");
+		return -1;
+	}
 
 	flag_while_loop = true;
-
-	data_list* tmp_ptr;
-	last_element->data.data_struct.wdo_time = 538780;
-	last_element->data.data_struct.PL_spare = 0;
-	last_element->data.data_struct.info = 0x4;
-	last_element->data.data_struct.wdo_id = 18;
-	for(int i=0; i<16; i++){
-		for(int j=0; j<32; j++) last_element->data.data_struct.data[i][j] = 0;
-	}
-	for(int j=0; j<32; j++) last_element->data.data_struct.data[11][j] = 1434;
-	tmp_ptr = last_element;
-	last_element = (data_list *)malloc(sizeof(data_list));
-	if(!last_element){
-		printf("malloc for last_element failed in function, %s! \r\n", __func__);
-	}
-	/* New empty element initialisation */
-	last_element->next = NULL;
-	last_element->previous = tmp_ptr;
-	tmp_ptr->next = last_element;
-
-	last_element->data.data_struct.wdo_time = 538796;
-	last_element->data.data_struct.PL_spare = 0;
-	last_element->data.data_struct.info = 0x4;
-	last_element->data.data_struct.wdo_id = 19;
-	for(int i=0; i<16; i++){
-		for(int j=0; j<32; j++) last_element->data.data_struct.data[i][j] = 0;
-	}
-	last_element->data.data_struct.data[11][0] = 1434;
-	last_element->data.data_struct.data[11][1] = 1403;
-	last_element->data.data_struct.data[11][2] = 1372;
-	last_element->data.data_struct.data[11][3] = 1341;
-	last_element->data.data_struct.data[11][4] = 1310;
-	last_element->data.data_struct.data[11][5] = 1279;
-	last_element->data.data_struct.data[11][6] = 1248;
-	last_element->data.data_struct.data[11][7] = 1217;
-	last_element->data.data_struct.data[11][8] = 1186;
-	last_element->data.data_struct.data[11][9] = 1155;
-	last_element->data.data_struct.data[11][10] = 1124;
-	last_element->data.data_struct.data[11][11] = 1093;
-	last_element->data.data_struct.data[11][12] = 1062;
-	last_element->data.data_struct.data[11][13] = 1031;
-	last_element->data.data_struct.data[11][14] = 1062;
-	last_element->data.data_struct.data[11][15] = 1124;
-	last_element->data.data_struct.data[11][16] = 1217;
-	last_element->data.data_struct.data[11][17] = 1310;
-	last_element->data.data_struct.data[11][18] = 1403;
-	last_element->data.data_struct.data[11][19] = 1434;
-	last_element->data.data_struct.data[11][20] = 1434;
-	last_element->data.data_struct.data[11][21] = 1434;
-	last_element->data.data_struct.data[11][22] = 1434;
-	last_element->data.data_struct.data[11][23] = 1434;
-	last_element->data.data_struct.data[11][24] = 1434;
-	last_element->data.data_struct.data[11][25] = 1434;
-	last_element->data.data_struct.data[11][26] = 1434;
-	last_element->data.data_struct.data[11][27] = 1434;
-	last_element->data.data_struct.data[11][28] = 1434;
-	last_element->data.data_struct.data[11][29] = 1434;
-	last_element->data.data_struct.data[11][30] = 1434;
-	last_element->data.data_struct.data[11][31] = 1434;
-	tmp_ptr = last_element;
-	last_element = (data_list *)malloc(sizeof(data_list));
-	if(!last_element){
-		printf("malloc for last_element failed in function, %s! \r\n", __func__);
-	}
-	/* New empty element initialisation */
-	last_element->next = NULL;
-	last_element->previous = tmp_ptr;
-	tmp_ptr->next = last_element;
-
-	last_element->data.data_struct.wdo_time = 538812;
-	last_element->data.data_struct.PL_spare = 0;
-	last_element->data.data_struct.info = 0x44;
-	last_element->data.data_struct.wdo_id = 20;
-	for(int i=0; i<16; i++){
-		for(int j=0; j<32; j++) last_element->data.data_struct.data[i][j] = 0;
-	}
-	for(int j=0; j<32; j++) last_element->data.data_struct.data[11][j] = 1434;
-	tmp_ptr = last_element;
-	last_element = (data_list *)malloc(sizeof(data_list));
-	if(!last_element){
-		printf("malloc for last_element failed in function, %s! \r\n", __func__);
-	}
-	/* New empty element initialisation */
-	last_element->next = NULL;
-	last_element->previous = tmp_ptr;
-	tmp_ptr->next = last_element;
-
-	last_element->data.data_struct.wdo_time = 0;
-	last_element->data.data_struct.PL_spare = 0;
-	last_element->data.data_struct.info = 0;
-	last_element->data.data_struct.wdo_id = 0;
-
-	if(!printf_flag) printf("Initialisation pass!\r\n");
 	printf("Start while loop\r\n");
 	while (run_flag){
 		/* Simulate a infinity loop to trigger the watchdog  */
@@ -366,7 +269,6 @@ int main()
 
 		/* Simulate a function which has a problem */
 		if(simul_err_function_prob_flag){
-			dma_received_data(2);
 			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Error function problem ask from user (simulation of function return error!)");
 			return -1;
 		}
@@ -402,7 +304,7 @@ int main()
 		switch(state_main){
 			case IDLE:
 				if(stream_flag && (!get_transfer_fct_flag) && (!get_20_windows_flag)){
-					XAxiDma_SimpleTransfer_hm((UINTPTR)element_test->data.data_array, SIZE_DATA_ARRAY_BYT);
+					XAxiDma_SimpleTransfer_hm((UINTPTR)first_element->data.data_array, SIZE_DATA_ARRAY_BYT);
 					ControlRegisterWrite(CPUMODE_MASK,ENABLE); // mode trigger
 					state_main = STREAM;
 				}

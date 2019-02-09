@@ -2,13 +2,13 @@ var global_8c =
 [
     [ "cleanup_global_var", "global_8c.html#a2b5e09e25e12dc2a87ce17d3f3a17188", null ],
     [ "init_global_var", "global_8c.html#aa309e1b0dfdba7a6bef133c0e4d3aed6", null ],
+    [ "system_reset_hm", "global_8c.html#afee8c31ac090a3c2ffd20520358ef598", null ],
     [ "AxiDmaInstance", "global_8c.html#a3049748e366fb5472553cdbe9df0bc58", null ],
     [ "count_scu_timer", "global_8c.html#a6f03c2bee8cf4ef8c4319f1f60561ad1", null ],
     [ "count_ttcps_timer", "global_8c.html#a3d99f75279bc0e1ed6ae24ad1f92b3fb", null ],
     [ "echo_netif", "global_8c.html#acd12279932e5216593ee76d4eebdd996", null ],
     [ "empty_flag", "global_8c.html#ad53968991c134c5dbfc1d0d83e5decdb", null ],
     [ "first_element", "global_8c.html#a94f01ed55f54f902dc738539df30427e", null ],
-    [ "flag_assertion", "global_8c.html#af9ff4df27689ce692fdfe44a8efec098", null ],
     [ "flag_axidma_error", "global_8c.html#a226727c48b3bfd0888096614ee551f89", null ],
     [ "flag_axidma_rx", "global_8c.html#a7ab3cdc6684119650796bf71c8c37b81", null ],
     [ "flag_axidma_rx_done", "global_8c.html#af3d0d90fb2e8215cab44c4a6c6c268fc", null ],
@@ -27,6 +27,10 @@ var global_8c =
     [ "pedestal", "global_8c.html#a9f38c959b992d18ac787045dc9d4a7ab", null ],
     [ "regptr", "global_8c.html#a39d2cad95814eb9635cca5310d914893", null ],
     [ "run_flag", "global_8c.html#a4d1709746b2e7d35d9bef7ee11f2c790", null ],
+    [ "simul_err_assertion_flag", "global_8c.html#a919bd3e4774822906784c56e27553942", null ],
+    [ "simul_err_exception_flag", "global_8c.html#a425b0a64734859b3d86bab73b85f7e54", null ],
+    [ "simul_err_function_prob_flag", "global_8c.html#adb859c7e98b2aae4e90a807a53a91add", null ],
+    [ "simul_err_watchdog_flag", "global_8c.html#a0d359113bc8b0902b31d44305ec10d07", null ],
     [ "stream_flag", "global_8c.html#ac285664a88629c304befd42daafc3f90", null ],
     [ "WdtScuInstance", "global_8c.html#afd1f6e74a3d4d317436684e7fa64a8fa", null ]
 ];

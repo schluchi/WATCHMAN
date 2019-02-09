@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Watchman_software: interrupt.h File Reference</title>
+<title>Software_doxygen_documentation: C:/Users/antho/Documents/WATCHMAN/Vivado_Projects/TARGETC_Prototype_new_version/sdk/watchman_with_trigger/src/interrupt.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -29,7 +29,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Watchman_software
+   <div id="projectname">Software_doxygen_documentation
    </div>
   </td>
  </tr>
@@ -169,6 +169,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a23a03be94ba72e0e76d31f48ec7be68f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a23a03be94ba72e0e76d31f48ec7be68f">assert_callback</a> (const char8 *File, s32 Line)</td></tr>
 <tr class="memdesc:a23a03be94ba72e0e76d31f48ec7be68f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for assertion.  <a href="#a23a03be94ba72e0e76d31f48ec7be68f">More...</a><br /></td></tr>
 <tr class="separator:a23a03be94ba72e0e76d31f48ec7be68f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae211cdf2ada231de0447831a463b03e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#ae211cdf2ada231de0447831a463b03e2">exception_callback</a> (void *data)</td></tr>
+<tr class="memdesc:ae211cdf2ada231de0447831a463b03e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for all exception.  <a href="#ae211cdf2ada231de0447831a463b03e2">More...</a><br /></td></tr>
+<tr class="separator:ae211cdf2ada231de0447831a463b03e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af39e94c7f4250d6ff6eb2c54aba799d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#af39e94c7f4250d6ff6eb2c54aba799d2">timer_scu_callback</a> (XScuTimer *TimerInstance)</td></tr>
 <tr class="memdesc:af39e94c7f4250d6ff6eb2c54aba799d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for the timer scu.  <a href="#af39e94c7f4250d6ff6eb2c54aba799d2">More...</a><br /></td></tr>
 <tr class="separator:af39e94c7f4250d6ff6eb2c54aba799d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -199,9 +202,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a94e31fd7a13e5ce5cd73b37003db422b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a94e31fd7a13e5ce5cd73b37003db422b">devices_initialization</a> ()</td></tr>
 <tr class="memdesc:a94e31fd7a13e5ce5cd73b37003db422b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate and setup all the interrupts.  <a href="#a94e31fd7a13e5ce5cd73b37003db422b">More...</a><br /></td></tr>
 <tr class="separator:a94e31fd7a13e5ce5cd73b37003db422b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3db50992b6d2cd29e63b0c2d0f1596c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#aa3db50992b6d2cd29e63b0c2d0f1596c">cleanup_interrupts</a> ()</td></tr>
-<tr class="memdesc:aa3db50992b6d2cd29e63b0c2d0f1596c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable all the interrupts and stop the timers.  <a href="#aa3db50992b6d2cd29e63b0c2d0f1596c">More...</a><br /></td></tr>
-<tr class="separator:aa3db50992b6d2cd29e63b0c2d0f1596c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a304ac8a50b57b204450017e99ed406e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt_8h.html#a304ac8a50b57b204450017e99ed406e0">cleanup_interrupts</a> (bool wdt_too)</td></tr>
+<tr class="memdesc:a304ac8a50b57b204450017e99ed406e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable all the interrupts and stop the timers.  <a href="#a304ac8a50b57b204450017e99ed406e0">More...</a><br /></td></tr>
+<tr class="separator:a304ac8a50b57b204450017e99ed406e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Anthony Schluchin </dd></dl>
@@ -453,7 +456,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>When this callback is called, the filename and line number are stored in the log file, and then the programm stops </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When this callback is called, the filename and line number are stored in the log file, and then the programm restarts </dd></dl>
 
 </div>
 </div>
@@ -485,8 +488,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa3db50992b6d2cd29e63b0c2d0f1596c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3db50992b6d2cd29e63b0c2d0f1596c">&#9670;&nbsp;</a></span>cleanup_interrupts()</h2>
+<a id="a304ac8a50b57b204450017e99ed406e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a304ac8a50b57b204450017e99ed406e0">&#9670;&nbsp;</a></span>cleanup_interrupts()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -494,7 +497,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void cleanup_interrupts </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>wdt_too</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -503,7 +507,7 @@ Functions</h2></td></tr>
 <p>Disable all the interrupts and stop the timers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramname">wdt_too</td><td>indicates if the watchdog also needs to be disabled (trues -&gt; disable wdt)</td></tr>
   </table>
   </dd>
 </dl>
@@ -563,6 +567,34 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>- </dd></dl>
+
+</div>
+</div>
+<a id="ae211cdf2ada231de0447831a463b03e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae211cdf2ada231de0447831a463b03e2">&#9670;&nbsp;</a></span>exception_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void exception_callback </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Callback for all exception. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>ID of exception (see xil_exception.h)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When this callback is called, the exception's ID is stored in the log file, and then the programm restarts </dd></dl>
 
 </div>
 </div>
@@ -767,7 +799,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="interrupt_8h.html">interrupt.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="interrupt_8h.html">interrupt.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.15 </li>

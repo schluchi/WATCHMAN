@@ -80,25 +80,25 @@ int DAC_LTC2657_SetChannelVoltage(int channel, float voltage){
 	}
 	
 	//Channel
-	switch(channel){
-		case DAC_GRP_0:		xil_printf("DAC_GRP_0:%d\t",channel);	break;
-		case DAC_GRP_1:		xil_printf("DAC_GRP_1:%d\t",channel);	break;
-		case DAC_GRP_2:		xil_printf("DAC_GRP_2:%d\t",channel);	break;
-		case DAC_GRP_3:		xil_printf("DAC_GRP_3:%d\t",channel);	break;
-		case CHANNEL_E:		xil_printf("Channel E:%d\t",channel);	break;
-		case CHANNEL_F:		xil_printf("Channel F:%d\t",channel);	break;
-		case CHANNEL_G:		xil_printf("Channel G:%d\t",channel);	break;
-		case DAC_VPED:		xil_printf("DAC_VPED:%d\t",channel);	break;
-		case CHANNEL_ALL:	xil_printf("Channel ALL:%d\t",channel);	break;
-		default :		
-			return XST_FAILURE;
-			break;	
-	}
+//	switch(channel){
+//		case DAC_GRP_0:		xil_printf("DAC_GRP_0:%d\t",channel);	break;
+//		case DAC_GRP_1:		xil_printf("DAC_GRP_1:%d\t",channel);	break;
+//		case DAC_GRP_2:		xil_printf("DAC_GRP_2:%d\t",channel);	break;
+//		case DAC_GRP_3:		xil_printf("DAC_GRP_3:%d\t",channel);	break;
+//		case CHANNEL_E:		xil_printf("Channel E:%d\t",channel);	break;
+//		case CHANNEL_F:		xil_printf("Channel F:%d\t",channel);	break;
+//		case CHANNEL_G:		xil_printf("Channel G:%d\t",channel);	break;
+//		case DAC_VPED:		xil_printf("DAC_VPED:%d\t",channel);	break;
+//		case CHANNEL_ALL:	xil_printf("Channel ALL:%d\t",channel);	break;
+//		default :
+//			return XST_FAILURE;
+//			break;
+//	}
 	
 		//Voltage
 	if(voltage >= 2.5) intvolt = 65535;
 	else intvolt = (int)(65536.0 * voltage / 2.5);
-	printf("%lf V\r\n",voltage);
+//	printf("%lf V\r\n",voltage);
 	
 	
 	WriteBuffer[0] = 0x30 | channel;	// 0x30 command to write and update | channel is channel

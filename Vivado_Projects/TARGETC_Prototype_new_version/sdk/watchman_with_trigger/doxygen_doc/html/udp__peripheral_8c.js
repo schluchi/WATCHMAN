@@ -22,5 +22,9 @@ var udp__peripheral_8c =
     [ "pcb_data", "udp__peripheral_8c.html#ad82e4dd5f2bdcc51b68d9ecf90b6fe86", null ],
     [ "regptr", "udp__peripheral_8c.html#a39d2cad95814eb9635cca5310d914893", null ],
     [ "run_flag", "udp__peripheral_8c.html#a4d1709746b2e7d35d9bef7ee11f2c790", null ],
+    [ "simul_err_assertion_flag", "udp__peripheral_8c.html#a919bd3e4774822906784c56e27553942", null ],
+    [ "simul_err_exception_flag", "udp__peripheral_8c.html#a425b0a64734859b3d86bab73b85f7e54", null ],
+    [ "simul_err_function_prob_flag", "udp__peripheral_8c.html#adb859c7e98b2aae4e90a807a53a91add", null ],
+    [ "simul_err_watchdog_flag", "udp__peripheral_8c.html#a0d359113bc8b0902b31d44305ec10d07", null ],
     [ "stream_flag", "udp__peripheral_8c.html#ac285664a88629c304befd42daafc3f90", null ]
 ];

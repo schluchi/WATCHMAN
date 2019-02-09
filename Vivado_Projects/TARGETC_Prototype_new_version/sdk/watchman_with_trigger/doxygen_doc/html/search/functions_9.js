@@ -10,5 +10,6 @@ var searchData=
   ['setup_5fscu_5fwdt_5fint',['setup_scu_wdt_int',['../interrupt_8c.html#af4e90ff15af4c3dfa9f1f64b8294ec55',1,'interrupt.c']]],
   ['setup_5fttcps_5ftimer_5fint',['setup_ttcps_timer_int',['../interrupt_8c.html#a692f02b0d05726afd233ea337f09ba7c',1,'setup_ttcps_timer_int(void):&#160;interrupt.c'],['../interrupt_8h.html#a692f02b0d05726afd233ea337f09ba7c',1,'setup_ttcps_timer_int(void):&#160;interrupt.c']]],
   ['setup_5fudp_5fsettings',['setup_udp_settings',['../udp__peripheral_8c.html#add95cc1d5556c34f8c40639de2b37057',1,'setup_udp_settings(ip_addr_t pc_ipaddr):&#160;udp_peripheral.c'],['../udp__peripheral_8h.html#add95cc1d5556c34f8c40639de2b37057',1,'setup_udp_settings(ip_addr_t pc_ipaddr):&#160;udp_peripheral.c']]],
-  ['stringtotime',['stringtotime',['../time__hm_8c.html#aea8453e6247ec2872c89e25b17284666',1,'stringtotime(char *time_str, time_cplt *time):&#160;time_hm.c'],['../time__hm_8h.html#aea8453e6247ec2872c89e25b17284666',1,'stringtotime(char *time_str, time_cplt *time):&#160;time_hm.c']]]
+  ['stringtotime',['stringtotime',['../time__hm_8c.html#aea8453e6247ec2872c89e25b17284666',1,'stringtotime(char *time_str, time_cplt *time):&#160;time_hm.c'],['../time__hm_8h.html#aea8453e6247ec2872c89e25b17284666',1,'stringtotime(char *time_str, time_cplt *time):&#160;time_hm.c']]],
+  ['system_5freset_5fhm',['system_reset_hm',['../global_8c.html#afee8c31ac090a3c2ffd20520358ef598',1,'system_reset_hm(void):&#160;global.c'],['../global_8h.html#afee8c31ac090a3c2ffd20520358ef598',1,'system_reset_hm(void):&#160;global.c']]]
 ];

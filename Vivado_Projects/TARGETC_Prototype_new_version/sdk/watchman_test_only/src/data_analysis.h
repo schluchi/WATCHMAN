@@ -41,7 +41,7 @@
 /** @brief Threshold voltage to set up in DAC for the comparator of the trigger system (in float)*/
 #define THRESHOLD_CMP	1.25
 /** @brief Treshold used to select the gain stage in function correct_data to send (digital value)*/
-#define THRESHOLD_PULSE	800
+#define THRESHOLD_PULSE	500
 
 /*** Type definition *************************************************/
 /*********************************************************************/
